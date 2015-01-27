@@ -1,5 +1,5 @@
 var ICE = {
-  queueCandidate: function (peer, candidate) {
+  queueCandidate: function (peer, candidate, defer) {
     peer.queueCandidate = peer.queueCandidate || [];
     peer.queueCandidate.push([candidate, defer]);
   },
@@ -11,6 +11,9 @@ var ICE = {
     for (i = 0; i < peer.queueCandidate.length; i += 1) {
       var candidate = peer.queueCandidate[i][0];
       var defer = peer.queueCandidate[i][1];
+      
+      console.info('candidate', candidate);
+      
       peer.addIceCandidate(candidate, function (success) {
         defer('candidate:success', success);
       }, function (error) {
@@ -21,6 +24,10 @@ var ICE = {
   },
   
   addCandidate: function (peer, candidate, defer) {
+    if (fn.isEmpty(candidate.candidate)) {
+      return defer('candidate:gathered', candidate);
+    }
+
     if (peer.newSignalingState === 'have-local-pranswer' ||
       peer.newSignalingState === 'have-remote-pranswer') {
       
@@ -52,12 +59,12 @@ var ICE = {
     
     var checkState = this.newIceConnectionStates[state];
     
-    if (!peer.iceConnectionFiredStates[peerId] || checkState === 'disconnected' || 
+    if (!peer.iceConnectionFiredStates || checkState === 'disconnected' || 
         checkState === 'failed' || checkState === 'closed') {
       peer.iceConnectionFiredStates = [];
     }
     
-    var newState = newIceConnectionStates[iceConnectionState];
+    var newState = this.newIceConnectionStates[state];
     
     if (peer.iceConnectionFiredStates.indexOf(newState) < 0) {
       peer.iceConnectionFiredStates.push(newState);
