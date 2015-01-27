@@ -15,7 +15,7 @@ var SDP = {
     
     for (i = 0; i < sdpLines.length; i += 1) {
       for (j = 0; j < condition.length; j += 1) {
-        sdpLines = sdpLines[i] || '';
+        sdpLines[i] = sdpLines[i] || '';
 
         if (sdpLines[i].indexOf(condition[j]) === 0) {
           return [i, sdpLines[i]];
@@ -39,7 +39,7 @@ var SDP = {
   addStereo: function(sdpLines) {
     var opusLineFound = false, opusPayload = 0;
     // Check if opus exists
-    var rtpmapLine = this._findSDPLine(sdpLines, ['a=rtpmap:']);
+    var rtpmapLine = this.find(sdpLines, ['a=rtpmap:']);
     if (rtpmapLine.length) {
       if (rtpmapLine[1].split(' ')[1].indexOf('opus/48000/') === 0) {
         opusLineFound = true;
@@ -48,7 +48,7 @@ var SDP = {
     }
     // Find the A=FMTP line with the same payload
     if (opusLineFound) {
-      var fmtpLine = this._findSDPLine(sdpLines, ['a=fmtp:' + opusPayload]);
+      var fmtpLine = this.find(sdpLines, ['a=fmtp:' + opusPayload]);
       if (fmtpLine.length) {
         sdpLines[fmtpLine[0]] = fmtpLine[1] + '; stereo=1';
       }
@@ -68,23 +68,25 @@ var SDP = {
    * @for Skylink
    * @since 0.6.0
    */
-  setBitrate: function (sdpLines) (
+  setBitrate: function (sdpLines, bandwidth) {
     // Find if user has audioStream
-    var bandwidth = this._streamSettings.bandwidth;
-    var maLineFound = this._findSDPLine(sdpLines, ['m=', 'a=']).length;
-    var cLineFound = this._findSDPLine(sdpLines, ['c=']).length;
+    var maLineFound = this.find(sdpLines, ['m=', 'a=']).length;
+    var cLineFound = this.find(sdpLines, ['c=']).length;
+    
     // Find the RTPMAP with Audio Codec
     if (maLineFound && cLineFound) {
       if (bandwidth.audio) {
-        var audioLine = this._findSDPLine(sdpLines, ['a=audio', 'm=audio']);
+        var audioLine = this.find(sdpLines, ['a=audio', 'm=audio']);
         sdpLines.splice(audioLine[0], 1, audioLine[1], 'b=AS:' + bandwidth.audio);
       }
+      
       if (bandwidth.video) {
-        var videoLine = this._findSDPLine(sdpLines, ['a=video', 'm=video']);
+        var videoLine = this.find(sdpLines, ['a=video', 'm=video']);
         sdpLines.splice(videoLine[0], 1, videoLine[1], 'b=AS:' + bandwidth.video);
       }
+      
       if (bandwidth.data && this._enableDataChannel) {
-        var dataLine = this._findSDPLine(sdpLines, ['a=application', 'm=application']);
+        var dataLine = this.find(sdpLines, ['a=application', 'm=application']);
         sdpLines.splice(dataLine[0], 1, dataLine[1], 'b=AS:' + bandwidth.data);
       }
     }
@@ -102,11 +104,11 @@ var SDP = {
    * @for Skylink
    * @since 0.6.0
    */
-  setResolution: function (sdpLines) (
+  setResolution: function (sdpLines) {
     var video = this._streamSettings.video;
     var frameRate = video.frameRate || 50;
     var resolution = video.resolution || {};
-    var fmtpLine = this._findSDPLine(sdpLines, ['a=fmtp:']);
+    var fmtpLine = this.find(sdpLines, ['a=fmtp:']);
     if (fmtpLine.length){
         sdpLines.splice(fmtpLine[0], 1,fmtpLine[1] + ';max-fr=' + frameRate +
         ';max-recv-width=' + (resolution.width ? resolution.width : 640) +
