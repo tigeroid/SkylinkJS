@@ -175,15 +175,15 @@ var StreamParser = {
 
     // set audio bandwidth
     options.audio = (typeof options.audio === 'number') ?
-      options.audio : 50;
+      options.audio : this.defaultConfig.bandwidth.audio;
     
     // set video bandwidth
     options.video = (typeof options.video === 'number') ?
-      options.video : 256;
+      options.video : this.defaultConfig.bandwidth.video;
     
     // set data bandwidth
     options.data = (typeof options.data === 'number') ?
-      options.data : 1638400;
+      options.data : this.defaultConfig.bandwidth.data;
 
     // set the settings
     return options;
