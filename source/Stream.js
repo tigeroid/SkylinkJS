@@ -396,9 +396,9 @@ function Stream(stream, config, listener) {
   }
 
   // Bind or start MediaStream
-  if (stream === null) {
-    var audioSettings = StreamParser.parseAudioConfig(config);
-    var videoSettings = StreamParser.parseVideoConfig(config);
+  if (fn.isEmpty(stream)) {
+    var audioSettings = StreamParser.parseAudioConfig(config.audio);
+    var videoSettings = StreamParser.parseVideoConfig(config.video);
     var statusSettings = StreamParser.parseMutedConfig(config);
 
     com.constraints = {
