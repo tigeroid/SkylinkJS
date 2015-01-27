@@ -1,3 +1,5 @@
+var log = console;
+
 /**
  * Stores the preferences shared across classes.
  * @attribute globals
