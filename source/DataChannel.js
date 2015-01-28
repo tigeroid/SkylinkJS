@@ -142,7 +142,7 @@ function DataChannel(channel, config, listener) {
    * @since 0.6.0
    */
   com.onMessage = function (bindChannel, data) {
-    listener('datachannel:error', {
+    listener('datachannel:message', {
       id: com.id,
       peerId: com.peerId,
       data: data
