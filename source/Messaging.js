@@ -2,7 +2,7 @@ var Messaging = {
   handle : function (room) {
     // User is in the Room
     room.socket.when('inRoom', function (data) {
-      room.self.setConfig(data);
+      room.self.userId = data.sid;
       room.socket.send({
         type: 'enter',
         mid: room.self.id,
