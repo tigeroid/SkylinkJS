@@ -75,17 +75,18 @@ function Room(name, listener) {
    * @param {String} id The user id for this room.
    * @param {String} token The user token for this room.
    * @param {String} timeStamp The date timestamp (ISO format) for this room.
-   * @type User
+   * @type JSON
    * @private
    * @for Room
    * @since 0.6.0
    */
-  com.self = null;
+  com.self = {};
 
   /**
    * The list of users connected to room.
-   * @attribute user
-   * @param {User} [n=*] The user connected to room.
+   * @attribute users
+   * @param {String} <userId> The user connected to room.
+   * @param {Peer} <userId>.<peerId The peer connected.
    * @type JSON
    * @private
    * @for Room
@@ -150,6 +151,28 @@ function Room(name, listener) {
   };
   
   /**
+   * Locks the Room.
+   * @method lock
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Room
+   * @since 0.6.0
+   */
+  com.lock = function (options) {
+    com.socket.connect();
+  };
+
+  /**
+   * Unlocks the Room.
+   * @method unlock
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Room
+   * @since 0.6.0
+   */
+  com.unlock = function () {
+    com.socket.disconnect();
+  };
+  
+  /**
    * Handles the event when room succesfully disconnects.
    * @method onLeave
    * @for Room
@@ -194,36 +217,16 @@ function Room(name, listener) {
   };
   
   /**
-   * Handles the user events.
-   * @method handleUserEvents
+   * Updates the user data.
+   * @method updateUser
    * @for Room
    * @since 0.6.0
    */
-  com.handleUserEvents = function (event, data) {
-    listener(event, data);
-    
-    if (event === 'user:disconnect') {
-      com.onLeave();
-    }
-    
-    if (event === 'user:connect') {
-      com.onJoin();
-    }
+  com.updateUser = function (data) {
+    self.data = data;
   };
   
-  /**
-   * Handles the message events.
-   * @method handleUserEvents
-   * @for Room
-   * @since 0.6.0
-   */
-  com.handleMessageEvents = function (event, data) {
-    com.socket.when('enter', function (data) {
-    };
-                    
-    com.socket.when('welcome', function (data) {
-    };
-  };
+  
 
   // Start loading the room information
   var path = '/api/' + globals.apiKey + '/' + com.name;
@@ -254,19 +257,19 @@ function Room(name, listener) {
     };
 
     // User configuration settings from server
-    com.self = new User({
+    com.self = {
+      userId: null,
       connectId: content.username,
       token: content.userCred,
       timeStamp: content.timeStamp,
       data: globals.userData,
-      peerConstraints: JSON.parse(content.pc_constraints)
+      constraints: JSON.parse(content.pc_constraints)
 
-    }, com.handleUserEvents);
+    };
 
     // Signalling information
     com.socket = new Socket(content.ipSigserver, com.handleSocketEvents);
     
     Messaging.handle(com);
   });
-
 }
