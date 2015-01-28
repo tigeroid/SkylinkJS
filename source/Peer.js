@@ -554,6 +554,20 @@ function Peer(config, listener) {
   
     return data;
   };
+  
+  /**
+   * Handles the event when peer information is updated.
+   * @method onUpdate
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onUpdate = function () {
+    listener('peer:update', {
+      id: com.id,
+      data: com.getInfo()
+    });
+  };
 
   // Throw an error if adapterjs is not loaded
   if (!window.RTCPeerConnection) {
