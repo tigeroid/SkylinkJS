@@ -297,7 +297,7 @@ function Peer(config, listener) {
       com.datamessenger = new DataMessage(channel, listener);
     
     } else {
-      com.datatransfers[channel.label] = new DataTransfer(channel, listener);
+      com.datatransfers[channel.label] = new DataTransfer(channel, null, listener);
     }
   };
 
@@ -516,10 +516,10 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.startDataTransfer = function () {
+  com.transferData = function (data) {
     var channel = com.RTCPeerConnection.createDataChannel(Date.UTC);
     
-    com.datatransfers[channel.label] = new DataTransfer(channel, listener);
+    com.datatransfers[channel.label] = new DataTransfer(channel, data, listener);
   };
   
   /**
