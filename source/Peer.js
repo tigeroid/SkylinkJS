@@ -18,7 +18,7 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.userId = config.id || null;
+  com.userId = config.userId || null;
   
   /**
    * The peer id.
@@ -28,7 +28,7 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.id = config.id || Date.UTC();
+  com.id = fn.generateUID();
   
   /**
    * The peer type.
@@ -90,17 +90,7 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.data = config.data || {};
-  
-  /**
-   * The connection id.
-   * @attribute id
-   * @type String
-   * @private
-   * @for Peer
-   * @since 0.6.0
-   */
-  com.id = Date.UTC();
-
+ 
   /**
    * The PeerConnection constraints.
    * @attribute constraints
@@ -119,35 +109,12 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.config = config.config || {
+  com.config = {
     optional: [{
       DtlsSrtpKeyAgreement: true
     }]
   };
   
-  /**
-   * The PeerConnection sdp constraints options.
-   * @attribute config
-   * @type JSON
-   * @private
-   * @for Peer
-   * @since 0.6.0
-   */
-  com.streamingOptions = {
-    'user': {
-      'mandatory': {
-        'OfferToReceiveAudio': true,
-        'OfferToReceiveVideo': true
-      }
-    },
-    'stream': {
-      'mandatory': {
-        'OfferToReceiveAudio': false,
-        'OfferToReceiveVideo': false
-      }
-    }
-  };
-
   /**
    * The PeerConnection streaming configuration.
    * @attribute streamingConfig
@@ -156,7 +123,25 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.streamingConfig = com.streamingOptions[com.type];
+  com.streamingConfig = (function () {
+    if (com.type === 'user') {
+      return {
+        'mandatory': {
+          'OfferToReceiveAudio': true,
+          'OfferToReceiveVideo': true
+        }
+      };
+    
+    } else if (com.type === 'stream') {
+      return {
+        'OfferToReceiveAudio': false,
+        'OfferToReceiveVideo': false
+      };
+    
+    } else {
+      return {};
+    }
+  })();
   
   /**
    * The flag that indicates if stereo is enabled for this connection.
@@ -517,7 +502,7 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.transferData = function (data) {
-    var channel = com.RTCPeerConnection.createDataChannel(Date.UTC);
+    var channel = com.RTCPeerConnection.createDataChannel(fn.generateUID());
     
     com.datatransfers[channel.label] = new DataTransfer(channel, data, listener);
   };
