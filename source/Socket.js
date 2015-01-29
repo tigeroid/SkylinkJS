@@ -177,7 +177,7 @@ function Socket(config, listener) {
     // Push callback for listening
     com.responses[event].push(callback);
   };
-
+ 
   /**
    * Sends a socket data.
    * @method send
@@ -186,15 +186,15 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.send = function (data) {
-    var interval = com.messageInterval;
+    /*var interval = com.messageInterval;
 
     if (data.type === 'enter') {
       interval = 0;
     }
-    setTimeout(function () {
+    setTimeout(function () {*/
       com.Socket.send(JSON.stringify(data));
       listener('socket:send', data);
-    }, interval);
+    //}, interval);
   };
 
   /**
@@ -241,7 +241,8 @@ function Socket(config, listener) {
   com.onMessage = function (result) {
     listener('socket:message', {
       server: com.server,
-      port: com.port
+      port: com.port,
+      data: result
     });
 
     var data = JSON.parse(result);
