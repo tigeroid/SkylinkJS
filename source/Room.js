@@ -11,6 +11,16 @@ function Room(name, listener) {
   var com = this;
 
   /**
+   * The room id.
+   * @attribute name
+   * @type String
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.id = fn.generateUUID();
+
+  /**
    * The room name.
    * @attribute name
    * @type String
@@ -212,7 +222,18 @@ function Room(name, listener) {
     }
     
     if (event === 'socket:connect') {
-      Messaging.start(com);
+      com.socket.send({
+        type: 'joinRoom',
+        uid: room.self.connectId,
+        cid: room.apiConfig.key,
+        rid: room.apiConfig.id,
+        userCred: room.self.token,
+        timeStamp: room.self.timeStamp,
+        apiOwner: room.owner,
+        roomCred: room.apiConfig.token,
+        start: room.apiConfig.startDateTime,
+        len: room.apiConfig.duration
+      });
     }
   };
   
@@ -270,6 +291,57 @@ function Room(name, listener) {
     // Signalling information
     com.socket = new Socket(content.ipSigserver, com.handleSocketEvents);
     
-    Messaging.handle(com);
+    // User is in the Room
+    com.socket.when('inRoom', function (data) {
+      room.self.userId = data.sid;
+      room.socket.send({
+        type: 'enter',
+        mid: com.self.userId,
+        rid: com.id,
+        agent: window.webrtcDetectedBrowser,
+        version: window.webrtcDetectedVersion,
+        userInfo: room.self.getData()
+      });
+    });
+    
+    // Peer has joined the Room
+    com.socket.when('enter', function (data) {
+      var weight = Connection.generatePriority(room);
+      room.socket.send({
+        type: 'welcome',
+        mid: room.self.id,
+        rid: room.id,
+        agent: window.webrtcDetectedBrowser,
+        version: window.webrtcDetectedVersion,
+        userInfo: room.self.getData(),
+        target: data.mid,
+        weight: weight
+      });
+    });
+    
+    // Peer handshaking
+    com.socket.when('welcome', function (data) {
+      room.addUser(data);
+    });
+    
+    // Peer handshaking
+    com.socket.when('offer', function (data) {
+      room.self.handleOffer(data);
+    });
+    
+    // Peer handshaking
+    com.socket.when('answer', function (data) {
+      room.self.handleAnswer(data);
+    });
+    
+    // Peer connecting
+    com.socket.when('candidate', function (data) {
+      room.self.handleCandidate(data);
+    });
+    
+    // Peer connecting
+    com.socket.when('bye', function (data) {
+      room.removeUser(data);
+    }); 
   });
 }
