@@ -56,11 +56,16 @@ var StreamParser = {
   parseAudioConfig: function (options) {
     options = (typeof options === 'object') ? options : !!options;
 
+    console.info(options);
+  
     // Cleaning of unwanted keys
     if (options !== false) {
       options = (typeof options === 'boolean') ? {} : options;
       var tempOptions = {};
       tempOptions.stereo = !!options.stereo;
+      tempOptions.sourceId = options.sourceId;
+      
+      console.info(tempOptions);
       options = tempOptions;
     }
 
@@ -68,7 +73,7 @@ var StreamParser = {
       true : options;
 
     // Add video sourceId
-    if (tempOptions.sourceId && tempOptions.audio === true) {
+    if (tempOptions.sourceId && tempOptions.audio !== false) {
       userMedia = { optional: [{ sourceId: tempOptions.sourceId }] };
     }
 
@@ -121,6 +126,9 @@ var StreamParser = {
       // set the framerate
       tempOptions.frameRate = options.frameRate ||
         this.defaultConfig.video.frameRate;
+      
+      // set the sourceid
+      tempOptions.sourceId = options.sourceId;
       
       options = tempOptions;
 
