@@ -39,17 +39,6 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.config = config;
-  
-  /**
-   * The stream readyState.
-   * @attribute readyState
-   * @type String
-   * @required
-   * @private
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.readyState = 'new';
 
   /**
    * The MediaStream object.
@@ -83,7 +72,7 @@ function Stream(stream, config, listener) {
    */
   com.bind = function (bindStream) {
     // Set a MediaStream id if Firefox or Chrome doesn't
-    com.id = bindStream.id || Date.UTC();
+    com.id = bindStream.id || fn.generateUID();
 
     // Bind events to MediaStream
     // bindStream.onaddtrack = com.onAddTrack;
@@ -113,7 +102,7 @@ function Stream(stream, config, listener) {
   com.bindTracks = function (bindTracks) {
     for (var i = 0; i < bindTracks.length; i++) {
       var track = bindTracks[i];
-      track.newId = track.id || Date.UTC();
+      track.newId = track.id || fn.generateUID();
 
       // Bind events to MediaStreamTrack
       // bindTracks[i].onstarted = com.onStarted;
@@ -131,10 +120,10 @@ function Stream(stream, config, listener) {
 
       if (track.kind === 'audio') {
         isEnabled = (typeof com.config.audio === 'object') ?
-          !!!com.config.audio.mute : !!com.config.audio;
+          !!!com.config.status.audioMuted : !!com.config.audio;
       } else {
         isEnabled = (typeof com.config.video === 'object') ?
-          !!!com.config.video.mute : !!com.config.video;
+          !!!com.config.status.videoMuted : !!com.config.video;
       }
       
       bindTracks[i].enabled = isEnabled;
@@ -157,7 +146,13 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.attachElement = function (element) {
-    window.attachMediaStream(element, com.MediaStream);
+    if (window.webrtcDetectedBrowser === 'firefox' &&
+      (com.MediaStream instanceof LocalMediaStream) === false) {
+      window.reattachMediaStream(element, com.MediaStream.checkingVideo);
+    
+    } else {
+      window.attachMediaStream(element, com.MediaStream);
+    }
   };
 
   /**
@@ -193,15 +188,17 @@ function Stream(stream, config, listener) {
           // Use a video to attach to check if stream has ended
           var video = document.createElement('video');
           video.onstreamended = setInterval(function () {
-            if (typeof video.mozSrcObject === 'object') {
+            if (!fn.isEmpty(video.mozSrcObject)) {
               if (video.mozSrcObject.ended === true) {
                 clearInterval(video.onstreamended);
                 com.onStreamEnded(bindStream, null);
               }
             }
           }, 1000);
-
-          window.attachMediaStream(video, event.stream);
+          
+          bindStream.checkingVideo = video;
+  
+          window.attachMediaStream(video, bindStream);
           return video;
         })();
       }
