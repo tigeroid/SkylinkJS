@@ -92,5 +92,9 @@ var fn = {
       enumerable: true
     };
     Object.defineProperties(main, obj);
+  },
+  
+  generateUID: function() {
+    return (new Date()).getTime();
   }
 }
