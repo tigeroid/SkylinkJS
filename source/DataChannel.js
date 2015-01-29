@@ -4,7 +4,7 @@
  * @for Skylink
  * @since 0.6.0
  */
-function DataChannel(channel, config, listener) {
+function DataChannel(channel, peerId, listener) {
   'use strict';
 
   // Reference of instance
@@ -38,7 +38,7 @@ function DataChannel(channel, config, listener) {
    * @for DataChannel
    * @since 0.6.0
    */
-  com.peerId = config.peerId;
+  com.peerId = peerId;
 
   /**
    * The DataChannel object.
@@ -68,16 +68,16 @@ function DataChannel(channel, config, listener) {
       com.onOpen(bindChannel);
     }
     
-    bindChannel.onerror = function(error) {
+    bindChannel.onerror = function (error) {
       com.onError(bindChannel, error);
     };
 
     // NOTE: Older firefox might close the DataChannel earlier 
-    bindChannel.onclose = function() {
+    bindChannel.onclose = function () {
       com.onClose(bindChannel);
     };
 
-    bindChannel.onmessage = function(event) {
+    bindChannel.onmessage = function (event) {
       com.onMessage(bindChannel, event.data);
     };
     

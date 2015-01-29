@@ -18,7 +18,7 @@ function Room(name, listener) {
    * @for Room
    * @since 0.6.0
    */
-  com.id = fn.generateUUID();
+  com.id = fn.generateUID();
 
   /**
    * The room name.
@@ -85,6 +85,9 @@ function Room(name, listener) {
    * @param {String} id The user id for this room.
    * @param {String} token The user token for this room.
    * @param {String} timeStamp The date timestamp (ISO format) for this room.
+   * @param {String} data The user data.
+   * @param {JSON} data The streams.
+   * @param {Stream} <streamId> The stream connected to room.
    * @type JSON
    * @private
    * @for Room
@@ -130,13 +133,24 @@ function Room(name, listener) {
   /**
    * The room readyState.
    * @attribute readyState
-   * @type String
+   * @type Integer
    * @required
    * @private
    * @for Room
    * @since 0.6.0
    */
-  com.readyState = 'new';
+  com.readyState = 0;
+  
+  /**
+   * The room locked state.
+   * @attribute locked
+   * @type Boolean
+   * @required
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.locked = false;
 
   /**
    * Starts the connection to the room.
@@ -145,7 +159,67 @@ function Room(name, listener) {
    * @for Room
    * @since 0.6.0
    */
-  com.join = function (options) {
+  com.join = function (stream) {
+    // Get user info for socket messaging
+    var userInfo;
+
+    if (stream) {
+      com.self.streams[stream.id] = stream;
+      userInfo = com.getUserInfo();
+      userInfo.settings = userInfo.settings[stream.id];
+    
+    } else {
+      userInfo = com.getUserInfo();
+      userInfo.settings = {};
+    }
+    // Remove reference
+    delete userInfo.agent;
+
+    // User is in the Room
+    com.socket.when('inRoom', function (data) {
+      com.self.userId = data.sid;
+      
+      com.socket.send({
+        type: 'enter',
+        mid: com.self.userId,
+        rid: com.apiConfig.id,
+        prid: 'main',
+        agent: window.webrtcDetectedBrowser,
+        version: window.webrtcDetectedVersion,
+        webRTCType: window.webrtcDetectedType,
+        userInfo: userInfo
+      });
+      
+      com.onJoin();
+    });
+    
+    // Peer has joined the Room
+    com.socket.when('enter', function (data) {
+      com.addUserPeer(data, stream);
+      
+      com.socket.send({
+        type: 'welcome',
+        mid: com.self.userId,
+        rid: com.apiConfig.id,
+        prid: data.prid,
+        agent: window.webrtcDetectedBrowser,
+        version: window.webrtcDetectedVersion,
+        webRTCType: window.webrtcDetectedType,
+        userInfo: com.getUserInfo(),
+        target: data.mid,
+        weight: com.users[data.mid][data.prid].weight
+      });
+    });
+    
+    // Peer handshaking
+    com.socket.when('welcome', function (data) {
+      if (data.prid === 'main') {
+        com.addUserPeer(data, stream);
+      } else {
+        com.addUserPeer(data);
+      }
+    });
+
     com.socket.connect();
   };
 
@@ -168,7 +242,7 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.lock = function (options) {
-    com.socket.connect();
+    //com.socket.connect();
   };
 
   /**
@@ -179,9 +253,9 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.unlock = function () {
-    com.socket.disconnect();
+    //com.socket.disconnect();
   };
-  
+ 
   /**
    * Handles the event when room succesfully disconnects.
    * @method onLeave
@@ -194,7 +268,7 @@ function Room(name, listener) {
       userId: com.self.id
     });
   };
-  
+
   /**
    * Handles the event when room succesfully connects.
    * @method onJoin
@@ -207,36 +281,85 @@ function Room(name, listener) {
       userId: com.self.id
     });
   };
-  
+
   /**
-   * Handles the socket events.
-   * @method handleSocketEvents
+   * Locks the Room.
+   * @method lock
+   * @trigger peerJoined, mediaAccessRequired
    * @for Room
    * @since 0.6.0
    */
-  com.handleSocketEvents = function (event, data) {
-    listener(event, data);
-    
-    if (event === 'socket:disconnect') {
-      com.self.disconnect();
+  com.addUserPeer = function (data, stream) {
+    var doOffer = data.type === 'welcome';
+
+    com.users[data.mid] = com.users[data.mid] || {};
+
+    // Received duplicate
+    if (fn.isSafe(function () { return !!com.users[data.mid][data.prid]; })) {
+      if (data.type === 'welcome') {
+        if (com.users[data.mid][data.prid].weight < data.weight) {
+          doOffer = false;
+        }
+      }
+    // Create since peer doesn't exists
+    } else {
+      var peer = new Peer({
+        id: data.prid,
+        userId: data.mid,
+        data: data.userInfo.userData,
+        agent: data.agent,
+        dataChannel: globals.dataChannel,
+        streamingConfig: {
+          audio: fn.isSafe(function () { 
+            data.userInfo.settings.audio 
+          }),
+          video: fn.isSafe(function () { 
+            data.userInfo.settings.video 
+          }),
+          status: fn.isSafe(function () { 
+            data.userInfo.settings.mediaStatus 
+          })
+        }
+      }, function (event, edata) {
+        listener(event, edata);
+  
+        if (event === 'peer:localdescription:success') {
+          console.info(edata);
+          
+          com.socket.send({
+            type: edata.sdp.type,
+            sdp: edata.sdp,
+            mid: com.self.userId,
+            prid: data.prid,
+            target: data.mid,
+            rid: com.apiConfig.id
+          });
+        }
+        
+        if (event === 'peer:icecandidate') {
+          com.socket.send({
+            type: 'candidate',
+            label: edata.candidate.sdpMLineIndex,
+            id: edata.candidate.sdpMid,
+            candidate: edata.candidate.candidate,
+            mid: com.self.userId,
+            prid: data.prid,
+            target: data.mid,
+            rid: com.apiConfig.id
+          });
+        }
+      });
+
+      com.users[data.mid][data.prid] = peer;
+
+      peer.connect(stream);
     }
     
-    if (event === 'socket:connect') {
-      com.socket.send({
-        type: 'joinRoom',
-        uid: room.self.connectId,
-        cid: room.apiConfig.key,
-        rid: room.apiConfig.id,
-        userCred: room.self.token,
-        timeStamp: room.self.timeStamp,
-        apiOwner: room.owner,
-        roomCred: room.apiConfig.token,
-        start: room.apiConfig.startDateTime,
-        len: room.apiConfig.duration
-      });
+    if (doOffer) {
+      peer.createOffer();
     }
   };
-  
+
   /**
    * Updates the user data.
    * @method updateUser
@@ -247,7 +370,100 @@ function Room(name, listener) {
     self.data = data;
   };
   
+  /**
+   * Sends another stream
+   * @method updateUser
+   * @for Room
+   * @since 0.6.0
+   */
+  com.sendNewStream = function (stream, userId) {
+    // Get user info for socket messaging
+    var userInfo;
+    var prid = fn.generateUID();
+
+    if (stream) {
+      com.self.streams[stream.id] = stream;
+      userInfo = com.users[userId]['main'].getInfo();
+      userInfo.settings = userInfo.settings[stream.id];
+    
+    } else {
+      userInfo = com.users[userId]['main'].getInfo();
+      userInfo.settings = {};
+    }
+    // Remove reference
+
+    com.addUserPeer({
+      type: 'enter',
+      mid: userId,
+      rid: com.apiConfig.id,
+      prid: prid,
+      agent: userInfo.agent.name,
+      version: userInfo.agent.version,
+      webRTCType: userInfo.agent.webRTCType,
+      userInfo: userInfo
+    }, stream);
+
+    room.socket.send({
+      type: 'welcome',
+      mid: com.self.userId,
+      rid: com.apiConfig.id,
+      prid: prid,
+      agent: window.webrtcDetectedBrowser,
+      version: window.webrtcDetectedVersion,
+      webRTCType: window.webrtcDetectedType,
+      userInfo: com.getUserInfo(),
+      target: userId,
+      weight: com.users[userId][prid].weight
+    });
+  };
+
+  /**
+   * Gets the user info.
+   * @method updateUser
+   * @for Room
+   * @since 0.6.0
+   */
+  com.getUserInfo = function () {
+    return {
+      userData: com.self.data,
+      settings: (function () {
+        var streaming = {};
   
+        com.self.streams.forEach(function (value, key) {
+          streaming[key] = {
+            audio: value.config.audio,
+            video: value.config.video,
+            mediaStatus: value.config.status,
+            bandwidth: {}
+          }
+        });
+        
+        return streaming;
+      })(),
+      agent: {
+        name: window.webrtcDetectedBrowser,
+        version: window.webrtcDetectedVersion,
+        webRTCType: window.webrtcDetectedType
+      }
+    };
+  };
+
+  /**
+   * Sets the user info.
+   * @method updateUser
+   * @for Room
+   * @since 0.6.0
+   */
+  com.setUserInfo = function (data) {
+    com.self.data = data;
+
+    com.socket.send({
+      type: 'updateUserEvent',
+      mid: com.self.userId,
+      rid: com.apiConfig.id,
+      userData: com.self.data
+    });
+  };
 
   // Start loading the room information
   var path = '/api/' + globals.apiKey + '/' + com.name;
@@ -276,6 +492,8 @@ function Room(name, listener) {
       startDateTime: content.start,
       duration: content.len
     };
+    
+    com.owner = content.apiOwner;
 
     // User configuration settings from server
     com.self = {
@@ -284,64 +502,144 @@ function Room(name, listener) {
       token: content.userCred,
       timeStamp: content.timeStamp,
       data: globals.userData,
-      constraints: JSON.parse(content.pc_constraints)
-
+      constraints: JSON.parse(content.pc_constraints),
+      streams: {}
     };
 
     // Signalling information
-    com.socket = new Socket(content.ipSigserver, com.handleSocketEvents);
-    
-    // User is in the Room
-    com.socket.when('inRoom', function (data) {
-      room.self.userId = data.sid;
-      room.socket.send({
-        type: 'enter',
-        mid: com.self.userId,
-        rid: com.id,
-        agent: window.webrtcDetectedBrowser,
-        version: window.webrtcDetectedVersion,
-        userInfo: room.self.getData()
-      });
-    });
-    
-    // Peer has joined the Room
-    com.socket.when('enter', function (data) {
-      var weight = Connection.generatePriority(room);
-      room.socket.send({
-        type: 'welcome',
-        mid: room.self.id,
-        rid: room.id,
-        agent: window.webrtcDetectedBrowser,
-        version: window.webrtcDetectedVersion,
-        userInfo: room.self.getData(),
-        target: data.mid,
-        weight: weight
-      });
-    });
-    
-    // Peer handshaking
-    com.socket.when('welcome', function (data) {
-      room.addUser(data);
+    com.socket = new Socket({
+      server: content.ipSigserver,
+      httpPortList: content.httpPortList,
+      httpsPortList: content.httpsPortList
+
+    }, function (event, data) {
+      listener(event, data);
+
+      if (event === 'socket:disconnect') {
+        //com.self.disconnect();
+        com.onLeave();
+      }
+
+      if (event === 'socket:connect') {
+        com.socket.send({
+          type: 'joinRoom',
+          uid: com.self.connectId,
+          cid: com.apiConfig.key,
+          rid: com.apiConfig.id,
+          userCred: com.self.token,
+          timeStamp: com.self.timeStamp,
+          apiOwner: com.owner,
+          roomCred: com.apiConfig.token,
+          start: com.apiConfig.startDateTime,
+          len: com.apiConfig.duration
+        });
+      }
     });
     
     // Peer handshaking
     com.socket.when('offer', function (data) {
-      room.self.handleOffer(data);
+      var peer = com.users[data.mid][data.prid];
+      
+      peer.setRemoteDescription(data.sdp);
+      
+      peer.createAnswer();
     });
-    
+  
     // Peer handshaking
     com.socket.when('answer', function (data) {
-      room.self.handleAnswer(data);
+      var peer = com.users[data.mid][data.prid];
+      
+      peer.setRemoteDescription(data.sdp);
     });
     
     // Peer connecting
     com.socket.when('candidate', function (data) {
-      room.self.handleCandidate(data);
+      var peer = com.users[data.mid][data.prid];
+      
+      var candidate = new window.RTCIceCandidate({
+        sdpMLineIndex: data.label,
+        candidate: data.candidate,
+        sdpMid: data.id
+      });
+    
+      console.info('candidate', candidate);
+      peer.addIceCandidate(candidate);
+    });
+    
+    // Socket messaging events
+    // Peer information updated
+    com.socket.when('updateUserEvent', function (data) {
+      var peer = com.users[data.mid][data.prid];
+      
+      peer.onUpdate(peer.getInfo());
+    });
+    
+    // Peer stream audio muted
+    com.socket.when('muteAudioEvent', function (data) {
+      var peer = com.users[data.mid][data.prid];
+      
+      // Triggers stream events
+      peer.stream.status.audioMuted = data.muted;
+      peer.stream.muteAudio();
+      
+      // Triggers peer update event
+      peer.onUpdate(peer.getInfo());
+    });
+    
+    // Peer stream video muted
+    com.socket.when('muteVideoEvent', function (data) {
+      var peer = com.users[data.mid][data.prid];
+      
+      // Triggers stream events
+      peer.stream.status.videoMuted = data.muted;
+      peer.stream.muteVideo();
+      
+      // Triggers peer update event
+      peer.onUpdate(peer.getInfo());
+    });
+
+    // Room lock event
+    com.socket.when('roomLockEvent', function (data) {
+      com.locked = data.lock;
+      
+      if (com.locked) {
+        com.onLock(data.mid);
+      
+      } else {
+        com.onUnlock(data.mid);
+      }
+    });
+    
+    // Redirect event
+    com.socket.when('redirect', function (data) {
+      
+    });
+    
+    // Redirect event
+    com.socket.when('restart', function (data) {
+      peer.restart(data);
     });
     
     // Peer connecting
     com.socket.when('bye', function (data) {
-      room.removeUser(data);
+      com.users[data.mid].forEach(function (value, key) {
+        value.disconnect();
+      });
+      //delete com.users[data.mid];
     }); 
+    
+    listener('room:start', {
+      id: com.id,
+      name: com.name
+    });
+  
+  }, function (status, error) {
+    com.readyState = -1;
+
+    listener('room:error', {
+      id: com.id,
+      name: com.name,
+      error: error
+    });
   });
 }

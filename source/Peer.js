@@ -28,7 +28,7 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.id = fn.generateUID();
+  com.id = config.id || fn.generateUID();
   
   /**
    * The peer type.
@@ -38,7 +38,7 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.type = config.type || 'stream';
+  com.type = config.id === 'main' ? 'user' : 'stream';
 
   /**
    * The PeerConnection constraints.
@@ -90,6 +90,16 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.data = config.data || {};
+  
+  /**
+   * Stores the browser agent information.
+   * @attribute agent
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.agent = config.agent || {};
  
   /**
    * The PeerConnection constraints.
@@ -116,6 +126,21 @@ function Peer(config, listener) {
   };
   
   /**
+   * The PeerConnection answer sdp configuration.
+   * @attribute sdpConfig
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.sdpConfig = {
+    'mandatory': {
+      'OfferToReceiveAudio': true,
+      'OfferToReceiveVideo': true
+    }
+  };
+
+  /**
    * The PeerConnection streaming configuration.
    * @attribute streamingConfig
    * @type JSON
@@ -123,25 +148,7 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.streamingConfig = (function () {
-    if (com.type === 'user') {
-      return {
-        'mandatory': {
-          'OfferToReceiveAudio': true,
-          'OfferToReceiveVideo': true
-        }
-      };
-    
-    } else if (com.type === 'stream') {
-      return {
-        'OfferToReceiveAudio': false,
-        'OfferToReceiveVideo': false
-      };
-    
-    } else {
-      return {};
-    }
-  })();
+  com.streamingConfig = config.streamingConfig;
   
   /**
    * The flag that indicates if stereo is enabled for this connection.
@@ -188,10 +195,16 @@ function Peer(config, listener) {
     // Send stream
     if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
       // Set the data
-      com.stereo = fn.isSafe(function () { return stream.audio.stereo; });
+      com.stereo = fn.isSafe(function () { return com.stream.audio.stereo; });
     
       // Check class type
       peer.addStream(stream.MediaStream);
+      
+      listener('peer:localstream', {
+        id: com.id,
+        userId: com.userId,
+        stream: stream
+      });
     }
 
     com.bind(peer);
@@ -221,7 +234,7 @@ function Peer(config, listener) {
     bindPeer.queueCandidate = [];
     bindPeer.iceConnectionFiredStates = [];
     bindPeer.newSignalingState = 'new';
-    bindPeer.newIceConnectionState = 'checking';
+    bindPeer.newIceConnectionState = 'new';
 
     bindPeer.ondatachannel = function (event) {
       //var dc = event.channel || event;
@@ -263,7 +276,8 @@ function Peer(config, listener) {
 
     fn.runSync(function () {
       listener('peer:start', {
-        id: com.id
+        id: com.id,
+        userId: com.userId,
       });
     });
   };
@@ -276,14 +290,20 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.onDataChannel = function (event) {
-    var channel = event.channel || event;
+    var channel = new DataChannel(event.channel || event, com.id, listener);
     
-    if (channel.label === 'main_' + com.userId) {
-      com.datamessenger = new DataMessage(channel, listener);
+    if (channel.id === 'main_' + com.userId) {
+      //com.datamessenger = new DataMessage(channel, listener);
     
     } else {
-      com.datatransfers[channel.label] = new DataTransfer(channel, null, listener);
+      //com.datatransfers[channel.label] = new DataTransfer(channel, null, listener);
     }
+    
+    listener('peer:remotedatachannel', {
+      id: com.id,
+      userId: com.userId,
+      channel: channel 
+    });
   };
 
   /**
@@ -296,8 +316,19 @@ function Peer(config, listener) {
   com.onAddStream = function (event) {
     var stream = event.stream || event;
 
-    com.stream = new Stream(stream, config.streamConfig
-      || {}, listener);
+    com.stream = new Stream(stream, com.streamingConfig
+      || {}, function (event, data) {
+      
+      listener(event, data);
+
+      if (event === 'stream:start') {
+        listener('peer:remotestream', {
+          id: com.id,
+          userId: com.userId,
+          stream: com.stream
+        });
+      }
+    });
   };
 
   /**
@@ -308,19 +339,19 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.onIceCandidate = function (event, bindPeer) {
-    var received = event.candidate || event;
-
-    ICE.addCandidate(bindPeer, received, function (event, data) {
-      listener(event, {
-        id: com.id,
-        event: data
-      });
-    });
+    var candidate = event.candidate || event;
     
-    listener('peer:icecandidate', {
-      id: com.id,
-      event: received
-    });
+    if (com.RTCPeerConnection.newSignalingState === 'have-local-answer' ||
+        com.RTCPeerConnection.newSignalingState === 'have-remote-answer') {
+      listener('peer:icecandidate', {
+        id: com.id,
+        userId: com.userId,
+        candidate: candidate
+      });
+    
+    } else {
+      ICE.queueCandidate(com.RTCPeerConnection, candidate);
+    }
   };
 
   /**
@@ -333,6 +364,7 @@ function Peer(config, listener) {
   com.onIceConnectionStateChange = function (bindPeer) {
     listener('peer:iceconnectionstate', {
       id: com.id,
+      userId: com.userId,
       state: bindPeer.newIceConnectionState
     });
   };
@@ -365,6 +397,7 @@ function Peer(config, listener) {
     
     listener('peer:signalingstate', {
       id: com.id,
+      userId: com.userId,
       state: state
     });
   };
@@ -379,15 +412,22 @@ function Peer(config, listener) {
   com.createOffer = function () {
     // Create datachannel
     if (globals.dataChannel && com.type === 'user') {
-      var channel = peer.createDataChannel('main_' + com.userId);
+      var channel = com.RTCPeerConnection.createDataChannel('main_' + com.userId);
   
-      com.datamessenger = new DataMessage(channel, listener);
+      //com.datamessenger = new DataMessage(channel, listener);
+      
+      listener('peer:localdatachannel', {
+        id: com.id,
+        userId: com.userId,
+        channel: new DataChannel(channel, com.id, listener)
+      });
     }
 
     com.RTCPeerConnection.createOffer(function (offer) {
       listener('peer:offer:success', {
         id: com.id,
-        event: offer
+        userId: com.userId,
+        sdp: offer
       });
 
       com.setLocalDescription(offer);
@@ -395,9 +435,10 @@ function Peer(config, listener) {
     }, function (error) {
       listener('peer:offer:failure', {
         id: com.id,
+        userId: com.userId,
         error: error
       });
-    }, com.streamingConfig);
+    }, com.sdpConfig);
   };
 
   /**
@@ -411,7 +452,8 @@ function Peer(config, listener) {
     com.RTCPeerConnection.createAnswer(function (offer) {
       listener('peer:answer:success', {
         id: com.id,
-        event: offer
+        userId: com.userId,
+        sdp: offer
       });
 
       com.setLocalDescription(offer);
@@ -419,10 +461,11 @@ function Peer(config, listener) {
     }, function (error) {
       listener('peer:answer:failure', {
         id: com.id,
+        userId: com.userId,
         error: error
       });
       
-    }, com.streamingConfig);
+    }, com.sdpConfig);
   };
 
   /**
@@ -447,7 +490,8 @@ function Peer(config, listener) {
     com.RTCPeerConnection.setLocalDescription(localDescription, function () {
       listener('peer:localdescription:success', {
         id: com.id,
-        event: localDescription
+        userId: com.userId,
+        sdp: localDescription
       });
 
       if (localDescription.type === 'answer') {
@@ -458,6 +502,7 @@ function Peer(config, listener) {
     }, function (error) {
       listener('peer:localdescription:error', {
         id: com.id,
+        userId: com.userId,
         error: error
       });
     });
@@ -475,7 +520,8 @@ function Peer(config, listener) {
     com.RTCPeerConnection.setRemoteDescription(remoteDescription, function () {
       listener('peer:remotedescription:success', {
         id: com.id,
-        event: remoteDescription
+        userId: com.userId,
+        sdp: remoteDescription
       });
 
       if (remoteDescription.type === 'answer') {
@@ -484,14 +530,31 @@ function Peer(config, listener) {
       }
       
       // Add all ICE Candidate generated before remote description of answer and offer
-      ICE.popCandidate(com.RTCPeerConnection);
+      ICE.popCandidate(com.RTCPeerConnection, function (candidate) {
+        listener('peer:icecandidate', {
+          id: com.id,
+          userId: com.userId,
+          candidate: candidate
+        });
+      });
 
     }, function (error) {
       listener('peer:remotedescription:error', {
         id: com.id,
+        userId: com.userId,
         error: error
       });
     });
+  };
+  
+  /**
+   * Adds the ICE candidate.
+   * @method setRemoteDescription
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.addIceCandidate = function (candidate) {
+    ICE.addCandidate(com.RTCPeerConnection, candidate, listener);
   };
   
   /**
@@ -504,7 +567,7 @@ function Peer(config, listener) {
   com.transferData = function (data) {
     var channel = com.RTCPeerConnection.createDataChannel(fn.generateUID());
     
-    com.datatransfers[channel.label] = new DataTransfer(channel, data, listener);
+    //com.datatransfers[channel.label] = new DataTransfer(channel, data, listener);
   };
   
   /**
@@ -515,7 +578,27 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.getInfo = function () {
-    var data = {};
+    return {
+      userData: com.data,
+      agent: com.agent,
+      settings: (function () {
+        var streaming = [];
+        streaming[com.stream.id] = {
+          audio: fn.isSafe(function () {
+            return com.stream.config.audio;
+          }),
+          video: fn.isSafe(function () {
+            return com.stream.config.video;
+          }),
+          mediaStatus: fn.isSafe(function () {
+            return com.stream.config.status;
+          }),
+          bandwidth: com.bandwidth || {}
+        };
+      
+        return streaming;
+      })()
+    };
     
     if (fn.isEmpty(com.stream)) {
       data.stream = {
@@ -550,6 +633,7 @@ function Peer(config, listener) {
   com.onUpdate = function () {
     listener('peer:update', {
       id: com.id,
+      userId: com.userId,
       data: com.getInfo()
     });
   };
@@ -563,5 +647,5 @@ function Peer(config, listener) {
   com.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
   
   // Start health checker
-  com.startChecker();
+  //com.startChecker();
 }

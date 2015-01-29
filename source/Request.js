@@ -43,7 +43,7 @@ var Request = {
    * @for Request
    * @since 0.6.0
    */
-  load: function (path, callback) {
+  load: function (path, deferSuccess, deferError) {
     var xhr = null;
 
     if (this.isXDomainRequest) {
@@ -64,12 +64,25 @@ var Request = {
     xhr.onload = function () {
       var response = xhr.responseText || xhr.response;
       var status = xhr.status || 200;
-
-      callback(status, JSON.parse(response || '{}'));
+      
+      console.info(response, status);
+      
+      try {
+        response = JSON.parse( response || '{}' );
+      } catch (error) {
+        throw error;
+      }
+  
+      if (status === 200) {
+        deferSuccess(status, response);
+      
+      } else {
+        deferError(status, response);
+      }
     };
 
-    xhr.onerror = function () {
-      log.error('Error retrieving data');
+    xhr.onerror = function (error) {
+      throw error;
     };
 
     xhr.onprogress = function () {
@@ -78,8 +91,8 @@ var Request = {
 
     xhr.open('GET', this.protocol + this.server + path, true);
 
-    xhr.setContentType('application/json;charset=UTF-8');
+    // xhr.setContentType('application/json;charset=UTF-8');
 
-    xhr.send(JSON.stringify(params));
+    xhr.send();
   }
 };

@@ -1,24 +1,17 @@
 var ICE = {
-  queueCandidate: function (peer, candidate, defer) {
+
+  queueCandidate: function (peer, candidate) {
     peer.queueCandidate = peer.queueCandidate || [];
-    peer.queueCandidate.push([candidate, defer]);
+    peer.queueCandidate.push(candidate);
   },
   
-  popCandidate: function (peer) {
+  popCandidate: function (peer, defer) {
     peer.queueCandidate = peer.queueCandidate || [];
     var i;
     
     for (i = 0; i < peer.queueCandidate.length; i += 1) {
-      var candidate = peer.queueCandidate[i][0];
-      var defer = peer.queueCandidate[i][1];
-      
-      console.info('candidate', candidate);
-      
-      peer.addIceCandidate(candidate, function (success) {
-        defer('candidate:success', success);
-      }, function (error) {
-        defer('candidate:error', error);
-      });
+      var candidate = peer.queueCandidate[i];
+      defer(candidate);
     }
     peer.queueCandidate = [];
   },
@@ -27,20 +20,12 @@ var ICE = {
     if (fn.isEmpty(candidate.candidate)) {
       return defer('candidate:gathered', candidate);
     }
-
-    if (peer.newSignalingState === 'have-local-pranswer' ||
-      peer.newSignalingState === 'have-remote-pranswer') {
-      
-      peer.addIceCandidate(candidate, function (success) {
-        defer('candidate:add', success); 
-      }, function (error) {
-        defer('candidate:error', error); 
-      });
     
-    } else {
-      this.queueCandidate(peer, candidate, defer);
-      defer('candidate:wait');
-    }
+    peer.addIceCandidate(candidate, function (success) {
+      defer('candidate:add', candidate); 
+    }, function (error) {
+      defer('candidate:error', error); 
+    });
   },
   
   newIceConnectionStates: {

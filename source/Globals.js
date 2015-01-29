@@ -95,6 +95,24 @@ var fn = {
   },
   
   generateUID: function() {
-    return (new Date()).getTime();
+    return (new Date()).getTime().toString();
   }
+}
+
+Object.prototype.forEach = function (defer) {
+  for (var key in this) {
+    if (this.hasOwnProperty(key)) {
+      defer(this[key], key);
+    }
+  }
+};
+
+if (typeof Array.prototype.forEach !== 'function') {
+  Array.prototype.forEach = function (defer) {
+    var i;
+    
+    for (i = 0; i < this.length; i += 1) {
+      defer(this[i], i);
+    }
+  };
 }
