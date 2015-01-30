@@ -53,6 +53,7 @@
           });
         </pre>
         <div id="videoList"></div>
+        <div id="videoList2"></div>
       </div>
     </div>
   </div>
@@ -61,7 +62,9 @@
     <select id="videoTrackList"></select>
     <select id="audioTrackList"></select><br><br>
     <button onclick="start()">Join room</button>
-    <button onclick="addStream()">Add stream to peer</button>
+    <button onclick="addStream()">Add stream to peer to room</button>
+    <button onclick="start2()">Join room 2</button>
+    <button onclick="addStream2()">Add stream to peer to room 2</button>
     <div id="output" class="panel"></div>
   </div>
   
@@ -83,10 +86,10 @@
   <script>
     globals.apiKey = '5f874168-0079-46fc-ab9d-13931c2baa39';
 
-    var room;
-    var stream;
-    var extraStreams = {};
-    var peerList = [];
+    var room, room2;
+    var stream, stream2;
+    var extraStreams = {}, extraStreams2 = {};
+    var peerList = [], peerList2 = [];
     var audioTrackListDom = document.getElementById('audioTrackList');
     var videoTrackListDom = document.getElementById('videoTrackList');
     
@@ -148,6 +151,67 @@
           extraStreams[newStream.id] = newStream;
         }
         handler(event, data);
+      });
+    }
+    
+    
+    function start2 () {
+      room2 = new Room('test2', handler2);
+    }
+    
+    function handler2 (event, data) {
+      console.log(event, data);
+      
+      if (event === 'room:start') {
+        stream2 = new Stream(null, { 
+          audio: { sourceId: audioTrackListDom.value },
+          video: { sourceId: videoTrackListDom.value }
+          
+        }, handler2);
+      }
+      
+      if (event === 'room:connect') {
+        attachStream2('local', stream2);
+      }
+      
+      if (event === 'stream:start') {
+        if (data.id === stream2.id) {
+          room2.join(stream2); 
+        }
+        if (Object.keys(extraStreams2).indexOf(data.id) > -1) {
+          peerList2.forEach(function (userId) {
+            room2.sendNewStream( extraStreams2[data.id], userId );
+          });
+        }
+      }
+      
+      if (event === 'peer:remotestream') {
+        if (peerList2.indexOf(data.userId) === -1) {
+          peerList2.push(data.userId);
+        }
+        attachStream2(data.userId + '-' + data.id, data.stream);
+      }
+    }
+    
+    function attachStream2(id, stream) {
+      var video = document.createElement('video');
+      video.id = id;
+      video.autoplay = 'autoplay';
+      
+      document.getElementById('videoList2').appendChild(video);
+  
+      stream.attachElement(video);
+    }
+    
+    function addStream2() {
+      var newStream = new Stream(null, { 
+        audio: { sourceId: audioTrackListDom.value },
+        video: { sourceId: videoTrackListDom.value }
+      }, function (event, data) {
+        if (event === 'stream:start') {
+          extraStream2s[newStream.id] = newStream;
+        }
+        handler2(event, data);
       });
     }
     
