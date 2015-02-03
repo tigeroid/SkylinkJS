@@ -4,7 +4,7 @@
  * @for Skylink
  * @since 0.6.0
  */
-function DataChannel(channel, peerId, listener) {
+function DataChannel(channel, listener) {
   'use strict';
 
   // Reference of instance

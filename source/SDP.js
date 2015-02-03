@@ -135,5 +135,32 @@ var SDP = {
       sdpLines.splice(invalidLineIndex, 1);
     }
     return sdpLines;
+  },
+  
+  /**
+   * Modifies a local session description with the configuration provided
+   * @property SDP.configure
+   * @type Function
+   * @param {Array} sdpLines Sdp received.
+   * @return {String} Updated local session description.
+   * @private
+   * @for Skylink
+   * @since 0.6.0
+   */
+  configure: function (sdp, config) {
+    var sdpLines = sdp.sdp.split('\r\n');
+    sdpLines = this.removeH264Support(sdpLines);
+
+    if (fn.isSafe(function () { return config.stereo; })) {
+      sdpLines = this.addStereo(sdpLines);
+    }
+    if (config.bandwidth) {
+      sdpLines = this.setBitrate(sdpLines, config.bandwidth);
+    }
+
+    sdp.sdp = sdpLines.join('\r\n');
+    
+    return sdp;
   }
+  
 };

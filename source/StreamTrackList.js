@@ -13,7 +13,7 @@ var StreamTrackList = {
   readyState: 'new',
   audio: [],
   video: [],
-  onReady: function () {}
+  onready: function () {}
 };
 
 // Firefox does not support MediaStreamTrack.getSources yet
@@ -46,7 +46,7 @@ if (window.webrtcDetectedBrowser === 'firefox') {
     StreamTrackList.readyState = 'done';
     
     if (typeof StreamTrackList.onReady === 'function') {
-      StreamTrackList.onReady(StreamTrackList);
+      StreamTrackList.onready(StreamTrackList);
     }
   });
 }
