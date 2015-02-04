@@ -1,32 +1,4 @@
 /**
- * Handles the peer class events.
- * @attribute PeerHandler
- * @for Peer
- * @since 0.6.0
- */
-var PeerHandler = function (com, event, data, listener) {
-  if (event.indexOf('trigger:') !== 0) {
-    data.peerId = com.id;
-
-    listener(event, data);
-  }
-  
-  var params = event.split(':');
-  
-  fn.isSafe(function () {
-    if (subActions.length > 2) {
-      PeerHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (subActions.length > 1) {
-      PeerHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      PeerHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
-};
-
-/**
  * Stores the peer class events.
  * @attribute PeerHandlerEvent
  * @for Peer
@@ -41,7 +13,19 @@ var PeerHandlerEvent = {
    * @private
    * @since 0.6.0
    */
-  'stream': {
+  stream: {
+    /**
+     * Handles the remote stream stop trigger.
+     * @property stop
+     * @type Function
+     * @private
+     * @since 0.6.0
+     */
+    stop: function (com, data, listener) {
+      if (com.id !== 'main') {
+        com.disconnect();
+      }
+    }
   },
   
   /**
@@ -52,7 +36,7 @@ var PeerHandlerEvent = {
    * @private
    * @since 0.6.0
    */
-  'trigger': {
+  trigger: {
     /**
      * Handles the ice connection state trigger.
      * @property iceconnectionstate
@@ -60,7 +44,7 @@ var PeerHandlerEvent = {
      * @private
      * @since 0.6.0
      */
-    'iceconnectionstate': function (com, data, listener) {
+    iceconnectionstate: function (com, data, listener) {
       var state = com.RTCPeerConnection.newIceConnectionState;
 
       listener('peer:iceconnectionstate', {
@@ -80,7 +64,7 @@ var PeerHandlerEvent = {
      * @private
      * @since 0.6.0
      */
-    'icegatheringstate': function (com, data, listener) {
+    icegatheringstate: function (com, data, listener) {
       var state = com.RTCPeerConnection.iceGatheringState;
 
       listener('peer:icegatheringstate', {
@@ -100,7 +84,7 @@ var PeerHandlerEvent = {
      * @private
      * @since 0.6.0
      */
-    'icecandidate': function (com, data, listener) {
+    icecandidate: function (com, data, listener) {
       var candidate = data.candidate;
 
       if (data.type === 'remote') {
@@ -121,7 +105,7 @@ var PeerHandlerEvent = {
      * @private
      * @since 0.6.0
      */
-    'signalingstate': function (com, data, listener) {
+    signalingstate: function (com, data, listener) {
       var state = com.RTCPeerConnection.newSignalingState;
 
       listener('peer:signalingstate', {
@@ -141,7 +125,7 @@ var PeerHandlerEvent = {
      * @private
      * @since 0.6.0
      */
-    'datachannel': function (com, data, listener) {
+    datachannel: function (com, data, listener) {
       var channel = new DataChannel(data.channel, { type: data.type }, com.manager);
 
       com.datachannels[channel.id] = channel;
@@ -160,7 +144,7 @@ var PeerHandlerEvent = {
      * @private
      * @since 0.6.0
      */
-    'stream': function (com, data, listener) {
+    stream: function (com, data, listener) {
       var stream;
 
       if (data.stream instanceof Stream) {
@@ -209,9 +193,17 @@ var PeerHandlerEvent = {
      * @since 0.6.0
      */
     handshake: function (com, data, listener) {
+      if (data.type === 'enter') {
+        com.connect(com.stream);
+        
+        fn.runSync(function () {
+          com.createOffer();
+        });
+      }
+      
       if (data.type === 'welcome') {
-        com.createOffer();
-      } 
+        com.connect(com.stream);
+      }
 
       if (data.type === 'offer') {
         com.remoteDescription = new window.RTCSessionDescription(data);
@@ -257,7 +249,7 @@ var PeerHandlerEvent = {
      * @private
      * @since 0.6.0
      */
-    'disconnect': function (com, data, listener) {
+    disconnect: function (com, data, listener) {
       listener('peer:disconnect', {
         id: com.id
       });
@@ -267,4 +259,32 @@ var PeerHandlerEvent = {
       }
     }
   }
+};
+
+/**
+ * Handles the peer class events.
+ * @attribute PeerHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerHandler = function (com, event, data, listener) {
+  if (event.indexOf('trigger:') !== 0) {
+    data.peerId = com.id;
+
+    listener(event, data);
+  }
+  
+  var params = event.split(':');
+  
+  fn.isSafe(function () {
+    if (params.length > 2) {
+      PeerHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
+
+    } else if (params.length > 1) {
+      PeerHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
+
+    } else {
+      PeerHandlerEvent[ params[0] ](com, data, listener);
+    }
+  });
 };

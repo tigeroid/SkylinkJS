@@ -97,8 +97,9 @@ var fn = {
   generateUID: function() {
     return (new Date()).getTime().toString();
   }
-}
+};
 
+/*jshint -W121 */
 Object.prototype.forEach = function (defer) {
   for (var key in this) {
     if (this.hasOwnProperty(key)) {
@@ -116,3 +117,4 @@ if (typeof Array.prototype.forEach !== 'function') {
     }
   };
 }
+/*jshint +W121 */

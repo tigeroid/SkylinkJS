@@ -1,4 +1,4 @@
-var Event = {
+var _Event = {
   listeners: {
     on: {},
     once: {}
@@ -95,3 +95,5 @@ var Event = {
     };
   }
 };
+
+Skylink.Event = _Event;

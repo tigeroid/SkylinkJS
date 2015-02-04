@@ -1,32 +1,4 @@
 /**
- * Handles the room class events.
- * @attribute RoomHandler
- * @for Room
- * @since 0.6.0
- */
-var RoomHandler = function (com, event, data, listener) {
-  if (event.indexOf('trigger:') !== 0) {
-    data.peerId = com.id;
-
-    listener(event, data);
-  }
-  
-  var params = event.split(':');
-  
-  fn.isSafe(function () {
-    if (subActions.length > 2) {
-      PeerHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (subActions.length > 1) {
-      PeerHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      PeerHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
-};
-
-/**
  * Stores the room class events.
  * @attribute RoomHandlerEvent
  * @for Room
@@ -52,15 +24,15 @@ var RoomHandlerEvent = {
     connect: function (com, data, listener) {
       com.socket.send({
         type: 'joinRoom',
-        uid: com.self.connectId,
-        cid: com.apiConfig.key,
-        rid: com.apiConfig.id,
+        uid: com.self.username,
+        cid: com.key,
+        rid: com.id,
         userCred: com.self.token,
         timeStamp: com.self.timeStamp,
         apiOwner: com.owner,
-        roomCred: com.apiConfig.token,
-        start: com.apiConfig.startDateTime,
-        len: com.apiConfig.duration
+        roomCred: com.token,
+        start: com.startDateTime,
+        len: com.duration
       });  
     },
     
@@ -278,17 +250,30 @@ var RoomHandlerEvent = {
 };
 
 /**
- * Handles the room messaging events.
- * @attribute MessageHandler
+ * Handles the room class events.
+ * @attribute RoomHandler
  * @for Room
  * @since 0.6.0
  */
-var MessageHandler = function (com, listener) {
-  // Handles the socket events
-  MessageHandlerEvent.forEach(function (value, key) {
-    com.socket.when(key, function (data) {
-      value(com, event, data, listener);
-    });
+var RoomHandler = function (com, event, data, listener) {
+  if (event.indexOf('trigger:') !== 0) {
+    data.peerId = com.id;
+
+    listener(event, data);
+  }
+  
+  var params = event.split(':');
+  
+  fn.isSafe(function () {
+    if (params.length > 2) {
+      RoomHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
+
+    } else if (params.length > 1) {
+      RoomHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
+
+    } else {
+      RoomHandlerEvent[ params[0] ](com, data, listener);
+    }
   });
 };
 
@@ -311,14 +296,53 @@ var MessageHandlerEvent = {
 
     com.socket.send({
       type: 'enter',
-      mid: com.self.userId,
-      rid: com.apiConfig.id,
+      mid: com.self.id,
+      rid: com.id,
       prid: 'main',
       agent: window.webrtcDetectedBrowser,
       version: window.webrtcDetectedVersion,
       webRTCType: window.webrtcDetectedType,
-      userInfo: userInfo
+      userInfo: com.self.getInfo()
     });
+    
+    if (typeof com.onjoin === 'function') {
+      com.onjoin(data.mid);
+    }
+  },
+  
+  /**
+   * User has sent self an enter.
+   * @property enter
+   * @type JSON
+   * @private
+   * @since 0.6.0
+   */
+  enter: function (com, data, listener) {
+    com.handshake(data);
+
+    com.socket.send({
+      type: 'welcome',
+      mid: com.self.id,
+      rid: com.id,
+      prid: data.prid,
+      agent: window.webrtcDetectedBrowser,
+      version: window.webrtcDetectedVersion,
+      webRTCType: window.webrtcDetectedType,
+      userInfo: com.self.getInfo(),
+      target: data.mid,
+      weight: com.users[data.mid][data.prid].weight
+    });
+  },
+  
+  /**
+   * User has sent self an welcome.
+   * @property enter
+   * @type JSON
+   * @private
+   * @since 0.6.0
+   */
+  welcome: function (com, data, listener) {
+    com.handshake(data);
   },
   
   /**
@@ -476,9 +500,21 @@ var MessageHandlerEvent = {
     var user = com.users[data.mid];
 
     user.disconnect();
-  },
-  
-  
+  }  
     
-    
+};
+
+/**
+ * Handles the room messaging events.
+ * @attribute MessageHandler
+ * @for Room
+ * @since 0.6.0
+ */
+var MessageHandler = function (com, listener) {
+  // Handles the socket events
+  MessageHandlerEvent.forEach(function (value, key) {
+    com.socket.when(key, function (data) {
+      value(com, event, data, listener);
+    });
+  });
 };

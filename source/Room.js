@@ -180,6 +180,19 @@ function Room(name, listener) {
   com.readyState = 0;
   
   /**
+   * The room TURN/STUN servers connection.
+   * @attribute iceServers
+   * @param {Array} iceServers The list of ICE servers.
+   * @param {JSON} <iceServers.n> The ICE server.
+   * @type JSON
+   * @required
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.iceServers = {};
+  
+  /**
    * The room locked state.
    * @attribute locked
    * @type Boolean
@@ -268,55 +281,7 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.join = function (stream) {
-    // Get user info for socket messaging
-    var userInfo;
-
-    if (stream) {
-      com.self.streams[stream.id] = stream;
-      userInfo = com.getUserInfo();
-      userInfo.settings = userInfo.settings[stream.id];
-    
-    } else {
-      userInfo = com.getUserInfo();
-      userInfo.settings = {};
-    }
-    // Remove reference
-    delete userInfo.agent;
-
-    // User is in the Room
-    com.socket.when('inRoom', function (data) {
-      
-      
-      com.onJoin();
-    });
-    
-    // Peer has joined the Room
-    com.socket.when('enter', function (data) {
-      com.addUserPeer(data, stream);
-      
-      com.socket.send({
-        type: 'welcome',
-        mid: com.self.userId,
-        rid: com.apiConfig.id,
-        prid: data.prid,
-        agent: window.webrtcDetectedBrowser,
-        version: window.webrtcDetectedVersion,
-        webRTCType: window.webrtcDetectedType,
-        userInfo: com.getUserInfo(),
-        target: data.mid,
-        weight: com.users[data.mid][data.prid].weight
-      });
-    });
-    
-    // Peer handshaking
-    com.socket.when('welcome', function (data) {
-      if (data.prid === 'main') {
-        com.addUserPeer(data, stream);
-      } else {
-        com.addUserPeer(data);
-      }
-    });
-
+    com.self.addStreamConnection(stream, 'main');
     com.socket.connect();
   };
 
@@ -392,129 +357,79 @@ function Room(name, listener) {
   };
 
   /**
-   * Adds a user to the room.
-   * @method addUser
+   * Starts the handshake
+   * @method handshake
    * @param {JSON} data The user information.
    * @for Room
    * @since 0.6.0
    */
-  com.addUser = function (data) {
-    var doOffer = data.type === 'welcome';
-
-    com.users[data.mid] = com.users[data.mid] || {};
-
-    // Received duplicate
-    if (fn.isSafe(function () { return !!com.users[data.mid][data.prid]; })) {
-      if (data.type === 'welcome') {
-        if (com.users[data.mid][data.prid].weight < data.weight) {
-          doOffer = false;
-        }
-      }
-    // Create since peer doesn't exists
-    } else {
-      var peer = new Peer({
-        id: data.prid,
-        userId: data.mid,
-        data: data.userInfo.userData,
-        agent: data.agent,
-        dataChannel: globals.dataChannel,
-        streamingConfig: {
-          audio: fn.isSafe(function () { 
-            data.userInfo.settings.audio 
-          }),
-          video: fn.isSafe(function () { 
-            data.userInfo.settings.video 
-          }),
-          status: fn.isSafe(function () { 
-            data.userInfo.settings.mediaStatus 
-          })
-        }
-      }, function (event, edata) {
-        listener(event, edata);
-  
-        if (event === 'peer:localdescription:success') {
-          console.info(edata);
-          
-          com.socket.send({
-            type: edata.sdp.type,
-            sdp: edata.sdp,
-            mid: com.self.userId,
-            prid: data.prid,
-            target: data.mid,
-            rid: com.apiConfig.id
-          });
-        }
-        
-        if (event === 'peer:icecandidate') {
-          com.socket.send({
-            type: 'candidate',
-            label: edata.candidate.sdpMLineIndex,
-            id: edata.candidate.sdpMid,
-            candidate: edata.candidate.candidate,
-            mid: com.self.userId,
-            prid: data.prid,
-            target: data.mid,
-            rid: com.apiConfig.id
-          });
-        }
-      });
-
-      com.users[data.mid][data.prid] = peer;
-
-      peer.connect(stream);
+  com.handshake = function (data, defer) {
+    if (fn.isEmpty(com.users[data.mid])) {
+      com.users[data.mid] = new User(data, com.handler);
     }
     
-    if (doOffer) {
-      peer.createOffer();
+    // Get stream
+    var stream;
+    var connection = com.self.streams[data.prid];
+
+    // Check if stream connection exists
+    if (typeof connection === 'object') {
+      // Check if there is targeted users
+      if (typeof connection.targetUsers === 'object') {
+        // If it exists in targetUsers, add
+        if (connection.targetUsers.indexOf(data.mid)) {
+          stream = connection.stream;
+        }
+      }
     }
+    
+    data.iceServers = com.iceServers;
+    data.stream = stream;
+
+    com.users[data.mid].handler('trigger:handshake', data);
   };
 
   
   
   /**
-   * Sends another stream
-   * @method updateUser
+   * Sends a another stream to users.
+   * @method addStreamConnection
+   * @param {Stream} stream The stream object.
+   * @param {Array} [targetUsers] The list of targeted users.
    * @for Room
    * @since 0.6.0
    */
-  com.sendNewStream = function (stream, userId) {
-    // Get user info for socket messaging
-    var userInfo;
-    var prid = fn.generateUID();
+  com.addStreamConnection = function (stream, targetUsers) {
+    var connectionId = fn.generateUID();
 
-    if (stream) {
-      com.self.streams[stream.id] = stream;
-      userInfo = com.users[userId]['main'].getInfo();
-      userInfo.settings = userInfo.settings[stream.id];
+    com.self.addStreamConnection(stream, connectionId, targetUsers);
     
-    } else {
-      userInfo = com.users[userId]['main'].getInfo();
-      userInfo.settings = {};
-    }
-    // Remove reference
-
-    com.addUser({
-      type: 'enter',
-      mid: userId,
-      rid: com.apiConfig.id,
-      prid: prid,
-      agent: userInfo.agent.name,
-      version: userInfo.agent.version,
-      webRTCType: userInfo.agent.webRTCType,
-      userInfo: userInfo
-    }, stream);
-
-    room.socket.send({
-      type: 'welcome',
-      mid: com.self.userId,
-      rid: com.apiConfig.id,
-      prid: prid,
-      agent: window.webrtcDetectedBrowser,
-      version: window.webrtcDetectedVersion,
-      webRTCType: window.webrtcDetectedType,
-      userInfo: com.getUserInfo(),
-      target: userId,
-      weight: com.users[userId][prid].weight
+    stream.parentHandler = com.handler;
+    
+    com.users.forEach(function (value, key) {
+      // Check if targetUsers is an array
+      var sendStream = typeof targetUsers === 'object';
+      // If it is check if it is a targeted user
+      // Else, just send anyway
+      sendStream = sendStream === true ? 
+        targetUsers.indexOf(key) > -1 : true;
+        
+      if (sendStream) {
+        value.handler('trigger:handshake', {
+          type: 'enter',
+          mid: value.id,
+          rid: com.id,
+          prid: connectionId,
+          agent: value.agent.name,
+          version: value.agent.version,
+          webRTCType: value.agent.webRTCType,
+          userInfo: {
+            userData: value.data,
+            bandwidth: value.bandwidth,
+            settings: value.streamingConfig
+          }
+        });
+      }
     });
   };
 
@@ -526,7 +441,7 @@ function Room(name, listener) {
    * @extend Room
    * @since 0.6.0
    */
-  com.Self = function (config) {
+  function Self (config) {
     // Reference of instance
     var subcom = this;
 
@@ -538,7 +453,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.id = config.id;
+    subcom.id = config.id;
     
     /**
      * The self user data.
@@ -548,7 +463,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.data = config.data;
+    subcom.data = config.data;
     
     /**
      * The self user username.
@@ -558,7 +473,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.username = config.username;
+    subcom.username = config.username;
     
     /**
      * The self user timestamp (ISO format).
@@ -568,18 +483,44 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.timeStamp = config.timeStamp;
+    subcom.timeStamp = config.timeStamp;
+    
+    /**
+     * The self user credential.
+     * @attribute token
+     * @type String
+     * @private
+     * @for Self
+     * @since 0.6.0
+     */
+    subcom.token = config.token;
     
     /**
      * The self user local stream connection.
      * @attribute stream
-     * @param {Stream} <streamId> The stream connected to room.
+     * @param {JSON} <connectionId> The stream connection to users.
+     * @param {Array} <connectionId.targetUsers> The target users.
+     * @param {Stream} <connectionId.stream> The stream connected to room.
      * @type JSON
      * @private
      * @for Self
      * @since 0.6.0
      */
-    com.streams = {};
+    subcom.streams = {};
+    
+    /**
+     * The self user browser agent information.
+     * @attribute agent
+     * @type JSON
+     * @private
+     * @for Self
+     * @since 0.6.0
+     */
+    subcom.agent = {
+      name: window.webrtcDetectedBrowser,
+      version: window.webrtcDetectedVersion,
+      webRTCType: window.webrtcDetectedType
+    };
 
     
     /**
@@ -588,7 +529,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.onupdate = function () {};
+    subcom.onupdate = function () {};
     
     /**
      * Function to subscribe to when self has added a stream connection.
@@ -596,7 +537,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.onaddstreamconnection = function () {};
+    subcom.onaddstreamconnection = function () {};
 
     /**
      * Function to subscribe to when self has stopped a stream connection.
@@ -604,7 +545,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.onremovestreamconnection = function () {};
+    subcom.onremovestreamconnection = function () {};
     
     /**
      * Function to subscribe to when self has been disconnected from the room.
@@ -612,7 +553,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.ondisconnect = function () {};
+    subcom.ondisconnect = function () {};
     
   
     /**
@@ -621,7 +562,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.update = function (data) {
+    subcom.update = function (data) {
       subcom.data = data;
       
       com.socket.send({
@@ -629,6 +570,82 @@ function Room(name, listener) {
         mid: subcom.id,
         rid: com.id,
         userData: subcom.data
+      });
+      
+      listener('self:update', {
+        id: subcom.id,
+        data: subcom.data
+      });
+    };
+
+    /**
+     * Starts a new stream connection.
+     * @method addStreamConnection
+     * @param {Stream} stream The stream object.
+     * @param {Array|String} The array or string "main".
+     * @for Self
+     * @since 0.6.0
+     */
+    subcom.addStreamConnection = function (stream, connectionId, targetUsers) {
+      subcom.streams[connectionId] = {
+        stream: stream,
+        targetUsers: targetUsers
+      };
+      
+      if (typeof subcom.onaddstreamconnection === 'function') {
+        subcom.onaddstreamconnection(stream, connectionId, targetUsers);
+      }
+      
+      listener('self:addstreamconnection', {
+        id: subcom.id,
+        stream: stream,
+        connectionId: connectionId
+      });
+    };
+    
+    /**
+     * Stops a stream connection.
+     * @method removeStreamConnection
+     * @param {String} connectionId The streaming connection id.
+     * @for Self
+     * @since 0.6.0
+     */
+    subcom.removeStreamConnection = function (connectionId) {
+      var stream = subcom.streams[connectionId];
+      
+      stream.stop();
+      
+      // Do not remove main connection.
+      // Stream may stop, but user is still connected.
+      if (connectionId !== 'main') {
+        // Stream has targeted users
+        if (fn.isEmpty(subcom.streams[connectionId].targetUsers)) {
+          com.users.forEach(function (value, key) {
+            value.removeConnection(streamId);
+          });
+
+        // Stream has targeted users
+        } else {
+          subcom.streams[connectionId].targetUsers.forEach(function (value, key) {
+            if (!fn.isEmpty(com.users[key])) {
+              com.users[key].removeConnection(streamId);
+            }
+          });
+        }
+      }
+  
+      if (typeof subcom.onremovestreamconnection === 'function') {
+        subcom.onremovestreamconnection(stream, targetUsers);
+      }
+      
+      // Remove stream reference
+      delete subcom.streams[streamId];
+      // Remove connections to stream reference
+      delete subcom.streams[streamId];
+      
+      listener('self:removestreamconnection', {
+        id: subcom.id,
+        streamId: streamId
       });
     };
     
@@ -638,7 +655,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    com.getInfo = function () {
+    subcom.getInfo = function () {
       return {
         userData: subcom.data,
         settings: (function () {
@@ -650,19 +667,15 @@ function Room(name, listener) {
               video: value.config.video,
               mediaStatus: value.config.status,
               bandwidth: {}
-            }
+            };
           });
 
           return streaming;
         })(),
-        agent: {
-          name: window.webrtcDetectedBrowser,
-          version: window.webrtcDetectedVersion,
-          webRTCType: window.webrtcDetectedType
-        }
+        agent: subcom.agent
       };
     };
-  };
+  }
 
 
   // Start loading the room information
@@ -685,14 +698,11 @@ function Room(name, listener) {
     com.apiPath = path;
 
     // Room configuration settings from server
-    com.apiConfig = {
-      key: content.cid,
-      id: content.room_key,
-      token: content.roomCred,
-      startDateTime: content.start,
-      duration: content.len
-    };
-    
+    com.key = content.cid;
+    com.id = content.room_key;
+    com.token = content.roomCred;
+    com.startDateTime = content.start;
+    com.duration = content.len;
     com.owner = content.apiOwner;
 
     // User configuration settings from server
@@ -704,7 +714,7 @@ function Room(name, listener) {
       data: globals.userData
     });
     
-    constraints: JSON.parse(content.pc_constraints)
+    com.iceServers = JSON.parse(content.pc_constraints);
 
     // Signalling information
     com.socket = new Socket({
@@ -718,6 +728,9 @@ function Room(name, listener) {
       id: com.id,
       name: com.name
     });
+    
+    // Bind the message events handler
+    MessageHandler(com, listener);
   
   }, function (status, error) {
     com.handler('trigger:error', {

@@ -65,7 +65,7 @@ var Request = {
       var response = xhr.responseText || xhr.response;
       var status = xhr.status || 200;
       
-      console.info(response, status);
+      log.info('Received response from API server', response, status);
       
       try {
         response = JSON.parse( response || '{}' );

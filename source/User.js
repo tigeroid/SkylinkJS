@@ -12,7 +12,7 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.id = config.id;
+  com.id = config.mid;
   
   /**
    * The user type.
@@ -25,17 +25,6 @@ function User (config, listener) {
   com.type = 'user';
 
   /**
-   * The user's streams.
-   * @attribute streams
-   * @type JSON
-   * @param {Stream} [n..] The stream object.
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.streams = {};
- 
-  /**
    * Stores the user data.
    * @attribute data
    * @type JSON
@@ -43,7 +32,7 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.data = config.data || {};
+  com.data = config.userInfo.data || {};
 
   /**
    * Stores the browser agent information.
@@ -54,6 +43,16 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.agent = config.agent || {};
+  
+  /**
+   * Stores the bandwidth configuration.
+   * @attribute bandwidth
+   * @type JSON
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.bandwidth = config.settings.bandwidth || {};
   
   /**
    * The handler that manages all triggers or relaying events.
@@ -131,11 +130,26 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.addConnection = function (peerId, stream) {
-    var peerConfig = peerId;
+  com.addConnection = function (data, stream) {
+    var peerConfig = {
+      id: data.prid,
+      constraints: data.iceServers,
+      bandwidth: data.bandwidth,
+      streamingConfig: {
+        audio: fn.isSafe(function () { 
+          return data.userInfo.settings.audio;
+        }),
+        video: fn.isSafe(function () { 
+          return data.userInfo.settings.video;
+        }),
+        status: fn.isSafe(function () { 
+          return data.userInfo.settings.mediaStatus;
+        })
+      }
+    };
     
     var peer = new Peer(peerConfig, com.manager);
-    
+
     peer.connect(stream);
   };
  

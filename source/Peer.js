@@ -144,6 +144,14 @@ function Peer(config, listener) {
 
 
   /**
+   * Function to subscribe to when peer's connection has been started.
+   * @method onconnect
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
    * Function to subscribe to when peer's ice connection state changes.
    * @method oniceconnectionstatechange
    * @for Peer
@@ -341,6 +349,10 @@ function Peer(config, listener) {
       listener('peer:connect', {
         id: com.id
       });
+      
+      if (typeof com.onconnect === 'function') {
+        com.onconnect(com.id);
+      }
     });
   };
 

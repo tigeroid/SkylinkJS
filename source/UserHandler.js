@@ -1,32 +1,4 @@
 /**
- * Handles the user class events.
- * @attribute UserHandler
- * @for User
- * @since 0.6.0
- */
-var UserHandler = function (com, event, data, listener) {
-  if (event.indexOf('trigger:') !== 0) {
-    data.peerId = com.id;
-
-    listener(event, data);
-  }
-  
-  var params = event.split(':');
-  
-  fn.isSafe(function () {
-    if (subActions.length > 2) {
-      UserHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (subActions.length > 1) {
-      UserHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      UserHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
-};
-
-/**
  * Stores the user class events.
  * @attribute UserHandlerEvent
  * @for User
@@ -177,6 +149,22 @@ var UserHandlerEvent = {
      */
     handshake: function (com, data, listener) {
       var peer = com.peers[data.prid];
+      var offer = data.type === 'welcome';
+
+      if (fn.isEmpty(peer)) {
+        if (data.type === 'welcome') {
+          if (peer.weight < data.weight) {
+            offer = false;
+          }
+        }
+      
+      } else {
+
+        data.bandwidth = com.bandwidth;
+        com.addConnection(data, data.stream);
+      
+        com.peers[data.prid] = peer;
+      }
       
       peer.handler('trigger:handshake', data);
     },
@@ -226,11 +214,34 @@ var UserHandlerEvent = {
       var peer = com.peers[data.prid];
       
       peer.handler('trigger:reconnect', data);
-    },
-    
-    
-    
-    
-    
+    }
   }
+};
+
+/**
+ * Handles the user class events.
+ * @attribute UserHandler
+ * @for User
+ * @since 0.6.0
+ */
+var UserHandler = function (com, event, data, listener) {
+  if (event.indexOf('trigger:') !== 0) {
+    data.peerId = com.id;
+
+    listener(event, data);
+  }
+  
+  var params = event.split(':');
+  
+  fn.isSafe(function () {
+    if (params.length > 2) {
+      UserHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
+
+    } else if (params.length > 1) {
+      UserHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
+
+    } else {
+      UserHandlerEvent[ params[0] ](com, data, listener);
+    }
+  });
 };

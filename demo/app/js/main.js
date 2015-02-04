@@ -9,6 +9,7 @@ Demo.Streams = [];
 Demo.Methods = {};
 Demo.Skylink = SkylinkDemo;
 
+
 Demo.Methods.displayFileItemHTML = function (content) {
   return '<p>' + content.name + '<small style="float:right;color:#aaa;">' + content.size + ' B</small></p>' +
     ((content.isUpload) ? ('<table id="' + content.transferId + '" class="table upload-table">' +

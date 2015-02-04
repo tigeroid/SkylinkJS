@@ -325,7 +325,7 @@ function Socket(config, listener) {
     case 'WebSocket':
       com.Socket = com.WebSocket();
       break;
-    case 'XHRPolling':
+    //case 'XHRPolling':
     default:
       com.Socket = com.XHRPolling();
     }
