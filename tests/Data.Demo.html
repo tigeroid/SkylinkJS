@@ -148,14 +148,18 @@
     function sendMessage(){
       for (var peer in room.users){
         if (room.users.hasOwnProperty(peer)){
-          room.users[peer].main.RTCPeerConnection.channels['main'].send('hello');
+          //room.users[peer].main.RTCPeerConnection.channels['main'].send('hello');
+          room.users[peer].main.sendMessage('hello');
         }
       }
-      //return;
     }
 
     function getChannels(){
-      console.log(room.users[self].main.RTCPeerConnection.channels);
+      for (var peer in room.users){
+        if (room.users.hasOwnProperty(peer)){
+          console.log(room.users[peer].main.RTCPeerConnection.channels);
+        }
+      }
     }
 
     function attachStream(id, stream) {

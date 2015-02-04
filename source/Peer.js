@@ -630,6 +630,12 @@ function Peer(config, listener) {
     return data;
   };
   
+  com.sendMessage = function(message){
+    if (com.RTCPeerConnection.channels['main']){
+      com.RTCPeerConnection.channels['main'].send(message);
+    }
+  }
+
   /**
    * Handles the event when peer information is updated.
    * @method onUpdate
