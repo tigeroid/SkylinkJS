@@ -99,6 +99,7 @@ function DataChannel(channel, peerId, listener) {
    * @since 0.6.0
    */
   com.onOpen = function (bindChannel) {
+    console.log('->datachannel opened');
     listener('datachannel:connect', {
       id: com.id,
       peerId: com.peerId

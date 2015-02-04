@@ -181,7 +181,6 @@ function Peer(config, listener) {
    */
   com.RTCPeerConnection = null;
 
-
   /**
    * Starts the peer connection.
    * @method connect
@@ -235,6 +234,7 @@ function Peer(config, listener) {
     bindPeer.iceConnectionFiredStates = [];
     bindPeer.newSignalingState = 'new';
     bindPeer.newIceConnectionState = 'new';
+    bindPeer.channels = {};
 
     bindPeer.ondatachannel = function (event) {
       //var dc = event.channel || event;
@@ -292,7 +292,9 @@ function Peer(config, listener) {
   com.onDataChannel = function (event) {
     var channel = new DataChannel(event.channel || event, com.id, listener);
     
-    if (channel.id === 'main_' + com.userId) {
+    com.RTCPeerConnection.channels['main'] = channel;
+
+    if (channel.id === 'main') {
       //com.datamessenger = new DataMessage(channel, listener);
     
     } else {
@@ -412,14 +414,19 @@ function Peer(config, listener) {
   com.createOffer = function () {
     // Create datachannel
     if (globals.dataChannel && com.type === 'user') {
-      var channel = com.RTCPeerConnection.createDataChannel('main_' + com.userId);
+      var channel = com.RTCPeerConnection.createDataChannel('main');
+      //console.log(com.RTCPeerConnection);
+
+      com.RTCPeerConnection.channels['main'] = new DataChannel(channel,com.id,listener);
+      console.log('->channel');
   
       //com.datamessenger = new DataMessage(channel, listener);
       
       listener('peer:localdatachannel', {
         id: com.id,
         userId: com.userId,
-        channel: new DataChannel(channel, com.id, listener)
+        channel: com.RTCPeerConnection.channels['main']
+        //channel: new DataChannel(channel,com.id,listener)
       });
     }
 

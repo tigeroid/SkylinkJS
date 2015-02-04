@@ -221,6 +221,7 @@ function Room(name, listener) {
     });
 
     com.socket.connect();
+    console.log('->joined');
   };
 
   /**
@@ -290,6 +291,7 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.addUserPeer = function (data, stream) {
+    console.log('->addUserPeer');
     var doOffer = data.type === 'welcome';
 
     com.users[data.mid] = com.users[data.mid] || {};
@@ -357,6 +359,7 @@ function Room(name, listener) {
     
     if (doOffer) {
       peer.createOffer();
+      console.log('->offer created');
     }
   };
 
