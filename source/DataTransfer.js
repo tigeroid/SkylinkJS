@@ -174,7 +174,7 @@ function DataTransfer(channel, peerId, listener) {
         fileReader.onload = function() {
           // Load Blob as dataurl base64 string
           var base64BinaryString = fileReader.result.split(',')[1];
-          //com._sendDataChannelMessage(com.peerId, base64BinaryString);
+          com.channel.send(base64BinaryString);
           com._setDataChannelTimeout(timeout, true);
 
           listener('datatransfer:uploading',{
@@ -223,6 +223,53 @@ function DataTransfer(channel, peerId, listener) {
       transferType: ((isUploader) ? com.DATA_TRANSFER_TYPE.UPLOAD :
         com.DATA_TRANSFER_TYPE.DOWNLOAD)
     });
+  };
+
+  com._CANCELProtocolHandler = function(data) {
+    var isUpload = !!com._uploadDataSessions[com.peerId];
+    var isDownload = !!com._downloadDataSessions[com.peerId];
+
+    var transferId = (isUpload) ? com._uploadDataSessions[com.peerId].transferId :
+      com._downloadDataSessions[com.peerId].transferId;
+
+    com._clearDataChannelTimeout(isUploader);
+
+    listener('datatransfer:cancel',{
+      peerId: com.peerId,
+      transferId: transferId,
+      name: data.name,
+      content: data.content,
+      senderPeerId: data.sender,
+      transferType: ((isUpload) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+        com.DATA_TRANSFER_TYPE.DOWNLOAD)
+    });
+
+    try {
+      if (isUpload) {
+        delete com._uploadDataSessions[com.peerId];
+        delete com._uploadDataTransfers[com.peerId];
+      } else {
+        delete com._downloadDataSessions[peerId];
+        delete com._downloadDataTransfers[peerId];
+      }
+
+      listener('datatransfer:cancel',{
+        peerId: com.peerId,
+        transferId: transferId,
+        name: data.name,
+        content: data.content,
+        senderPeerId: data.sender,
+        transferType: ((isUpload) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+          com.DATA_TRANSFER_TYPE.DOWNLOAD)
+      });
+
+    } catch (error) {
+      listener('datatransfer:error',{
+        message: 'Failed cancelling data request from peer',
+        transferType: ((isUpload) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+          com.DATA_TRANSFER_TYPE.DOWNLOAD)
+      });
+    }
   };
 
 }
