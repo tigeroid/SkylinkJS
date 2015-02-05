@@ -89,6 +89,48 @@ function DataTransfer(channel, peerId, listener) {
     }
   };
 
+  com._setDataChannelTimeout = function(timeout, isSender) {
+    if (!com._dataTransfersTimeout[com.peerId]) {
+      com._dataTransfersTimeout[com.peerId] = [];
+    }
+    var type = (isSender) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+      com.DATA_TRANSFER_TYPE.DOWNLOAD;
+    com._dataTransfersTimeout[com.peerId][type] = setTimeout(function() {
+      var name;
+      if (com._dataTransfersTimeout[com.peerId][type]) {
+        if (isSender) {
+          name = com._uploadDataSessions[com.peerId].name;
+          delete com._uploadDataTransfers[com.peerId];
+          delete com._uploadDataSessions[com.peerId];
+        } else {
+          name = com._downloadDataSessions[com.peerId].name;
+          delete com._downloadDataTransfers[com.peerId];
+          delete com._downloadDataSessions[com.peerId];
+        }
+
+        com.channel.send({
+          type: com._DC_PROTOCOL_TYPE.ERROR,
+          //sender: self._user.sid,
+          name: name,
+          content: 'Connection Timeout. Longer than ' + timeout +
+            ' seconds. Connection is abolished.',
+          isUploadError: isSender
+        });
+        
+        com._clearDataChannelTimeout(isSender);
+      }
+    }, 1000 * timeout);
+  };
+
+  com._clearDataChannelTimeout = function(isSender) {
+    if (com._dataTransfersTimeout[com.peerId]) {
+      var type = (isSender) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+        com.DATA_TRANSFER_TYPE.DOWNLOAD;
+      clearTimeout(com._dataTransfersTimeout[com.peerId][type]);
+      delete com._dataTransfersTimeout[com.peerId][type];
+    }
+  };
+
   com.WRQProtocolHandler = function(data){
     var transferId = com.peerId + com.DATA_TRANSFER_TYPE.DOWNLOAD +
       (((new Date()).toISOString().replace(/-/g, '').replace(/:/g, ''))).replace('.', '');
@@ -123,7 +165,7 @@ function DataTransfer(channel, peerId, listener) {
     var transferId = uploadedDetails.transferId;
     var timeout = uploadedDetails.timeout;
 
-    //self._clearDataChannelTimeout(peerId, true);
+    com._clearDataChannelTimeout(true);
 
     if (ackN > -1) {
       // Still uploading
@@ -132,8 +174,8 @@ function DataTransfer(channel, peerId, listener) {
         fileReader.onload = function() {
           // Load Blob as dataurl base64 string
           var base64BinaryString = fileReader.result.split(',')[1];
-          com._sendDataChannelMessage(com.peerId, base64BinaryString);
-          com._setDataChannelTimeout(com.peerId, timeout, true);
+          //com._sendDataChannelMessage(com.peerId, base64BinaryString);
+          com._setDataChannelTimeout(timeout, true);
 
           listener('datatransfer:uploading',{
             peerId: com.peerId,
