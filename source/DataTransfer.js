@@ -14,6 +14,34 @@ function DataTransfer(channel, peerId, listener) {
     CANCEL: 'CANCEL',
     MESSAGE: 'MESSAGE'
   };
+
+  com.DATA_TRANSFER_TYPE = {
+    UPLOAD: 'upload',
+    DOWNLOAD: 'download'
+  };
+
+  com.DATA_TRANSFER_STATE = {
+    UPLOAD_REQUEST: 'request',
+    UPLOAD_STARTED: 'uploadStarted',
+    DOWNLOAD_STARTED: 'downloadStarted',
+    REJECTED: 'rejected',
+    CANCEL: 'cancel',
+    ERROR: 'error',
+    UPLOADING: 'uploading',
+    DOWNLOADING: 'downloading',
+    UPLOAD_COMPLETED: 'uploadCompleted',
+    DOWNLOAD_COMPLETED: 'downloadCompleted'
+  };
+
+  com._uploadDataTransfers = [];
+
+  com._uploadDataSessions = [];
+
+  com._downloadDataTransfers = [];
+
+  com._downloadDataSessions = [];
+
+  com._dataTransfersTimeout = [];
   
   com.dataHandler = function(dataString){
     if (typeof dataString === 'string'){
@@ -61,4 +89,35 @@ function DataTransfer(channel, peerId, listener) {
     }
   };
 
+  com.WRQProtocolHandler = function(data){
+    var transferId = com.peerId + com.DATA_TRANSFER_TYPE.DOWNLOAD +
+      (((new Date()).toISOString().replace(/-/g, '').replace(/:/g, ''))).replace('.', '');
+
+    listener('datatransfer:wrq',{
+      transferId: transferId,
+      peerId: com.peerId,
+      data: data
+    });
+
+    var name = data.name;
+    var binarySize = data.size;
+    var expectedSize = data.chunkSize;
+    var timeout = data.timeout;
+    com._downloadDataSessions[com.peerId] = {
+      transferId: transferId,
+      name: name,
+      size: binarySize,
+      ackN: 0,
+      receivedSize: 0,
+      chunkSize: expectedSize,
+      timeout: timeout
+    };
+  }
+  
 }
+
+
+
+
+
+
