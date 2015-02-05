@@ -112,8 +112,55 @@ function DataTransfer(channel, peerId, listener) {
       chunkSize: expectedSize,
       timeout: timeout
     };
-  }
-  
+  };
+
+  com.ACKProtocolHandler = function(data){
+    var ackN = data.ackN;
+    com.peerId = (com.peerId === 'MCU') ? data.sender : com.peerId;
+
+    var chunksLength = com._uploadDataTransfers[com.peerId].length;
+    var uploadedDetails = com._uploadDataSessions[com.peerId];
+    var transferId = uploadedDetails.transferId;
+    var timeout = uploadedDetails.timeout;
+
+    //self._clearDataChannelTimeout(peerId, true);
+
+    if (ackN > -1) {
+      // Still uploading
+      if (ackN < chunksLength) {
+        var fileReader = new FileReader();
+        fileReader.onload = function() {
+          // Load Blob as dataurl base64 string
+          var base64BinaryString = fileReader.result.split(',')[1];
+          com._sendDataChannelMessage(com.peerId, base64BinaryString);
+          com._setDataChannelTimeout(com.peerId, timeout, true);
+
+          /*self._trigger('dataTransferState', self.DATA_TRANSFER_STATE.UPLOADING,
+            transferId, peerId, {
+            percentage: (((ackN + 1) / chunksLength) * 100).toFixed()
+          });*/
+
+        };
+        fileReader.readAsDataURL(com._uploadDataTransfers[com.peerId][ackN]);
+      } else if (ackN === chunksLength) {
+        /*self._trigger('dataTransferState',
+          self.DATA_TRANSFER_STATE.UPLOAD_COMPLETED, transferId, peerId, {
+          name: uploadedDetails.name
+        });*/
+        delete com._uploadDataTransfers[com.peerId];
+        delete com._uploadDataSessions[com.peerId];
+      }
+    } else {
+      /*self._trigger('dataTransferState', self.DATA_TRANSFER_STATE.REJECTED,
+        transferId, peerId, {
+          name: self._uploadDataSessions[peerId].name,
+          size: self._uploadDataSessions[peerId].size
+        });*/
+      delete com._uploadDataTransfers[com.peerId];
+      delete com._uploadDataSessions[com.peerId];
+    }
+  };
+
 }
 
 
