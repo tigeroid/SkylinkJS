@@ -135,30 +135,52 @@ function DataTransfer(channel, peerId, listener) {
           com._sendDataChannelMessage(com.peerId, base64BinaryString);
           com._setDataChannelTimeout(com.peerId, timeout, true);
 
-          /*self._trigger('dataTransferState', self.DATA_TRANSFER_STATE.UPLOADING,
-            transferId, peerId, {
+          listener('datatransfer:uploading',{
+            peerId: com.peerId,
+            transferId: transferId,
             percentage: (((ackN + 1) / chunksLength) * 100).toFixed()
-          });*/
-
+          });
         };
         fileReader.readAsDataURL(com._uploadDataTransfers[com.peerId][ackN]);
       } else if (ackN === chunksLength) {
-        /*self._trigger('dataTransferState',
-          self.DATA_TRANSFER_STATE.UPLOAD_COMPLETED, transferId, peerId, {
+        
+        listener('datatransfer:uploadcompleted',{
+          peerId: com.peerId,
+          transferId: transferId,
           name: uploadedDetails.name
-        });*/
+        });
         delete com._uploadDataTransfers[com.peerId];
         delete com._uploadDataSessions[com.peerId];
       }
     } else {
-      /*self._trigger('dataTransferState', self.DATA_TRANSFER_STATE.REJECTED,
-        transferId, peerId, {
-          name: self._uploadDataSessions[peerId].name,
-          size: self._uploadDataSessions[peerId].size
-        });*/
+      listener('datatransfer:rejected',{
+        peerId: com.peerId,
+        transferId: transferId,
+        name: com._uploadDataSessions[com.peerId].name,
+        size: com._uploadDataSessions[com.peerId].size
+      });
       delete com._uploadDataTransfers[com.peerId];
       delete com._uploadDataSessions[com.peerId];
     }
+  };
+
+  com.MESSAGEProtocolHandler = function(data){
+    listener('datatransfer:message',{
+      peerId: com.peerId,
+      data: data
+    });
+  };
+
+  com.ERRORProtocolHandler = function(data){
+    var isUploader = data.isUploadError;
+    var transferId = (isUploader) ? com._uploadDataSessions[com.peerId].transferId :
+      com._downloadDataSessions[com.peerId].transferId;
+    listener('datatransfer:error',{
+      peerId: com.peerId,
+      data: data,
+      transferType: ((isUploader) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+        com.DATA_TRANSFER_TYPE.DOWNLOAD)
+    });
   };
 
 }
