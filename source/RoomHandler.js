@@ -5,22 +5,9 @@
  * @since 0.6.0
  */
 var RoomHandlerEvent = {
-  /**
-   * Handles socket events that will require the room class to
-   * trigger the listener.
-   * @property socket
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
+  
   socket: {
-    /**
-     * Handles the socket connect state.
-     * @property connect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
+    
     connect: function (com, data, listener) {
       com.socket.send({
         type: 'joinRoom',
@@ -36,13 +23,6 @@ var RoomHandlerEvent = {
       });  
     },
     
-    /**
-     * Handles the socket disconnect state.
-     * @property disconnect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
     disconnect: function (com, data, listener) {
       listener('room:leave', {
         id: com.id,
@@ -54,13 +34,6 @@ var RoomHandlerEvent = {
       }
     },
     
-    /**
-     * Handles the socket disconnect state.
-     * @property disconnect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
     error: function (com, data, listener) {
       com.handler('trigger:error', {
         error: data,
@@ -69,14 +42,49 @@ var RoomHandlerEvent = {
     }
   },
   
-  /**
-   * Handles events that will require the peer class to
-   * trigger peer class events.
-   * @property trigger
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
+  peer: {
+    offer: {
+      success: function (com, data, listener) {
+        com.socket.send({
+          type: 'offer',
+          sdp: data.sdp,
+          prid: data.id,
+          mid: com.self.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    },
+    
+    answer: {
+      success: function (com, data, listener) {
+        com.socket.send({
+          type: 'answer',
+          sdp: data.sdp,
+          prid: data.id,
+          mid: com.self.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    },
+    
+    icecandidate: function (com, data, listener) {
+      if (data.sourceType === 'local') {
+        com.socket.send({
+          type: 'candidate',
+          label: data.candidate.sdpMLineIndex,
+          id: data.candidate.sdpMid,
+          candidate: data.candidate.candidate,
+          mid: com.self.id,
+          prid: data.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    }
+  },
+  
   trigger: {
     /**
      * Handles the ice gathering state trigger.
@@ -101,150 +109,6 @@ var RoomHandlerEvent = {
           state: data.state
         });
       }
-    },
-    
-    /**
-     * Handles the ice candidate trigger.
-     * @property icecandidate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'icecandidate': function (com, data, listener) {
-      var candidate = data.candidate;
-
-      if (data.type === 'remote') {
-        ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
-      }
-
-      listener('peer:icecandidate', {
-        id: com.id,
-        type: data.type,
-        candidate: data.candidate
-      });
-    },
-    
-    /**
-     * Handles the signaling state trigger.
-     * @property signalingstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'signalingstate': function (com, data, listener) {
-      var state = com.RTCPeerConnection.newSignalingState;
-
-      listener('peer:signalingstate', {
-        id: com.id,
-        state: state
-      });
-
-      if (typeof com.onsignalingstatechange === 'function') {
-        com.onsignalingstatechange(state);
-      }
-    },
-    
-    /**
-     * Handles the datachannel state trigger.
-     * @property datachannel
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'datachannel': function (com, data, listener) {
-      var channel = new DataChannel(data.channel, { type: data.type }, com.manager);
-
-      com.datachannels[channel.id] = channel;
-
-      listener('peer:datachannel', {
-        id: com.id,
-        channel: data.channel,
-        type: data.type
-      });
-    },
-    
-    /**
-     * Handles the stream trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'stream': function (com, data, listener) {
-      var stream;
-
-      if (data.stream instanceof Stream) {
-        stream = data.stream;
-
-      } else {
-        stream = new Stream(data.stream, { 
-          type: data.type, 
-          audio: config.streamingConfig.audio,
-          video: config.streamingConfig.video
-
-        }, com.manager);
-
-        com.stream = stream;
-      }
-
-      listener('peer:stream', {
-        id: com.id,
-        stream: data.stream,
-        type: data.type
-      });
-    },
-    
-    /**
-     * Handles the reconnect state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'reconnect': function (com, data, listener) {
-      listener('peer:reconnect', {
-        id: com.id
-      });
-
-      if (typeof com.onreconnect === 'function') {
-        com.onreconnect();
-      }
-    },
-    
-    /**
-     * Handles the handshake state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'handshake': function (com, data, listener) {
-      if (data.type === 'welcome') {
-        com.createOffer();
-      } 
-
-      if (data.type === 'offer' || data.type === 'answer') {
-        com.remoteDescription = new window.RTCSessionDescription(data);
-
-        com.setLocalDescription();
-      }
-    },
-    
-    /**
-     * Handles the disconnected state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'disconnect': function (com, data, listener) {
-      listener('peer:disconnect', {
-        id: com.id
-      });
-
-      if (typeof com.ondisconnect === 'function') {
-        com.ondisconnect();
-      }
     }
   }
 };
@@ -257,24 +121,14 @@ var RoomHandlerEvent = {
  */
 var RoomHandler = function (com, event, data, listener) {
   if (event.indexOf('trigger:') !== 0) {
-    data.peerId = com.id;
+    data.roomName = com.name;
 
     listener(event, data);
   }
   
   var params = event.split(':');
   
-  fn.isSafe(function () {
-    if (params.length > 2) {
-      RoomHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (params.length > 1) {
-      RoomHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      RoomHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
+  fn.applyHandler(RoomHandlerEvent, params, [com, data, listener]);
 };
 
 /**
@@ -293,6 +147,8 @@ var MessageHandlerEvent = {
    */
   inRoom: function (com, data, listener) {
     com.self.id = data.sid;
+    
+    com.iceServers = data.pc_config;
 
     com.socket.send({
       type: 'enter',
@@ -305,6 +161,11 @@ var MessageHandlerEvent = {
       userInfo: com.self.getInfo()
     });
     
+    listener('room:join', {
+      name: com.name,
+      userId: com.self.id
+    });
+  
     if (typeof com.onjoin === 'function') {
       com.onjoin(data.mid);
     }
@@ -330,7 +191,7 @@ var MessageHandlerEvent = {
       webRTCType: window.webrtcDetectedType,
       userInfo: com.self.getInfo(),
       target: data.mid,
-      weight: com.users[data.mid][data.prid].weight
+      weight: com.users[data.mid].peers[data.prid].weight
     });
   },
   
@@ -512,9 +373,9 @@ var MessageHandlerEvent = {
  */
 var MessageHandler = function (com, listener) {
   // Handles the socket events
-  MessageHandlerEvent.forEach(function (value, key) {
-    com.socket.when(key, function (data) {
-      value(com, event, data, listener);
+  fn.forEach(MessageHandlerEvent, function (response, event) {
+    com.socket.when(event, function (data) {
+      response(com, data, listener);
     });
   });
 };

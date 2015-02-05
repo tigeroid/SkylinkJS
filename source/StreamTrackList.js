@@ -10,43 +10,45 @@
  * @since 0.6.0
  */
 var StreamTrackList = {
-  readyState: 'new',
   audio: [],
+  
   video: [],
-  onready: function () {}
+  
+  get: function (defer) {
+    // Firefox does not support MediaStreamTrack.getSources yet
+    if (window.webrtcDetectedBrowser === 'firefox') {
+      StreamTrackList.readyState = 'done';
+
+    // Chrome / Plugin / Opera supports MediaStreamTrack.getSources
+    } else {
+      // Retrieve list
+      MediaStreamTrack.getSources(function (trackList) {
+        fn.forEach(trackList, function (track, i) {
+          var data = {};
+
+          // MediaStreamTrack label - FaceHD Camera
+          data.label = track.label || (track.kind + '_' + (i + 1));
+          // MediaStreamTrack kind - audio / video
+          data.kind = track.kind;
+          // MediaStreamTrack id - The identifier
+          data.id = track.id;
+          // The facing environment
+          data.facing = track.facing;
+
+          if (track.kind === 'audio') {
+            StreamTrackList.audio.push(data);
+          } else {
+            StreamTrackList.video.push(data);
+          }
+
+        }, function () {
+          defer({
+            audio: StreamTrackList.audio,
+            video: StreamTrackList.video
+          });
+        });
+      });
+    }
+  },
+  
 };
-
-// Firefox does not support MediaStreamTrack.getSources yet
-if (window.webrtcDetectedBrowser === 'firefox') {
-  StreamTrackList.readyState = 'done';
-
-// Chrome / Plugin / Opera supports MediaStreamTrack.getSources
-} else {
-  // Retrieve list
-  MediaStreamTrack.getSources(function (trackList) {
-    for (var i =0; i < trackList.length; i++) {
-      var track = trackList[i];
-      var data = {};
-
-      // MediaStreamTrack label - FaceHD Camera
-      data.label = track.label || (track.kind + '_' + (i + 1));
-      // MediaStreamTrack kind - audio / video
-      data.kind = track.kind;
-      // MediaStreamTrack id - The identifier
-      data.id = track.id;
-      // The facing environment
-      data.facing = track.facing;
-
-      if (track.kind === 'audio') {
-        StreamTrackList.audio.push(data);
-      } else {
-        StreamTrackList.video.push(data);
-      }
-    }
-    StreamTrackList.readyState = 'done';
-    
-    if (typeof StreamTrackList.onReady === 'function') {
-      StreamTrackList.onready(StreamTrackList);
-    }
-  });
-}

@@ -21,6 +21,25 @@ var PeerHandlerEvent = {
      * @private
      * @since 0.6.0
      */
+    start: function (com, data, listener) {
+      if (fn.isSafe(function () { 
+        return com.stream.id === data.id && com.stream.sourceType === 'remote';
+      })) {
+        listener('peer:stream', {
+          id: com.id,
+          stream: com.stream,
+          sourceType: 'remote'
+        });
+      }
+    },
+    
+    /**
+     * Handles the remote stream stop trigger.
+     * @property stop
+     * @type Function
+     * @private
+     * @since 0.6.0
+     */
     stop: function (com, data, listener) {
       if (com.id !== 'main') {
         com.disconnect();
@@ -87,13 +106,18 @@ var PeerHandlerEvent = {
     icecandidate: function (com, data, listener) {
       var candidate = data.candidate;
 
-      if (data.type === 'remote') {
+      if (data.sourceType === 'remote') {
         ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
+      
+      } else {
+        if (fn.isEmpty(data.candidate.candidate)) {
+          return listener('candidate:gathered', data.candidate);
+        }
       }
 
       listener('peer:icecandidate', {
         id: com.id,
-        type: data.type,
+        sourceType: data.sourceType,
         candidate: data.candidate
       });
     },
@@ -126,14 +150,15 @@ var PeerHandlerEvent = {
      * @since 0.6.0
      */
     datachannel: function (com, data, listener) {
-      var channel = new DataChannel(data.channel, { type: data.type }, com.manager);
+      var channel = new DataChannel(data.channel, com.handler);
+      channel.sourceType = data.sourceType;
 
       com.datachannels[channel.id] = channel;
 
       listener('peer:datachannel', {
         id: com.id,
         channel: data.channel,
-        type: data.type
+        sourceType: data.sourceType
       });
     },
     
@@ -151,21 +176,11 @@ var PeerHandlerEvent = {
         stream = data.stream;
 
       } else {
-        stream = new Stream(data.stream, { 
-          type: data.type, 
-          audio: config.streamingConfig.audio,
-          video: config.streamingConfig.video
-
-        }, com.manager);
+        stream = new Stream(data.stream, data.config, com.handler);
+        stream.sourceType = 'remote';
 
         com.stream = stream;
       }
-
-      listener('peer:stream', {
-        id: com.id,
-        stream: data.stream,
-        type: data.type
-      });
     },
     
     /**
@@ -193,26 +208,24 @@ var PeerHandlerEvent = {
      * @since 0.6.0
      */
     handshake: function (com, data, listener) {
-      if (data.type === 'enter') {
-        com.connect(com.stream);
-        
-        fn.runSync(function () {
+      if (data.type === 'start') {
+        if (com.SDPType === 'offer') {
           com.createOffer();
-        });
-      }
-      
-      if (data.type === 'welcome') {
-        com.connect(com.stream);
+        }
       }
 
       if (data.type === 'offer') {
         com.remoteDescription = new window.RTCSessionDescription(data);
 
+        listener('peer:offer', data);
+        
         com.setRemoteDescription();
       }
       
       if (data.type === 'answer') {
         com.remoteDescription = new window.RTCSessionDescription(data);
+
+        listener('peer:answer', data);
 
         com.setLocalDescription();
       }
@@ -276,15 +289,5 @@ var PeerHandler = function (com, event, data, listener) {
   
   var params = event.split(':');
   
-  fn.isSafe(function () {
-    if (params.length > 2) {
-      PeerHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (params.length > 1) {
-      PeerHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      PeerHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
+  fn.applyHandler(PeerHandlerEvent, params, [com, data, listener]);
 };

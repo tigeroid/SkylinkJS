@@ -31,16 +31,6 @@ function DataChannel(channel, listener) {
   com.type = 'message';
 
   /**
-   * The peer the datachannel is linked to.
-   * @attribute peerId
-   * @type String
-   * @private
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.peerId = peerId;
-
-  /**
    * The DataChannel object.
    * @attribute RTCDataChannel
    * @type Object

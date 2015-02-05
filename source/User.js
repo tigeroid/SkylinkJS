@@ -52,7 +52,17 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.bandwidth = config.settings.bandwidth || {};
+  com.bandwidth = config.userInfo.settings.bandwidth || {};
+  
+  /**
+   * Stores the list of peer connections to user.
+   * @attribute peers
+   * @type JSON
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.peers = {};
   
   /**
    * The handler that manages all triggers or relaying events.
@@ -131,6 +141,8 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.addConnection = function (data, stream) {
+    console.info(data.iceServers);
+  
     var peerConfig = {
       id: data.prid,
       constraints: data.iceServers,
@@ -148,9 +160,13 @@ function User (config, listener) {
       }
     };
     
-    var peer = new Peer(peerConfig, com.manager);
+    var peer = new Peer(peerConfig, com.handler);
+
+    console.info('data:', stream);
 
     peer.connect(stream);
+    
+    com.peers[peer.id] = peer;
   };
  
   /**
@@ -170,8 +186,8 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.disconnect = function () {
-    com.peers.forEach(function (value, key) {
-      value.disconnect();
+    fn.forEach(com.peers, function (peer, id) {
+      peer.disconnect();
     });
   };
   
@@ -194,23 +210,30 @@ function User (config, listener) {
       return data;
     
     } else {
-      var streamList = fn.clone(com.peers);
-      
-      streamList.forEach(function (value, key) {
-        // set the key settings
-        var peerSettings = value.stream ? 
-          value.stream.config || {} : {};
+      fn.forEach(com.peers, function (peer, id) {
+        var stream = peer.stream;
+
+        // Check if there is stream
+        if (!fn.isEmpty(stream)) {
+          data.settings[stream.id] = {
+            audio: stream.config.audio,
+            video: stream.config.video,
+            mediaStatus: stream.config.status,
+            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
+          };
         
-        // Filter audio and video bandwidth?
-        peerSettings.bandwidth = com.bandwidth || {};
-        
-        data.settings[key] = data;
-        
-        delete streamList[key];
-        
-        if (fn.isEmpty(streamList)) {
-          return data;
+        // No stream
+        } else {
+          data.settings[id] = {
+            audio: false,
+            video: false,
+            mediaStatus: { audioMuted: true, videoMuted: true },
+            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
+          };
         }
+      
+      }, function () {
+        return data;
       });
     }
   };

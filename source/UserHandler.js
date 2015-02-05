@@ -22,11 +22,15 @@ var UserHandlerEvent = {
      * @since 0.6.0
      */
     connect: function (com, data, listener) {
-      var peer = com.peers[peerId];
+      var peer = com.peers[data.id];
 
       if (typeof com.onupdate === 'function') {
-        com.onaddconnection(peerId, peer);
+        com.onaddconnection(data.id, peer);
       }
+      
+      data.type = 'start';
+      
+      peer.handler('trigger:handshake', data);
     },
     
     /**
@@ -149,24 +153,41 @@ var UserHandlerEvent = {
      */
     handshake: function (com, data, listener) {
       var peer = com.peers[data.prid];
-      var offer = data.type === 'welcome';
+      
+      // welcome | enter
+      if (data.type === 'welcome' || data.type === 'enter') {
+        if (!fn.isEmpty(peer)) {
+          if (data.type === 'welcome') {
+            if (peer.weight < data.weight) {
+              return;
+            }
+          }
 
-      if (fn.isEmpty(peer)) {
-        if (data.type === 'welcome') {
-          if (peer.weight < data.weight) {
-            offer = false;
+          peer.SDPType = 'offer';
+          data.type = 'start';
+
+          peer.handler('trigger:handshake', data);
+
+        } else {
+
+          data.bandwidth = com.bandwidth;
+          com.addConnection(data, data.stream);
+
+          peer = com.peers[data.prid];
+
+          if (data.type === 'welcome') {
+            peer.SDPType = 'offer';
+
+          } else {
+            peer.SDPType = 'answer';
           }
         }
       
+      // answer | offer
       } else {
-
-        data.bandwidth = com.bandwidth;
-        com.addConnection(data, data.stream);
-      
-        com.peers[data.prid] = peer;
+        peer.handler('trigger:handshake', data);
       }
-      
-      peer.handler('trigger:handshake', data);
+      console.info('exe', data);
     },
     
     /**
@@ -180,12 +201,15 @@ var UserHandlerEvent = {
       var candidate = new window.RTCIceCandidate({
         sdpMLineIndex: data.label,
         candidate: data.candidate,
-        sdpMid: data.id
+        sdpMid: data.id,
+        label: data.label,
+        id: data.id
       });
 
       var peer = com.peers[data.prid];
       
-      data.type = 'remote';
+      data.sourceType = 'remote';
+      data.candidate = candidate;
       
       peer.handler('trigger:icecandidate', data);
     },
@@ -226,22 +250,12 @@ var UserHandlerEvent = {
  */
 var UserHandler = function (com, event, data, listener) {
   if (event.indexOf('trigger:') !== 0) {
-    data.peerId = com.id;
+    data.userId = com.id;
 
     listener(event, data);
   }
   
   var params = event.split(':');
   
-  fn.isSafe(function () {
-    if (params.length > 2) {
-      UserHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (params.length > 1) {
-      UserHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      UserHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
+  fn.applyHandler(UserHandlerEvent, params, [com, data, listener]);
 };

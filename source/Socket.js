@@ -136,6 +136,48 @@ function Socket(config, listener) {
    */
   com.responses = {};
 
+  
+  /**
+   * Function to subscribe to when socket has been connected.
+   * @method onconnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when socket has been disconnected.
+   * @method ondisconnect
+   * @for Room
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+  
+  /**
+   * Function to subscribe to when socket has connection error.
+   * @method onconnecterror
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onconnecterror = function () {};
+  
+  /**
+   * Function to subscribe to when socket attempts to reconnect.
+   * @method onreconnect
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onreconnect = function () {};
+  
+  /**
+   * Function to subscribe to when socket has an exception.
+   * @method onerror
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onerror = function () {};
+
+  
   /**
    * Starts the connection to the signalling server
    * @method connect
@@ -198,13 +240,12 @@ function Socket(config, listener) {
   };
 
   /**
-   * Starts the connection to the signalling server
-   * @method onconnect
-   * @trigger peerJoined, mediaAccessRequired
+   * Handles the event when socket is connected to signaling.
+   * @method bindOnConnect
    * @for Socket
    * @since 0.6.0
    */
-  com.onConnect = function (options) {
+  com.bindOnConnect = function (options) {
     listener('socket:connect', {
       server: com.server,
       port: com.port
@@ -212,33 +253,42 @@ function Socket(config, listener) {
 
     com.Socket.removeAllListeners();
 
-    com.Socket.on('disconnect', com.onDisconnect);
+    com.Socket.on('disconnect', com.bindOnDisconnect);
 
-    com.Socket.on('message', com.onMessage);
+    com.Socket.on('message', com.bindOnMessage);
+    
+    com.Socket.on('error', com.bindOnError);
+    
+    if (typeof com.onconnect === 'function') {
+      com.onconnect();
+    }
   };
 
   /**
-   * Starts the connection to the signalling server
-   * @method ondisconnect
-   * @trigger peerJoined, mediaAccessRequired
+   * Handles the event when socket is disconnected to signaling.
+   * @method bindOnDisconnect
    * @for Socket
    * @since 0.6.0
    */
-  com.onDisconnect = function () {
+  com.bindOnDisonnect = function () {
     listener('socket:disconnect', {
       server: com.server,
       port: com.port
     });
+    
+    if (typeof com.onerror === 'function') {
+      com.ondisconnect();
+    }
   };
 
   /**
-   * Starts the connection to the signalling server
-   * @method onmessage
+   * Handles the event when socket receives a message from signaling.
+   * @method bindOnMessage
    * @trigger peerJoined, mediaAccessRequired
    * @for Socket
    * @since 0.6.0
    */
-  com.onMessage = function (result) {
+  com.bindOnMessage = function (result) {
     listener('socket:message', {
       server: com.server,
       port: com.port,
@@ -249,39 +299,22 @@ function Socket(config, listener) {
 
     // Check if bulk message
     if (data.type === 'group') {
-      for (var i = 0; i < data.lists.length; i++) {
-        com.respond(data.lists[i].type, data.lists[i]);
-      }
+      fn.forEach(function (message, key) {
+        com.respond(message.type, message);
+      });
 
     } else {
       com.respond(data.type, data);
     }
   };
-
+  
   /**
-   * Responses to the attached socket message responses.
-   * @method respond
-   * @trigger peerJoined, mediaAccessRequired
+   * Handles the event when socket have a connection error.
+   * @method bindOnConnectError
    * @for Socket
    * @since 0.6.0
    */
-  com.respond = function (type, data) {
-    // Parse for events tied to type.
-    com.responses[type] = com.responses[type] || [];
-
-    for (var i = 0; i < com.responses[type].length; i++) {
-      com.responses[type][i](data);
-    }
-  };
-
-  /**
-   * Triggers when connection failed.
-   * @method onConnectError
-   * @trigger peerJoined, mediaAccessRequired
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.onConnectError = function (error) {
+  com.bindOnConnectError = function (error) {
     listener('socket:connect_error', {
       server: com.server,
       port: com.port,
@@ -309,6 +342,44 @@ function Socket(config, listener) {
         break;
       }
     }
+    
+    if (typeof com.onconnecterror === 'function') {
+      com.onconnecterror(error);
+    }
+  };
+  
+  /**
+   * Handles the event when socket catches an exception.
+   * @method bindOnError
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.bindOnError = function (error) {
+    listener('socket:error', {
+      server: com.server,
+      port: com.port,
+      error: error
+    });
+    
+    if (typeof com.onerror === 'function') {
+      com.onerror(error);
+    }
+  };
+
+  /**
+   * Responses to the attached socket message responses.
+   * @method respond
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.respond = function (type, data) {
+    // Parse for events tied to type.
+    com.responses[type] = com.responses[type] || [];
+    
+    fn.forEach(com.responses[type], function (response, i) {
+      response(data);
+    });
   };
 
   /**
@@ -328,6 +399,10 @@ function Socket(config, listener) {
     //case 'XHRPolling':
     default:
       com.Socket = com.XHRPolling();
+    }
+    
+    if (typeof com.onreconnect === 'function') {
+      com.onreconnect(com.type);
     }
   };
 
@@ -355,8 +430,8 @@ function Socket(config, listener) {
 
     var socket = io.connect(server, options);
 
-    socket.on('connect', com.onConnect);
-    socket.on('connect_error', com.onConnectError);
+    socket.on('connect', com.bindOnConnect);
+    socket.on('connect_error', com.bindOnConnectError);
 
     return socket;
   };
@@ -385,10 +460,10 @@ function Socket(config, listener) {
 
     var socket = io.connect(server, options);
 
-    socket.on('connect', com.onConnect);
-    socket.on('reconnect', com.onConnect);
-    socket.on('connect_error', com.onConnectError);
-    socket.on('reconnect_failed', com.onConnectError);
+    socket.on('connect', com.bindOnConnect);
+    socket.on('reconnect', com.bindOnConnect);
+    socket.on('connect_error', com.bindOnConnectError);
+    socket.on('reconnect_failed', com.bindOnConnectError);
 
     return socket;
   };

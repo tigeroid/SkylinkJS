@@ -281,7 +281,9 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.join = function (stream) {
-    com.self.addStreamConnection(stream, 'main');
+    if (!fn.isEmpty(stream)) {
+      com.self.addStreamConnection(stream, 'main');
+    }
     com.socket.connect();
   };
 
@@ -329,32 +331,6 @@ function Room(name, listener) {
     
     com.handler('trigger:unlock');
   };
- 
-  /**
-   * Handles the event when room succesfully disconnects.
-   * @method onLeave
-   * @for Room
-   * @since 0.6.0
-   */
-  com.onLeave = function () {
-    listener('room:disconnect', {
-      name: com.name,
-      userId: com.self.id
-    });
-  };
-
-  /**
-   * Handles the event when room succesfully connects.
-   * @method onJoin
-   * @for Room
-   * @since 0.6.0
-   */
-  com.onJoin = function () {
-    listener('room:connect', {
-      name: com.name,
-      userId: com.self.id
-    });
-  };
 
   /**
    * Starts the handshake
@@ -369,28 +345,18 @@ function Room(name, listener) {
     }
     
     // Get stream
-    var stream;
     var connection = com.self.streams[data.prid];
 
     // Check if stream connection exists
-    if (typeof connection === 'object') {
-      // Check if there is targeted users
-      if (typeof connection.targetUsers === 'object') {
-        // If it exists in targetUsers, add
-        if (connection.targetUsers.indexOf(data.mid)) {
-          stream = connection.stream;
-        }
-      }
+    if (!fn.isEmpty(connection)) {
+      data.stream = connection.stream;
     }
     
     data.iceServers = com.iceServers;
-    data.stream = stream;
 
     com.users[data.mid].handler('trigger:handshake', data);
   };
-
-  
-  
+ 
   /**
    * Sends a another stream to users.
    * @method addStreamConnection
@@ -406,7 +372,7 @@ function Room(name, listener) {
     
     stream.parentHandler = com.handler;
     
-    com.users.forEach(function (value, key) {
+    fn.forEach(com.users, function (user, key) {
       // Check if targetUsers is an array
       var sendStream = typeof targetUsers === 'object';
       // If it is check if it is a targeted user
@@ -415,19 +381,20 @@ function Room(name, listener) {
         targetUsers.indexOf(key) > -1 : true;
         
       if (sendStream) {
-        value.handler('trigger:handshake', {
+        com.handler('trigger:handshake', {
           type: 'enter',
-          mid: value.id,
+          mid: user.id,
           rid: com.id,
           prid: connectionId,
-          agent: value.agent.name,
-          version: value.agent.version,
-          webRTCType: value.agent.webRTCType,
+          agent: user.agent.name,
+          version: user.agent.version,
+          webRTCType: user.agent.webRTCType,
           userInfo: {
-            userData: value.data,
-            bandwidth: value.bandwidth,
-            settings: value.streamingConfig
-          }
+            userData: user.data,
+            bandwidth: user.bandwidth,
+            settings: user.streamingConfig
+          },
+          stream: stream
         });
       }
     });
@@ -453,7 +420,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    subcom.id = config.id;
+    subcom.id = null;
     
     /**
      * The self user data.
@@ -587,6 +554,8 @@ function Room(name, listener) {
      * @since 0.6.0
      */
     subcom.addStreamConnection = function (stream, connectionId, targetUsers) {
+      stream.sourceType = 'local';
+
       subcom.streams[connectionId] = {
         stream: stream,
         targetUsers: targetUsers
@@ -620,13 +589,13 @@ function Room(name, listener) {
       if (connectionId !== 'main') {
         // Stream has targeted users
         if (fn.isEmpty(subcom.streams[connectionId].targetUsers)) {
-          com.users.forEach(function (value, key) {
+          fn.forEach(com.users, function (value, key) {
             value.removeConnection(streamId);
           });
 
         // Stream has targeted users
         } else {
-          subcom.streams[connectionId].targetUsers.forEach(function (value, key) {
+          fn.forEach(subcom.streams[connectionId].targetUsers, function (value, key) {
             if (!fn.isEmpty(com.users[key])) {
               com.users[key].removeConnection(streamId);
             }
@@ -661,11 +630,11 @@ function Room(name, listener) {
         settings: (function () {
           var streaming = {};
 
-          subcom.streams.forEach(function (value, key) {
+          fn.forEach(subcom.streams, function (value, key) {
             streaming[key] = {
-              audio: value.config.audio,
-              video: value.config.video,
-              mediaStatus: value.config.status,
+              audio: value.stream.config.audio,
+              video: value.stream.config.video,
+              mediaStatus: value.stream.config.status,
               bandwidth: {}
             };
           });
@@ -714,7 +683,7 @@ function Room(name, listener) {
       data: globals.userData
     });
     
-    com.iceServers = JSON.parse(content.pc_constraints);
+    //com.constraints = JSON.parse(content.pc_constraints);
 
     // Signalling information
     com.socket = new Socket({
@@ -724,13 +693,13 @@ function Room(name, listener) {
 
     }, com.handler);
     
+    // Bind the message events handler
+    MessageHandler(com, listener);
+    
     listener('room:start', {
       id: com.id,
       name: com.name
     });
-    
-    // Bind the message events handler
-    MessageHandler(com, listener);
   
   }, function (status, error) {
     com.handler('trigger:error', {

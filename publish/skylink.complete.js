@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-04 */
+/*! skylinkjs - v0.5.7 - 2015-02-05 */
 
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -7690,7 +7690,7 @@ if (navigator.mozGetUserMedia) {
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
 
-/*! skylinkjs - v0.5.7 - 2015-02-04 */
+/*! skylinkjs - v0.5.7 - 2015-02-05 */
 
 var log = console;
 
@@ -7735,14 +7735,24 @@ var globals = {
 
 var fn = {
   isEmpty: function (data) {
-    return typeof data === 'undefined' || data === null;
+    var isUnDefined = typeof data === 'undefined' || data === null;
+    
+    if (typeof data === 'object' && !isUnDefined) {
+      if (data.constructor === Array) {
+        return data.length === 0;
+      
+      } else {
+        return Object.keys(data).length === 0;
+      }
+    }
+    return isUnDefined;
   },
   
   isSafe: function (unsafeFn) {
     try {
       return unsafeFn();
     } catch (error){
-      log.warn('Unsafe code received', error);
+      log.warn(error);
       return false;
     }
   },
@@ -7790,28 +7800,51 @@ var fn = {
   
   generateUID: function() {
     return (new Date()).getTime().toString();
-  }
-};
-
-/*jshint -W121 */
-Object.prototype.forEach = function (defer) {
-  for (var key in this) {
-    if (this.hasOwnProperty(key)) {
-      defer(this[key], key);
-    }
-  }
-};
-
-if (typeof Array.prototype.forEach !== 'function') {
-  Array.prototype.forEach = function (defer) {
+  },
+  
+  applyHandler: function (callee, params, args) {
+    var item = callee;
     var i;
     
-    for (i = 0; i < this.length; i += 1) {
-      defer(this[i], i);
+    for (i = 0; i < params.length; i += 1) {
+      if (!fn.isEmpty(item[params[i]])) {
+        item = item[params[i]];
+      }
     }
-  };
-}
-/*jshint +W121 */
+
+    if (typeof item === 'function') {
+      item.apply(this, args);
+    }
+  },
+  
+  forEach: function (main, deferItem, deferFin) {
+    if (typeof main === 'object' && !fn.isEmpty(main)) {
+      // Array objects
+      if (main.constructor === Array) {
+        var i;
+        
+        for (i = 0; i < main.length; i += 1) {
+          deferItem(main[i], i);
+        }
+      
+      // JSON objects
+      } else {
+        var key;
+        
+        for (key in main) {
+          if (main.hasOwnProperty(key)) {
+            deferItem(main[key], key);
+          }
+        }
+      }
+      // Finished loop
+      if (typeof deferFin === 'function') {
+        deferFin();
+      }
+    }
+  }
+  
+};
 var log = {};
 
 // Parse if debug is not defined
@@ -8161,16 +8194,6 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.type = 'message';
-
-  /**
-   * The peer the datachannel is linked to.
-   * @attribute peerId
-   * @type String
-   * @private
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.peerId = peerId;
 
   /**
    * The DataChannel object.
@@ -9064,6 +9087,16 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.type = config.id === 'main' ? 'user' : 'stream';
+  
+  /**
+   * The local description type peer sends.
+   * @attribute SDPType
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.SDPType = null;
 
   /**
    * The PeerConnection constraints - iceServers.
@@ -9263,9 +9296,9 @@ function Peer(config, listener) {
       // Check class type
       peer.addStream(stream.MediaStream);
       
-      listener('peer:localstream', {
+      listener('peer:stream', {
         id: com.id,
-        userId: com.userId,
+        sourceType: 'local',
         stream: stream
       });
     }
@@ -9343,21 +9376,21 @@ function Peer(config, listener) {
 
     bindPeer.ondatachannel = function (event) {
       com.handler('trigger:datachannel', {
-        type: 'remote',
+        sourceType: 'remote',
         channel: event.channel || event
       }); 
     };
 
     bindPeer.onaddstream = function (event) {
       com.handler('trigger:stream', {
-        type: 'remote',
+        sourceType: 'remote',
         stream: event.stream || event
       }); 
     };
 
     bindPeer.onicecandidate = function (event) {
       com.handler('trigger:icecandidate', {
-        type: 'local',
+        sourceType: 'local',
         candidate: event.candidate || event
       }); 
     };
@@ -9402,13 +9435,13 @@ function Peer(config, listener) {
     // Create datachannel
     if (globals.dataChannel && com.type === 'user') {
       com.handler('trigger:datachannel', {
-        type: 'local',
+        sourceType: 'local',
         channel: com.RTCPeerConnection.createDataChannel('main')
       });
     }
 
     com.RTCPeerConnection.createOffer(function (offer) {
-      var sdp = SDP.configure(offer, com.sdpConfig);
+      var sdp = SDP.configure(offer.sdp, com.sdpConfig);
 
       com.localDescription = offer;
 
@@ -9434,9 +9467,9 @@ function Peer(config, listener) {
    */
   com.createAnswer = function () {
     com.RTCPeerConnection.createAnswer(function (answer) {
-      var sdp = SDP.configure(answer, com.sdpConfig);
+      var sdp = SDP.configure(answer.sdp, com.sdpConfig);
   
-      com.localDescription = offer;
+      com.localDescription = answer;
   
       listener('peer:answer:success', {
         id: com.id,
@@ -9466,8 +9499,8 @@ function Peer(config, listener) {
     com.RTCPeerConnection.setLocalDescription(localDescription, function () {
       listener('peer:localdescription:success', {
         id: com.id,
-        sdp: data.sdp,
-        type: data.type,
+        sdp: localDescription.sdp,
+        type: localDescription.type,
       });
 
       if (localDescription.type === 'answer') {
@@ -9482,9 +9515,9 @@ function Peer(config, listener) {
     }, function (error) {
       listener('peer:localdescription:error', {
         id: com.id,
-        sdp: data.sdp,
-        type: data.type,
-        error: data.error
+        sdp: localDescription.sdp,
+        type: localDescription.type,
+        error: error
       });
     });
   };
@@ -9501,8 +9534,8 @@ function Peer(config, listener) {
     com.RTCPeerConnection.setRemoteDescription(remoteDescription, function () {
       listener('peer:remotedescription:success', {
         id: com.id,
-        sdp: data.sdp,
-        type: data.type
+        sdp: remoteDescription.sdp,
+        type: remoteDescription.type
       });
   
       if (remoteDescription.type === 'answer') {
@@ -9520,9 +9553,9 @@ function Peer(config, listener) {
     }, function (error) {
       listener('peer:remotedescription:error', {
         id: com.id,
-        sdp: data.sdp,
-        type: data.type,
-        error: data.error
+        sdp: remoteDescription.sdp,
+        type: remoteDescription.type,
+        error: error
       });
     });
   };
@@ -9537,15 +9570,13 @@ function Peer(config, listener) {
   com.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
 
   // Parse constraints ICE servers
-  com.constraints = ICE.parseTURNServers(config.constraints);
-  com.constraints = ICE.parseSTUNServers(com.constraints);
+  com.constraints = config.constraints; //ICE.parseTURNServers(config.constraints);
+  //com.constraints = //ICE.parseSTUNServers(com.constraints);
   
   // Parse the sdp configuration
   com.sdpConfig = {
-    stereo: fn.isSafe(function () {
-      return config.streamingConfig.audio.stereo;
-    }),         
-    bandwidth: com.bandwidth,
+    stereo: fn.isSafe(function () { return config.streamingConfig.audio.stereo; }),
+    bandwidth: com.bandwidth
   };
   
   listener('peer:start', {
@@ -9562,6 +9593,25 @@ var PeerHandlerEvent = {
    * @since 0.6.0
    */
   stream: {
+    /**
+     * Handles the remote stream stop trigger.
+     * @property stop
+     * @type Function
+     * @private
+     * @since 0.6.0
+     */
+    start: function (com, data, listener) {
+      if (fn.isSafe(function () { 
+        return com.stream.id === data.id && com.stream.sourceType === 'remote';
+      })) {
+        listener('peer:stream', {
+          id: com.id,
+          stream: com.stream,
+          sourceType: 'remote'
+        });
+      }
+    },
+    
     /**
      * Handles the remote stream stop trigger.
      * @property stop
@@ -9635,13 +9685,18 @@ var PeerHandlerEvent = {
     icecandidate: function (com, data, listener) {
       var candidate = data.candidate;
 
-      if (data.type === 'remote') {
+      if (data.sourceType === 'remote') {
         ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
+      
+      } else {
+        if (fn.isEmpty(data.candidate.candidate)) {
+          return listener('candidate:gathered', data.candidate);
+        }
       }
 
       listener('peer:icecandidate', {
         id: com.id,
-        type: data.type,
+        sourceType: data.sourceType,
         candidate: data.candidate
       });
     },
@@ -9674,14 +9729,15 @@ var PeerHandlerEvent = {
      * @since 0.6.0
      */
     datachannel: function (com, data, listener) {
-      var channel = new DataChannel(data.channel, { type: data.type }, com.manager);
+      var channel = new DataChannel(data.channel, com.handler);
+      channel.sourceType = data.sourceType;
 
       com.datachannels[channel.id] = channel;
 
       listener('peer:datachannel', {
         id: com.id,
         channel: data.channel,
-        type: data.type
+        sourceType: data.sourceType
       });
     },
     
@@ -9699,21 +9755,11 @@ var PeerHandlerEvent = {
         stream = data.stream;
 
       } else {
-        stream = new Stream(data.stream, { 
-          type: data.type, 
-          audio: config.streamingConfig.audio,
-          video: config.streamingConfig.video
-
-        }, com.manager);
+        stream = new Stream(data.stream, data.config, com.handler);
+        stream.sourceType = 'remote';
 
         com.stream = stream;
       }
-
-      listener('peer:stream', {
-        id: com.id,
-        stream: data.stream,
-        type: data.type
-      });
     },
     
     /**
@@ -9741,26 +9787,24 @@ var PeerHandlerEvent = {
      * @since 0.6.0
      */
     handshake: function (com, data, listener) {
-      if (data.type === 'enter') {
-        com.connect(com.stream);
-        
-        fn.runSync(function () {
+      if (data.type === 'start') {
+        if (com.SDPType === 'offer') {
           com.createOffer();
-        });
-      }
-      
-      if (data.type === 'welcome') {
-        com.connect(com.stream);
+        }
       }
 
       if (data.type === 'offer') {
         com.remoteDescription = new window.RTCSessionDescription(data);
 
+        listener('peer:offer', data);
+        
         com.setRemoteDescription();
       }
       
       if (data.type === 'answer') {
         com.remoteDescription = new window.RTCSessionDescription(data);
+
+        listener('peer:answer', data);
 
         com.setLocalDescription();
       }
@@ -9824,17 +9868,7 @@ var PeerHandler = function (com, event, data, listener) {
   
   var params = event.split(':');
   
-  fn.isSafe(function () {
-    if (params.length > 2) {
-      PeerHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (params.length > 1) {
-      PeerHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      PeerHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
+  fn.applyHandler(PeerHandlerEvent, params, [com, data, listener]);
 };
 var Request = {
   /**
@@ -10205,7 +10239,9 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.join = function (stream) {
-    com.self.addStreamConnection(stream, 'main');
+    if (!fn.isEmpty(stream)) {
+      com.self.addStreamConnection(stream, 'main');
+    }
     com.socket.connect();
   };
 
@@ -10253,32 +10289,6 @@ function Room(name, listener) {
     
     com.handler('trigger:unlock');
   };
- 
-  /**
-   * Handles the event when room succesfully disconnects.
-   * @method onLeave
-   * @for Room
-   * @since 0.6.0
-   */
-  com.onLeave = function () {
-    listener('room:disconnect', {
-      name: com.name,
-      userId: com.self.id
-    });
-  };
-
-  /**
-   * Handles the event when room succesfully connects.
-   * @method onJoin
-   * @for Room
-   * @since 0.6.0
-   */
-  com.onJoin = function () {
-    listener('room:connect', {
-      name: com.name,
-      userId: com.self.id
-    });
-  };
 
   /**
    * Starts the handshake
@@ -10293,28 +10303,18 @@ function Room(name, listener) {
     }
     
     // Get stream
-    var stream;
     var connection = com.self.streams[data.prid];
 
     // Check if stream connection exists
-    if (typeof connection === 'object') {
-      // Check if there is targeted users
-      if (typeof connection.targetUsers === 'object') {
-        // If it exists in targetUsers, add
-        if (connection.targetUsers.indexOf(data.mid)) {
-          stream = connection.stream;
-        }
-      }
+    if (!fn.isEmpty(connection)) {
+      data.stream = connection.stream;
     }
     
     data.iceServers = com.iceServers;
-    data.stream = stream;
 
     com.users[data.mid].handler('trigger:handshake', data);
   };
-
-  
-  
+ 
   /**
    * Sends a another stream to users.
    * @method addStreamConnection
@@ -10330,7 +10330,7 @@ function Room(name, listener) {
     
     stream.parentHandler = com.handler;
     
-    com.users.forEach(function (value, key) {
+    fn.forEach(com.users, function (user, key) {
       // Check if targetUsers is an array
       var sendStream = typeof targetUsers === 'object';
       // If it is check if it is a targeted user
@@ -10339,19 +10339,20 @@ function Room(name, listener) {
         targetUsers.indexOf(key) > -1 : true;
         
       if (sendStream) {
-        value.handler('trigger:handshake', {
+        com.handler('trigger:handshake', {
           type: 'enter',
-          mid: value.id,
+          mid: user.id,
           rid: com.id,
           prid: connectionId,
-          agent: value.agent.name,
-          version: value.agent.version,
-          webRTCType: value.agent.webRTCType,
+          agent: user.agent.name,
+          version: user.agent.version,
+          webRTCType: user.agent.webRTCType,
           userInfo: {
-            userData: value.data,
-            bandwidth: value.bandwidth,
-            settings: value.streamingConfig
-          }
+            userData: user.data,
+            bandwidth: user.bandwidth,
+            settings: user.streamingConfig
+          },
+          stream: stream
         });
       }
     });
@@ -10377,7 +10378,7 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    subcom.id = config.id;
+    subcom.id = null;
     
     /**
      * The self user data.
@@ -10511,6 +10512,8 @@ function Room(name, listener) {
      * @since 0.6.0
      */
     subcom.addStreamConnection = function (stream, connectionId, targetUsers) {
+      stream.sourceType = 'local';
+
       subcom.streams[connectionId] = {
         stream: stream,
         targetUsers: targetUsers
@@ -10544,13 +10547,13 @@ function Room(name, listener) {
       if (connectionId !== 'main') {
         // Stream has targeted users
         if (fn.isEmpty(subcom.streams[connectionId].targetUsers)) {
-          com.users.forEach(function (value, key) {
+          fn.forEach(com.users, function (value, key) {
             value.removeConnection(streamId);
           });
 
         // Stream has targeted users
         } else {
-          subcom.streams[connectionId].targetUsers.forEach(function (value, key) {
+          fn.forEach(subcom.streams[connectionId].targetUsers, function (value, key) {
             if (!fn.isEmpty(com.users[key])) {
               com.users[key].removeConnection(streamId);
             }
@@ -10585,11 +10588,11 @@ function Room(name, listener) {
         settings: (function () {
           var streaming = {};
 
-          subcom.streams.forEach(function (value, key) {
+          fn.forEach(subcom.streams, function (value, key) {
             streaming[key] = {
-              audio: value.config.audio,
-              video: value.config.video,
-              mediaStatus: value.config.status,
+              audio: value.stream.config.audio,
+              video: value.stream.config.video,
+              mediaStatus: value.stream.config.status,
               bandwidth: {}
             };
           });
@@ -10638,7 +10641,7 @@ function Room(name, listener) {
       data: globals.userData
     });
     
-    com.iceServers = JSON.parse(content.pc_constraints);
+    //com.constraints = JSON.parse(content.pc_constraints);
 
     // Signalling information
     com.socket = new Socket({
@@ -10648,13 +10651,13 @@ function Room(name, listener) {
 
     }, com.handler);
     
+    // Bind the message events handler
+    MessageHandler(com, listener);
+    
     listener('room:start', {
       id: com.id,
       name: com.name
     });
-    
-    // Bind the message events handler
-    MessageHandler(com, listener);
   
   }, function (status, error) {
     com.handler('trigger:error', {
@@ -10664,22 +10667,9 @@ function Room(name, listener) {
   });
 }
 var RoomHandlerEvent = {
-  /**
-   * Handles socket events that will require the room class to
-   * trigger the listener.
-   * @property socket
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
+  
   socket: {
-    /**
-     * Handles the socket connect state.
-     * @property connect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
+    
     connect: function (com, data, listener) {
       com.socket.send({
         type: 'joinRoom',
@@ -10695,13 +10685,6 @@ var RoomHandlerEvent = {
       });  
     },
     
-    /**
-     * Handles the socket disconnect state.
-     * @property disconnect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
     disconnect: function (com, data, listener) {
       listener('room:leave', {
         id: com.id,
@@ -10713,13 +10696,6 @@ var RoomHandlerEvent = {
       }
     },
     
-    /**
-     * Handles the socket disconnect state.
-     * @property disconnect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
     error: function (com, data, listener) {
       com.handler('trigger:error', {
         error: data,
@@ -10728,14 +10704,49 @@ var RoomHandlerEvent = {
     }
   },
   
-  /**
-   * Handles events that will require the peer class to
-   * trigger peer class events.
-   * @property trigger
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
+  peer: {
+    offer: {
+      success: function (com, data, listener) {
+        com.socket.send({
+          type: 'offer',
+          sdp: data.sdp,
+          prid: data.id,
+          mid: com.self.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    },
+    
+    answer: {
+      success: function (com, data, listener) {
+        com.socket.send({
+          type: 'answer',
+          sdp: data.sdp,
+          prid: data.id,
+          mid: com.self.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    },
+    
+    icecandidate: function (com, data, listener) {
+      if (data.sourceType === 'local') {
+        com.socket.send({
+          type: 'candidate',
+          label: data.candidate.sdpMLineIndex,
+          id: data.candidate.sdpMid,
+          candidate: data.candidate.candidate,
+          mid: com.self.id,
+          prid: data.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    }
+  },
+  
   trigger: {
     /**
      * Handles the ice gathering state trigger.
@@ -10760,150 +10771,6 @@ var RoomHandlerEvent = {
           state: data.state
         });
       }
-    },
-    
-    /**
-     * Handles the ice candidate trigger.
-     * @property icecandidate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'icecandidate': function (com, data, listener) {
-      var candidate = data.candidate;
-
-      if (data.type === 'remote') {
-        ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
-      }
-
-      listener('peer:icecandidate', {
-        id: com.id,
-        type: data.type,
-        candidate: data.candidate
-      });
-    },
-    
-    /**
-     * Handles the signaling state trigger.
-     * @property signalingstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'signalingstate': function (com, data, listener) {
-      var state = com.RTCPeerConnection.newSignalingState;
-
-      listener('peer:signalingstate', {
-        id: com.id,
-        state: state
-      });
-
-      if (typeof com.onsignalingstatechange === 'function') {
-        com.onsignalingstatechange(state);
-      }
-    },
-    
-    /**
-     * Handles the datachannel state trigger.
-     * @property datachannel
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'datachannel': function (com, data, listener) {
-      var channel = new DataChannel(data.channel, { type: data.type }, com.manager);
-
-      com.datachannels[channel.id] = channel;
-
-      listener('peer:datachannel', {
-        id: com.id,
-        channel: data.channel,
-        type: data.type
-      });
-    },
-    
-    /**
-     * Handles the stream trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'stream': function (com, data, listener) {
-      var stream;
-
-      if (data.stream instanceof Stream) {
-        stream = data.stream;
-
-      } else {
-        stream = new Stream(data.stream, { 
-          type: data.type, 
-          audio: config.streamingConfig.audio,
-          video: config.streamingConfig.video
-
-        }, com.manager);
-
-        com.stream = stream;
-      }
-
-      listener('peer:stream', {
-        id: com.id,
-        stream: data.stream,
-        type: data.type
-      });
-    },
-    
-    /**
-     * Handles the reconnect state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'reconnect': function (com, data, listener) {
-      listener('peer:reconnect', {
-        id: com.id
-      });
-
-      if (typeof com.onreconnect === 'function') {
-        com.onreconnect();
-      }
-    },
-    
-    /**
-     * Handles the handshake state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'handshake': function (com, data, listener) {
-      if (data.type === 'welcome') {
-        com.createOffer();
-      } 
-
-      if (data.type === 'offer' || data.type === 'answer') {
-        com.remoteDescription = new window.RTCSessionDescription(data);
-
-        com.setLocalDescription();
-      }
-    },
-    
-    /**
-     * Handles the disconnected state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'disconnect': function (com, data, listener) {
-      listener('peer:disconnect', {
-        id: com.id
-      });
-
-      if (typeof com.ondisconnect === 'function') {
-        com.ondisconnect();
-      }
     }
   }
 };
@@ -10916,24 +10783,14 @@ var RoomHandlerEvent = {
  */
 var RoomHandler = function (com, event, data, listener) {
   if (event.indexOf('trigger:') !== 0) {
-    data.peerId = com.id;
+    data.roomName = com.name;
 
     listener(event, data);
   }
   
   var params = event.split(':');
   
-  fn.isSafe(function () {
-    if (params.length > 2) {
-      RoomHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (params.length > 1) {
-      RoomHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      RoomHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
+  fn.applyHandler(RoomHandlerEvent, params, [com, data, listener]);
 };
 
 /**
@@ -10952,6 +10809,8 @@ var MessageHandlerEvent = {
    */
   inRoom: function (com, data, listener) {
     com.self.id = data.sid;
+    
+    com.iceServers = data.pc_config;
 
     com.socket.send({
       type: 'enter',
@@ -10964,6 +10823,11 @@ var MessageHandlerEvent = {
       userInfo: com.self.getInfo()
     });
     
+    listener('room:join', {
+      name: com.name,
+      userId: com.self.id
+    });
+  
     if (typeof com.onjoin === 'function') {
       com.onjoin(data.mid);
     }
@@ -10989,7 +10853,7 @@ var MessageHandlerEvent = {
       webRTCType: window.webrtcDetectedType,
       userInfo: com.self.getInfo(),
       target: data.mid,
-      weight: com.users[data.mid][data.prid].weight
+      weight: com.users[data.mid].peers[data.prid].weight
     });
   },
   
@@ -11171,9 +11035,9 @@ var MessageHandlerEvent = {
  */
 var MessageHandler = function (com, listener) {
   // Handles the socket events
-  MessageHandlerEvent.forEach(function (value, key) {
-    com.socket.when(key, function (data) {
-      value(com, event, data, listener);
+  fn.forEach(MessageHandlerEvent, function (response, event) {
+    com.socket.when(event, function (data) {
+      response(com, data, listener);
     });
   });
 };
@@ -11251,22 +11115,31 @@ var SDP = {
     // Find if user has audioStream
     var maLineFound = this.find(sdpLines, ['m=', 'a=']).length;
     var cLineFound = this.find(sdpLines, ['c=']).length;
-    
+
     // Find the RTPMAP with Audio Codec
     if (maLineFound && cLineFound) {
       if (bandwidth.audio) {
         var audioLine = this.find(sdpLines, ['a=audio', 'm=audio']);
-        sdpLines.splice(audioLine[0], 1, audioLine[1], 'b=AS:' + bandwidth.audio);
+        
+        if (!fn.isEmpty(audioLine)) {
+          sdpLines.splice(audioLine[0], 1, audioLine[1], 'b=AS:' + bandwidth.audio);
+        }
       }
       
       if (bandwidth.video) {
         var videoLine = this.find(sdpLines, ['a=video', 'm=video']);
-        sdpLines.splice(videoLine[0], 1, videoLine[1], 'b=AS:' + bandwidth.video);
+        
+        if (!fn.isEmpty(videoLine)) {
+          sdpLines.splice(videoLine[0], 1, videoLine[1], 'b=AS:' + bandwidth.video);
+        }
       }
       
       if (bandwidth.data && this._enableDataChannel) {
         var dataLine = this.find(sdpLines, ['a=application', 'm=application']);
-        sdpLines.splice(dataLine[0], 1, dataLine[1], 'b=AS:' + bandwidth.data);
+        
+        if (!fn.isEmpty(dataLine)) {
+          sdpLines.splice(dataLine[0], 1, dataLine[1], 'b=AS:' + bandwidth.data);
+        }
       }
     }
     return sdpLines;
@@ -11327,19 +11200,19 @@ var SDP = {
    * @since 0.6.0
    */
   configure: function (sdp, config) {
-    var sdpLines = sdp.sdp.split('\r\n');
+    var sdpLines = sdp.split('\r\n');
+    
     sdpLines = this.removeH264Support(sdpLines);
 
-    if (fn.isSafe(function () { return config.stereo; })) {
+    if (config.stereo) {
       sdpLines = this.addStereo(sdpLines);
     }
+
     if (config.bandwidth) {
       sdpLines = this.setBitrate(sdpLines, config.bandwidth);
     }
 
-    sdp.sdp = sdpLines.join('\r\n');
-    
-    return sdp;
+    return sdpLines.join('\r\n');
   }
   
 };
@@ -11475,6 +11348,48 @@ function Socket(config, listener) {
    */
   com.responses = {};
 
+  
+  /**
+   * Function to subscribe to when socket has been connected.
+   * @method onconnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when socket has been disconnected.
+   * @method ondisconnect
+   * @for Room
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+  
+  /**
+   * Function to subscribe to when socket has connection error.
+   * @method onconnecterror
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onconnecterror = function () {};
+  
+  /**
+   * Function to subscribe to when socket attempts to reconnect.
+   * @method onreconnect
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onreconnect = function () {};
+  
+  /**
+   * Function to subscribe to when socket has an exception.
+   * @method onerror
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onerror = function () {};
+
+  
   /**
    * Starts the connection to the signalling server
    * @method connect
@@ -11537,13 +11452,12 @@ function Socket(config, listener) {
   };
 
   /**
-   * Starts the connection to the signalling server
-   * @method onconnect
-   * @trigger peerJoined, mediaAccessRequired
+   * Handles the event when socket is connected to signaling.
+   * @method bindOnConnect
    * @for Socket
    * @since 0.6.0
    */
-  com.onConnect = function (options) {
+  com.bindOnConnect = function (options) {
     listener('socket:connect', {
       server: com.server,
       port: com.port
@@ -11551,33 +11465,42 @@ function Socket(config, listener) {
 
     com.Socket.removeAllListeners();
 
-    com.Socket.on('disconnect', com.onDisconnect);
+    com.Socket.on('disconnect', com.bindOnDisconnect);
 
-    com.Socket.on('message', com.onMessage);
+    com.Socket.on('message', com.bindOnMessage);
+    
+    com.Socket.on('error', com.bindOnError);
+    
+    if (typeof com.onconnect === 'function') {
+      com.onconnect();
+    }
   };
 
   /**
-   * Starts the connection to the signalling server
-   * @method ondisconnect
-   * @trigger peerJoined, mediaAccessRequired
+   * Handles the event when socket is disconnected to signaling.
+   * @method bindOnDisconnect
    * @for Socket
    * @since 0.6.0
    */
-  com.onDisconnect = function () {
+  com.bindOnDisonnect = function () {
     listener('socket:disconnect', {
       server: com.server,
       port: com.port
     });
+    
+    if (typeof com.onerror === 'function') {
+      com.ondisconnect();
+    }
   };
 
   /**
-   * Starts the connection to the signalling server
-   * @method onmessage
+   * Handles the event when socket receives a message from signaling.
+   * @method bindOnMessage
    * @trigger peerJoined, mediaAccessRequired
    * @for Socket
    * @since 0.6.0
    */
-  com.onMessage = function (result) {
+  com.bindOnMessage = function (result) {
     listener('socket:message', {
       server: com.server,
       port: com.port,
@@ -11588,39 +11511,22 @@ function Socket(config, listener) {
 
     // Check if bulk message
     if (data.type === 'group') {
-      for (var i = 0; i < data.lists.length; i++) {
-        com.respond(data.lists[i].type, data.lists[i]);
-      }
+      fn.forEach(function (message, key) {
+        com.respond(message.type, message);
+      });
 
     } else {
       com.respond(data.type, data);
     }
   };
-
+  
   /**
-   * Responses to the attached socket message responses.
-   * @method respond
-   * @trigger peerJoined, mediaAccessRequired
+   * Handles the event when socket have a connection error.
+   * @method bindOnConnectError
    * @for Socket
    * @since 0.6.0
    */
-  com.respond = function (type, data) {
-    // Parse for events tied to type.
-    com.responses[type] = com.responses[type] || [];
-
-    for (var i = 0; i < com.responses[type].length; i++) {
-      com.responses[type][i](data);
-    }
-  };
-
-  /**
-   * Triggers when connection failed.
-   * @method onConnectError
-   * @trigger peerJoined, mediaAccessRequired
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.onConnectError = function (error) {
+  com.bindOnConnectError = function (error) {
     listener('socket:connect_error', {
       server: com.server,
       port: com.port,
@@ -11648,6 +11554,44 @@ function Socket(config, listener) {
         break;
       }
     }
+    
+    if (typeof com.onconnecterror === 'function') {
+      com.onconnecterror(error);
+    }
+  };
+  
+  /**
+   * Handles the event when socket catches an exception.
+   * @method bindOnError
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.bindOnError = function (error) {
+    listener('socket:error', {
+      server: com.server,
+      port: com.port,
+      error: error
+    });
+    
+    if (typeof com.onerror === 'function') {
+      com.onerror(error);
+    }
+  };
+
+  /**
+   * Responses to the attached socket message responses.
+   * @method respond
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.respond = function (type, data) {
+    // Parse for events tied to type.
+    com.responses[type] = com.responses[type] || [];
+    
+    fn.forEach(com.responses[type], function (response, i) {
+      response(data);
+    });
   };
 
   /**
@@ -11667,6 +11611,10 @@ function Socket(config, listener) {
     //case 'XHRPolling':
     default:
       com.Socket = com.XHRPolling();
+    }
+    
+    if (typeof com.onreconnect === 'function') {
+      com.onreconnect(com.type);
     }
   };
 
@@ -11694,8 +11642,8 @@ function Socket(config, listener) {
 
     var socket = io.connect(server, options);
 
-    socket.on('connect', com.onConnect);
-    socket.on('connect_error', com.onConnectError);
+    socket.on('connect', com.bindOnConnect);
+    socket.on('connect_error', com.bindOnConnectError);
 
     return socket;
   };
@@ -11724,10 +11672,10 @@ function Socket(config, listener) {
 
     var socket = io.connect(server, options);
 
-    socket.on('connect', com.onConnect);
-    socket.on('reconnect', com.onConnect);
-    socket.on('connect_error', com.onConnectError);
-    socket.on('reconnect_failed', com.onConnectError);
+    socket.on('connect', com.bindOnConnect);
+    socket.on('reconnect', com.bindOnConnect);
+    socket.on('connect_error', com.bindOnConnectError);
+    socket.on('reconnect_failed', com.bindOnConnectError);
 
     return socket;
   };
@@ -11772,6 +11720,16 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.config = config;
+  
+  /**
+   * The stream source type.
+   * @attribute sourceType
+   * @type String
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.sourceType = 'local';
 
   /**
    * The MediaStream object.
@@ -11805,7 +11763,7 @@ function Stream(stream, config, listener) {
     listener(event, data);
 
     if (typeof com.parentHandler === 'function') {
-      com.parentHandler(com, event, data, listener);
+      com.parentHandler(event, data);
     }
   };
 
@@ -11852,7 +11810,11 @@ function Stream(stream, config, listener) {
    */
   com.start = function () {
     window.getUserMedia(com.constraints, com.bind, function (error) {
-      com.handler('stream:error', error);
+      com.handler('stream:error', {
+        id: com.id,
+        error: error,
+        sourceType: com.sourceType
+      });
     });
   };
 
@@ -11871,6 +11833,7 @@ function Stream(stream, config, listener) {
     // bindStream.onaddtrack = com.onAddTrack;
     // bindStream.onremovetrack = com.onRemoveTrack;
     bindStream.onended = com.bindOnStreamEnded(bindStream);
+    bindStream.newId = com.id;
 
     // Bind track events
     com.bindTracks(bindStream.getAudioTracks());
@@ -11881,7 +11844,8 @@ function Stream(stream, config, listener) {
     com.handler('stream:start', {
       id: com.id,
       label: bindStream.label,
-      constraints: com.constraints
+      constraints: com.constraints,
+      sourceType: com.sourceType
     });
   };
 
@@ -11893,7 +11857,7 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.bindTracks = function (bindTracks) {
-    bindTracks.forEach(function (track, i) {
+    fn.forEach(bindTracks, function (track, i) {
       track.newId = track.id || fn.generateUID();
 
       // Bind events to MediaStreamTrack
@@ -11904,7 +11868,8 @@ function Stream(stream, config, listener) {
           id: track.newId,
           kind: track.kind,
           label: track.label,
-          enabled: track.enabled
+          enabled: track.enabled,
+          sourceType: com.sourceType
         });
 
         if (typeof com.ontrackended === 'function') {
@@ -11928,14 +11893,15 @@ function Stream(stream, config, listener) {
           !!!com.config.status.videoMuted : !!com.config.video;
       }
       
-      bindTracks[i].enabled = isEnabled;
+      track.enabled = isEnabled;
 
       com.handler('stream:track:start', {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
         label: track.label,
-        enabled: track.enabled
+        enabled: track.enabled,
+        sourceType: com.sourceType
       });
     });
   };
@@ -11969,7 +11935,8 @@ function Stream(stream, config, listener) {
       com.handler('stream:stop', {
         id: com.id,
         label: stream.label,
-        constraints: com.constraints
+        constraints: com.constraints,
+        sourceType: com.sourceType
       });
       
       if (typeof com.onended === 'function') {
@@ -12041,22 +12008,23 @@ function Stream(stream, config, listener) {
    */
   com.muteAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
-
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].enabled = false;
+    
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = false;
       
       com.handler('stream:track:mute', {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
         label: track.label,
-        enabled: track.enabled
+        enabled: track.enabled,
+        sourceType: com.sourceType
       });
 
       if (typeof com.ontrackmute === 'function') {
-        com.ontrackmute(tracks[i]);
+        com.ontrackmute(track);
       }
-    }
+    });
   };
 
   /**
@@ -12069,21 +12037,22 @@ function Stream(stream, config, listener) {
   com.unmuteAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].enabled = true;
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = true;
       
       com.handler('stream:track:unmute', {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
         label: track.label,
-        enabled: track.enabled
+        enabled: track.enabled,
+        sourceType: com.sourceType
       });
 
       if (typeof com.ontrackunmute === 'function') {
-        com.ontrackunmute(tracks[i]);
+        com.ontrackunmute(track);
       }
-    }
+    });
   };
 
   /**
@@ -12096,24 +12065,26 @@ function Stream(stream, config, listener) {
   com.stopAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].stop();
+    fn.forEach(tracks, function (track, i) {
+      track.stop();
 
       // Workaround for firefox as it does not have stop events
       if (window.webrtcDetectedBrowser === 'firefox') {
-        if (tracks[i].ended !== true) {
-          tracks[i].onended(tracks[i]);
-          tracks[i].hasEnded = true;
+        if (track.hasEnded !== true) {
+          track.onended(track);
+          track.hasEnded = true;
         }
       }
-    }
     
-    // Workaround for firefox as it does not have stop stream when all track ends
-    if (window.webrtcDetectedBrowser === 'firefox') {
-      if (com.MediaStream.videoended === true) {
-        com.MediaStream.hasEnded = true;
+    }, function () {
+      // Workaround for firefox as it does not have stop stream when all track ends
+      if (window.webrtcDetectedBrowser === 'firefox') {
+        if (com.MediaStream.videoEnded === true) {
+          com.MediaStream.hasEnded = true;
+        }
+        com.MediaStream.audioEnded = true;
       }
-    }
+    });
   };
 
   /**
@@ -12126,21 +12097,22 @@ function Stream(stream, config, listener) {
   com.muteVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].enabled = false;
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = false;
       
       com.handler('stream:track:mute', {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
         label: track.label,
-        enabled: track.enabled
+        enabled: track.enabled,
+        sourceType: com.sourceType
       });
 
       if (typeof com.ontrackmute === 'function') {
-        com.ontrackmute(tracks[i]);
+        com.ontrackmute(track);
       }
-    }
+    });
   };
 
   /**
@@ -12153,21 +12125,22 @@ function Stream(stream, config, listener) {
   com.unmuteVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].enabled = true;
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = true;
       
       com.handler('stream:track:unmute', {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
         label: track.label,
-        enabled: track.enabled
+        enabled: track.enabled,
+        sourceType: com.sourceType
       });
 
       if (typeof com.ontrackunmute === 'function') {
-        com.ontrackunmute(tracks[i]);
+        com.ontrackunmute(track);
       }
-    }
+    });
   };
 
   /**
@@ -12180,26 +12153,26 @@ function Stream(stream, config, listener) {
   com.stopVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].stop();
+    fn.forEach(tracks, function (track, i) {
+      track.stop();
 
       // Workaround for firefox as it does not have stop events
       if (window.webrtcDetectedBrowser === 'firefox') {
-        if (tracks[i].ended !== true) {
-          tracks[i].onended(tracks[i]);
-          tracks[i].hasEnded = true;
+        if (track.hasEnded !== true) {
+          track.onended(tracks[i]);
+          track.hasEnded = true;
         }
       }
-    }
-
-    com.MediaStream.videoended = true;
     
-    // Workaround for firefox as it does not have stop stream when all track ends
-    if (window.webrtcDetectedBrowser === 'firefox') {
-      if (com.MediaStream.audioended === true) {
-        com.MediaStream.hasEnded = true;
+    }, function () {
+      // Workaround for firefox as it does not have stop stream when all track ends
+      if (window.webrtcDetectedBrowser === 'firefox') {
+        if (com.MediaStream.audioEnded === true) {
+          com.MediaStream.hasEnded = true;
+        }
+        com.MediaStream.videoEnded = true;
       }
-    }
+    });
   };
 
   com.stop = function () {
@@ -12486,46 +12459,48 @@ var StreamParser = {
   }
 };
 var StreamTrackList = {
-  readyState: 'new',
   audio: [],
+  
   video: [],
-  onready: function () {}
+  
+  get: function (defer) {
+    // Firefox does not support MediaStreamTrack.getSources yet
+    if (window.webrtcDetectedBrowser === 'firefox') {
+      StreamTrackList.readyState = 'done';
+
+    // Chrome / Plugin / Opera supports MediaStreamTrack.getSources
+    } else {
+      // Retrieve list
+      MediaStreamTrack.getSources(function (trackList) {
+        fn.forEach(trackList, function (track, i) {
+          var data = {};
+
+          // MediaStreamTrack label - FaceHD Camera
+          data.label = track.label || (track.kind + '_' + (i + 1));
+          // MediaStreamTrack kind - audio / video
+          data.kind = track.kind;
+          // MediaStreamTrack id - The identifier
+          data.id = track.id;
+          // The facing environment
+          data.facing = track.facing;
+
+          if (track.kind === 'audio') {
+            StreamTrackList.audio.push(data);
+          } else {
+            StreamTrackList.video.push(data);
+          }
+
+        }, function () {
+          defer({
+            audio: StreamTrackList.audio,
+            video: StreamTrackList.video
+          });
+        });
+      });
+    }
+  },
+  
 };
-
-// Firefox does not support MediaStreamTrack.getSources yet
-if (window.webrtcDetectedBrowser === 'firefox') {
-  StreamTrackList.readyState = 'done';
-
-// Chrome / Plugin / Opera supports MediaStreamTrack.getSources
-} else {
-  // Retrieve list
-  MediaStreamTrack.getSources(function (trackList) {
-    for (var i =0; i < trackList.length; i++) {
-      var track = trackList[i];
-      var data = {};
-
-      // MediaStreamTrack label - FaceHD Camera
-      data.label = track.label || (track.kind + '_' + (i + 1));
-      // MediaStreamTrack kind - audio / video
-      data.kind = track.kind;
-      // MediaStreamTrack id - The identifier
-      data.id = track.id;
-      // The facing environment
-      data.facing = track.facing;
-
-      if (track.kind === 'audio') {
-        StreamTrackList.audio.push(data);
-      } else {
-        StreamTrackList.video.push(data);
-      }
-    }
-    StreamTrackList.readyState = 'done';
-    
-    if (typeof StreamTrackList.onReady === 'function') {
-      StreamTrackList.onready(StreamTrackList);
-    }
-  });
-}
 function User (config, listener) {
   'use strict';
 
@@ -12580,7 +12555,17 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.bandwidth = config.settings.bandwidth || {};
+  com.bandwidth = config.userInfo.settings.bandwidth || {};
+  
+  /**
+   * Stores the list of peer connections to user.
+   * @attribute peers
+   * @type JSON
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.peers = {};
   
   /**
    * The handler that manages all triggers or relaying events.
@@ -12659,6 +12644,8 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.addConnection = function (data, stream) {
+    console.info(data.iceServers);
+  
     var peerConfig = {
       id: data.prid,
       constraints: data.iceServers,
@@ -12676,9 +12663,13 @@ function User (config, listener) {
       }
     };
     
-    var peer = new Peer(peerConfig, com.manager);
+    var peer = new Peer(peerConfig, com.handler);
+
+    console.info('data:', stream);
 
     peer.connect(stream);
+    
+    com.peers[peer.id] = peer;
   };
  
   /**
@@ -12698,8 +12689,8 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.disconnect = function () {
-    com.peers.forEach(function (value, key) {
-      value.disconnect();
+    fn.forEach(com.peers, function (peer, id) {
+      peer.disconnect();
     });
   };
   
@@ -12722,23 +12713,30 @@ function User (config, listener) {
       return data;
     
     } else {
-      var streamList = fn.clone(com.peers);
-      
-      streamList.forEach(function (value, key) {
-        // set the key settings
-        var peerSettings = value.stream ? 
-          value.stream.config || {} : {};
+      fn.forEach(com.peers, function (peer, id) {
+        var stream = peer.stream;
+
+        // Check if there is stream
+        if (!fn.isEmpty(stream)) {
+          data.settings[stream.id] = {
+            audio: stream.config.audio,
+            video: stream.config.video,
+            mediaStatus: stream.config.status,
+            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
+          };
         
-        // Filter audio and video bandwidth?
-        peerSettings.bandwidth = com.bandwidth || {};
-        
-        data.settings[key] = data;
-        
-        delete streamList[key];
-        
-        if (fn.isEmpty(streamList)) {
-          return data;
+        // No stream
+        } else {
+          data.settings[id] = {
+            audio: false,
+            video: false,
+            mediaStatus: { audioMuted: true, videoMuted: true },
+            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
+          };
         }
+      
+      }, function () {
+        return data;
       });
     }
   };
@@ -12762,11 +12760,15 @@ var UserHandlerEvent = {
      * @since 0.6.0
      */
     connect: function (com, data, listener) {
-      var peer = com.peers[peerId];
+      var peer = com.peers[data.id];
 
       if (typeof com.onupdate === 'function') {
-        com.onaddconnection(peerId, peer);
+        com.onaddconnection(data.id, peer);
       }
+      
+      data.type = 'start';
+      
+      peer.handler('trigger:handshake', data);
     },
     
     /**
@@ -12889,24 +12891,41 @@ var UserHandlerEvent = {
      */
     handshake: function (com, data, listener) {
       var peer = com.peers[data.prid];
-      var offer = data.type === 'welcome';
+      
+      // welcome | enter
+      if (data.type === 'welcome' || data.type === 'enter') {
+        if (!fn.isEmpty(peer)) {
+          if (data.type === 'welcome') {
+            if (peer.weight < data.weight) {
+              return;
+            }
+          }
 
-      if (fn.isEmpty(peer)) {
-        if (data.type === 'welcome') {
-          if (peer.weight < data.weight) {
-            offer = false;
+          peer.SDPType = 'offer';
+          data.type = 'start';
+
+          peer.handler('trigger:handshake', data);
+
+        } else {
+
+          data.bandwidth = com.bandwidth;
+          com.addConnection(data, data.stream);
+
+          peer = com.peers[data.prid];
+
+          if (data.type === 'welcome') {
+            peer.SDPType = 'offer';
+
+          } else {
+            peer.SDPType = 'answer';
           }
         }
       
+      // answer | offer
       } else {
-
-        data.bandwidth = com.bandwidth;
-        com.addConnection(data, data.stream);
-      
-        com.peers[data.prid] = peer;
+        peer.handler('trigger:handshake', data);
       }
-      
-      peer.handler('trigger:handshake', data);
+      console.info('exe', data);
     },
     
     /**
@@ -12920,12 +12939,15 @@ var UserHandlerEvent = {
       var candidate = new window.RTCIceCandidate({
         sdpMLineIndex: data.label,
         candidate: data.candidate,
-        sdpMid: data.id
+        sdpMid: data.id,
+        label: data.label,
+        id: data.id
       });
 
       var peer = com.peers[data.prid];
       
-      data.type = 'remote';
+      data.sourceType = 'remote';
+      data.candidate = candidate;
       
       peer.handler('trigger:icecandidate', data);
     },
@@ -12966,22 +12988,12 @@ var UserHandlerEvent = {
  */
 var UserHandler = function (com, event, data, listener) {
   if (event.indexOf('trigger:') !== 0) {
-    data.peerId = com.id;
+    data.userId = com.id;
 
     listener(event, data);
   }
   
   var params = event.split(':');
   
-  fn.isSafe(function () {
-    if (params.length > 2) {
-      UserHandlerEvent[ params[0] ][ params[1] ][ params[2] ](com, data, listener);
-
-    } else if (params.length > 1) {
-      UserHandlerEvent[ params[0] ][ params[1] ](com, data, listener);
-
-    } else {
-      UserHandlerEvent[ params[0] ](com, data, listener);
-    }
-  });
+  fn.applyHandler(UserHandlerEvent, params, [com, data, listener]);
 };

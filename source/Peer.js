@@ -29,6 +29,16 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.type = config.id === 'main' ? 'user' : 'stream';
+  
+  /**
+   * The local description type peer sends.
+   * @attribute SDPType
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.SDPType = null;
 
   /**
    * The PeerConnection constraints - iceServers.
@@ -228,9 +238,9 @@ function Peer(config, listener) {
       // Check class type
       peer.addStream(stream.MediaStream);
       
-      listener('peer:localstream', {
+      listener('peer:stream', {
         id: com.id,
-        userId: com.userId,
+        sourceType: 'local',
         stream: stream
       });
     }
@@ -308,21 +318,21 @@ function Peer(config, listener) {
 
     bindPeer.ondatachannel = function (event) {
       com.handler('trigger:datachannel', {
-        type: 'remote',
+        sourceType: 'remote',
         channel: event.channel || event
       }); 
     };
 
     bindPeer.onaddstream = function (event) {
       com.handler('trigger:stream', {
-        type: 'remote',
+        sourceType: 'remote',
         stream: event.stream || event
       }); 
     };
 
     bindPeer.onicecandidate = function (event) {
       com.handler('trigger:icecandidate', {
-        type: 'local',
+        sourceType: 'local',
         candidate: event.candidate || event
       }); 
     };
@@ -367,13 +377,13 @@ function Peer(config, listener) {
     // Create datachannel
     if (globals.dataChannel && com.type === 'user') {
       com.handler('trigger:datachannel', {
-        type: 'local',
+        sourceType: 'local',
         channel: com.RTCPeerConnection.createDataChannel('main')
       });
     }
 
     com.RTCPeerConnection.createOffer(function (offer) {
-      var sdp = SDP.configure(offer, com.sdpConfig);
+      var sdp = SDP.configure(offer.sdp, com.sdpConfig);
 
       com.localDescription = offer;
 
@@ -399,9 +409,9 @@ function Peer(config, listener) {
    */
   com.createAnswer = function () {
     com.RTCPeerConnection.createAnswer(function (answer) {
-      var sdp = SDP.configure(answer, com.sdpConfig);
+      var sdp = SDP.configure(answer.sdp, com.sdpConfig);
   
-      com.localDescription = offer;
+      com.localDescription = answer;
   
       listener('peer:answer:success', {
         id: com.id,
@@ -431,8 +441,8 @@ function Peer(config, listener) {
     com.RTCPeerConnection.setLocalDescription(localDescription, function () {
       listener('peer:localdescription:success', {
         id: com.id,
-        sdp: data.sdp,
-        type: data.type,
+        sdp: localDescription.sdp,
+        type: localDescription.type,
       });
 
       if (localDescription.type === 'answer') {
@@ -447,9 +457,9 @@ function Peer(config, listener) {
     }, function (error) {
       listener('peer:localdescription:error', {
         id: com.id,
-        sdp: data.sdp,
-        type: data.type,
-        error: data.error
+        sdp: localDescription.sdp,
+        type: localDescription.type,
+        error: error
       });
     });
   };
@@ -466,8 +476,8 @@ function Peer(config, listener) {
     com.RTCPeerConnection.setRemoteDescription(remoteDescription, function () {
       listener('peer:remotedescription:success', {
         id: com.id,
-        sdp: data.sdp,
-        type: data.type
+        sdp: remoteDescription.sdp,
+        type: remoteDescription.type
       });
   
       if (remoteDescription.type === 'answer') {
@@ -485,9 +495,9 @@ function Peer(config, listener) {
     }, function (error) {
       listener('peer:remotedescription:error', {
         id: com.id,
-        sdp: data.sdp,
-        type: data.type,
-        error: data.error
+        sdp: remoteDescription.sdp,
+        type: remoteDescription.type,
+        error: error
       });
     });
   };
@@ -502,15 +512,13 @@ function Peer(config, listener) {
   com.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
 
   // Parse constraints ICE servers
-  com.constraints = ICE.parseTURNServers(config.constraints);
-  com.constraints = ICE.parseSTUNServers(com.constraints);
+  com.constraints = config.constraints; //ICE.parseTURNServers(config.constraints);
+  //com.constraints = //ICE.parseSTUNServers(com.constraints);
   
   // Parse the sdp configuration
   com.sdpConfig = {
-    stereo: fn.isSafe(function () {
-      return config.streamingConfig.audio.stereo;
-    }),         
-    bandwidth: com.bandwidth,
+    stereo: fn.isSafe(function () { return config.streamingConfig.audio.stereo; }),
+    bandwidth: com.bandwidth
   };
   
   listener('peer:start', {

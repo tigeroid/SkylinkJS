@@ -41,14 +41,24 @@ var globals = {
 
 var fn = {
   isEmpty: function (data) {
-    return typeof data === 'undefined' || data === null;
+    var isUnDefined = typeof data === 'undefined' || data === null;
+    
+    if (typeof data === 'object' && !isUnDefined) {
+      if (data.constructor === Array) {
+        return data.length === 0;
+      
+      } else {
+        return Object.keys(data).length === 0;
+      }
+    }
+    return isUnDefined;
   },
   
   isSafe: function (unsafeFn) {
     try {
       return unsafeFn();
     } catch (error){
-      log.warn('Unsafe code received', error);
+      log.warn(error);
       return false;
     }
   },
@@ -96,25 +106,48 @@ var fn = {
   
   generateUID: function() {
     return (new Date()).getTime().toString();
-  }
-};
-
-/*jshint -W121 */
-Object.prototype.forEach = function (defer) {
-  for (var key in this) {
-    if (this.hasOwnProperty(key)) {
-      defer(this[key], key);
-    }
-  }
-};
-
-if (typeof Array.prototype.forEach !== 'function') {
-  Array.prototype.forEach = function (defer) {
+  },
+  
+  applyHandler: function (callee, params, args) {
+    var item = callee;
     var i;
     
-    for (i = 0; i < this.length; i += 1) {
-      defer(this[i], i);
+    for (i = 0; i < params.length; i += 1) {
+      if (!fn.isEmpty(item[params[i]])) {
+        item = item[params[i]];
+      }
     }
-  };
-}
-/*jshint +W121 */
+
+    if (typeof item === 'function') {
+      item.apply(this, args);
+    }
+  },
+  
+  forEach: function (main, deferItem, deferFin) {
+    if (typeof main === 'object' && !fn.isEmpty(main)) {
+      // Array objects
+      if (main.constructor === Array) {
+        var i;
+        
+        for (i = 0; i < main.length; i += 1) {
+          deferItem(main[i], i);
+        }
+      
+      // JSON objects
+      } else {
+        var key;
+        
+        for (key in main) {
+          if (main.hasOwnProperty(key)) {
+            deferItem(main[key], key);
+          }
+        }
+      }
+      // Finished loop
+      if (typeof deferFin === 'function') {
+        deferFin();
+      }
+    }
+  }
+  
+};
