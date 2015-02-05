@@ -128,18 +128,6 @@
         attachStream(data.userId + '-' + data.id, data.stream);
       }
 
-      /*if (event === 'peer:localdatachannel'){
-        channel = data.channel;
-        console.log(channel);
-      }
-
-      if (event === 'peer:iceconnectionstate'){
-        console.log(channel);
-        if (data.state === 'completed'){
-          channel.send('hello');
-        }
-      }*/
-
       if (event === 'datachannel:message'){
         console.log('->'+data.data);
       }

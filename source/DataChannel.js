@@ -148,8 +148,35 @@ function DataChannel(channel, peerId, listener) {
       peerId: com.peerId,
       data: data
     });
+    /*com.dataHandler(data);*/
   };
-  
+
+  /*com.dataHandler = function(dataString, dataTransfer){
+    if (typeof dataString === 'string'){
+      var data = {};
+      try{
+        data = JSON.parse(dataString);
+      }
+      catch(error){
+        listener('datachannel:binary',{
+          id: com.id,
+          peerId: com.peerId,
+          data: dataString
+        });
+        dataTransfer
+      }
+    }
+
+  }*/
+
+  com.close = function(){
+    channel.close();
+    listener('datachannel:close',{
+      id: com.id,
+      peerId: com.peerId
+    });
+  }
+
   /**
    * Sends data over the datachannel.
    * @method send
