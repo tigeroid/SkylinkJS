@@ -347,6 +347,162 @@ function DataTransfer(channel, peerId, listener) {
     }
   };
 
+  com.sendBlobData = function(data, dataInfo) {
+    dataInfo.timeout = dataInfo.timeout || 60;
+    dataInfo.transferId = com.DATA_TRANSFER_TYPE.UPLOAD +
+      (((new Date()).toISOString().replace(/-/g, '').replace(/:/g, ''))).replace('.', '');
+    console.log('Sending blob data');
+    com.sendBlobDataToPeer(data, dataInfo, targetPeerId, true);
+
+    listener('datatransfer:uploadstarted',{
+      peerId: com.peerId,
+      transferId: dataInfo.transferId,
+      name: dataInfo.name,
+      size: dataInfo.size,
+      timeout: dataInfo.timeout || 60,
+      data: data
+    });
+
+  };
+
+  com.sendBlobDataToPeer = function(data, dataInfo, isPrivate) {
+
+    var ongoingTransfer = null;
+    var binarySize = parseInt((dataInfo.size * (4 / 3)).toFixed(), 10);
+    var chunkSize = parseInt((DataProcess.chunkSize * (4 / 3)).toFixed(), 10);
+
+    if (window.webrtcDetectedBrowser === 'firefox' &&
+      window.webrtcDetectedVersion < 30) {
+      chunkSize = DataProcess.mozChunkSize;
+    }
+    console.log('Chunk size of data: '+chunkSize);
+
+    if (com._uploadDataSessions[com.peerId]) {
+      ongoingTransfer = com.DATA_TRANSFER_TYPE.UPLOAD;
+    } else if (com._downloadDataSessions[com.peerId]) {
+      ongoingTransfer = com.DATA_TRANSFER_TYPE.DOWNLOAD;
+    }
+
+    if (ongoingTransfer) {
+      console.error('User have ongoing ' + ongoingTransfer + ' ' +
+        'transfer session with peer. Unable to send data '+ dataInfo);
+      listener('datatransfer:error',{
+        peerId: peerId,
+        transferId: dataInfo.transferId,
+        name: dataInfo.name,
+        message: dataInfo.content,
+        transferType: ongoingTransfer
+      });
+      return;
+    }
+    com._uploadDataTransfers[com.peerId] = DataProcess.chunk(data, dataInfo.size);
+    com._uploadDataSessions[com.peerId] = {
+      name: dataInfo.name,
+      size: binarySize,
+      transferId: dataInfo.transferId,
+      timeout: dataInfo.timeout
+    };
+    com.channel.send({
+      type: com._DC_PROTOCOL_TYPE.WRQ,
+      //sender: this._user.sid,
+      agent: window.webrtcDetectedBrowser,
+      name: dataInfo.name,
+      size: binarySize,
+      chunkSize: chunkSize,
+      timeout: dataInfo.timeout,
+      target: com.peerId
+      isPrivate: !!isPrivate
+    });
+    com._setDataChannelTimeout(dataInfo.timeout, true);
+  };
+
+  com.respondBlobRequest = function (accept) {
+    if (accept) {
+      console.log('User accepted peer request');
+      com._downloadDataTransfers[com.peerId] = [];
+      var data = com._downloadDataSessions[com.peerId];
+      com.channel.send({
+        type: com._DC_PROTOCOL_TYPE.ACK,
+        //sender: this._user.sid,
+        ackN: 0,
+        agent: window.webrtcDetectedBrowser
+      });
+
+      listener('datatransfer:downloadstarted',{
+        peerId: com.peerId,
+        name: data.name,
+        size: data.size,
+        transferId: data.transferId
+      });
+
+    } else {
+      console.log('User rejected peer request');
+      com.channel.send({
+        type: this._DC_PROTOCOL_TYPE.ACK,
+        //sender: this._user.sid,
+        ackN: -1
+      });
+      delete com._downloadDataSessions[com.peerId];
+    }
+  };
+
+  com.cancelBlobTransfer = function (transferType) {
+    var data;
+
+    // cancel upload
+    if (transferType === com.DATA_TRANSFER_TYPE.UPLOAD && !transferType) {
+      data = com._uploadDataSessions[com.peerId];
+
+      if (data) {
+        delete com._uploadDataSessions[com.peerId];
+        delete com._uploadDataTransfers[com.peerId];
+
+        com.channel.send({
+          type: com._DC_PROTOCOL_TYPE.CANCEL,
+          //sender: this._user.sid,
+          name: data.name,
+          content: 'Peer cancelled upload transfer'
+        });
+      } else {
+        listener('datatransfer:error',{
+          peerId: com.peerId
+          transferId: dataInfo.transferId,
+          name: dataInfo.name,
+          message: 'Unable to cancel upload transfer. There is ' +
+            'not ongoing upload sessions with the peer',
+          transferType: com.DATA_TRANSFER_TYPE.UPLOAD
+        });
+
+        if (!!transferType) {
+          return;
+        }
+      }
+    }
+    if (transferType === com.DATA_TRANSFER_TYPE.DOWNLOAD) {
+      data = com._downloadDataSessions[peerId];
+
+      if (data) {
+        delete com._downloadDataSessions[com.peerId];
+        delete com._downloadDataTransfers[com.peerId];
+
+        com.channel.send({
+          type: com._DC_PROTOCOL_TYPE.CANCEL,
+          //sender: this._user.sid,
+          name: data.name,
+          content: 'Peer cancelled download transfer'
+        });
+      } else {
+        listener('datatransfer:error',{
+          peerId: com.peerId
+          transferId: dataInfo.transferId,
+          name: dataInfo.name,
+          message: 'Unable to cancel download transfer. There is ' +
+            'not ongoing download sessions with the peer',
+          transferType: com.DATA_TRANSFER_TYPE.DOWNLOAD
+        });
+      }
+    }
+  };
 
 }
 

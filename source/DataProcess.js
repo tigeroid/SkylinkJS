@@ -4,7 +4,7 @@ var DataProcess = {
   
   mozChunkSize: 16384,
   
-  chunk: function (blob) {
+  chunk: function (blob, blobByteSize) {
     var chunksArray = [],
     startCount = 0,
     endCount = 0;
