@@ -272,6 +272,82 @@ function DataTransfer(channel, peerId, listener) {
     }
   };
 
+  com._DATAProtocolHandler = function(dataString, dataType) {
+    var chunk, error = '';
+    var transferStatus = com._downloadDataSessions[com.peerId];
+
+    var transferId = transferStatus.transferId;
+
+    com._clearDataChannelTimeout(false);
+
+    if (dataType === com.DATA_TRANSFER_DATA_TYPE.BINARY_STRING) {
+      chunk = DataProcess.unchunk(dataString);
+    } else if (dataType === com.DATA_TRANSFER_DATA_TYPE.ARRAY_BUFFER) {
+      chunk = new Blob(dataString);
+    } else if (dataType === com.DATA_TRANSFER_DATA_TYPE.BLOB) {
+      chunk = dataString;
+    } else {
+      error = 'Unhandled data exception: ' + dataType;
+
+      listener('datatransfer:error',{
+        peerId: com.peerId,
+        transferId: transferId,
+        message: error,
+        transferType: com.DATA_TRANSFER_TYPE.DOWNLOAD
+      });
+
+      return;
+    }
+    var receivedSize = (chunk.size * (4 / 3));
+
+    if (transferStatus.chunkSize >= receivedSize) {
+      com._downloadDataTransfers[com.peerId].push(chunk);
+      transferStatus.ackN += 1;
+      transferStatus.receivedSize += receivedSize;
+      var totalReceivedSize = transferStatus.receivedSize;
+      var percentage = ((totalReceivedSize / transferStatus.size) * 100).toFixed();
+
+      com.channel.send({
+        type: com._DC_PROTOCOL_TYPE.ACK,
+        sender: null
+        ackN: transferStatus.ackN
+      });
+
+      if (transferStatus.chunkSize === receivedSize) {
+
+        listener('datatransfer:downloading',{
+          peerId: com.peerId,
+          transferId: transferId,
+          percentage: percentage
+        }); 
+
+        com._setDataChannelTimeout(transferStatus.timeout, false);
+        com._downloadDataTransfers[com.peerId].info = transferStatus;
+      } else {
+        var blob = new Blob(com._downloadDataTransfers[com.peerId]);
+
+        listener('datatransfer:downloadcompleted',{
+          peerId: com.peerId,
+          transferId: transferId,
+          data: blob
+        });
+
+        delete com._downloadDataTransfers[com.peerId];
+        delete com._downloadDataSessions[com.peerId];
+      }
+    } else {
+      error = 'Packet not match - [Received]' + receivedSize +
+        ' / [Expected]' + transferStatus.chunkSize;
+      listener('datatransfer:error',{
+        peerId: com.peerId,
+        transferId: transferId,
+        message: error,
+        transferType: com.DATA_TRANSFER_TYPE.DOWNLOAD
+      });
+    }
+  };
+
+
 }
 
 
