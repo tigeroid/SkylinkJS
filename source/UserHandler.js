@@ -1,243 +1,206 @@
 /**
- * Stores the user class events.
- * @attribute UserHandlerEvent
+ * Handles all the events received from sub classes.
+ * @attribute UserHandlerReceivedHandler
  * @for User
  * @since 0.6.0
  */
-var UserHandlerEvent = {
-  /**
-   * Handles stream events that will require the user class to
-   * trigger the listener.
-   * @property peer
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
+var UserEventReceivedHandler = {
+  
   peer: {
-    /**
-     * Handles the event when peer is connected.
-     * @property connect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
+    
     connect: function (com, data, listener) {
       var peer = com.peers[data.id];
 
-      if (typeof com.onupdate === 'function') {
-        com.onaddconnection(data.id, peer);
+      if (typeof com.onaddconnection === 'function') {
+        com.onaddconnection(peer);
       }
       
-      data.type = 'start';
-      
-      peer.handler('trigger:handshake', data);
+      if (peer.SDPType === 'offer') {
+        peer.createOffer();
+      }
     },
     
-    /**
-     * Handles the event when peer is disconnected.
-     * @property disconnect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
+    iceconnectionstate: function (com, data, listener) {
+      if (data.id === 'main' && data.state === 'connected') {
+        com.handler('user:connect', {});
+      }
+    },
+    
     disconnect: function (com, data, listener) {
-      var peer = com.peers[peerId];
+      var peer = com.peers[data.id];
+      
+      delete com.peers[data.id];
 
-      delete com.peers[peerId];
-
-      if (typeof com.onupdate === 'function') {
-        com.onremoveconnection(peerId, peer);
+      if (typeof com.onremoveconnection === 'function') {
+        com.onremoveconnection(peer);
+      }
+      
+      if (Object.keys(com.peers).length === 0) {
+        com.handler('user:disconnect', {});
       }
     }
   },
   
-  /**
-   * Handles transfer events that will require the user class to
-   * trigger the listener.
-   * @property transfer
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
   transfer: {
-    /**
-     * Handles the event when transfer is completed.
-     * @property complete
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
+    
     complete: function (com, data, listener) {
-      listener('user:data', {
-        id: com.id,
-        data: data
-      });
-
-      if (typeof com.ondata === 'function') {
-        com.ondata();
-      }
+      com.handler('user:data', data);
     },
     
-    /**
-     * Handles the event when a request transfer is received.
-     * @property request
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
     request: function (com, data, listener) {
-      listener('user:datarequest', {
-        id: com.id,
-        request: dataInfo
-      });
+      com.handler('user:datarequest', data); 
+    }
+  }
+  
+};
 
-      if (typeof com.ondatarequest === 'function') {
-        com.ondatarequest();
-      }
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute UserHandlerResponseHandler
+ * @for User
+ * @since 0.6.0
+ */
+var UserEventResponseHandler = {
+  
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === 'function') {
+      com.onconnect();
     }
   },
   
+  data: function (com, data, listener) {
+    if (typeof com.ondata === 'function') {
+      com.ondata();
+    }
+  },
+  
+  datarequest: function (com, data, listener) {
+    if (typeof com.ondatarequest === 'function') {
+      com.ondatarequest();
+    }
+  },
+  
+  update: function (com, data, listener) {
+    if (typeof com.onupdate === 'function') {
+      com.onupdate(data.data);
+    }
+  },
+
   /**
-   * Handles events that will require the user class to
-   * trigger user class events.
-   * @property trigger
-   * @type JSON
+   * Handles the incoming message trigger.
+   * @property message
+   * @type Function
    * @private
    * @since 0.6.0
    */
-  trigger: {
-    /**
-     * Handles the update user data trigger.
-     * @property update
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    update: function (com, data, listener) {
-      com.data = newData;
+  message: function (com, data, listener) {
+    if (typeof com.onmessage === 'function') {
+      com.onmessage();
+    }
+  },
+  
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === 'function') {
+      com.ondisconnect();
+    }
+  }
+  
+};
 
-      listener('user:update', {
-        id: com.id,
-        userData: com.data
-      });
+/**
+ * Handles all the message events received from socket.
+ * @attribute UserEventMessageHandler
+ * @for User
+ * @since 0.6.0
+ */
+var UserEventMessageHandler = {
+  
+  enter: function (com, data, listener) {
+    var peer = com.peers[data.prid];
 
-      if (typeof com.onupdate === 'function') {
-        com.onupdate(newData);
+    if (!fn.isEmpty(peer)) {
+      return;
+    }
+
+    data.bandwidth = com.bandwidth;
+    data.SDPType = 'answer';
+    com.addConnection(data, data.stream);
+  },
+
+  welcome: function (com, data, listener) {
+    var peer = com.peers[data.prid];
+
+    if (!fn.isEmpty(peer)) {
+      if (peer.weight < data.weight) {
+        return;
       }
-    },
+
+      peer.SDPType = 'offer';
+      data.type = 'start';
+
+    } else {
+
+      data.bandwidth = com.bandwidth;
+      com.addConnection(data, data.stream);
+      peer = com.peers[data.prid];
+
+      peer.SDPType = 'offer';
+    }
+  },
+
+  offer: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the incoming message trigger.
-     * @property message
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    message: function (com, data, listener) {
-      listener('user:message', {
-        id: com.id,
-        message: data
-      });
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:offer', data);
+    }
+  },
 
-      if (typeof com.ondatarequest === 'function') {
-        com.ondatarequest();
-      }
-    },
+  answer: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the handshake trigger.
-     * @property handshake
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    handshake: function (com, data, listener) {
-      var peer = com.peers[data.prid];
-      
-      // welcome | enter
-      if (data.type === 'welcome' || data.type === 'enter') {
-        if (!fn.isEmpty(peer)) {
-          if (data.type === 'welcome') {
-            if (peer.weight < data.weight) {
-              return;
-            }
-          }
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:answer', data);
+    }
+  },
 
-          peer.SDPType = 'offer';
-          data.type = 'start';
-
-          peer.handler('trigger:handshake', data);
-
-        } else {
-
-          data.bandwidth = com.bandwidth;
-          com.addConnection(data, data.stream);
-
-          peer = com.peers[data.prid];
-
-          if (data.type === 'welcome') {
-            peer.SDPType = 'offer';
-
-          } else {
-            peer.SDPType = 'answer';
-          }
-        }
-      
-      // answer | offer
-      } else {
-        peer.handler('trigger:handshake', data);
-      }
-      console.info('exe', data);
-    },
+  candidate: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the candidate trigger.
-     * @property candidate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    candidate: function (com, data, listener) {
-      var candidate = new window.RTCIceCandidate({
-        sdpMLineIndex: data.label,
-        candidate: data.candidate,
-        sdpMid: data.id,
-        label: data.label,
-        id: data.id
-      });
-
-      var peer = com.peers[data.prid];
-      
-      data.sourceType = 'remote';
-      data.candidate = candidate;
-      
-      peer.handler('trigger:icecandidate', data);
-    },
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:candidate', data);
+    }
+  },
+  
+  restart: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the mute stream trigger.
-     * @property mutestream
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    mutestream: function (com, data, listener) {
-      var peer = com.peers[data.prid];
-      
-      peer.handler('trigger:mutestream', data);
-    },
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:restart', data);
+    }
+  },
+  
+  updateUserEvent: function (com, data, listener) {
+    com.data = data.data;
+  
+    com.handler('user:update', {
+      data: data.userData
+    });
+  },
+  
+  muteAudioEvent: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the peer connection restart trigger.
-     * @property restart
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    restart: function (com, data, listener) {
-      var peer = com.peers[data.prid];
-      
-      peer.handler('trigger:reconnect', data);
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:muteAudioEvent', data);
+    }
+  },
+    
+  muteVideoEvent: function (com, data, listener) {
+    var peer = com.peers[data.prid];
+    
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:muteVideoEvent', data);
     }
   }
 };
@@ -249,13 +212,28 @@ var UserHandlerEvent = {
  * @since 0.6.0
  */
 var UserHandler = function (com, event, data, listener) {
-  if (event.indexOf('trigger:') !== 0) {
-    data.userId = com.id;
+  var params = event.split(':');
 
+  // Messaging events
+  if (event.indexOf('message:') === 0) {
+    
+    fn.applyHandler(UserEventMessageHandler, params, [com, data, listener]);
+  
+  } else {
+    // Class events
+    if (event.indexOf('user:') === 0) {
+      data.id = com.id;
+
+      fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
+
+    } else {
+      data.userId = com.id;
+
+      fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
+    }
+    
     listener(event, data);
   }
   
-  var params = event.split(':');
-  
-  fn.applyHandler(UserHandlerEvent, params, [com, data, listener]);
+  //log.debug('UserHandler', event, data);
 };

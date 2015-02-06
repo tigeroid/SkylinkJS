@@ -1,3 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>source/Stream.js - skylinkjs</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
+      <small>Version: 0.5.7</small>
+    </li>
+    <hr>
+    
+      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      
+      <div class="content content-main">
+        <h1 class="file-heading">File: source/Stream.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
 /**
  * Handles the XMLHttpStream and API function calls.
  * @class Stream
@@ -5,7 +89,7 @@
  * @since 0.6.0
  */
 function Stream(stream, config, listener) {
-  'use strict';
+  &#x27;use strict&#x27;;
 
   // Reference of instance
   var com = this;
@@ -48,7 +132,7 @@ function Stream(stream, config, listener) {
    * @for Stream
    * @since 0.6.0
    */
-  com.sourceType = 'local';
+  com.sourceType = &#x27;local&#x27;;
 
   /**
    * The MediaStream object.
@@ -80,10 +164,8 @@ function Stream(stream, config, listener) {
    */
   com.handler = function (event, data) {
     listener(event, data);
-    
-    //log.debug('StreamHandler', event, data); 
 
-    if (typeof com.parentHandler === 'function') {
+    if (typeof com.parentHandler === &#x27;function&#x27;) {
       com.parentHandler(event, data);
     }
   };
@@ -131,7 +213,7 @@ function Stream(stream, config, listener) {
    */
   com.start = function () {
     window.getUserMedia(com.constraints, com.bind, function (error) {
-      com.handler('stream:error', {
+      com.handler(&#x27;stream:error&#x27;, {
         id: com.id,
         error: error,
         sourceType: com.sourceType
@@ -147,7 +229,7 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.bind = function (bindStream) {
-    // Set a MediaStream id if Firefox or Chrome doesn't
+    // Set a MediaStream id if Firefox or Chrome doesn&#x27;t
     com.id = bindStream.id || fn.generateUID();
 
     // Bind events to MediaStream
@@ -162,7 +244,7 @@ function Stream(stream, config, listener) {
 
     com.MediaStream = bindStream;
  
-    com.handler('stream:start', {
+    com.handler(&#x27;stream:start&#x27;, {
       id: com.id,
       label: bindStream.label,
       constraints: com.constraints,
@@ -184,7 +266,7 @@ function Stream(stream, config, listener) {
       // Bind events to MediaStreamTrack
       // bindTracks[i].onstarted = com.onStarted;
       track.onended = function () {
-        com.handler('stream:track:stop', {
+        com.handler(&#x27;stream:track:stop&#x27;, {
           streamId: com.id,
           id: track.newId,
           kind: track.kind,
@@ -193,7 +275,7 @@ function Stream(stream, config, listener) {
           sourceType: com.sourceType
         });
 
-        if (typeof com.ontrackended === 'function') {
+        if (typeof com.ontrackended === &#x27;function&#x27;) {
           com.ontrackended(track);
         }
       };
@@ -206,17 +288,17 @@ function Stream(stream, config, listener) {
       // Set the mute status
       var isEnabled = true;
 
-      if (track.kind === 'audio') {
-        isEnabled = (typeof com.config.audio === 'object') ?
+      if (track.kind === &#x27;audio&#x27;) {
+        isEnabled = (typeof com.config.audio === &#x27;object&#x27;) ?
           !!!com.config.status.audioMuted : !!com.config.audio;
       } else {
-        isEnabled = (typeof com.config.video === 'object') ?
+        isEnabled = (typeof com.config.video === &#x27;object&#x27;) ?
           !!!com.config.status.videoMuted : !!com.config.video;
       }
       
       track.enabled = isEnabled;
 
-      com.handler('stream:track:start', {
+      com.handler(&#x27;stream:track:start&#x27;, {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
@@ -235,7 +317,7 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.attachElement = function (element) {
-    if (window.webrtcDetectedBrowser === 'firefox' &&
+    if (window.webrtcDetectedBrowser === &#x27;firefox&#x27; &amp;&amp;
       (com.MediaStream instanceof LocalMediaStream) === false) {
       window.reattachMediaStream(element, com.MediaStream.checkingVideo);
     
@@ -253,20 +335,20 @@ function Stream(stream, config, listener) {
    */
   com.bindOnStreamEnded = function (bindStream) {
     var fn = function () {
-      com.handler('stream:stop', {
+      com.handler(&#x27;stream:stop&#x27;, {
         id: com.id,
         label: stream.label,
         constraints: com.constraints,
         sourceType: com.sourceType
       });
       
-      if (typeof com.onended === 'function') {
+      if (typeof com.onended === &#x27;function&#x27;) {
         com.onended(bindStream);
       }
     };
     
     // Firefox browsers
-    if (window.webrtcDetectedBrowser === 'firefox') {
+    if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
       // LocalMediaStream
       if (bindStream.constructor === LocalMediaStream) {
         return setInterval(function () {
@@ -276,7 +358,7 @@ function Stream(stream, config, listener) {
             fn();
           }
   
-          if (typeof bindStream.recordedTime === 'undefined') {
+          if (typeof bindStream.recordedTime === &#x27;undefined&#x27;) {
             bindStream.recordedTime = 0;
           }
 
@@ -294,7 +376,7 @@ function Stream(stream, config, listener) {
       } else {
         return (function () {
           // Use a video to attach to check if stream has ended
-          var video = document.createElement('video');
+          var video = document.createElement(&#x27;video&#x27;);
           video.onstreamended = setInterval(function () {
             if (bindStream.hasEnded) {
               clearInterval(video.onstreamended);
@@ -333,7 +415,7 @@ function Stream(stream, config, listener) {
     fn.forEach(tracks, function (track, i) {
       track.enabled = false;
       
-      com.handler('stream:track:mute', {
+      com.handler(&#x27;stream:track:mute&#x27;, {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
@@ -342,7 +424,7 @@ function Stream(stream, config, listener) {
         sourceType: com.sourceType
       });
 
-      if (typeof com.ontrackmute === 'function') {
+      if (typeof com.ontrackmute === &#x27;function&#x27;) {
         com.ontrackmute(track);
       }
     });
@@ -361,7 +443,7 @@ function Stream(stream, config, listener) {
     fn.forEach(tracks, function (track, i) {
       track.enabled = true;
       
-      com.handler('stream:track:unmute', {
+      com.handler(&#x27;stream:track:unmute&#x27;, {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
@@ -370,7 +452,7 @@ function Stream(stream, config, listener) {
         sourceType: com.sourceType
       });
 
-      if (typeof com.ontrackunmute === 'function') {
+      if (typeof com.ontrackunmute === &#x27;function&#x27;) {
         com.ontrackunmute(track);
       }
     });
@@ -390,7 +472,7 @@ function Stream(stream, config, listener) {
       track.stop();
 
       // Workaround for firefox as it does not have stop events
-      if (window.webrtcDetectedBrowser === 'firefox') {
+      if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
         if (track.hasEnded !== true) {
           track.onended(track);
           track.hasEnded = true;
@@ -399,7 +481,7 @@ function Stream(stream, config, listener) {
     
     }, function () {
       // Workaround for firefox as it does not have stop stream when all track ends
-      if (window.webrtcDetectedBrowser === 'firefox') {
+      if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
         if (com.MediaStream.videoEnded === true) {
           com.MediaStream.hasEnded = true;
         }
@@ -421,7 +503,7 @@ function Stream(stream, config, listener) {
     fn.forEach(tracks, function (track, i) {
       track.enabled = false;
       
-      com.handler('stream:track:mute', {
+      com.handler(&#x27;stream:track:mute&#x27;, {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
@@ -430,7 +512,7 @@ function Stream(stream, config, listener) {
         sourceType: com.sourceType
       });
 
-      if (typeof com.ontrackmute === 'function') {
+      if (typeof com.ontrackmute === &#x27;function&#x27;) {
         com.ontrackmute(track);
       }
     });
@@ -449,7 +531,7 @@ function Stream(stream, config, listener) {
     fn.forEach(tracks, function (track, i) {
       track.enabled = true;
       
-      com.handler('stream:track:unmute', {
+      com.handler(&#x27;stream:track:unmute&#x27;, {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
@@ -458,7 +540,7 @@ function Stream(stream, config, listener) {
         sourceType: com.sourceType
       });
 
-      if (typeof com.ontrackunmute === 'function') {
+      if (typeof com.ontrackunmute === &#x27;function&#x27;) {
         com.ontrackunmute(track);
       }
     });
@@ -478,7 +560,7 @@ function Stream(stream, config, listener) {
       track.stop();
 
       // Workaround for firefox as it does not have stop events
-      if (window.webrtcDetectedBrowser === 'firefox') {
+      if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
         if (track.hasEnded !== true) {
           track.onended(tracks[i]);
           track.hasEnded = true;
@@ -487,7 +569,7 @@ function Stream(stream, config, listener) {
     
     }, function () {
       // Workaround for firefox as it does not have stop stream when all track ends
-      if (window.webrtcDetectedBrowser === 'firefox') {
+      if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
         if (com.MediaStream.audioEnded === true) {
           com.MediaStream.hasEnded = true;
         }
@@ -506,7 +588,7 @@ function Stream(stream, config, listener) {
   
   // Throw an error if adapterjs is not loaded
   if (!window.attachMediaStream) {
-    throw new Error('Required dependency adapterjs not found');
+    throw new Error(&#x27;Required dependency adapterjs not found&#x27;);
   }
 
   // Bind or start MediaStream
@@ -532,10 +614,29 @@ function Stream(stream, config, listener) {
     // Allow javascript to return object before code execution
     fn.runSync(function () {
       com.config = {
-        audio: fn.isSafe(function () { return stream.getAudioTracks().length > 0; }),
-        video: fn.isSafe(function () { return stream.getVideoTracks().length > 0; })
+        audio: fn.isSafe(function () { return stream.getAudioTracks().length &gt; 0; }),
+        video: fn.isSafe(function () { return stream.getVideoTracks().length &gt; 0; })
       };
       com.bind(stream);
     });
   }
 }
+    </pre>
+</div>
+
+      </div>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

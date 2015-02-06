@@ -1,7 +1,17 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "Skylink"
+        "DataChannel",
+        "DataMessage",
+        "Debugger",
+        "Peer",
+        "Request",
+        "Room",
+        "Self",
+        "Skylink",
+        "Socket",
+        "Stream",
+        "User"
     ],
     "modules": [],
     "allModules": []

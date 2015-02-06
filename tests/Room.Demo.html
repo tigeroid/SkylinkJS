@@ -1,4 +1,5 @@
 <html>
+
 <head>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -15,11 +16,23 @@
     .col-md-4 {
       padding-right: 0;
     }
-    video {
-      background: #000;
+    .video-item {
       width: 49%;
       display: inline-block;
       vertical-align: top;
+    }
+    .video-item video {
+      background: #000;
+      width: 100%;
+    }
+    .video-item span {
+      display: block;
+      position: relative;
+      z-index: 99;
+      margin-top: -30px;
+      background: #444;
+      color: #fff;
+      padding: 5px;
     }
     .btn-group {
       margin-top: 15px;
@@ -32,17 +45,17 @@
     }
   </style>
 </head>
+
 <body class="container">
   <h1>Room Demo</h1>
-  <p>Classes: <code>Globals</code>, <code>DataChannel</code>, <code>DataTransfer</code>, <code>ICE</code>, <code>SDP</code>, <code>StreamParser</code> and <code>Connection</code></p>
 
   <div class="col-md-8">
     <div class="panel panel-default">
       <div class="panel-body">
         <h4>Example 1:</h4>
-        <p>Start a connection with with another Peer with stream. Please open another tab to see the other peer.</p>
+        <p>Join a Room with stream</p>
         <pre>
-          var room = new Room(name, function (event, data) {
+          function handler (event, data) {
             if (event === 'room:start') {
               var stream = new Stream(null, { audio: true }, function(event, data) {
                 if (event === 'stream:start') {
@@ -50,176 +63,253 @@
                 }
               });
             }
-          });
+          }
+          var room = new Room(name, handler);
         </pre>
-        <div id="videoList"></div>
-        <div id="videoList2"></div>
+
+        <h4>Example 2:</h4>
+        <p>Add another stream</p>
+        <pre>
+          room.addStreamConnection(anotherStream);
+        </pre>
+
+        <h4>Example 3:</h4>
+        <p>Join another Room with stream</p>
+        <pre>
+          var room = new Room(anotherName, handler);
+        </pre>
       </div>
     </div>
   </div>
-  
+
   <div class="col-md-4">
-    <select id="videoTrackList"></select>
-    <select id="audioTrackList"></select><br><br>
-    <button onclick="start()">Join room</button>
-    <button onclick="addStream()">Add stream to peer to room</button>
-    <button onclick="start2()">Join room 2</button>
-    <button onclick="addStream2()">Add stream to peer to room 2</button>
-    <div id="output" class="panel"></div>
+    <h4>Media Tracks:</h4>
+    <small>Select a track. If you're on Firefox, you may select the track when getUserMedia is invoked.</small>
+    <br>
+    <br>Audio:
+    <select id="videoTrackList"></select>&nbsp;&nbsp;&nbsp; Video:
+    <select id="audioTrackList"></select>
+
+    <hr>
+    <h5>Room 1:</h5>
+    <button onclick="joinRoom('test1')">Join</button>
+    <button onclick="sendStream('test1')">Send another Stream</button>
+    <button onclick="leaveRoom('test1')">Leave</button>
+
+    <hr>
+    <h5>Room 2:</h5>
+    <button onclick="joinRoom('test2')">Join</button>
+    <button onclick="sendStream('test2')">Send another Stream</button>
+    <button onclick="leaveRoom('test2')">Leave</button>
+
+    <hr>
+
+    <h4>Result</h4>
+    <small>Your local media stream is in low opacity. Additional streams will be red bordered.</small>
+    <h5>Room 1</h5>
+    <div id="videoList1"></div>
+
+    <h5>Room 2</h5>
+    <div id="videoList2"></div>
+
   </div>
-  
+
   <script src="../publish/skylink.complete.js"></script>
-  
+
   <script>
-    globals.apiKey = '5f874168-0079-46fc-ab9d-13931c2baa39';
+    window.onload = function () {
+      globals.apiKey = '5f874168-0079-46fc-ab9d-13931c2baa39';
 
-    var room, room2;
-    var stream, stream2;
-    var extraStreams = {}, extraStreams2 = {};
-    var peerList = [], peerList2 = [];
-    var audioTrackListDom = document.getElementById('audioTrackList');
-    var videoTrackListDom = document.getElementById('videoTrackList');
-    
+      var availableRooms = ['test1', 'test2'];
 
-    function start () {
-      room = new Room('test', handler);
-    }
-    
-    function handler (event, data) {
-      console.log(event, data);
+      var room1, room2;
       
-      if (event === 'room:start') {
-        stream = new Stream(null, { 
-          audio: { sourceId: audioTrackListDom.value },
-          video: { sourceId: videoTrackListDom.value }
-          
-        }, handler);
+      var stream1, stream2;
+      
+      var videoListDom1 = document.getElementById('videoList1');
+      var videoListDom2 = document.getElementById('videoList2');
+
+      var audioTrackListDom = document.getElementById('audioTrackList');
+      var videoTrackListDom = document.getElementById('videoTrackList');
+
+
+      StreamTrackList.get(function (sources) {
+        fn.forEach(sources.audio, function (value) {
+          var option = document.createElement('option');
+          option.value = value.id;
+          option.innerHTML = value.label;
+
+          audioTrackListDom.appendChild(option);
+        });
+
+        fn.forEach(sources.video, function (value) {
+          var option = document.createElement('option');
+          option.value = value.id;
+          option.innerHTML = value.label;
+
+          videoTrackListDom.appendChild(option);
+        });
+      });
+
+      function getStream(defer) {
+        var stream = new Stream(null, {
+          audio: {
+            sourceId: audioTrackListDom.value
+          },
+          video: {
+            sourceId: videoTrackListDom.value
+          }
+
+        }, function (event, data) {
+          if (event === 'stream:start') {
+            defer(stream);
+          }
+        });
       }
-      
-      if (event === 'room:connect') {
-        attachStream('local', stream);
-      }
-      
-      if (event === 'stream:start') {
-        if (data.id === stream.id) {
-          room.join(stream); 
+
+      function attachStream(stream, data) {
+        var room = data.roomName || data.name;
+        var peerId = data.id || 'main';
+        var userId = data.userId;
+        
+        var video = document.createElement('video');
+        video.autoplay = 'autoplay';
+
+        if (stream.sourceType === 'local') {
+          video.style.opacity = '0.5';
+
+          if (room === 'test1' ? stream.id !== stream1.id : stream.id !== stream2.id) {
+            video.style.border = 'solid 2px red';
+          }
+  
+        } else {
+          if (peerId !== 'main') {
+            video.style.border = 'solid 2px red';
+          }
         }
-        if (Object.keys(extraStreams).indexOf(data.id) > -1) {
-          peerList.forEach(function (userId) {
-            room.sendNewStream( extraStreams[data.id], userId );
+
+        var videoDom = document.createElement('div');
+        videoDom.className = 'video-item';
+        videoDom.id = room + '-' + userId + '-' + peerId;
+        videoDom.innerHTML = '<span>' + userId + '</span>';
+
+        if (room === 'test1') {
+          videoListDom1.appendChild(videoDom);
+        } else {
+          videoListDom2.appendChild(videoDom);
+        }
+
+        videoDom.appendChild(video);
+        stream.attachElement(video);
+      }
+
+      function handler(event, data) {
+        if (event === 'room:start') {
+          getStream(function (stream) {
+            if (data.name === 'test1') {
+              stream1 = stream;
+              room1.join(stream);
+            } else {
+              stream2 = stream;
+              room2.join(stream);
+            }
           });
         }
-      }
-      
-      if (event === 'peer:remotestream') {
-        if (peerList.indexOf(data.userId) === -1) {
-          peerList.push(data.userId);
+        
+        if (event === 'room:join') {
+          if (data.name === 'test1') {
+            attachStream(stream1, data);
+          } else {
+            attachStream(stream2, data);
+          }
         }
-        attachStream(data.userId + '-' + data.id, data.stream);
-      }
-    }
-    
-    function attachStream(id, stream) {
-      var video = document.createElement('video');
-      video.id = id;
-      video.autoplay = 'autoplay';
-      
-      document.getElementById('videoList').appendChild(video);
+
+        if (event === 'peer:stream' && data.sourceType === 'remote') {
+          attachStream(data.stream, data);
+        }
+        
+        if (event === 'room:leave') {
+          if (data.name === 'test1') {
+            stream1.stop();
+            videoListDom1.innerHTML = '';
+          } else {
+            stream2.stop();
+            videoListDom2.innerHTML = '';
+          }
+        }
+        
+        if (event === 'peer:disconnect') {
+          var id = data.roomName + '-' + data.userId + '-' + (data.id || '');
+          var element = document.getElementById(id);
   
-      stream.attachElement(video);
-    }
-    
-    function addStream() {
-      var newStream = new Stream(null, { 
-        audio: { sourceId: audioTrackListDom.value },
-        video: { sourceId: videoTrackListDom.value }
-      }, function (event, data) {
-        if (event === 'stream:start') {
-          extraStreams[newStream.id] = newStream;
-        }
-        handler(event, data);
-      });
-    }
-    
-    
-    function start2 () {
-      room2 = new Room('test2', handler2);
-    }
-    
-    function handler2 (event, data) {
-      console.log(event, data);
-      
-      if (event === 'room:start') {
-        stream2 = new Stream(null, { 
-          audio: { sourceId: audioTrackListDom.value },
-          video: { sourceId: videoTrackListDom.value }
-          
-        }, handler2);
-      }
-      
-      if (event === 'room:connect') {
-        attachStream2('local', stream2);
-      }
-      
-      if (event === 'stream:start') {
-        if (data.id === stream2.id) {
-          room2.join(stream2); 
-        }
-        if (Object.keys(extraStreams2).indexOf(data.id) > -1) {
-          peerList2.forEach(function (userId) {
-            room2.sendNewStream( extraStreams2[data.id], userId );
-          });
+          if (data.roomName === 'test1') {
+            videoListDom1.removeChild(element);
+          } else {
+            videoListDom2.removeChild(element);
+          }
         }
       }
-      
-      if (event === 'peer:remotestream') {
-        if (peerList2.indexOf(data.userId) === -1) {
-          peerList2.push(data.userId);
+
+      joinRoom = function (name) {
+        switch (name) {
+        case 'test1':
+          if (!room1) {
+            room1 = new Room(name, handler);
+          } else {
+            throw new Error('You have already joined room1');
+          }
+          break;
+        case 'test2':
+          if (!room2) {
+            room2 = new Room(name, handler);
+          } else {
+            throw new Error('You have already joined room2');
+          }
         }
-        attachStream2(data.userId + '-' + data.id, data.stream);
       }
-    }
-    
-    function attachStream2(id, stream) {
-      var video = document.createElement('video');
-      video.id = id;
-      video.autoplay = 'autoplay';
-      
-      document.getElementById('videoList2').appendChild(video);
-  
-      stream.attachElement(video);
-    }
-    
-    function addStream2() {
-      var newStream = new Stream(null, { 
-        audio: { sourceId: audioTrackListDom.value },
-        video: { sourceId: videoTrackListDom.value }
-      }, function (event, data) {
-        if (event === 'stream:start') {
-          extraStream2s[newStream.id] = newStream;
+
+      leaveRoom = function (name) {
+        switch (name) {
+        case 'test1':
+          if (room1) {
+            room1.leave();
+          } else {
+            throw new Error('You are not in room1');
+          }
+          break;
+        case 'test2':
+          if (room2) {
+            room2.leave();
+          } else {
+            throw new Error('You are not in room2');
+          }
         }
-        handler2(event, data);
-      });
-    }
-    
-    StreamTrackList.onReady = function () {
-      StreamTrackList.audio.forEach(function(value) {
-        var option = document.createElement('option');
-        option.value = value.id;
-        option.innerHTML = value.label;
-  
-        document.getElementById('audioTrackList').appendChild(option);
-      });
-      
-      StreamTrackList.video.forEach(function(value) {
-        var option = document.createElement('option');
-        option.value = value.id;
-        option.innerHTML = value.label;
-  
-        document.getElementById('videoTrackList').appendChild(option);
-      });
+      }
+
+      sendStream = function (name) {
+        switch (name) {
+        case 'test1':
+          if (room1) {
+            getStream(function (stream) {
+              room1.addStreamConnection(stream);
+            });
+
+          } else {
+            throw new Error('You are not in room1');
+          }
+          break;
+        case 'test2':
+          if (room2) {
+            getStream(function (stream) {
+              room2.addStreamConnection(stream);
+            });
+
+          } else {
+            throw new Error('You are not in room2');
+          }
+        }
+      }
     };
-
   </script>
 </body>
 

@@ -1,23 +1,24 @@
-<ul id="api-list" class="nav navbar-nav navbar-right">
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
-      {{#classes}}
-        <li><a href="{{../projectRoot}}classes/{{name}}.html">{{displayName}}</a></li>
-      {{/classes}}
-    </ul>
-  </li>
-  <!--<li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="#api-modules">View all Modules</a></li>
-      {{#allModules}}
-        <li><a href="{{../projectRoot}}modules/{{name}}.html">{{displayName}}</a></li>
-      {{/allModules}}
-    </ul>
-  </li>-->
-  <li><a href="https://temasys.github.io">Getting Started</a></li>
-</ul>
+<!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <img src="{{projectAssets}}/img/logo.svg" / data="{{url}}"><span>JS</span>
+      <small>Version: {{projectVersion}}</small>
+    </li>
+    <hr>
+    {{#classes}}
+      <li><a href="{{../projectRoot}}classes/{{name}}.html">{{displayName}} <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    {{/classes}}
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
 <!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
   <div id="api-tabview-filter" class="form-group">
     <input type="search" id="api-filter" placeholder="Type to filter APIs">

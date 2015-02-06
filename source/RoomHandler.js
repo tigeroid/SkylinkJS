@@ -1,13 +1,13 @@
 /**
- * Stores the room class events.
- * @attribute RoomHandlerEvent
+ * Handles all the events received from sub classes.
+ * @attribute RoomEventReceivedHandler
  * @for Room
  * @since 0.6.0
  */
-var RoomHandlerEvent = {
-  
+var RoomEventReceivedHandler = {
+
   socket: {
-    
+
     connect: function (com, data, listener) {
       com.socket.send({
         type: 'joinRoom',
@@ -20,34 +20,70 @@ var RoomHandlerEvent = {
         roomCred: com.token,
         start: com.startDateTime,
         len: com.duration
-      });  
-    },
-    
-    disconnect: function (com, data, listener) {
-      listener('room:leave', {
-        id: com.id,
-        name: com.name
       });
+    },
+
+    disconnect: function (com, data, listener) {
+      com.handler('room:leave', {});
 
       if (typeof com.onleave === 'function') {
         com.onleave();
       }
     },
-    
+
     error: function (com, data, listener) {
-      com.handler('trigger:error', {
+      com.handler('room:error', {
         error: data,
         state: -2
       });
     }
   },
+
+  user: {
+    start: function (com, data, listener) {
+      var user = com.users[data.mid];
+
+      // Get stream
+      var connection = com.self.streams[data.prid];
+
+      // Check if stream connection exists
+      if (!fn.isEmpty(connection)) {
+        data.stream = connection.stream;
+      }
+
+      data.iceServers = com.iceServers;
+
+      user.handler('message:' + data.type, data);
+    }
+  },
   
   peer: {
+    connect: function (com, data, listener) {
+      var user = com.users[data.userId];
+      var userInfo = user.getInfo();
+  
+      // Send welcome after creating object
+      if (data.SDPType === 'answer') {
+        com.socket.send({
+          type: 'welcome',
+          mid: com.self.id,
+          rid: com.id,
+          prid: data.id,
+          agent: window.webrtcDetectedBrowser,
+          version: window.webrtcDetectedVersion,
+          webRTCType: window.webrtcDetectedType,
+          userInfo: com.self.getInfo(data.id),
+          target: data.userId,
+          weight: data.weight
+        });
+      }
+    },
+    
     offer: {
       success: function (com, data, listener) {
         com.socket.send({
           type: 'offer',
-          sdp: data.sdp,
+          sdp: data.offer.sdp,
           prid: data.id,
           mid: com.self.id,
           target: data.userId,
@@ -55,12 +91,12 @@ var RoomHandlerEvent = {
         });
       }
     },
-    
+
     answer: {
       success: function (com, data, listener) {
         com.socket.send({
           type: 'answer',
-          sdp: data.sdp,
+          sdp: data.answer.sdp,
           prid: data.id,
           mid: com.self.id,
           target: data.userId,
@@ -68,7 +104,7 @@ var RoomHandlerEvent = {
         });
       }
     },
-    
+
     icecandidate: function (com, data, listener) {
       if (data.sourceType === 'local') {
         com.socket.send({
@@ -83,34 +119,39 @@ var RoomHandlerEvent = {
         });
       }
     }
-  },
-  
-  trigger: {
-    /**
-     * Handles the ice gathering state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    error: function (com, data, listener) {
-      com.readyState = data.state;
-  
-      listener('room:error', {
-        id: com.id,
-        name: com.name,
+  }
+};
+
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute RoomEventResponseHandler
+ * @for Room
+ * @since 0.6.0
+ */
+var RoomEventResponseHandler = {
+  /**
+   * Handles the error state trigger.
+   * @property error
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  error: function (com, data, listener) {
+    com.readyState = data.state;
+
+    com.handler('room:error', {
+      error: data.error,
+      state: data.state
+    });
+
+    if (typeof com.onerror === 'function') {
+      com.onerror({
         error: data.error,
         state: data.state
       });
-
-      if (typeof com.onerror === 'function') {
-        com.onerror({
-          error: data.error,
-          state: data.state
-        });
-      }
     }
   }
+
 };
 
 /**
@@ -120,15 +161,23 @@ var RoomHandlerEvent = {
  * @since 0.6.0
  */
 var RoomHandler = function (com, event, data, listener) {
-  if (event.indexOf('trigger:') !== 0) {
+  var params = event.split(':');
+
+  // Class events
+  if (event.indexOf('room:') === 0) {
+    data.name = com.name;
+
+    fn.applyHandler(RoomEventResponseHandler, params, [com, data, listener]);
+
+  } else {
     data.roomName = com.name;
 
-    listener(event, data);
+    fn.applyHandler(RoomEventReceivedHandler, params, [com, data, listener]);
   }
+
+  listener(event, data);
   
-  var params = event.split(':');
-  
-  fn.applyHandler(RoomHandlerEvent, params, [com, data, listener]);
+  log.debug('RoomHandler', event, data);
 };
 
 /**
@@ -147,7 +196,7 @@ var MessageHandlerEvent = {
    */
   inRoom: function (com, data, listener) {
     com.self.id = data.sid;
-    
+
     com.iceServers = data.pc_config;
 
     com.socket.send({
@@ -158,19 +207,20 @@ var MessageHandlerEvent = {
       agent: window.webrtcDetectedBrowser,
       version: window.webrtcDetectedVersion,
       webRTCType: window.webrtcDetectedType,
-      userInfo: com.self.getInfo()
+      userInfo: com.self.getInfo('main')
     });
-    
-    listener('room:join', {
-      name: com.name,
-      userId: com.self.id
+
+    com.handler('room:join', {
+      userId: com.self.id,
+      user: com.self,
+      isSelf: true
     });
-  
+
     if (typeof com.onjoin === 'function') {
       com.onjoin(data.mid);
     }
   },
-  
+
   /**
    * User has sent self an enter.
    * @property enter
@@ -179,22 +229,15 @@ var MessageHandlerEvent = {
    * @since 0.6.0
    */
   enter: function (com, data, listener) {
-    com.handshake(data);
-
-    com.socket.send({
-      type: 'welcome',
-      mid: com.self.id,
-      rid: com.id,
-      prid: data.prid,
-      agent: window.webrtcDetectedBrowser,
-      version: window.webrtcDetectedVersion,
-      webRTCType: window.webrtcDetectedType,
-      userInfo: com.self.getInfo(),
-      target: data.mid,
-      weight: com.users[data.mid].peers[data.prid].weight
-    });
+    var user = com.users[data.mid];
+    
+    if (fn.isEmpty(user)) {
+      user = new User(data, com.handler);
+      
+      com.users[data.mid] = user;
+    }
   },
-  
+
   /**
    * User has sent self an welcome.
    * @property enter
@@ -203,9 +246,15 @@ var MessageHandlerEvent = {
    * @since 0.6.0
    */
   welcome: function (com, data, listener) {
-    com.handshake(data);
+    var user = com.users[data.mid];
+    
+    if (fn.isEmpty(user)) {
+      user = new User(data, com.handler);
+      
+      com.users[data.mid] = user;
+    }
   },
-  
+
   /**
    * A user has sent an offer to self.
    * @property offer
@@ -216,9 +265,11 @@ var MessageHandlerEvent = {
   offer: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:handshake', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:offer', data);
+    }
   },
-  
+
   /**
    * A user has sent an answer to self.
    * @property answer
@@ -229,9 +280,11 @@ var MessageHandlerEvent = {
   answer: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:handshake', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:answer', data);
+    }
   },
-  
+
   /**
    * A user has sent an ICE candidate to self.
    * @property candidate
@@ -242,9 +295,11 @@ var MessageHandlerEvent = {
   candidate: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:candidate', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:candidate', data);
+    }
   },
-  
+
   /**
    * A user has updated their own custom user data.
    * @property updateUserEvent
@@ -255,9 +310,11 @@ var MessageHandlerEvent = {
   updateUserEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:update', data.userData);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:updateUserEvent', data.userData);
+    }
   },
-  
+
   /**
    * An audio stream muted status has been updated.
    * @property muteAudioEvent
@@ -268,11 +325,11 @@ var MessageHandlerEvent = {
   muteAudioEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    data.kind = 'audio';
-
-    user.handler('trigger:mutestream', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:muteAudioEvent', data);
+    }
   },
-  
+
   /**
    * A video stream muted status has been updated.
    * @property muteVideoEvent
@@ -283,11 +340,11 @@ var MessageHandlerEvent = {
   muteVideoEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    data.kind = 'video';
-
-    user.handler('trigger:mutestream', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:muteVideoEvent', data);
+    }
   },
-  
+
   /**
    * The room is lock status has been updated.
    * @property roomLockEvent
@@ -309,7 +366,7 @@ var MessageHandlerEvent = {
       }
     }
   },
-  
+
   /**
    * The room is lock status has been updated.
    * @property roomLockEvent
@@ -320,9 +377,11 @@ var MessageHandlerEvent = {
   restart: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:restart', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:restart', data);
+    }
   },
-  
+
   /**
    * The self is redirected or warned.
    * @property redirect
@@ -337,9 +396,11 @@ var MessageHandlerEvent = {
           message: data.info,
           reason: data.reason
         });
+        
+        com.leave();
       }
     }
-    
+
     if (data.action === 'warning') {
       if (typeof com.onwarn === 'function') {
         com.onwarn({
@@ -349,7 +410,7 @@ var MessageHandlerEvent = {
       }
     }
   },
-  
+
   /**
    * The a user or self is disconnected from room.
    * @property bye
@@ -360,9 +421,11 @@ var MessageHandlerEvent = {
   bye: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.disconnect();
-  }  
-    
+    if (!fn.isEmpty(user)) {
+      user.disconnect();
+    }
+  }
+
 };
 
 /**

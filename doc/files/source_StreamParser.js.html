@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>source/StreamParser.js - skylinkjs</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
+      <small>Version: 0.5.7</small>
+    </li>
+    <hr>
+    
+      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      
+      <div class="content content-main">
+        <h1 class="file-heading">File: source/StreamParser.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles the parsing of Stream / Bandwidth settings.
+ * @attribute StreamParser
+ * @for Skylink
+ * @since 0.6.0
+ */
+var StreamParser = {
+  /**
+   * Stores the default Stream / Bandwidth settings.
+   * @property defaultConfig
+   * @param {JSON} audio The default audio settings.
+   * @param {Boolean} audio.stereo The default flag to indicate if stereo is enabled.
+   * @param {JSON} video The default video settings.
+   * @param {JSON} video.resolution The default video resolution.
+   * @param {Integer} video.resolution.width The default video resolution width.
+   * @param {Integer} video.resolution.height The default video resolution height.
+   * @param {Integer} video.frameRate The default video maximum framerate.
+   * @param {JSON} bandwidth The default bandwidth streaming settings.
+   * @param {Integer} bandwidth.audio The default audio bandwidth bitrate.
+   * @param {Integer} bandwidth.video The default video bandwidth bitrate.
+   * @param {Integer} bandwidth.data The default DataChannel data bandwidth bitrate.
+   * @type JSON
+   * @private
+   * @since 0.6.0
+   */
+  defaultConfig: {
+    audio: {
+      stereo: false
+    },
+    video: {
+      resolution: {
+        width: 640,
+        height: 480
+      },
+      frameRate: 50
+    },
+    bandwidth: {
+      audio: 50,
+      video: 256,
+      data: 1638400
+    }
+  },
+  
+  /**
+   * Parses the audio configuration for the getUserMedia constraints.
+   * @property parseAudioConfig
+   * @param {JSON|Boolean} options The audio settings or flag if audio is enabled.
+   * @param {Boolean} options.stereo The flag to indicate if stereo is enabled.
+   * @type Function
+   * @return {JSON}
+   * - options: The configuration.
+   * - userMedia: The getUserMedia constraints.
+   * @private
+   * @since 0.6.0
+   */
+  parseAudioConfig: function (options) {
+    options = (typeof options === &#x27;object&#x27;) ? options : !!options;
+
+    var userMedia = false;
+    var tempOptions = {};
+  
+    // Cleaning of unwanted keys
+    if (options !== false) {
+      options = (typeof options === &#x27;boolean&#x27;) ? {} : options;
+      tempOptions.stereo = !!options.stereo;
+      tempOptions.sourceId = options.sourceId;
+
+      options = tempOptions;
+    }
+
+    userMedia = (typeof options === &#x27;object&#x27;) ?
+      true : options;
+
+    // Add video sourceId
+    if (tempOptions.sourceId &amp;&amp; tempOptions.audio !== false) {
+      userMedia = { optional: [{ sourceId: tempOptions.sourceId }] };
+    }
+
+    return {
+      settings: options,
+      userMedia: userMedia
+    };
+  },
+  
+  /**
+   * Parses the video configuration for the getUserMedia constraints.
+   * @property parseVideoConfig
+   * @param {JSON} options The video settings.
+   * @param {JSON} options.resolution The video resolution.
+   * @param {Integer} options.resolution.width The video resolution width.
+   * @param {Integer} options.resolution.height The video resolution height.
+   * @param {Integer} options.frameRate The video maximum framerate.
+   * @type Function
+   * @return {JSON}
+   * - options: The configuration.
+   * - userMedia: The getUserMedia constraints.
+   * @private
+   * @since 0.6.0
+   */
+  parseVideoConfig: function (options) {
+    options = (typeof options === &#x27;object&#x27;) ?
+    options : !!options;
+
+    var userMedia = false;
+    var tempOptions = {};
+
+    // Cleaning of unwanted keys
+    if (options !== false) {
+      options = (typeof options === &#x27;boolean&#x27;) ?
+        { resolution: {} } : options;
+      
+      // set the resolution parsing
+      options.resolution = options.resolution || {};
+      
+      tempOptions.resolution = tempOptions.resolution || {};
+      
+      // set resolution
+      tempOptions.resolution.width = options.resolution.width ||
+        this.defaultConfig.video.resolution.width;
+      
+      tempOptions.resolution.height = options.resolution.height ||
+        this.defaultConfig.video.resolution.height;
+      
+      // set the framerate
+      tempOptions.frameRate = options.frameRate ||
+        this.defaultConfig.video.frameRate;
+      
+      // set the sourceid
+      tempOptions.sourceId = options.sourceId;
+      
+      options = tempOptions;
+
+      userMedia = {
+        mandatory: {
+          //minWidth: tempOptions.resolution.width,
+          //minHeight: tempOptions.resolution.height,
+          maxWidth: tempOptions.resolution.width,
+          maxHeight: tempOptions.resolution.height,
+          //minFrameRate: tempOptions.frameRate,
+          maxFrameRate: tempOptions.frameRate
+        },
+        optional: []
+      };
+      
+      // Add video sourceId
+      if (tempOptions.sourceId) {
+        userMedia.optional[0] = { sourceId: tempOptions.sourceId };
+      }
+
+      //Remove maxFrameRate for AdapterJS to work with Safari
+      if (window.webrtcDetectedType === &#x27;plugin&#x27;) {
+        delete userMedia.mandatory.maxFrameRate;
+      }
+    }
+
+    return {
+      settings: options,
+      userMedia: userMedia
+    };
+  },
+  
+  /**
+   * Parses the bandwidth configuration.
+   * - In low-bandwidth environment, it&#x27;s mostly managed by the browser.
+   *   However, this option enables you to set low bandwidth for high-bandwidth
+   *   environment whichever way is possible.
+   * @property parseBandwidthConfig
+   * @param {JSON} options The bandwidth streaming settings.
+   * @param {Integer} options.audio The audio bandwidth bitrate.
+   * @param {Integer} options.video The video bandwidth bitrate.
+   * @param {Integer} options.data The DataChannel data bandwidth bitrate.
+   * @type Function
+   * @return {JSON}
+   * - options: The configuration.
+   * - userMedia: The getUserMedia constraints.
+   * @private
+   * @since 0.6.0
+   */
+  parseBandwidthConfig: function (options) {
+    options = (typeof options === &#x27;object&#x27;) ? options : {};
+
+    // set audio bandwidth
+    options.audio = (typeof options.audio === &#x27;number&#x27;) ?
+      options.audio : this.defaultConfig.bandwidth.audio;
+    
+    // set video bandwidth
+    options.video = (typeof options.video === &#x27;number&#x27;) ?
+      options.video : this.defaultConfig.bandwidth.video;
+    
+    // set data bandwidth
+    options.data = (typeof options.data === &#x27;number&#x27;) ?
+      options.data : this.defaultConfig.bandwidth.data;
+
+    // set the settings
+    return options;
+  },
+  
+  /**
+   * Parses the stream muted configuration.
+   * @property parseMutedConfig
+   * @param {JSON} options The stream muted settings.
+   * @param {Integer} options.audioMuted The flag to indicate if audio stream is muted.
+   * @param {Integer} options.videoMuted The flag to indicate if video stream is muted.
+   * @type Function
+   * @return {JSON}
+   * - options: The configuration.
+   * - userMedia: The getUserMedia constraints.
+   * @private
+   * @since 0.6.0
+   */
+  parseMutedConfig: function (options) {
+    // the stream options
+    options = (typeof options === &#x27;object&#x27;) ?
+      options : { audio: false, video: false };
+
+    var updateAudioMuted = (typeof options.audio === &#x27;object&#x27;) ?
+      !!options.audio.mute : !options.audio;
+    var updateVideoMuted = (typeof options.video === &#x27;object&#x27;) ?
+      !!options.video.mute : !options.video;
+
+    return {
+      audioMuted: updateAudioMuted,
+      videoMuted: updateVideoMuted
+    };
+  },
+
+  parseDefaultConfig: function (options) {
+    var hasMediaChanged = false;
+
+    // prevent undefined error
+    options = options || {};
+
+    log.debug(&#x27;Parsing stream settings. Default stream options:&#x27;, options);
+
+    options.maxWidth = (typeof options.maxWidth === &#x27;number&#x27;) ? options.maxWidth :
+      640;
+    options.maxHeight = (typeof options.maxHeight === &#x27;number&#x27;) ? options.maxHeight :
+      480;
+
+    // parse video resolution. that&#x27;s for now
+    this.defaultConfig.video.resolution.width = options.maxWidth;
+    this.defaultConfig.video.resolution.height = options.maxHeight;
+
+    log.debug(&#x27;Parsed default media stream settings&#x27;, this.defaultConfig);
+  }
+};
+    </pre>
+</div>
+
+      </div>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

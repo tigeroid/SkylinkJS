@@ -1,5 +1,3 @@
-var log = console;
-
 /**
  * Stores the preferences shared across classes.
  * @attribute globals
@@ -58,7 +56,7 @@ var fn = {
     try {
       return unsafeFn();
     } catch (error){
-      log.warn(error);
+      log.warn('Function', error);
       return false;
     }
   },

@@ -1,0 +1,2382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Socket - skylinkjs</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
+      <small>Version: 0.5.7</small>
+    </li>
+    <hr>
+    
+      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      
+      <div class="content content-main">
+        <div class="jumbotron no-padding">
+  <div class="container">
+    <h1>
+      Socket <span>Class</span>
+      
+        <small>
+          <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l1"><code>source&#x2F;Socket.js:1</code></a>
+        </small>
+      
+      
+        <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+      
+    </h1>
+    <br/>
+  </div>
+</div>
+<div class="page container">
+  <section id="infodocs">
+    <h2>Documentation Notes</h2>
+    <p><p>Handles the Socket connection.</p>
+</p>
+    <hr>
+  </section>
+  <section id="classdocs">
+    <ul class="nav nav-tabs" role="tablist">
+      <li  role="presentation" class="doc-selected active"><a href="#constructor">Constructor</a></li>
+      
+        <li role="presentation" class="doc-selected"><a href="#methods">Methods</a></li>
+      
+      
+      
+         <li role="presentation" class="doc-selected"><a href="#attrs">Attributes</a></li>
+      
+      
+    </ul>
+    <div class="scroll-data"></div>
+  </section>
+</div>
+<br><br>
+<div class="page container">
+  <div id="index" class="api-class-tabpanel index">
+    <ul id="doc-type-select" class="nav nav-pills" role="tablist">
+      <li role="presentation" class="doc-type-select-public active">
+        <a>Developer <span class="doc-private-label">methods</span></a>
+      </li>
+      <li role="presentation" class="doc-type-select-private">
+        <a>Internal <span class="doc-private-label">methods</span></a>
+      </li>
+      <div class="nav-links pull-right">
+        <span><i class="fa fa-external-link"></i>&nbsp;&nbsp;Navigate to</span>
+        <ul>
+          <li> <a href="#attr__SIG_MESSAGE_TYPE"> <i class="fa fa-hand-o-right"></i>Signalling Handshake Messaging </a> </li>
+          <li> <a href="#attr__DC_PROTOCOL_TYPE"> <i class="fa fa-exchange"></i>Datachannel Transfer Protocol </a> </li>
+        </ul>
+      </div>
+    </ul>
+    <div class="section-doc-group">
+      <h2 id="current-doc-selected-title">Methods</h2>
+      <div class="col-md-3">
+        <div></div>
+        <div class="list-group-o-wrapper">
+          <span class="title">Methods</span>
+          <div class="list-group-wrapper">
+            <div class="list-group ">
+              <a href="#method_Socket" class="list-group-item code-menu-item constructor-item">
+                &nbsp;&nbsp;Skylink ()
+              </a>
+              
+                
+                  <a href="#method_bindOnConnect" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;bindOnConnect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_bindOnConnectError" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;bindOnConnectError
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_bindOnDisconnect" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;bindOnDisconnect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_bindOnError" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;bindOnError
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_bindOnMessage" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;bindOnMessage
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_connect" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;connect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_disconnect" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;disconnect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onconnect" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;onconnect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_reconnect" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;reconnect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_respond" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;respond
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_send" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;send
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_WebSocket" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;WebSocket
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_when" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;when
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_XHRPolling" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;XHRPolling
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+              
+              
+              
+                
+                  <a href="#attr_config" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;config
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_messageInterval" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;messageInterval
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_messageQueue" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;messageQueue
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_ports" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;ports
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_protocol" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;protocol
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_readyState" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;readyState
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_responses" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;responses
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_server" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;server
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_server" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;server
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_Socket" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;Socket
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_timeout" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;timeout
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_type" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;type
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+              
+              
+            </div>
+          </div>
+          <div class="scroll-top">
+            <i class="fa fa-arrow-circle-o-up"></i>&nbsp;&nbsp;Scroll to top
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 doc-content">
+        
+        
+          <section id="methods">
+            
+              <div id="method_bindOnConnect" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>bindOnConnect</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l242"><code>source&#x2F;Socket.js:242</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the event when socket is connected to signaling.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_bindOnConnectError" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>bindOnConnectError</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l311"><code>source&#x2F;Socket.js:311</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the event when socket have a connection error.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_bindOnDisconnect" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>bindOnDisconnect</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l267"><code>source&#x2F;Socket.js:267</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the event when socket is disconnected to signaling.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_bindOnError" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>bindOnError</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l351"><code>source&#x2F;Socket.js:351</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the event when socket catches an exception.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_bindOnMessage" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>bindOnMessage</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l284"><code>source&#x2F;Socket.js:284</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the event when socket receives a message from signaling.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_connect" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>connect</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l181"><code>source&#x2F;Socket.js:181</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Starts the connection to the signalling server</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_disconnect" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>disconnect</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l198"><code>source&#x2F;Socket.js:198</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Stops the connection to the Socket.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onconnect" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>onconnect</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l140"><code>source&#x2F;Socket.js:140</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when socket has been connected.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_reconnect" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>reconnect</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l385"><code>source&#x2F;Socket.js:385</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Restarts the connection to the Socket.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_respond" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>respond</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l369"><code>source&#x2F;Socket.js:369</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Responses to the attached socket message responses.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_send" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>send</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l223"><code>source&#x2F;Socket.js:223</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Sends a socket data.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_WebSocket" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>WebSocket</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l411"><code>source&#x2F;Socket.js:411</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Creates a WebSocket connection in socket.io.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_when" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>when</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l210"><code>source&#x2F;Socket.js:210</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Attaches a listener to a particular socket message event received.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_XHRPolling" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>XHRPolling</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l439"><code>source&#x2F;Socket.js:439</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Creates a XHR Long-polling connection in socket.io.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+          </section>
+        
+        
+        
+          <section id="attrs">
+            
+              <div id="attr_config" class="code-item attr item private-attr-item ">
+  <a name="config_config"></a> 
+  <h3 class="code-item-name"><code>config</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l99"><code>source&#x2F;Socket.js:99</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The socket configuratin.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_messageInterval" class="code-item attr item private-attr-item ">
+  <a name="config_messageInterval"></a> 
+  <h3 class="code-item-name"><code>messageInterval</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Integer<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l53"><code>source&#x2F;Socket.js:53</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The interval to wait before sending the next message.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_messageQueue" class="code-item attr item private-attr-item ">
+  <a name="config_messageQueue"></a> 
+  <h3 class="code-item-name"><code>messageQueue</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Array<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l63"><code>source&#x2F;Socket.js:63</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The queue of messages (throttle) before sending the next</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_ports" class="code-item attr item private-attr-item ">
+  <a name="config_ports"></a> 
+  <h3 class="code-item-name"><code>ports</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l84"><code>source&#x2F;Socket.js:84</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The list of available signalling server ports.</p>
+
+  </div>
+
+  
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Keys:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">http:</code>
+            <span class="type"><b>{</b>Array<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The list of Http ports.</p>
+
+            </div>
+
+            
+          </li>
+      
+          <li class="param">
+            <code class="param-name">https:</code>
+            <span class="type"><b>{</b>Array<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The list of Https ports.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_protocol" class="code-item attr item private-attr-item ">
+  <a name="config_protocol"></a> 
+  <h3 class="code-item-name"><code>protocol</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l23"><code>source&#x2F;Socket.js:23</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The signalling server protocol to connect with.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_readyState" class="code-item attr item private-attr-item ">
+  <a name="config_readyState"></a> 
+  <h3 class="code-item-name"><code>readyState</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-warning" title="This attribute is required for communication.">required</span>
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l73"><code>source&#x2F;Socket.js:73</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The socket readyState.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_responses" class="code-item attr item private-attr-item ">
+  <a name="config_responses"></a> 
+  <h3 class="code-item-name"><code>responses</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l129"><code>source&#x2F;Socket.js:129</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The responses attached to message events.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_server" class="code-item attr item private-attr-item ">
+  <a name="config_server"></a> 
+  <h3 class="code-item-name"><code>server</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l33"><code>source&#x2F;Socket.js:33</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The signalling server port to connect with.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_server" class="code-item attr item private-attr-item ">
+  <a name="config_server"></a> 
+  <h3 class="code-item-name"><code>server</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l13"><code>source&#x2F;Socket.js:13</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The signalling server.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_Socket" class="code-item attr item private-attr-item ">
+  <a name="config_Socket"></a> 
+  <h3 class="code-item-name"><code>Socket</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Object<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l119"><code>source&#x2F;Socket.js:119</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The Socket.io object.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_timeout" class="code-item attr item private-attr-item ">
+  <a name="config_timeout"></a> 
+  <h3 class="code-item-name"><code>timeout</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Integer<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l43"><code>source&#x2F;Socket.js:43</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The timeout the Socket should wait for before throwing an error.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_type" class="code-item attr item private-attr-item ">
+  <a name="config_type"></a> 
+  <h3 class="code-item-name"><code>type</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l109"><code>source&#x2F;Socket.js:109</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The type of socket connection.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+          </section>
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+
+
+
+
+
+
+
+-->
+
+      </div>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -32,7 +32,7 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.data = config.userInfo.data || {};
+  com.data = config.userInfo.userData || {};
 
   /**
    * Stores the browser agent information.
@@ -45,16 +45,6 @@ function User (config, listener) {
   com.agent = config.agent || {};
   
   /**
-   * Stores the bandwidth configuration.
-   * @attribute bandwidth
-   * @type JSON
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.bandwidth = config.userInfo.settings.bandwidth || {};
-  
-  /**
    * Stores the list of peer connections to user.
    * @attribute peers
    * @type JSON
@@ -63,6 +53,16 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.peers = {};
+  
+  /**
+   * Stores the list of peer streaming configuration.
+   * @attribute streamingConfigs
+   * @type JSON
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.streamingConfigs = {};
   
   /**
    * The handler that manages all triggers or relaying events.
@@ -141,30 +141,18 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.addConnection = function (data, stream) {
-    console.info(data.iceServers);
-  
     var peerConfig = {
       id: data.prid,
       constraints: data.iceServers,
       bandwidth: data.bandwidth,
-      streamingConfig: {
-        audio: fn.isSafe(function () { 
-          return data.userInfo.settings.audio;
-        }),
-        video: fn.isSafe(function () { 
-          return data.userInfo.settings.video;
-        }),
-        status: fn.isSafe(function () { 
-          return data.userInfo.settings.mediaStatus;
-        })
-      }
+      streamingConfig: data.settings
     };
     
     var peer = new Peer(peerConfig, com.handler);
-
-    console.info('data:', stream);
-
+    
     peer.connect(stream);
+    
+    peer.SDPType = data.SDPType;
     
     com.peers[peer.id] = peer;
   };
@@ -176,7 +164,11 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.removeConnection = function (peerId) {
-    com.peers[peerId].disconnect();
+    var peer = com.peers[peerId];
+    
+    if (!fn.isEmpty(peer)) {
+      peer.disconnect();
+    }
   };
 
   /**
@@ -192,49 +184,41 @@ function User (config, listener) {
   };
   
   /**
+   * Updates this user information.
+   * @method getInfo
+   * @for User
+   * @since 0.6.0
+   */
+  com.update = function (data) {
+    com.data = data;
+    
+    com.handler('user:update', {
+      data: com.data
+    });
+  };
+  
+  /**
    * Gets this user information.
    * @method getInfo
    * @for User
    * @since 0.6.0
    */
-  com.getInfo = function () {
+  com.getInfo = function (peerId) {
     var data = {};
     
     data.userData = com.data;
     
     data.agent = com.agent;
     
-    data.settings = {};
+    data.settings = com.streamingConfigs;
     
-    if (fn.isEmpty(com.peers)) {
-      return data;
-    
-    } else {
-      fn.forEach(com.peers, function (peer, id) {
-        var stream = peer.stream;
-
-        // Check if there is stream
-        if (!fn.isEmpty(stream)) {
-          data.settings[stream.id] = {
-            audio: stream.config.audio,
-            video: stream.config.video,
-            mediaStatus: stream.config.status,
-            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
-          };
-        
-        // No stream
-        } else {
-          data.settings[id] = {
-            audio: false,
-            video: false,
-            mediaStatus: { audioMuted: true, videoMuted: true },
-            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
-          };
-        }
-      
-      }, function () {
-        return data;
-      });
-    }
+    return data;
   };
+  
+  // Add the main streaming config
+  com.streamingConfigs[config.prid] = config.settings;
+
+  fn.runSync(function () {
+    com.handler('user:start', config);
+  });
 }

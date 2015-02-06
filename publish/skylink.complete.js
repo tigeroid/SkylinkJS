@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-05 */
+/*! skylinkjs - v0.5.7 - 2015-02-06 */
 
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -7690,21 +7690,8 @@ if (navigator.mozGetUserMedia) {
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
 
-/*! skylinkjs - v0.5.7 - 2015-02-05 */
+/*! skylinkjs - v0.5.7 - 2015-02-06 */
 
-var log = console;
-
-/**
- * Stores the preferences shared across classes.
- * @attribute globals
- * @type JSON
- * @param {String} apiKey The developer API Key.
- * @param {String} region The regional server to connect to.
- * @param {String} defaultRoom The default room that joinRoom should connect to.
- * @private
- * @for Skylink
- * @since 0.6.0
- */
 var globals = {
   apiKey: null,
 
@@ -7752,7 +7739,7 @@ var fn = {
     try {
       return unsafeFn();
     } catch (error){
-      log.warn(error);
+      log.warn('Function', error);
       return false;
     }
   },
@@ -7897,17 +7884,17 @@ var Debugger = {
   logs: [],
   
   console: {
-    log: window.console.log.bind(window.console, LogKey + '%s'),
+    log: window.console.log.bind(window.console, LogKey + '<<%s>> %s'),
     
-    error: window.console.error.bind(window.console, LogKey + '%s'),
+    error: window.console.error.bind(window.console, LogKey + '<<%s>> %s'),
     
     info: window.console.info.bind(window.console, 
-      (window.webrtcDetectedBrowser === 'safari' ? 'INFO: ' : '') + LogKey + '%s'),
+      (window.webrtcDetectedBrowser === 'safari' ? 'INFO: ' : '') + LogKey + '<<%s>> %s'),
     
-    warn: window.console.warn.bind(window.console, LogKey + '%s'),
+    warn: window.console.warn.bind(window.console, LogKey + '<<%s>> %s'),
 
     debug: window.console.newDebug.bind(window.console, 
-      (typeof window.console.debug !== 'function' ? 'DEBUG: ' : '') + LogKey + '%s')
+      (typeof window.console.debug !== 'function' ? 'DEBUG: ' : '') + LogKey + '<<%s>> %s')
   },
   
   traceTemplate: {
@@ -7934,7 +7921,7 @@ var Debugger = {
 
   setLevel: function (inputLevel) {
     // Debug level
-    if (inputLevel === 4) {
+    if (inputLevel > 3) {
       log.debug = this.applyConsole('debug');
     
     } else {
@@ -7990,11 +7977,16 @@ var Debugger = {
   }
 };
 
-Debugger.setLevel(2);
+Debugger.setLevel(4);
 
 var Skylink = {};
 
 var rooms = [];
+
+var Config = function (options) {
+  globals.apiKey = options.apiKey;
+  
+};
 
 Skylink.init = function (apiKey, name, listener) {
   rooms[name] = new Room(name, listener);
@@ -8967,7 +8959,6 @@ var ICE = {
   queueCandidate: function (peer, candidate) {
     peer.queueCandidate = peer.queueCandidate || [];
     peer.queueCandidate.push(candidate);
-    peer.queueCandidateDefer = defer;
   },
   
   popCandidate: function (peer, defer) {
@@ -9052,6 +9043,10 @@ var ICE = {
       peer.newIceConnectionState = newState;
       peer.oniceconnectionnewstatechange(peer);
     }
+  },
+  
+  parseICEServers: function (constraints) {
+    return constraints;
   },
   
   parseSTUNServers: function (constraints) {
@@ -9140,6 +9135,26 @@ function Peer(config, listener) {
   com.datachannels = {};
   
   /**
+   * The flag that indicates if trickle ICE is enable for this PeerConnection.
+   * @attribute iceTrickle
+   * @type Boolean
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.iceTrickle = true;
+  
+  /**
+   * The timeout that would react if PeerConnection is unstable and refresh connection.
+   * @attribute healthTimer
+   * @type Function
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.healthTimer = null;
+  
+  /**
    * The stream send from this peer.
    * @attribute stream
    * @type Stream
@@ -9148,6 +9163,21 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.stream = null;
+  
+  /**
+   * Stores the streaming configuration.
+   * @attribute streamingConfig
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.streamingConfig = config.streamingConfig || {
+    bandwidth: {},
+    audio: false,
+    video: false,
+    mediaStatus: { audioMuted: true, videoMuted: true }
+  };
 
   /**
    * The PeerConnection session description constraints.
@@ -9158,9 +9188,9 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.sdpConstraints = {
-    'mandatory': {
-      'OfferToReceiveAudio': true,
-      'OfferToReceiveVideo': true
+    mandatory: {
+      OfferToReceiveAudio: true,
+      OfferToReceiveVideo: true
     }
   };
   
@@ -9197,6 +9227,16 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.RTCPeerConnection = null;
+  
+  /**
+   * The peerconnection weight during handshake.
+   * @attribute weight
+   * @type Integer
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.weight = parseInt(fn.generateUID(), 10);
   
   /**
    * The handler that manages all triggers or relaying events.
@@ -9296,8 +9336,9 @@ function Peer(config, listener) {
       // Check class type
       peer.addStream(stream.MediaStream);
       
-      listener('peer:stream', {
-        id: com.id,
+      window.data = stream.MediaStream;
+
+      com.handler('peer:stream', {
         sourceType: 'local',
         stream: stream
       });
@@ -9334,14 +9375,12 @@ function Peer(config, listener) {
       peer.addStream(stream.MediaStream);
       
       if (hasStream) {
-        listener('peer:localstream', {
-          id: com.id,
-          userId: com.userId,
+        com.handler('peer:stream', {
           stream: stream
         });
       }
       
-      com.handler('trigger:reconnect', peer);
+      com.handler('peer:reconnect', {});
     }
     com.bind(peer);
   };
@@ -9358,7 +9397,8 @@ function Peer(config, listener) {
     if (com.RTCPeerConnection.newSignalingState !== 'closed') {
       com.RTCPeerConnection.close();
     }
-    com.handler('trigger:disconnect');
+    
+    com.handler('peer:disconnect', {});
   };
 
   /**
@@ -9375,23 +9415,52 @@ function Peer(config, listener) {
     bindPeer.newIceConnectionState = 'new';
 
     bindPeer.ondatachannel = function (event) {
-      com.handler('trigger:datachannel', {
-        sourceType: 'remote',
-        channel: event.channel || event
-      }); 
+      var eventChannel = event.channel || event;
+      
+      // Send the channel only when channel has started
+      var channel = new DataChannel(eventChannel, function (event, data) {
+        
+        com.handler(event, data);
+        
+        if (event === 'datachannel:start') {
+          com.handler('peer:datachannel', {
+            channel: channel,
+            sourceType: 'remote'
+          });
+        }
+      });
     };
 
     bindPeer.onaddstream = function (event) {
-      com.handler('trigger:stream', {
-        sourceType: 'remote',
-        stream: event.stream || event
-      }); 
+      var eventStream = event.stream || event;
+  
+      // Send the stream only when stream has started
+      var stream = new Stream(eventStream, config.streamingConfig, function (event, data) {
+        
+        com.handler(event, data);
+  
+        if (event === 'stream:start') {
+          com.handler('peer:stream', {
+            sourceType: 'remote',
+            stream: stream
+          });
+        }
+      });
     };
 
     bindPeer.onicecandidate = function (event) {
-      com.handler('trigger:icecandidate', {
+      var eventCandidate = event.candidate || event;
+  
+      if (fn.isEmpty(eventCandidate.candidate)) {
+        com.handler('candidate:gathered', {
+          candidate: eventCandidate
+        });
+        return;
+      }
+      
+      com.handler('peer:icecandidate', {
         sourceType: 'local',
-        candidate: event.candidate || event
+        candidate: eventCandidate
       }); 
     };
 
@@ -9400,27 +9469,41 @@ function Peer(config, listener) {
     };
 
     bindPeer.oniceconnectionnewstatechange = function (event) {
-      com.handler('trigger:iceconnectionstate', bindPeer); 
+      // Connection is successful
+      if (com.RTCPeerConnection.newIceConnectionState === 'connected') {
+        // Stop timer
+        if (!fn.isEmpty(com.healthTimer)) {
+          log.debug('Peer', com.id, 'Stopping health timer as connection is established.');
+
+          clearInterval(com.healthTimer);
+        }
+      }
+      
+      com.handler('peer:iceconnectionstate', {
+        state: com.RTCPeerConnection.newIceConnectionState
+      });
     };
 
     bindPeer.onsignalingstatechange = function (event) {
-      com.handler('trigger:signalingstate', bindPeer);
+      com.handler('peer:signalingstate', {
+        state: com.RTCPeerConnection.newSignalingState
+      });
     };
 
     bindPeer.onicegatheringstatechange = function () {
-      com.handler('trigger:icegatheringstate', bindPeer); 
+      com.handler('peer:icegatheringstate', {
+        state: com.RTCPeerConnection.iceGatheringState
+      }); 
     };
     
     com.RTCPeerConnection = bindPeer;
 
     fn.runSync(function () {
-      listener('peer:connect', {
-        id: com.id
+      com.handler('peer:connect', {
+        weight: com.weight,
+        SDPType: com.SDPType,
+        streamingConfig: com.streamingConfig
       });
-      
-      if (typeof com.onconnect === 'function') {
-        com.onconnect(com.id);
-      }
     });
   };
 
@@ -9434,25 +9517,31 @@ function Peer(config, listener) {
   com.createOffer = function () {
     // Create datachannel
     if (globals.dataChannel && com.type === 'user') {
-      com.handler('trigger:datachannel', {
-        sourceType: 'local',
-        channel: com.RTCPeerConnection.createDataChannel('main')
+      var eventChannel = com.RTCPeerConnection.createDataChannel('main');
+      
+      // Send the channel only when channel has started
+      var channel = new DataChannel(eventChannel, function (event, data) {
+        
+        com.handler(event, data);
+        
+        com.handler('peer:datachannel', {
+          sourceType: 'local',
+          channel: channel
+        });
       });
     }
 
     com.RTCPeerConnection.createOffer(function (offer) {
-      var sdp = SDP.configure(offer.sdp, com.sdpConfig);
+      offer.sdp = SDP.configure(offer.sdp, com.sdpConfig);
 
       com.localDescription = offer;
 
-      listener('peer:offer:success', {
-        id: com.id,
-        sdp: sdp
+      com.handler('peer:offer:success', {
+        offer: offer
       });
 
     }, function (error) {
-      listener('peer:offer:error', {
-        id: com.id,
+      com.handler('peer:offer:error', {
         error: error
       });
     }, com.sdpConstraints);
@@ -9467,20 +9556,18 @@ function Peer(config, listener) {
    */
   com.createAnswer = function () {
     com.RTCPeerConnection.createAnswer(function (answer) {
-      var sdp = SDP.configure(answer.sdp, com.sdpConfig);
+      answer.sdp = SDP.configure(answer.sdp, com.sdpConfig);
   
       com.localDescription = answer;
   
-      listener('peer:answer:success', {
-        id: com.id,
-        sdp: sdp
+      com.handler('peer:answer:success', {
+        answer: answer
       });
       
       com.setLocalDescription();
 
     }, function (error) {
-      listener('peer:answer:error', {
-        id: com.id,
+      com.handler('peer:answer:error', {
         error: error
       });
       
@@ -9497,25 +9584,25 @@ function Peer(config, listener) {
     var localDescription = com.localDescription;
   
     com.RTCPeerConnection.setLocalDescription(localDescription, function () {
-      listener('peer:localdescription:success', {
-        id: com.id,
-        sdp: localDescription.sdp,
+      com.handler('peer:localdescription:success', {
+        localDescription: localDescription.sdp,
         type: localDescription.type,
       });
 
       if (localDescription.type === 'answer') {
         com.RTCPeerConnection.newSignalingState = 'have-local-answer';
         
-        com.handler('trigger:signalingstate', com.RTCPeerConnection);
+        com.handler('peer:signalingstate', {
+          state: com.RTCPeerConnection.newSignalingState
+        });
       
       } else {
         com.setRemoteDescription();
       }
 
     }, function (error) {
-      listener('peer:localdescription:error', {
-        id: com.id,
-        sdp: localDescription.sdp,
+      com.handler('peer:localdescription:error', {
+        localDescription: localDescription.sdp,
         type: localDescription.type,
         error: error
       });
@@ -9532,16 +9619,17 @@ function Peer(config, listener) {
     var remoteDescription = com.remoteDescription;
 
     com.RTCPeerConnection.setRemoteDescription(remoteDescription, function () {
-      listener('peer:remotedescription:success', {
-        id: com.id,
-        sdp: remoteDescription.sdp,
+      com.handler('peer:remotedescription:success', {
+        remoteDescription: remoteDescription.sdp,
         type: remoteDescription.type
       });
   
       if (remoteDescription.type === 'answer') {
         com.RTCPeerConnection.newSignalingState = 'have-remote-answer';
         
-        com.handler('trigger:signalingstate', com.RTCPeerConnection);
+        com.handler('peer:signalingstate', {
+          state: com.RTCPeerConnection.newSignalingState
+        });
       
       } else {
         com.createAnswer();
@@ -9551,15 +9639,13 @@ function Peer(config, listener) {
       ICE.popCandidate(com.RTCPeerConnection, com.handler);
 
     }, function (error) {
-      listener('peer:remotedescription:error', {
-        id: com.id,
-        sdp: remoteDescription.sdp,
+      com.handler('peer:remotedescription:error', {
+        remoteDescription: remoteDescription.sdp,
         type: remoteDescription.type,
         error: error
       });
     });
   };
-
 
   // Throw an error if adapterjs is not loaded
   if (!window.RTCPeerConnection) {
@@ -9567,11 +9653,10 @@ function Peer(config, listener) {
   }
   
   // Parse bandwidth
-  com.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
+  com.streamingConfig.bandwidth = StreamParser.parseBandwidthConfig(com.streamingConfig.bandwidth);
 
   // Parse constraints ICE servers
-  com.constraints = config.constraints; //ICE.parseTURNServers(config.constraints);
-  //com.constraints = //ICE.parseSTUNServers(com.constraints);
+  com.constraints = ICE.parseICEServers(config.constraints);
   
   // Parse the sdp configuration
   com.sdpConfig = {
@@ -9579,276 +9664,208 @@ function Peer(config, listener) {
     bandwidth: com.bandwidth
   };
   
-  listener('peer:start', {
-    id: com.id
+  // Start timer
+  /*com.healthTimer = setTimeout(function () {
+    if (!fn.isEmpty(com.healthTimer)) {
+      log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
+      
+      clearInterval(com.healthTimer);
+      
+      com.reconnect();
+    }
+    
+  }, com.iceTrickle ? 10000 : 50000);*/
+
+  fn.runSync(function () {
+    com.handler('peer:start', {
+      weight: com.weight,
+      SDPType: com.SDPType,
+      streamingConfig: com.streamingConfig
+    });
   });
 }
-var PeerHandlerEvent = {
-  /**
-   * Handles stream events that will require the peer class to
-   * trigger the listener.
-   * @property stream
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
+var PeerEventReceivedHandler = {
+  
   stream: {
-    /**
-     * Handles the remote stream stop trigger.
-     * @property stop
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    start: function (com, data, listener) {
-      if (fn.isSafe(function () { 
-        return com.stream.id === data.id && com.stream.sourceType === 'remote';
-      })) {
-        listener('peer:stream', {
-          id: com.id,
-          stream: com.stream,
-          sourceType: 'remote'
-        });
-      }
-    },
     
-    /**
-     * Handles the remote stream stop trigger.
-     * @property stop
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
     stop: function (com, data, listener) {
+      // If stream is not the main, disconnect the peer connection.
       if (com.id !== 'main') {
         com.disconnect();
       }
     }
+  }
+  
+};
+
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute PeerEventResponseHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerEventResponseHandler = {
+  
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === 'function') {
+      com.onconnect(com.id);
+    }
   },
   
+  reconnect: function (com, data, listener) {
+    if (typeof com.onreconnect === 'function') {
+      com.onreconnect();
+    }
+  },
+  
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === 'function') {
+      com.ondisconnect();
+    }
+  },
+  
+  stream: function (com, data, listener) {
+    data.stream.sourceType = data.sourceType;
+
+    if (data.sourceType === 'remote') {
+      com.stream = data.stream;
+    }
+    
+    if (typeof com.onaddstream === 'function') {
+      com.onaddstream(data.stream);
+    }
+  },
+
   /**
-   * Handles events that will require the peer class to
-   * trigger peer class events.
-   * @property trigger
-   * @type JSON
+   * Handles the ice connection state trigger.
+   * @property iceconnectionstate
+   * @type Function
    * @private
    * @since 0.6.0
    */
-  trigger: {
-    /**
-     * Handles the ice connection state trigger.
-     * @property iceconnectionstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    iceconnectionstate: function (com, data, listener) {
-      var state = com.RTCPeerConnection.newIceConnectionState;
+  iceconnectionstate: function (com, data, listener) {
+    if (typeof com.oniceconnectionstatechange === 'function') {
+      com.oniceconnectionstatechange(data.state);
+    }  
+  },
 
-      listener('peer:iceconnectionstate', {
-        id: com.id,
-        state: state
-      });
+  /**
+   * Handles the ice gathering state trigger.
+   * @property icegatheringstate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  icegatheringstate: function (com, data, listener) {
+    if (typeof com.onicegatheringstatechange === 'function') {
+      com.onicegatheringstatechange(data.state);
+    }
+  },
 
-      if (typeof com.oniceconnectionstatechange === 'function') {
-        com.oniceconnectionstatechange(state);
-      }  
-    },
+  /**
+   * Handles the ice candidate trigger.
+   * @property icecandidate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  icecandidate: function (com, data, listener) {},
+
+  /**
+   * Handles the signaling state trigger.
+   * @property signalingstate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  signalingstate: function (com, data, listener) {
+    if (typeof com.onsignalingstatechange === 'function') {
+      com.onsignalingstatechange(data.state);
+    }
+  },
+
+  /**
+   * Handles the datachannel state trigger.
+   * @property datachannel
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  datachannel: function (com, data, listener) {
+    data.channel.sourceType = data.sourceType;
+
+    com.datachannels[data.channel.id] = data.channel;
     
-    /**
-     * Handles the ice gathering state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    icegatheringstate: function (com, data, listener) {
-      var state = com.RTCPeerConnection.iceGatheringState;
+    if (typeof com.ondatachannel === 'function') {
+      com.ondatachannel(data.channel);
+    }
+  }
+};
 
-      listener('peer:icegatheringstate', {
-        id: com.id,
-        state: state
-      });
+/**
+ * Handles all the message events received from socket.
+ * @attribute PeerEventMessageHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerEventMessageHandler = {
 
-      if (typeof com.onicegatheringstatechange === 'function') {
-        com.onicegatheringstatechange(state);
-      }
-    },
-    
-    /**
-     * Handles the ice candidate trigger.
-     * @property icecandidate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    icecandidate: function (com, data, listener) {
-      var candidate = data.candidate;
+  offer: function (com, data, listener) {
+    com.remoteDescription = new window.RTCSessionDescription(data);
 
-      if (data.sourceType === 'remote') {
-        ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
-      
-      } else {
-        if (fn.isEmpty(data.candidate.candidate)) {
-          return listener('candidate:gathered', data.candidate);
-        }
-      }
-
-      listener('peer:icecandidate', {
-        id: com.id,
-        sourceType: data.sourceType,
-        candidate: data.candidate
-      });
-    },
-    
-    /**
-     * Handles the signaling state trigger.
-     * @property signalingstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    signalingstate: function (com, data, listener) {
-      var state = com.RTCPeerConnection.newSignalingState;
-
-      listener('peer:signalingstate', {
-        id: com.id,
-        state: state
-      });
-
-      if (typeof com.onsignalingstatechange === 'function') {
-        com.onsignalingstatechange(state);
-      }
-    },
-    
-    /**
-     * Handles the datachannel state trigger.
-     * @property datachannel
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    datachannel: function (com, data, listener) {
-      var channel = new DataChannel(data.channel, com.handler);
-      channel.sourceType = data.sourceType;
-
-      com.datachannels[channel.id] = channel;
-
-      listener('peer:datachannel', {
-        id: com.id,
-        channel: data.channel,
-        sourceType: data.sourceType
-      });
-    },
-    
-    /**
-     * Handles the stream trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    stream: function (com, data, listener) {
-      var stream;
-
-      if (data.stream instanceof Stream) {
-        stream = data.stream;
-
-      } else {
-        stream = new Stream(data.stream, data.config, com.handler);
-        stream.sourceType = 'remote';
-
-        com.stream = stream;
-      }
-    },
-    
-    /**
-     * Handles the reconnect state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    'reconnect': function (com, data, listener) {
-      listener('peer:reconnect', {
-        id: com.id
-      });
-
-      if (typeof com.onreconnect === 'function') {
-        com.onreconnect();
-      }
-    },
-    
-    /**
-     * Handles the handshake state trigger.
-     * @property handshake
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    handshake: function (com, data, listener) {
-      if (data.type === 'start') {
-        if (com.SDPType === 'offer') {
-          com.createOffer();
-        }
-      }
-
-      if (data.type === 'offer') {
-        com.remoteDescription = new window.RTCSessionDescription(data);
-
-        listener('peer:offer', data);
+    com.handler('peer:offer', {
+      sourceType: 'remote',
+      offer: com.remoteDescription
+    });
         
-        com.setRemoteDescription();
-      }
-      
-      if (data.type === 'answer') {
-        com.remoteDescription = new window.RTCSessionDescription(data);
+    com.setRemoteDescription();
+  },
+  
+  answer: function (com, data, listener) {
+    com.remoteDescription = new window.RTCSessionDescription(data);
 
-        listener('peer:answer', data);
+    com.handler('peer:answer', {
+      sourceType: 'remote',
+      answer: com.remoteDescription
+    });
 
-        com.setLocalDescription();
-      }
-    },
+    com.setLocalDescription();
+  },
+
+  candidate: function (com, data, listener) {
+    var candidate = new window.RTCIceCandidate({
+      sdpMLineIndex: data.label,
+      candidate: data.candidate,
+      sdpMid: data.id,
+      label: data.label,
+      id: data.id
+    });
+
+    ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
+
+    com.handler('peer:icecandidate', {
+      sourceType: 'remote',
+      candidate: candidate
+    });
+  },
+  
+  restart: function (com, data, listener) {
     
-    /**
-     * Handles the disconnected state trigger.
-     * @property mutestream
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    mutestream: function (com, data, listener) {
-      if (data.muted) {
-        if (data.kind === 'audio') {
-          com.stream.muteAudio();
-        } else {
-          com.stream.muteVideo();
-        }
-        
-      } else {
-        if (data.kind === 'audio') {
-          com.stream.unmuteAudio();
-        } else {
-          com.stream.unmuteVideo();
-        }
-      }
-    },
+  },
+  
+  muteAudioEvent: function (com, data, listener) {
+    if (data.muted) {
+      com.stream.muteAudio();
+    } else {
+      com.stream.muteVideo();
+    }
+  },
     
-    /**
-     * Handles the disconnected state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    disconnect: function (com, data, listener) {
-      listener('peer:disconnect', {
-        id: com.id
-      });
-
-      if (typeof com.ondisconnect === 'function') {
-        com.ondisconnect();
-      }
+  muteVideoEvent: function (com, data, listener) {
+    if (data.muted) {
+      com.stream.unmuteAudio();
+    } else {
+      com.stream.unmuteVideo();
     }
   }
 };
@@ -9860,15 +9877,30 @@ var PeerHandlerEvent = {
  * @since 0.6.0
  */
 var PeerHandler = function (com, event, data, listener) {
-  if (event.indexOf('trigger:') !== 0) {
-    data.peerId = com.id;
+  var params = event.split(':');
 
+  // Messaging events
+  if (event.indexOf('message:') === 0) {
+    
+    fn.applyHandler(PeerEventMessageHandler, params, [com, data, listener]);
+  
+  } else {
+    // Class events
+    if (event.indexOf('peer:') === 0) {
+      data.id = com.id;
+
+      fn.applyHandler(PeerEventResponseHandler, params, [com, data, listener]);
+
+    } else {
+      data.peerId = com.id;
+
+      fn.applyHandler(PeerEventReceivedHandler, params, [com, data, listener]);
+    }
+    
     listener(event, data);
   }
   
-  var params = event.split(':');
-  
-  fn.applyHandler(PeerHandlerEvent, params, [com, data, listener]);
+  //log.debug('PeerHandler', event, data);
 };
 var Request = {
   /**
@@ -9931,7 +9963,7 @@ var Request = {
       var response = xhr.responseText || xhr.response;
       var status = xhr.status || 200;
       
-      log.info('Received response from API server', response, status);
+      log.info('Request', 'Received response from API server', response, status);
       
       try {
         response = JSON.parse( response || '{}' );
@@ -9952,7 +9984,7 @@ var Request = {
     };
 
     xhr.onprogress = function () {
-      log.log('Request load in progress');
+      log.log('Request', 'Request load in progress');
     };
 
     xhr.open('GET', this.protocol + this.server + path, true);
@@ -10238,10 +10270,16 @@ function Room(name, listener) {
    * @for Room
    * @since 0.6.0
    */
-  com.join = function (stream) {
+  com.join = function (stream, config) {
+    config = config || {};
+
+    com.self.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
+    com.self.data = config.userData;
+  
     if (!fn.isEmpty(stream)) {
       com.self.addStreamConnection(stream, 'main');
     }
+
     com.socket.connect();
   };
 
@@ -10270,7 +10308,9 @@ function Room(name, listener) {
       lock: true
     });
     
-    com.handler('trigger:lock');
+    com.handler('room:lock', {
+      userId: com.self.id
+    });
   };
 
   /**
@@ -10287,74 +10327,28 @@ function Room(name, listener) {
       lock: false
     });
     
-    com.handler('trigger:unlock');
+    com.handler('room:unlock', {
+      userId: com.self.id
+    });
   };
 
-  /**
-   * Starts the handshake
-   * @method handshake
-   * @param {JSON} data The user information.
-   * @for Room
-   * @since 0.6.0
-   */
-  com.handshake = function (data, defer) {
-    if (fn.isEmpty(com.users[data.mid])) {
-      com.users[data.mid] = new User(data, com.handler);
-    }
-    
-    // Get stream
-    var connection = com.self.streams[data.prid];
-
-    // Check if stream connection exists
-    if (!fn.isEmpty(connection)) {
-      data.stream = connection.stream;
-    }
-    
-    data.iceServers = com.iceServers;
-
-    com.users[data.mid].handler('trigger:handshake', data);
-  };
- 
   /**
    * Sends a another stream to users.
    * @method addStreamConnection
    * @param {Stream} stream The stream object.
-   * @param {Array} [targetUsers] The list of targeted users.
    * @for Room
    * @since 0.6.0
    */
-  com.addStreamConnection = function (stream, targetUsers) {
+  com.addStreamConnection = function (stream) {
     var connectionId = fn.generateUID();
 
-    com.self.addStreamConnection(stream, connectionId, targetUsers);
+    com.self.addStreamConnection(stream, connectionId);
     
     stream.parentHandler = com.handler;
     
     fn.forEach(com.users, function (user, key) {
-      // Check if targetUsers is an array
-      var sendStream = typeof targetUsers === 'object';
-      // If it is check if it is a targeted user
-      // Else, just send anyway
-      sendStream = sendStream === true ? 
-        targetUsers.indexOf(key) > -1 : true;
-        
-      if (sendStream) {
-        com.handler('trigger:handshake', {
-          type: 'enter',
-          mid: user.id,
-          rid: com.id,
-          prid: connectionId,
-          agent: user.agent.name,
-          version: user.agent.version,
-          webRTCType: user.agent.webRTCType,
-          userInfo: {
-            userData: user.data,
-            bandwidth: user.bandwidth,
-            settings: user.streamingConfig
-          },
-          stream: stream
-        });
-      }
+      data.stream = stream;
+      user.handler('message:enter', data);
     });
   };
 
@@ -10446,6 +10440,32 @@ function Room(name, listener) {
       version: window.webrtcDetectedVersion,
       webRTCType: window.webrtcDetectedType
     };
+    
+    /**
+     * The self user bandwidth configuration.
+     * @attribute agent
+     * @type JSON
+     * @private
+     * @for Self
+     * @since 0.6.0
+     */
+    subcom.bandwidth = {};
+    
+    /**
+     * The handler that manages all triggers or relaying events.
+     * @attribute handler
+     * @type Function
+     * @private
+     * @for Self
+     * @since 0.6.0
+     */
+    subcom.handler = function (event, data) {
+      data.id = subcom.id;
+      
+      log.debug('SelfHandler:', event, data); 
+
+      RoomHandler(com, event, data, listener);
+    };
 
     
     /**
@@ -10497,8 +10517,7 @@ function Room(name, listener) {
         userData: subcom.data
       });
       
-      listener('self:update', {
-        id: subcom.id,
+      subcom.handler('self:update', {
         data: subcom.data
       });
     };
@@ -10511,20 +10530,21 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    subcom.addStreamConnection = function (stream, connectionId, targetUsers) {
+    subcom.addStreamConnection = function (stream, connectionId) {
       stream.sourceType = 'local';
 
-      subcom.streams[connectionId] = {
-        stream: stream,
-        targetUsers: targetUsers
+      var connection = {
+        id: connectionId,
+        stream: stream
       };
       
+      subcom.streams[connectionId] = connection;
+      
       if (typeof subcom.onaddstreamconnection === 'function') {
-        subcom.onaddstreamconnection(stream, connectionId, targetUsers);
+        subcom.onaddstreamconnection(connection);
       }
       
-      listener('self:addstreamconnection', {
-        id: subcom.id,
+      subcom.handler('self:addstreamconnection', {
         stream: stream,
         connectionId: connectionId
       });
@@ -10570,8 +10590,7 @@ function Room(name, listener) {
       // Remove connections to stream reference
       delete subcom.streams[streamId];
       
-      listener('self:removestreamconnection', {
-        id: subcom.id,
+      subcom.handler('self:removestreamconnection', {
         streamId: streamId
       });
     };
@@ -10579,29 +10598,64 @@ function Room(name, listener) {
     /**
      * Gets the self user info.
      * @method getInfo
+     * @param {String} connectionId The connectionId of the stream.
      * @for Self
      * @since 0.6.0
      */
-    subcom.getInfo = function () {
-      return {
+    subcom.getInfo = function (connectionId) {
+      var info = {
         userData: subcom.data,
-        settings: (function () {
-          var streaming = {};
-
-          fn.forEach(subcom.streams, function (value, key) {
-            streaming[key] = {
-              audio: value.stream.config.audio,
-              video: value.stream.config.video,
-              mediaStatus: value.stream.config.status,
-              bandwidth: {}
-            };
-          });
-
-          return streaming;
-        })(),
         agent: subcom.agent
       };
+  
+      if (fn.isEmpty(connectionId)) {
+        var streaming = {};
+
+        fn.forEach(subcom.streams, function (connection, key) {
+          var settings = subcom.streams[connectionId] || {};
+          var stream = settings.stream || { 
+            config: { 
+              audio: false, 
+              video: false, 
+              status: { audioMuted: true, videoMuted: true }
+            } 
+          };
+
+          streaming[key] = {
+            audio: stream.config.audio,
+            video: stream.config.video,
+            bandwidth: subcom.bandwidth,
+            mediaStatus: stream.config.status
+          };
+        
+        }, function () {
+          info.settings = streaming;
+          
+          return info;
+        });
+      
+      } else {
+        var settings = subcom.streams[connectionId] || {};
+        var stream = settings.stream || { 
+          config: { 
+            audio: false, 
+            video: false, 
+            status: { audioMuted: true, videoMuted: true }
+          } 
+        };
+  
+        info.settings = {
+          audio: stream.config.audio,
+          video: stream.config.video,
+          bandwidth: subcom.bandwidth,
+          mediaStatus: stream.config.status
+        };
+        
+        return info;
+      }
     };
+    
+    subcom.handler('self:start', config);
   }
 
 
@@ -10666,10 +10720,10 @@ function Room(name, listener) {
     });
   });
 }
-var RoomHandlerEvent = {
-  
+var RoomEventReceivedHandler = {
+
   socket: {
-    
+
     connect: function (com, data, listener) {
       com.socket.send({
         type: 'joinRoom',
@@ -10682,34 +10736,70 @@ var RoomHandlerEvent = {
         roomCred: com.token,
         start: com.startDateTime,
         len: com.duration
-      });  
-    },
-    
-    disconnect: function (com, data, listener) {
-      listener('room:leave', {
-        id: com.id,
-        name: com.name
       });
+    },
+
+    disconnect: function (com, data, listener) {
+      com.handler('room:leave', {});
 
       if (typeof com.onleave === 'function') {
         com.onleave();
       }
     },
-    
+
     error: function (com, data, listener) {
-      com.handler('trigger:error', {
+      com.handler('room:error', {
         error: data,
         state: -2
       });
     }
   },
+
+  user: {
+    start: function (com, data, listener) {
+      var user = com.users[data.mid];
+
+      // Get stream
+      var connection = com.self.streams[data.prid];
+
+      // Check if stream connection exists
+      if (!fn.isEmpty(connection)) {
+        data.stream = connection.stream;
+      }
+
+      data.iceServers = com.iceServers;
+
+      user.handler('message:' + data.type, data);
+    }
+  },
   
   peer: {
+    connect: function (com, data, listener) {
+      var user = com.users[data.userId];
+      var userInfo = user.getInfo();
+  
+      // Send welcome after creating object
+      if (data.SDPType === 'answer') {
+        com.socket.send({
+          type: 'welcome',
+          mid: com.self.id,
+          rid: com.id,
+          prid: data.id,
+          agent: window.webrtcDetectedBrowser,
+          version: window.webrtcDetectedVersion,
+          webRTCType: window.webrtcDetectedType,
+          userInfo: com.self.getInfo(data.id),
+          target: data.userId,
+          weight: data.weight
+        });
+      }
+    },
+    
     offer: {
       success: function (com, data, listener) {
         com.socket.send({
           type: 'offer',
-          sdp: data.sdp,
+          sdp: data.offer.sdp,
           prid: data.id,
           mid: com.self.id,
           target: data.userId,
@@ -10717,12 +10807,12 @@ var RoomHandlerEvent = {
         });
       }
     },
-    
+
     answer: {
       success: function (com, data, listener) {
         com.socket.send({
           type: 'answer',
-          sdp: data.sdp,
+          sdp: data.answer.sdp,
           prid: data.id,
           mid: com.self.id,
           target: data.userId,
@@ -10730,7 +10820,7 @@ var RoomHandlerEvent = {
         });
       }
     },
-    
+
     icecandidate: function (com, data, listener) {
       if (data.sourceType === 'local') {
         com.socket.send({
@@ -10745,34 +10835,39 @@ var RoomHandlerEvent = {
         });
       }
     }
-  },
-  
-  trigger: {
-    /**
-     * Handles the ice gathering state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    error: function (com, data, listener) {
-      com.readyState = data.state;
-  
-      listener('room:error', {
-        id: com.id,
-        name: com.name,
+  }
+};
+
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute RoomEventResponseHandler
+ * @for Room
+ * @since 0.6.0
+ */
+var RoomEventResponseHandler = {
+  /**
+   * Handles the error state trigger.
+   * @property error
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  error: function (com, data, listener) {
+    com.readyState = data.state;
+
+    com.handler('room:error', {
+      error: data.error,
+      state: data.state
+    });
+
+    if (typeof com.onerror === 'function') {
+      com.onerror({
         error: data.error,
         state: data.state
       });
-
-      if (typeof com.onerror === 'function') {
-        com.onerror({
-          error: data.error,
-          state: data.state
-        });
-      }
     }
   }
+
 };
 
 /**
@@ -10782,15 +10877,23 @@ var RoomHandlerEvent = {
  * @since 0.6.0
  */
 var RoomHandler = function (com, event, data, listener) {
-  if (event.indexOf('trigger:') !== 0) {
+  var params = event.split(':');
+
+  // Class events
+  if (event.indexOf('room:') === 0) {
+    data.name = com.name;
+
+    fn.applyHandler(RoomEventResponseHandler, params, [com, data, listener]);
+
+  } else {
     data.roomName = com.name;
 
-    listener(event, data);
+    fn.applyHandler(RoomEventReceivedHandler, params, [com, data, listener]);
   }
+
+  listener(event, data);
   
-  var params = event.split(':');
-  
-  fn.applyHandler(RoomHandlerEvent, params, [com, data, listener]);
+  log.debug('RoomHandler', event, data);
 };
 
 /**
@@ -10809,7 +10912,7 @@ var MessageHandlerEvent = {
    */
   inRoom: function (com, data, listener) {
     com.self.id = data.sid;
-    
+
     com.iceServers = data.pc_config;
 
     com.socket.send({
@@ -10820,19 +10923,20 @@ var MessageHandlerEvent = {
       agent: window.webrtcDetectedBrowser,
       version: window.webrtcDetectedVersion,
       webRTCType: window.webrtcDetectedType,
-      userInfo: com.self.getInfo()
+      userInfo: com.self.getInfo('main')
     });
-    
-    listener('room:join', {
-      name: com.name,
-      userId: com.self.id
+
+    com.handler('room:join', {
+      userId: com.self.id,
+      user: com.self,
+      isSelf: true
     });
-  
+
     if (typeof com.onjoin === 'function') {
       com.onjoin(data.mid);
     }
   },
-  
+
   /**
    * User has sent self an enter.
    * @property enter
@@ -10841,22 +10945,15 @@ var MessageHandlerEvent = {
    * @since 0.6.0
    */
   enter: function (com, data, listener) {
-    com.handshake(data);
-
-    com.socket.send({
-      type: 'welcome',
-      mid: com.self.id,
-      rid: com.id,
-      prid: data.prid,
-      agent: window.webrtcDetectedBrowser,
-      version: window.webrtcDetectedVersion,
-      webRTCType: window.webrtcDetectedType,
-      userInfo: com.self.getInfo(),
-      target: data.mid,
-      weight: com.users[data.mid].peers[data.prid].weight
-    });
+    var user = com.users[data.mid];
+    
+    if (fn.isEmpty(user)) {
+      user = new User(data, com.handler);
+      
+      com.users[data.mid] = user;
+    }
   },
-  
+
   /**
    * User has sent self an welcome.
    * @property enter
@@ -10865,9 +10962,15 @@ var MessageHandlerEvent = {
    * @since 0.6.0
    */
   welcome: function (com, data, listener) {
-    com.handshake(data);
+    var user = com.users[data.mid];
+    
+    if (fn.isEmpty(user)) {
+      user = new User(data, com.handler);
+      
+      com.users[data.mid] = user;
+    }
   },
-  
+
   /**
    * A user has sent an offer to self.
    * @property offer
@@ -10878,9 +10981,11 @@ var MessageHandlerEvent = {
   offer: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:handshake', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:offer', data);
+    }
   },
-  
+
   /**
    * A user has sent an answer to self.
    * @property answer
@@ -10891,9 +10996,11 @@ var MessageHandlerEvent = {
   answer: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:handshake', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:answer', data);
+    }
   },
-  
+
   /**
    * A user has sent an ICE candidate to self.
    * @property candidate
@@ -10904,9 +11011,11 @@ var MessageHandlerEvent = {
   candidate: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:candidate', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:candidate', data);
+    }
   },
-  
+
   /**
    * A user has updated their own custom user data.
    * @property updateUserEvent
@@ -10917,9 +11026,11 @@ var MessageHandlerEvent = {
   updateUserEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:update', data.userData);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:updateUserEvent', data.userData);
+    }
   },
-  
+
   /**
    * An audio stream muted status has been updated.
    * @property muteAudioEvent
@@ -10930,11 +11041,11 @@ var MessageHandlerEvent = {
   muteAudioEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    data.kind = 'audio';
-
-    user.handler('trigger:mutestream', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:muteAudioEvent', data);
+    }
   },
-  
+
   /**
    * A video stream muted status has been updated.
    * @property muteVideoEvent
@@ -10945,11 +11056,11 @@ var MessageHandlerEvent = {
   muteVideoEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    data.kind = 'video';
-
-    user.handler('trigger:mutestream', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:muteVideoEvent', data);
+    }
   },
-  
+
   /**
    * The room is lock status has been updated.
    * @property roomLockEvent
@@ -10971,7 +11082,7 @@ var MessageHandlerEvent = {
       }
     }
   },
-  
+
   /**
    * The room is lock status has been updated.
    * @property roomLockEvent
@@ -10982,9 +11093,11 @@ var MessageHandlerEvent = {
   restart: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.handler('trigger:restart', data);
+    if (!fn.isEmpty(user)) {
+      user.handler('message:restart', data);
+    }
   },
-  
+
   /**
    * The self is redirected or warned.
    * @property redirect
@@ -10999,9 +11112,11 @@ var MessageHandlerEvent = {
           message: data.info,
           reason: data.reason
         });
+        
+        com.leave();
       }
     }
-    
+
     if (data.action === 'warning') {
       if (typeof com.onwarn === 'function') {
         com.onwarn({
@@ -11011,7 +11126,7 @@ var MessageHandlerEvent = {
       }
     }
   },
-  
+
   /**
    * The a user or self is disconnected from room.
    * @property bye
@@ -11022,9 +11137,11 @@ var MessageHandlerEvent = {
   bye: function (com, data, listener) {
     var user = com.users[data.mid];
 
-    user.disconnect();
-  }  
-    
+    if (!fn.isEmpty(user)) {
+      user.disconnect();
+    }
+  }
+
 };
 
 /**
@@ -11347,6 +11464,26 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.responses = {};
+  
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @attribute handler
+   * @type Function
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    data.server = com.server;
+    data.port = com.port;
+    data.type = com.type;
+    data.protocol = com.protocol;
+    
+    //log.debug('SocketHandler', event, data); 
+  
+    listener(event, data);
+  };
+
 
   
   /**
@@ -11447,7 +11584,9 @@ function Socket(config, listener) {
     }
     setTimeout(function () {*/
       com.Socket.send(JSON.stringify(data));
-      listener('socket:send', data);
+      com.handler('socket:send', {
+        message: data
+      });
     //}, interval);
   };
 
@@ -11458,10 +11597,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.bindOnConnect = function (options) {
-    listener('socket:connect', {
-      server: com.server,
-      port: com.port
-    });
+    com.handler('socket:connect', {});
 
     com.Socket.removeAllListeners();
 
@@ -11483,10 +11619,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.bindOnDisonnect = function () {
-    listener('socket:disconnect', {
-      server: com.server,
-      port: com.port
-    });
+    com.handler('socket:disconnect', {});
     
     if (typeof com.onerror === 'function') {
       com.ondisconnect();
@@ -11501,13 +11634,11 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.bindOnMessage = function (result) {
-    listener('socket:message', {
-      server: com.server,
-      port: com.port,
-      data: result
-    });
-
     var data = JSON.parse(result);
+    
+    com.handler('socket:message', {
+      message: data
+    });
 
     // Check if bulk message
     if (data.type === 'group') {
@@ -11527,9 +11658,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.bindOnConnectError = function (error) {
-    listener('socket:connect_error', {
-      server: com.server,
-      port: com.port,
+    com.handler('socket:connect_error', {
       error: error
     });
 
@@ -11567,9 +11696,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.bindOnError = function (error) {
-    listener('socket:error', {
-      server: com.server,
-      port: com.port,
+    com.handler('socket:error', {
       error: error
     });
     
@@ -11684,6 +11811,10 @@ function Socket(config, listener) {
   if (!window.io) {
     throw new Error('Required dependency socket.io not found');
   }
+  
+  fn.runSync(function () {
+    com.handler('socket:start', config);
+  });
 }
 function Stream(stream, config, listener) {
   'use strict';
@@ -11761,6 +11892,8 @@ function Stream(stream, config, listener) {
    */
   com.handler = function (event, data) {
     listener(event, data);
+    
+    //log.debug('StreamHandler', event, data); 
 
     if (typeof com.parentHandler === 'function') {
       com.parentHandler(event, data);
@@ -12535,7 +12668,7 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.data = config.userInfo.data || {};
+  com.data = config.userInfo.userData || {};
 
   /**
    * Stores the browser agent information.
@@ -12548,16 +12681,6 @@ function User (config, listener) {
   com.agent = config.agent || {};
   
   /**
-   * Stores the bandwidth configuration.
-   * @attribute bandwidth
-   * @type JSON
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.bandwidth = config.userInfo.settings.bandwidth || {};
-  
-  /**
    * Stores the list of peer connections to user.
    * @attribute peers
    * @type JSON
@@ -12566,6 +12689,16 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.peers = {};
+  
+  /**
+   * Stores the list of peer streaming configuration.
+   * @attribute streamingConfigs
+   * @type JSON
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.streamingConfigs = {};
   
   /**
    * The handler that manages all triggers or relaying events.
@@ -12644,30 +12777,18 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.addConnection = function (data, stream) {
-    console.info(data.iceServers);
-  
     var peerConfig = {
       id: data.prid,
       constraints: data.iceServers,
       bandwidth: data.bandwidth,
-      streamingConfig: {
-        audio: fn.isSafe(function () { 
-          return data.userInfo.settings.audio;
-        }),
-        video: fn.isSafe(function () { 
-          return data.userInfo.settings.video;
-        }),
-        status: fn.isSafe(function () { 
-          return data.userInfo.settings.mediaStatus;
-        })
-      }
+      streamingConfig: data.settings
     };
     
     var peer = new Peer(peerConfig, com.handler);
-
-    console.info('data:', stream);
-
+    
     peer.connect(stream);
+    
+    peer.SDPType = data.SDPType;
     
     com.peers[peer.id] = peer;
   };
@@ -12679,7 +12800,11 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.removeConnection = function (peerId) {
-    com.peers[peerId].disconnect();
+    var peer = com.peers[peerId];
+    
+    if (!fn.isEmpty(peer)) {
+      peer.disconnect();
+    }
   };
 
   /**
@@ -12695,287 +12820,242 @@ function User (config, listener) {
   };
   
   /**
+   * Updates this user information.
+   * @method getInfo
+   * @for User
+   * @since 0.6.0
+   */
+  com.update = function (data) {
+    com.data = data;
+    
+    com.handler('user:update', {
+      data: com.data
+    });
+  };
+  
+  /**
    * Gets this user information.
    * @method getInfo
    * @for User
    * @since 0.6.0
    */
-  com.getInfo = function () {
+  com.getInfo = function (peerId) {
     var data = {};
     
     data.userData = com.data;
     
     data.agent = com.agent;
     
-    data.settings = {};
+    data.settings = com.streamingConfigs;
     
-    if (fn.isEmpty(com.peers)) {
-      return data;
-    
-    } else {
-      fn.forEach(com.peers, function (peer, id) {
-        var stream = peer.stream;
-
-        // Check if there is stream
-        if (!fn.isEmpty(stream)) {
-          data.settings[stream.id] = {
-            audio: stream.config.audio,
-            video: stream.config.video,
-            mediaStatus: stream.config.status,
-            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
-          };
-        
-        // No stream
-        } else {
-          data.settings[id] = {
-            audio: false,
-            video: false,
-            mediaStatus: { audioMuted: true, videoMuted: true },
-            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
-          };
-        }
-      
-      }, function () {
-        return data;
-      });
-    }
+    return data;
   };
+  
+  // Add the main streaming config
+  com.streamingConfigs[config.prid] = config.settings;
+
+  fn.runSync(function () {
+    com.handler('user:start', config);
+  });
 }
 
-var UserHandlerEvent = {
-  /**
-   * Handles stream events that will require the user class to
-   * trigger the listener.
-   * @property peer
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
+var UserEventReceivedHandler = {
+  
   peer: {
-    /**
-     * Handles the event when peer is connected.
-     * @property connect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
+    
     connect: function (com, data, listener) {
       var peer = com.peers[data.id];
 
-      if (typeof com.onupdate === 'function') {
-        com.onaddconnection(data.id, peer);
+      if (typeof com.onaddconnection === 'function') {
+        com.onaddconnection(peer);
       }
       
-      data.type = 'start';
-      
-      peer.handler('trigger:handshake', data);
+      if (peer.SDPType === 'offer') {
+        peer.createOffer();
+      }
     },
     
-    /**
-     * Handles the event when peer is disconnected.
-     * @property disconnect
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
+    iceconnectionstate: function (com, data, listener) {
+      if (data.id === 'main' && data.state === 'connected') {
+        com.handler('user:connect', {});
+      }
+    },
+    
     disconnect: function (com, data, listener) {
-      var peer = com.peers[peerId];
+      var peer = com.peers[data.id];
+      
+      delete com.peers[data.id];
 
-      delete com.peers[peerId];
-
-      if (typeof com.onupdate === 'function') {
-        com.onremoveconnection(peerId, peer);
+      if (typeof com.onremoveconnection === 'function') {
+        com.onremoveconnection(peer);
+      }
+      
+      if (Object.keys(com.peers).length === 0) {
+        com.handler('user:disconnect', {});
       }
     }
   },
   
-  /**
-   * Handles transfer events that will require the user class to
-   * trigger the listener.
-   * @property transfer
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
   transfer: {
-    /**
-     * Handles the event when transfer is completed.
-     * @property complete
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
+    
     complete: function (com, data, listener) {
-      listener('user:data', {
-        id: com.id,
-        data: data
-      });
-
-      if (typeof com.ondata === 'function') {
-        com.ondata();
-      }
+      com.handler('user:data', data);
     },
     
-    /**
-     * Handles the event when a request transfer is received.
-     * @property request
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
     request: function (com, data, listener) {
-      listener('user:datarequest', {
-        id: com.id,
-        request: dataInfo
-      });
+      com.handler('user:datarequest', data); 
+    }
+  }
+  
+};
 
-      if (typeof com.ondatarequest === 'function') {
-        com.ondatarequest();
-      }
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute UserHandlerResponseHandler
+ * @for User
+ * @since 0.6.0
+ */
+var UserEventResponseHandler = {
+  
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === 'function') {
+      com.onconnect();
     }
   },
   
+  data: function (com, data, listener) {
+    if (typeof com.ondata === 'function') {
+      com.ondata();
+    }
+  },
+  
+  datarequest: function (com, data, listener) {
+    if (typeof com.ondatarequest === 'function') {
+      com.ondatarequest();
+    }
+  },
+  
+  update: function (com, data, listener) {
+    if (typeof com.onupdate === 'function') {
+      com.onupdate(data.data);
+    }
+  },
+
   /**
-   * Handles events that will require the user class to
-   * trigger user class events.
-   * @property trigger
-   * @type JSON
+   * Handles the incoming message trigger.
+   * @property message
+   * @type Function
    * @private
    * @since 0.6.0
    */
-  trigger: {
-    /**
-     * Handles the update user data trigger.
-     * @property update
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    update: function (com, data, listener) {
-      com.data = newData;
+  message: function (com, data, listener) {
+    if (typeof com.onmessage === 'function') {
+      com.onmessage();
+    }
+  },
+  
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === 'function') {
+      com.ondisconnect();
+    }
+  }
+  
+};
 
-      listener('user:update', {
-        id: com.id,
-        userData: com.data
-      });
+/**
+ * Handles all the message events received from socket.
+ * @attribute UserEventMessageHandler
+ * @for User
+ * @since 0.6.0
+ */
+var UserEventMessageHandler = {
+  
+  enter: function (com, data, listener) {
+    var peer = com.peers[data.prid];
 
-      if (typeof com.onupdate === 'function') {
-        com.onupdate(newData);
+    if (!fn.isEmpty(peer)) {
+      return;
+    }
+
+    data.bandwidth = com.bandwidth;
+    data.SDPType = 'answer';
+    com.addConnection(data, data.stream);
+  },
+
+  welcome: function (com, data, listener) {
+    var peer = com.peers[data.prid];
+
+    if (!fn.isEmpty(peer)) {
+      if (peer.weight < data.weight) {
+        return;
       }
-    },
+
+      peer.SDPType = 'offer';
+      data.type = 'start';
+
+    } else {
+
+      data.bandwidth = com.bandwidth;
+      com.addConnection(data, data.stream);
+      peer = com.peers[data.prid];
+
+      peer.SDPType = 'offer';
+    }
+  },
+
+  offer: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the incoming message trigger.
-     * @property message
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    message: function (com, data, listener) {
-      listener('user:message', {
-        id: com.id,
-        message: data
-      });
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:offer', data);
+    }
+  },
 
-      if (typeof com.ondatarequest === 'function') {
-        com.ondatarequest();
-      }
-    },
+  answer: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the handshake trigger.
-     * @property handshake
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    handshake: function (com, data, listener) {
-      var peer = com.peers[data.prid];
-      
-      // welcome | enter
-      if (data.type === 'welcome' || data.type === 'enter') {
-        if (!fn.isEmpty(peer)) {
-          if (data.type === 'welcome') {
-            if (peer.weight < data.weight) {
-              return;
-            }
-          }
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:answer', data);
+    }
+  },
 
-          peer.SDPType = 'offer';
-          data.type = 'start';
-
-          peer.handler('trigger:handshake', data);
-
-        } else {
-
-          data.bandwidth = com.bandwidth;
-          com.addConnection(data, data.stream);
-
-          peer = com.peers[data.prid];
-
-          if (data.type === 'welcome') {
-            peer.SDPType = 'offer';
-
-          } else {
-            peer.SDPType = 'answer';
-          }
-        }
-      
-      // answer | offer
-      } else {
-        peer.handler('trigger:handshake', data);
-      }
-      console.info('exe', data);
-    },
+  candidate: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the candidate trigger.
-     * @property candidate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    candidate: function (com, data, listener) {
-      var candidate = new window.RTCIceCandidate({
-        sdpMLineIndex: data.label,
-        candidate: data.candidate,
-        sdpMid: data.id,
-        label: data.label,
-        id: data.id
-      });
-
-      var peer = com.peers[data.prid];
-      
-      data.sourceType = 'remote';
-      data.candidate = candidate;
-      
-      peer.handler('trigger:icecandidate', data);
-    },
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:candidate', data);
+    }
+  },
+  
+  restart: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the mute stream trigger.
-     * @property mutestream
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    mutestream: function (com, data, listener) {
-      var peer = com.peers[data.prid];
-      
-      peer.handler('trigger:mutestream', data);
-    },
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:restart', data);
+    }
+  },
+  
+  updateUserEvent: function (com, data, listener) {
+    com.data = data.data;
+  
+    com.handler('user:update', {
+      data: data.userData
+    });
+  },
+  
+  muteAudioEvent: function (com, data, listener) {
+    var peer = com.peers[data.prid];
     
-    /**
-     * Handles the peer connection restart trigger.
-     * @property restart
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    restart: function (com, data, listener) {
-      var peer = com.peers[data.prid];
-      
-      peer.handler('trigger:reconnect', data);
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:muteAudioEvent', data);
+    }
+  },
+    
+  muteVideoEvent: function (com, data, listener) {
+    var peer = com.peers[data.prid];
+    
+    if (!fn.isEmpty(peer)) {
+      peer.handler('message:muteVideoEvent', data);
     }
   }
 };
@@ -12987,13 +13067,28 @@ var UserHandlerEvent = {
  * @since 0.6.0
  */
 var UserHandler = function (com, event, data, listener) {
-  if (event.indexOf('trigger:') !== 0) {
-    data.userId = com.id;
+  var params = event.split(':');
 
+  // Messaging events
+  if (event.indexOf('message:') === 0) {
+    
+    fn.applyHandler(UserEventMessageHandler, params, [com, data, listener]);
+  
+  } else {
+    // Class events
+    if (event.indexOf('user:') === 0) {
+      data.id = com.id;
+
+      fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
+
+    } else {
+      data.userId = com.id;
+
+      fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
+    }
+    
     listener(event, data);
   }
   
-  var params = event.split(':');
-  
-  fn.applyHandler(UserHandlerEvent, params, [com, data, listener]);
+  //log.debug('UserHandler', event, data);
 };

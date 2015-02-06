@@ -1,0 +1,5223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Self - skylinkjs</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
+      <small>Version: 0.5.7</small>
+    </li>
+    <hr>
+    
+      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      
+      <div class="content content-main">
+        <div class="jumbotron no-padding">
+  <div class="container">
+    <h1>
+      Self <span>Class</span>
+      
+        <small>
+          <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l404"><code>source&#x2F;Room.js:404</code></a>
+        </small>
+      
+      
+        <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+      
+    </h1>
+    <br/>
+  </div>
+</div>
+<div class="page container">
+  <section id="infodocs">
+    <h2>Documentation Notes</h2>
+    <p><p>Handles the self connection to the room.</p>
+</p>
+    <hr>
+  </section>
+  <section id="classdocs">
+    <ul class="nav nav-tabs" role="tablist">
+      <li  role="presentation" class="doc-selected active"><a href="#constructor">Constructor</a></li>
+      
+        <li role="presentation" class="doc-selected"><a href="#methods">Methods</a></li>
+      
+      
+        <li role="presentation" class="doc-selected"><a href="#properties">Properties</a></li>
+      
+      
+         <li role="presentation" class="doc-selected"><a href="#attrs">Attributes</a></li>
+      
+      
+    </ul>
+    <div class="scroll-data"></div>
+  </section>
+</div>
+<br><br>
+<div class="page container">
+  <div id="index" class="api-class-tabpanel index">
+    <ul id="doc-type-select" class="nav nav-pills" role="tablist">
+      <li role="presentation" class="doc-type-select-public active">
+        <a>Developer <span class="doc-private-label">methods</span></a>
+      </li>
+      <li role="presentation" class="doc-type-select-private">
+        <a>Internal <span class="doc-private-label">methods</span></a>
+      </li>
+      <div class="nav-links pull-right">
+        <span><i class="fa fa-external-link"></i>&nbsp;&nbsp;Navigate to</span>
+        <ul>
+          <li> <a href="#attr__SIG_MESSAGE_TYPE"> <i class="fa fa-hand-o-right"></i>Signalling Handshake Messaging </a> </li>
+          <li> <a href="#attr__DC_PROTOCOL_TYPE"> <i class="fa fa-exchange"></i>Datachannel Transfer Protocol </a> </li>
+        </ul>
+      </div>
+    </ul>
+    <div class="section-doc-group">
+      <h2 id="current-doc-selected-title">Methods</h2>
+      <div class="col-md-3">
+        <div></div>
+        <div class="list-group-o-wrapper">
+          <span class="title">Methods</span>
+          <div class="list-group-wrapper">
+            <div class="list-group  extends">
+              <a href="#method_Self" class="list-group-item code-menu-item constructor-item">
+                &nbsp;&nbsp;Skylink ()
+              </a>
+              
+                
+                  <a href="#method_addStreamConnection" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;addStreamConnection
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_getInfo" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;getInfo
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_handshake" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;handshake
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_join" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;join
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_leave" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;leave
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_lock" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;lock
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onaddstream" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;onaddstream
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onaddstreamconnection" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;onaddstreamconnection
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onconnecterror" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;onconnecterror
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_ondisconnect" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;ondisconnect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onerror" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;onerror
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onjoin" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;onjoin
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onleave" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;onleave
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onlock" class="list-group-item code-menu-item method-item  inherited inherited">
+                    &nbsp;&nbsp;onlock
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onreadystatechange" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;onreadystatechange
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onreconnect" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;onreconnect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onunlock" class="list-group-item code-menu-item method-item  inherited inherited">
+                    &nbsp;&nbsp;onunlock
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_onupdate" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;onupdate
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_removeStreamConnection" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;removeStreamConnection
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_unlock" class="list-group-item code-menu-item method-item  inherited">
+                    &nbsp;&nbsp;unlock
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+                  <a href="#method_update" class="list-group-item code-menu-item method-item ">
+                    &nbsp;&nbsp;update
+                    <span class="settings">
+                      
+                      
+                    </span>
+                    
+                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+                  </a>
+                
+              
+              
+                
+                  <a href="#property_answer" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;answer
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_bye" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;bye
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_candidate" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;candidate
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_enter" class="list-group-item code-menu-item  private-property-item  inherited inherited">
+                    &nbsp;&nbsp;enter
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_icegatheringstate" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;icegatheringstate
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_inRoom" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;inRoom
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_muteAudioEvent" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;muteAudioEvent
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_muteVideoEvent" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;muteVideoEvent
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_offer" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;offer
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_redirect" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;redirect
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_roomLockEvent" class="list-group-item code-menu-item  private-property-item  inherited inherited">
+                    &nbsp;&nbsp;roomLockEvent
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#property_updateUserEvent" class="list-group-item code-menu-item  private-property-item  inherited">
+                    &nbsp;&nbsp;updateUserEvent
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+              
+              
+                
+                  <a href="#attr_agent" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;agent
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_credentials" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;credentials
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_data" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;data
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_duration" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;duration
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_handler" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;handler
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_iceServers" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;iceServers
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_key" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;key
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_locked" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;locked
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_MessageHandler" class="list-group-item code-menu-item attr-item  inherited">
+                    &nbsp;&nbsp;MessageHandler
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_MessageHandlerEvent" class="list-group-item code-menu-item attr-item  inherited">
+                    &nbsp;&nbsp;MessageHandlerEvent
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_name" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;name
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_owner" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;owner
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_path" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;path
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_readyState" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;readyState
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_RoomHandler" class="list-group-item code-menu-item attr-item  inherited">
+                    &nbsp;&nbsp;RoomHandler
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_RoomHandlerEvent" class="list-group-item code-menu-item attr-item  inherited">
+                    &nbsp;&nbsp;RoomHandlerEvent
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_self" class="list-group-item code-menu-item  private-attr-item  inherited inherited">
+                    &nbsp;&nbsp;self
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_startDateTime" class="list-group-item code-menu-item  private-attr-item  inherited inherited">
+                    &nbsp;&nbsp;startDateTime
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_stream" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;stream
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_timeStamp" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;timeStamp
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_token" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;token
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_user" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;user
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_username" class="list-group-item code-menu-item  private-attr-item ">
+                    &nbsp;&nbsp;username
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+                  <a href="#attr_users" class="list-group-item code-menu-item  private-attr-item  inherited">
+                    &nbsp;&nbsp;users
+                    <span class="settings">
+                      
+                      
+                    </span>
+                  </a>
+                
+              
+              
+            </div>
+          </div>
+          <div class="scroll-top">
+            <i class="fa fa-arrow-circle-o-up"></i>&nbsp;&nbsp;Scroll to top
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 doc-content">
+        
+        
+          <section id="methods">
+            
+              <div id="method_addStreamConnection" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>addStreamConnection</code></h3>
+  
+    <div class="args">
+      <span class="paren">(</span>
+      
+        
+          <code>stream</code>
+        
+        <i class="seperator">,&nbsp;&nbsp;</i>
+      
+        
+          <code>The</code>
+        
+        <i class="seperator">,&nbsp;&nbsp;</i>
+      
+      <span class="paren">)</span>
+    </div>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-danger" title="This method is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#method_addStreamConnection">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l548"><code>source&#x2F;Room.js:548</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Starts a new stream connection.</p>
+
+  </div>
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Parameters:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">stream</code>
+            <span class="type"><b>{</b><a href="../classes/Stream.html" class="crosslink">Stream</a><b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+              
+              <p>The stream object.</p>
+
+            </div>
+
+            
+          </li>
+      
+          <li class="param">
+            <code class="param-name">The</code>
+            <span class="type"><b>{</b>Array | String<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+              
+              <p>array or string &quot;main&quot;.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_getInfo" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>getInfo</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l621"><code>source&#x2F;Room.js:621</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Gets the self user info.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_handshake" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>handshake</code></h3>
+  
+    <div class="args">
+      <span class="paren">(</span>
+      
+        
+          <code>data</code>
+        
+        <i class="seperator">,&nbsp;&nbsp;</i>
+      
+      <span class="paren">)</span>
+    </div>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_handshake">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l335"><code>source&#x2F;Room.js:335</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Starts the handshake</p>
+
+  </div>
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Parameters:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">data</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+              
+              <p>The user information.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_join" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>join</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_join">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l276"><code>source&#x2F;Room.js:276</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Starts the connection to the room.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_leave" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>leave</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_leave">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l290"><code>source&#x2F;Room.js:290</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Stops the connection to the room.</p>
+
+  </div>
+
+  
+  <div class="code-item-section">
+    <h4>Triggers:</h4>
+    <span class="code-item-trigger">peerJoined, mediaAccessRequired</span>
+  </div>
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_lock" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>lock</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_lock">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l301"><code>source&#x2F;Room.js:301</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Locks the Room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onaddstream" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>onaddstream</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l509"><code>source&#x2F;Room.js:509</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when self has stopped a stream connection.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onaddstreamconnection" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>onaddstreamconnection</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l501"><code>source&#x2F;Room.js:501</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when self has added a stream connection.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onconnecterror" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>onconnecterror</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_onconnecterror">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l156"><code>source&#x2F;Socket.js:156</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when socket has connection error.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_ondisconnect" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>ondisconnect</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-danger" title="This method is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#method_ondisconnect">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l517"><code>source&#x2F;Room.js:517</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when self has been disconnected from the room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onerror" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>onerror</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_onerror">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l172"><code>source&#x2F;Socket.js:172</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when socket has an exception.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onjoin" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>onjoin</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_onjoin">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l227"><code>source&#x2F;Room.js:227</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when self has joined the room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onleave" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>onleave</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_onleave">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l267"><code>source&#x2F;Room.js:267</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when self has leave the room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onlock" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>onlock</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-danger" title="This method is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#method_onlock">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l235"><code>source&#x2F;Room.js:235</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when self has been kicked out of room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onreadystatechange" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>onreadystatechange</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_onreadystatechange">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l219"><code>source&#x2F;Room.js:219</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when room ready state has changed.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onreconnect" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>onreconnect</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_onreconnect">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Socket.js.html#l164"><code>source&#x2F;Socket.js:164</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when socket attempts to reconnect.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onunlock" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>onunlock</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-danger" title="This method is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#method_onunlock">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l243"><code>source&#x2F;Room.js:243</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when self is warned by server.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_onupdate" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>onupdate</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l493"><code>source&#x2F;Room.js:493</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Function to subscribe to when self user custom user data is updated.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_removeStreamConnection" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>removeStreamConnection</code></h3>
+  
+    <div class="args">
+      <span class="paren">(</span>
+      
+        
+          <code>connectionId</code>
+        
+        <i class="seperator">,&nbsp;&nbsp;</i>
+      
+      <span class="paren">)</span>
+    </div>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l575"><code>source&#x2F;Room.js:575</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Stops a stream connection.</p>
+
+  </div>
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Parameters:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">connectionId</code>
+            <span class="type"><b>{</b>String<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+              
+              <p>The streaming connection id.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_unlock" class="code-item method item method-item  inherited">
+  <h3 class="code-item-name"><code>unlock</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_unlock">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l318"><code>source&#x2F;Room.js:318</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Unlocks the Room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="method_update" class="code-item method item method-item ">
+  <h3 class="code-item-name"><code>update</code></h3>
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l526"><code>source&#x2F;Room.js:526</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Updates the self user data.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+          </section>
+        
+        
+          <section id="properties">
+            
+              <div id="property_answer" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>answer</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_answer">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l222"><code>source&#x2F;RoomHandler.js:222</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>A user has sent an answer to self.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_bye" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>bye</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_bye">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l353"><code>source&#x2F;RoomHandler.js:353</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The a user or self is disconnected from room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_candidate" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>candidate</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_candidate">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l235"><code>source&#x2F;RoomHandler.js:235</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>A user has sent an ICE candidate to self.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_enter" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>enter</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+        <span class="label label-danger" title="This property is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#method_enter">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l174"><code>source&#x2F;RoomHandler.js:174</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>User has sent self an enter.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_icegatheringstate" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>icegatheringstate</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_icegatheringstate">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l89"><code>source&#x2F;RoomHandler.js:89</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the ice gathering state trigger.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_inRoom" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>inRoom</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_inRoom">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l141"><code>source&#x2F;RoomHandler.js:141</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Self is in the room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_muteAudioEvent" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>muteAudioEvent</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_muteAudioEvent">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l261"><code>source&#x2F;RoomHandler.js:261</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>An audio stream muted status has been updated.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_muteVideoEvent" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>muteVideoEvent</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_muteVideoEvent">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l276"><code>source&#x2F;RoomHandler.js:276</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>A video stream muted status has been updated.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_offer" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>offer</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_offer">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l209"><code>source&#x2F;RoomHandler.js:209</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>A user has sent an offer to self.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_redirect" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>redirect</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_redirect">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l326"><code>source&#x2F;RoomHandler.js:326</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self is redirected or warned.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_roomLockEvent" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>roomLockEvent</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+        <span class="label label-danger" title="This property is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#method_roomLockEvent">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l291"><code>source&#x2F;RoomHandler.js:291</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The room is lock status has been updated.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="property_updateUserEvent" class="code-item property item private-property-item  inherited">
+  <h3 class="code-item-name"><code>updateUserEvent</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#method_updateUserEvent">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l248"><code>source&#x2F;RoomHandler.js:248</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>A user has updated their own custom user data.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+          </section>
+        
+        
+          <section id="attrs">
+            
+              <div id="attr_agent" class="code-item attr item private-attr-item ">
+  <a name="config_agent"></a> 
+  <h3 class="code-item-name"><code>agent</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l478"><code>source&#x2F;Room.js:478</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self user browser agent information.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_credentials" class="code-item attr item private-attr-item  inherited">
+  <a name="config_credentials"></a> 
+  <h3 class="code-item-name"><code>credentials</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_credentials">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l93"><code>source&#x2F;Room.js:93</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The user set settings for the room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Keys:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">duration</code>
+            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The room duration set by user.</p>
+
+            </div>
+
+            
+          </li>
+      
+          <li class="param">
+            <code class="param-name">hash</code>
+            <span class="type"><b>{</b>String<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The hashed secret generated by user.</p>
+
+            </div>
+
+            
+          </li>
+      
+          <li class="param">
+            <code class="param-name">startDateTime</code>
+            <span class="type"><b>{</b>String<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The room start date timestamp (ISO format) set by user.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_data" class="code-item attr item private-attr-item ">
+  <a name="config_data"></a> 
+  <h3 class="code-item-name"><code>data</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String | JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l425"><code>source&#x2F;Room.js:425</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self user data.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_duration" class="code-item attr item private-attr-item  inherited">
+  <a name="config_duration"></a> 
+  <h3 class="code-item-name"><code>duration</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Integer<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_duration">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l63"><code>source&#x2F;Room.js:63</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The room duration for persistent mode.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_handler" class="code-item attr item private-attr-item  inherited">
+  <a name="config_handler"></a> 
+  <h3 class="code-item-name"><code>handler</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Function<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_handler">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l206"><code>source&#x2F;Room.js:206</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The handler that manages all triggers or relaying events.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_iceServers" class="code-item attr item private-attr-item  inherited">
+  <a name="config_iceServers"></a> 
+  <h3 class="code-item-name"><code>iceServers</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-warning" title="This attribute is required for communication.">required</span>
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_iceServers">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l182"><code>source&#x2F;Room.js:182</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The room TURN/STUN servers connection.</p>
+
+  </div>
+
+  
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Keys:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">iceServers</code>
+            <span class="type"><b>{</b>Array<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The list of ICE servers.</p>
+
+            </div>
+
+            
+          </li>
+      
+          <li class="param">
+            <code class="param-name">&lt;iceServers.n&gt;</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The ICE server.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_key" class="code-item attr item private-attr-item  inherited">
+  <a name="config_key"></a> 
+  <h3 class="code-item-name"><code>key</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_key">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l43"><code>source&#x2F;Room.js:43</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The room key.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_locked" class="code-item attr item private-attr-item  inherited">
+  <a name="config_locked"></a> 
+  <h3 class="code-item-name"><code>locked</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Boolean<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-warning" title="This attribute is required for communication.">required</span>
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_locked">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l195"><code>source&#x2F;Room.js:195</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The room locked state.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_MessageHandler" class="code-item attr item attr-item  inherited">
+  <a name="config_MessageHandler"></a> 
+  <h3 class="code-item-name"><code>MessageHandler</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_MessageHandler">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l368"><code>source&#x2F;RoomHandler.js:368</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the room messaging events.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_MessageHandlerEvent" class="code-item attr item attr-item  inherited">
+  <a name="config_MessageHandlerEvent"></a> 
+  <h3 class="code-item-name"><code>MessageHandlerEvent</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_MessageHandlerEvent">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l134"><code>source&#x2F;RoomHandler.js:134</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Stores the room messaging events.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_name" class="code-item attr item private-attr-item ">
+  <a name="config_name"></a> 
+  <h3 class="code-item-name"><code>name</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+        <span class="label label-danger" title="This attribute is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#attr_name">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l415"><code>source&#x2F;Room.js:415</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self user id.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_owner" class="code-item attr item private-attr-item  inherited">
+  <a name="config_owner"></a> 
+  <h3 class="code-item-name"><code>owner</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_owner">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l83"><code>source&#x2F;Room.js:83</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The room api owner.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_path" class="code-item attr item private-attr-item  inherited">
+  <a name="config_path"></a> 
+  <h3 class="code-item-name"><code>path</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_path">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l73"><code>source&#x2F;Room.js:73</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The request path to the api server.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_readyState" class="code-item attr item private-attr-item  inherited">
+  <a name="config_readyState"></a> 
+  <h3 class="code-item-name"><code>readyState</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Integer<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-warning" title="This attribute is required for communication.">required</span>
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_readyState">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l171"><code>source&#x2F;Room.js:171</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The room readyState.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_RoomHandler" class="code-item attr item attr-item  inherited">
+  <a name="config_RoomHandler"></a> 
+  <h3 class="code-item-name"><code>RoomHandler</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_RoomHandler">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l116"><code>source&#x2F;RoomHandler.js:116</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the room class events.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_RoomHandlerEvent" class="code-item attr item attr-item  inherited">
+  <a name="config_RoomHandlerEvent"></a> 
+  <h3 class="code-item-name"><code>RoomHandlerEvent</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_RoomHandlerEvent">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l1"><code>source&#x2F;RoomHandler.js:1</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Stores the room class events.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_self" class="code-item attr item private-attr-item  inherited">
+  <a name="config_self"></a> 
+  <h3 class="code-item-name"><code>self</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><a href="../classes/Self.html" class="crosslink">Self</a><b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+        <span class="label label-danger" title="This attribute is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#attr_self">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l106"><code>source&#x2F;Room.js:106</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self user connection.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_startDateTime" class="code-item attr item private-attr-item  inherited">
+  <a name="config_startDateTime"></a> 
+  <h3 class="code-item-name"><code>startDateTime</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+        <span class="label label-danger" title="This attribute is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#attr_startDateTime">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l53"><code>source&#x2F;Room.js:53</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The room start date timestamp (ISO format) for persistent mode.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_stream" class="code-item attr item private-attr-item ">
+  <a name="config_stream"></a> 
+  <h3 class="code-item-name"><code>stream</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+        <span class="label label-danger" title="This attribute is overwritten.">overwritten</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        <span>
+          Inherited from
+          <a href="../classes/Room.html#attr_stream">Room</a>
+          
+            but overwritten in
+          
+        </span>
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l465"><code>source&#x2F;Room.js:465</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self user local stream connection.</p>
+
+  </div>
+
+  
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Keys:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">&lt;connectionId&gt;</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The stream connection to users.</p>
+
+            </div>
+
+            
+          </li>
+      
+          <li class="param">
+            <code class="param-name">&lt;connectionId.targetUsers&gt;</code>
+            <span class="type"><b>{</b>Array<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The target users.</p>
+
+            </div>
+
+            
+          </li>
+      
+          <li class="param">
+            <code class="param-name">&lt;connectionId.stream&gt;</code>
+            <span class="type"><b>{</b><a href="../classes/Stream.html" class="crosslink">Stream</a><b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The stream connected to room.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_timeStamp" class="code-item attr item private-attr-item ">
+  <a name="config_timeStamp"></a> 
+  <h3 class="code-item-name"><code>timeStamp</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l445"><code>source&#x2F;Room.js:445</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self user timestamp (ISO format).</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_token" class="code-item attr item private-attr-item ">
+  <a name="config_token"></a> 
+  <h3 class="code-item-name"><code>token</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l455"><code>source&#x2F;Room.js:455</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self user credential.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_user" class="code-item attr item private-attr-item  inherited">
+  <a name="config_user"></a> 
+  <h3 class="code-item-name"><code>user</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_user">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l148"><code>source&#x2F;Room.js:148</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p><p>The list of components connected to room.</p></p>
+<ul>
+<li>E.g. MCU, Recording</li>
+</ul>
+
+  </div>
+
+  
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Keys:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">n</code>
+            <span class="type"><b>{</b><a href="../classes/User.html" class="crosslink">User</a><b>}</b></span>
+
+            <span class="label">Optional</span>
+            
+
+            <div class="param-description">
+                <p>The user connected to room.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_username" class="code-item attr item private-attr-item ">
+  <a name="config_username"></a> 
+  <h3 class="code-item-name"><code>username</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l435"><code>source&#x2F;Room.js:435</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The self user username.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+              <div id="attr_users" class="code-item attr item private-attr-item  inherited">
+  <a name="config_users"></a> 
+  <h3 class="code-item-name"><code>users</code></h3>
+  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+        <span class="label label-default" title="This attribute is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          <span>
+            Inherited from:
+            <a href="../classes/Room.html#attr_users">Room</a>
+          </span>
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l137"><code>source&#x2F;Room.js:137</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The list of users connected to room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+    <div class="code-item-section">
+      <h4>Keys:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">&lt;userId&gt;</code>
+            <span class="type"><b>{</b><a href="../classes/User.html" class="crosslink">User</a><b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The user connected to room.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>
+            
+          </section>
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+
+
+
+    <div class="extends">
+        Extends <a href="../classes/Room.html" class="crosslink">Room</a>
+    </div>
+
+
+
+
+
+-->
+
+      </div>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

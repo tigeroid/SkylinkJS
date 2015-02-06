@@ -2,91 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>source/skylink-events.js - skylinkjs</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>source/EventList.js - skylinkjs</title>
     <!-- font and icon -->
     <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
     <!-- styling -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <!-- scripts -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="../assets/js/script.js"></script>
     <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
+
 <body>
 
-<div id="doc">
-  <nav id="hd" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="" class="navbar-brand">
-          <img src="../assets/img/logo.svg" />JS<small>Version: 0.5.7</small>
-        </a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul id="api-list" class="nav navbar-nav navbar-right">
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Classes <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
-      
-        <li><a href="../classes/Skylink.html">Skylink</a></li>
-      
-    </ul>
-  </li>
-  <!--<li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="#api-modules">View all Modules</a></li>
-      
-    </ul>
-  </li>-->
-  <li><a href="https://temasys.github.io">Getting Started</a></li>
-</ul>
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
+      <small>Version: 0.5.7</small>
+    </li>
+    <hr>
+    
+      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
 <!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
   <div id="api-tabview-filter" class="form-group">
     <input type="search" id="api-filter" placeholder="Type to filter APIs">
   </div>
 </form>-->
-      </div><!--/.navbar-collapse -->
-    </div>
-  </nav>
-  <div id="bd" class="yui3-g">
 
-      <div class="yui3-u-1-4">
-
-      </div>
-      <div class="yui3-u-3-4">
-          
-          <div class="apidocs">
-              <div id="docs-main">
-                  <div class="content content-main">
-                      <h1 class="file-heading">File: source/skylink-events.js</h1>
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      
+      <div class="content content-main">
+        <h1 class="file-heading">File: source/EventList.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * Syntactically private variables and utility functions.
- * @attribute _EVENTS
+ * Stores the list of available events.
+ * @attribute Event
  * @type JSON
  * @private
  * @final
  * @required
  * @for Skylink
- * @since 0.5.2
+ * @since 0.6.0
  */
-Skylink.prototype._EVENTS = {
+var EventList = [
   /**
    * Event fired when the socket connection to the signaling
    * server is open.
@@ -94,7 +100,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  channelOpen: [],
+  &#x27;channelOpen&#x27;,
 
   /**
    * Event fired when the socket connection to the signaling
@@ -103,7 +109,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  channelClose: [],
+  &#x27;channelClose&#x27;,
 
   /**
    * Event fired when the socket connection received a message
@@ -113,7 +119,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  channelMessage: [],
+  &#x27;channelMessage&#x27;,
 
   /**
    * Event fired when the socket connection has occurred an error.
@@ -122,7 +128,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  channelError: [],
+  &#x27;channelError&#x27;,
 
   /**
    * Event fired when the socket re-tries to connection with fallback ports.
@@ -132,7 +138,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.6
    */
-  channelRetry: [],
+  &#x27;channelRetry&#x27;,
 
   /**
    * Event fired when the socket connection failed connecting.
@@ -147,7 +153,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.5
    */
-  socketError: [],
+  &#x27;socketError&#x27;,
 
   /**
    * Event fired whether the room is ready for use.
@@ -162,7 +168,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.4.0
    */
-  readyStateChange: [],
+  &#x27;readyStateChange&#x27;,
 
   /**
    * Event fired when a peer&#x27;s handshake progress has changed.
@@ -174,7 +180,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.3.0
    */
-  handshakeProgress: [],
+  &#x27;handshakeProgress&#x27;,
 
   /**
    * Event fired when an ICE gathering state has changed.
@@ -186,7 +192,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  candidateGenerationState: [],
+  &#x27;candidateGenerationState&#x27;,
 
   /**
    * Event fired when a peer Connection state has changed.
@@ -198,7 +204,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  peerConnectionState: [],
+  &#x27;peerConnectionState&#x27;,
 
   /**
    * Event fired when a peer connection health has changed.
@@ -209,7 +215,7 @@ Skylink.prototype._EVENTS = {
    *    change.
    * @since 0.5.5
    */
-  peerConnectionHealth: [],
+  &#x27;peerConnectionHealth&#x27;,
 
   /**
    * Event fired when an ICE connection state has changed.
@@ -220,7 +226,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  iceConnectionState: [],
+  &#x27;iceConnectionState&#x27;,
 
   /**
    * Event fired when webcam or microphone media access fails.
@@ -229,7 +235,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  mediaAccessError: [],
+  &#x27;mediaAccessError&#x27;,
 
   /**
    * Event fired when webcam or microphone media acces passes.
@@ -238,7 +244,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  mediaAccessSuccess: [],
+  &#x27;mediaAccessSuccess&#x27;,
 
   /**
    * Event fired when it&#x27;s required to have audio or video access.
@@ -246,7 +252,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.5
    */
-  mediaAccessRequired: [],
+  &#x27;mediaAccessRequired&#x27;,
 
   /**
    * Event fired when media access to MediaStream has stopped.
@@ -254,7 +260,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.6
    */
-  mediaAccessStopped: [],
+  &#x27;mediaAccessStopped&#x27;,
 
   /**
    * Event fired when a peer joins the room.
@@ -289,7 +295,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.2
    */
-  peerJoined: [],
+  &#x27;peerJoined&#x27;,
 
   /**
    * Event fired when a peer&#x27;s connection is restarted.
@@ -323,7 +329,7 @@ Skylink.prototype._EVENTS = {
    * @param {Boolean} isSelfInitiateRestart Is it us who initiated the restart.
    * @since 0.5.5
    */
-  peerRestart: [],
+  &#x27;peerRestart&#x27;,
 
   /**
    * Event fired when a peer information is updated.
@@ -358,7 +364,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.2
    */
-  peerUpdated: [],
+  &#x27;peerUpdated&#x27;,
 
   /**
    * Event fired when a peer leaves the room
@@ -393,7 +399,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.2
    */
-  peerLeft: [],
+  &#x27;peerLeft&#x27;,
 
   /**
    * Event fired when a peer joins the room
@@ -404,7 +410,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  presenceChanged: [],
+  &#x27;presenceChanged&#x27;,
 
   /**
    * Event fired when a remote stream has become available.
@@ -422,7 +428,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.5
    */
-  incomingStream: [],
+  &#x27;incomingStream&#x27;,
 
   /**
    * Event fired when a message being broadcasted is received.
@@ -469,7 +475,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.2
    */
-  incomingMessage: [],
+  &#x27;incomingMessage&#x27;,
 
   /**
    * Event fired when connected to a room and the lock status has changed.
@@ -506,7 +512,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.2
    */
-  roomLock: [],
+  &#x27;roomLock&#x27;,
 
   /**
    * Event fired when a peer&#x27;s datachannel state has changed.
@@ -518,7 +524,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.1.0
    */
-  dataChannelState: [],
+  &#x27;dataChannelState&#x27;,
 
   /**
    * Event fired when a data transfer state has changed.
@@ -546,7 +552,7 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.4.1
    */
-  dataTransferState: [],
+  &#x27;dataTransferState&#x27;,
 
   /**
    * Event fired when the signaling server warns the user.
@@ -559,267 +565,16 @@ Skylink.prototype._EVENTS = {
    * @for Skylink
    * @since 0.5.1
    */
-  systemAction: []
-};
-
-/**
- * Events with callbacks that would be fired only once once condition is met.
- * @attribute _onceEvents
- * @type JSON
- * @private
- * @required
- * @for Skylink
- * @since 0.5.4
- */
-Skylink.prototype._onceEvents = {};
-
-/**
- * Trigger all the callbacks associated with an event.
- * - Note that extra arguments can be passed to the callback which
- *   extra argument can be expected by callback is documented by each event.
- * @method _trigger
- * @param {String} eventName The Skylink event.
- * @for Skylink
- * @private
- * @for Skylink
- * @since 0.1.0
- */
-Skylink.prototype._trigger = function(eventName) {
-  //convert the arguments into an array
-  var args = Array.prototype.slice.call(arguments);
-  var arr = this._EVENTS[eventName];
-  var once = this._onceEvents[eventName] || null;
-  args.shift(); //Omit the first argument since it&#x27;s the event name
-  if (arr) {
-    // for events subscribed forever
-    for (var i = 0; i &lt; arr.length; i++) {
-      try {
-        log.log([null, &#x27;Event&#x27;, eventName, &#x27;Event is fired&#x27;]);
-        if(arr[i].apply(this, args) === false) {
-          break;
-        }
-      } catch(error) {
-        log.error([null, &#x27;Event&#x27;, eventName, &#x27;Exception occurred in event:&#x27;], error);
-      }
-    }
-  }
-  if (once){
-    // for events subscribed on once
-    for (var j = 0; j &lt; once.length; j++) {
-      if (once[j][1].apply(this, args) === true) {
-        log.log([null, &#x27;Event&#x27;, eventName, &#x27;Condition is met. Firing event&#x27;]);
-        if(once[j][0].apply(this, args) === false) {
-          break;
-        }
-        if (!once[j][2]) {
-          log.log([null, &#x27;Event&#x27;, eventName, &#x27;Removing event after firing once&#x27;]);
-          once.splice(j, 1);
-          //After removing current element, the next element should be element of the same index
-          j--;
-        }
-      } else {
-        log.log([null, &#x27;Event&#x27;, eventName, &#x27;Condition is still not met. &#x27; +
-          &#x27;Holding event from being fired&#x27;]);
-      }
-    }
-  }
-
-  log.log([null, &#x27;Event&#x27;, eventName, &#x27;Event is triggered&#x27;]);
-};
-
-/**
- * To register a callback function to an event.
- * @method on
- * @param {String} eventName The Skylink event. See the event list to see what you can register.
- * @param {Function} callback The callback fired after the event is triggered.
- * @example
- *   SkylinkDemo.on(&#x27;peerJoined&#x27;, function (peerId, peerInfo) {
- *      alert(peerId + &#x27; has joined the room&#x27;);
- *   });
- * @for Skylink
- * @since 0.1.0
- */
-Skylink.prototype.on = function(eventName, callback) {
-  if (&#x27;function&#x27; === typeof callback) {
-    this._EVENTS[eventName] = this._EVENTS[eventName] || [];
-    this._EVENTS[eventName].push(callback);
-    log.log([null, &#x27;Event&#x27;, eventName, &#x27;Event is subscribed&#x27;]);
-  } else {
-    log.error([null, &#x27;Event&#x27;, eventName, &#x27;Provided parameter is not a function&#x27;]);
-  }
-};
-
-/**
- * To register a callback function to an event that is fired once a condition is met.
- * @method once
- * @param {String} eventName The Skylink event. See the event list to see what you can register.
- * @param {Function} callback The callback fired after the event is triggered.
- * @param {Function} [condition]
- *   The provided condition that would trigger this event.
- *   If not provided, it will return true when the event is triggered.
- *   Return a true to fire the callback.
- * @param {Boolean} [fireAlways=false] The function does not get removed onced triggered,
- *   but triggers everytime the event is called.
- * @example
- *   SkylinkDemo.once(&#x27;peerConnectionState&#x27;, function (state, peerId) {
- *     alert(&#x27;Peer has left&#x27;);
- *   }, function (state, peerId) {
- *     return state === SkylinkDemo.PEER_CONNECTION_STATE.CLOSED;
- *   });
- * @for Skylink
- * @since 0.5.4
- */
-Skylink.prototype.once = function(eventName, callback, condition, fireAlways) {
-  if (typeof condition === &#x27;boolean&#x27;) {
-    fireAlways = condition;
-    condition = null;
-  }
-  fireAlways = (typeof fireAlways === &#x27;undefined&#x27; ? false : fireAlways);
-  condition = (typeof condition !== &#x27;function&#x27;) ? function () {
-    return true;
-  } : condition;
-
-  if (typeof callback === &#x27;function&#x27;) {
-
-    this._EVENTS[eventName] = this._EVENTS[eventName] || [];
-    // prevent undefined error
-    this._onceEvents[eventName] = this._onceEvents[eventName] || [];
-    this._onceEvents[eventName].push([callback, condition, fireAlways]);
-    log.log([null, &#x27;Event&#x27;, eventName, &#x27;Event is subscribed on condition&#x27;]);
-  } else {
-    log.error([null, &#x27;Event&#x27;, eventName, &#x27;Provided callback is not a function&#x27;]);
-  }
-};
-
-/**
- * To unregister a callback function from an event.
- * @method off
- * @param {String} eventName The Skylink event. See the event list to see what you can unregister.
- * @param {Function} callback The callback fired after the event is triggered.
- *   Not providing any callback turns all callbacks tied to that event off.
- * @example
- *   SkylinkDemo.off(&#x27;peerJoined&#x27;, callback);
- * @for Skylink
- * @since 0.5.5
- */
-Skylink.prototype.off = function(eventName, callback) {
-  if (callback === undefined) {
-    this._EVENTS[eventName] = [];
-    this._onceEvents[eventName] = [];
-    log.log([null, &#x27;Event&#x27;, eventName, &#x27;All events are unsubscribed&#x27;]);
-    return;
-  }
-  var arr = this._EVENTS[eventName];
-  var once = this._onceEvents[eventName];
-
-  // unsubscribe events that is triggered always
-  for (var i = 0; i &lt; arr.length; i++) {
-    if (arr[i] === callback) {
-      log.log([null, &#x27;Event&#x27;, eventName, &#x27;Event is unsubscribed&#x27;]);
-      arr.splice(i, 1);
-      break;
-    }
-  }
-  // unsubscribe events fired only once
-  if(once !== undefined) {
-    for (var j = 0; j &lt; once.length; j++) {
-      if (once[j][0] === callback) {
-        log.log([null, &#x27;Event&#x27;, eventName, &#x27;One-time Event is unsubscribed&#x27;]);
-        once.splice(j, 1);
-        break;
-      }
-    }
-  }
-};
-
-/**
- * Does a check condition first to check if event is required to be subscribed.
- * If check condition fails, it subscribes an event with
- *  {{#crossLink &quot;Skylink/once:method&quot;}}once(){{/crossLink}} method to wait for
- * the condition to pass to fire the callback.
- * @method _condition
- * @param {String} eventName The Skylink event.
- * @param {Function} callback The callback fired after the condition is met.
- * @param {Function} checkFirst The condition to check that if pass, it would fire the callback,
- *   or it will just subscribe to an event and fire when condition is met.
- * @param {Function} [condition]
- *   The provided condition that would trigger this event.
- *   If not provided, it will return true when the event is triggered.
- *   Return a true to fire the callback.
- * @param {Boolean} [fireAlways=false] The function does not get removed onced triggered,
- *   but triggers everytime the event is called.
- * @for Skylink
- * @private
- * @for Skylink
- * @since 0.5.5
- */
-Skylink.prototype._condition = function(eventName, callback, checkFirst, condition, fireAlways) {
-  if (typeof condition === &#x27;boolean&#x27;) {
-    fireAlways = condition;
-    condition = null;
-  }
-  if (typeof callback === &#x27;function&#x27; &amp;&amp; typeof checkFirst === &#x27;function&#x27;) {
-    if (checkFirst()) {
-      log.log([null, &#x27;Event&#x27;, eventName, &#x27;First condition is met. Firing callback&#x27;]);
-      callback();
-      return;
-    }
-    log.log([null, &#x27;Event&#x27;, eventName, &#x27;First condition is not met. Subscribing to event&#x27;]);
-    this.once(eventName, callback, condition, fireAlways);
-  } else {
-    log.error([null, &#x27;Event&#x27;, eventName, &#x27;Provided callback or checkFirst is not a function&#x27;]);
-  }
-};
-
-/**
- * Sets an interval check. If condition is met, fires callback.
- * @method _wait
- * @param {Function} callback The callback fired after the condition is met.
- * @param {Function} condition The provided condition that would trigger this the callback.
- * @param {Integer} [intervalTime=50] The interval loop timeout.
- * @for Skylink
- * @private
- * @for Skylink
- * @since 0.5.5
- */
-Skylink.prototype._wait = function(callback, condition, intervalTime, fireAlways) {
-  fireAlways = (typeof fireAlways === &#x27;undefined&#x27; ? false : fireAlways);
-  if (typeof callback === &#x27;function&#x27; &amp;&amp; typeof condition === &#x27;function&#x27;) {
-    if (condition()) {
-      log.log([null, &#x27;Event&#x27;, null, &#x27;Condition is met. Firing callback&#x27;]);
-      callback();
-      return;
-    }
-    log.log([null, &#x27;Event&#x27;, null, &#x27;Condition is not met. Doing a check.&#x27;]);
-
-    intervalTime = (typeof intervalTime === &#x27;number&#x27;) ? intervalTime : 50;
-
-    var doWait = setInterval(function () {
-      if (condition()) {
-        log.log([null, &#x27;Event&#x27;, null, &#x27;Condition is met after waiting. Firing callback&#x27;]);
-        if (!fireAlways){
-          clearInterval(doWait);
-        }
-        callback();
-      }
-    }, intervalTime);
-  } else {
-    if (typeof callback !== &#x27;function&#x27;){
-      log.error([null, &#x27;Event&#x27;, null, &#x27;Provided callback is not a function&#x27;]);
-    }
-    if (typeof condition !== &#x27;function&#x27;){
-      log.error([null, &#x27;Event&#x27;, null, &#x27;Provided condition is not a function&#x27;]);
-    }
-  }
-};
+  &#x27;systemAction&#x27;
+];
     </pre>
 </div>
 
-                  </div>
-              </div>
-          </div>
       </div>
+    </div>
   </div>
+  <!-- /#page-content-wrapper -->
+
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>

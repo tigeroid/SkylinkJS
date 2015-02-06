@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>source/Peer.js - skylinkjs</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
+      <small>Version: 0.5.7</small>
+    </li>
+    <hr>
+    
+      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      
+      <div class="content content-main">
+        <h1 class="file-heading">File: source/Peer.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles the PeerConnection and Peer data.
+ * @class Peer
+ * @for Skylink
+ * @since 0.6.0
+ */
+function Peer(config, listener) {
+  &#x27;use strict&#x27;;
+
+  // Reference of instance
+  var com = this;
+
+  /**
+   * The peer id.
+   * @attribute id
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.id = config.id || fn.generateUID();
+  
+  /**
+   * The peer type.
+   * @attribute type
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.type = config.id === &#x27;main&#x27; ? &#x27;user&#x27; : &#x27;stream&#x27;;
+  
+  /**
+   * The local description type peer sends.
+   * @attribute SDPType
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.SDPType = null;
+
+  /**
+   * The PeerConnection constraints - iceServers.
+   * @attribute constraints
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.constraints = null;
+
+  /**
+   * The local description to be set.
+   * @attribute localDescription
+   * @type Object
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.localDescription = null;
+  
+  /**
+   * The remote description to be set.
+   * @attribute remoteDescription
+   * @type Object
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.remoteDescription = null;
+  
+  /**
+   * The datachannels connected to PeerConnection.
+   * @attribute datachannels
+   * @param {DataChannel} &lt;channelId&gt; The datachannel connected to peer.
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.datachannels = {};
+  
+  /**
+   * The stream send from this peer.
+   * @attribute stream
+   * @type Stream
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.stream = null;
+
+  /**
+   * The PeerConnection session description constraints.
+   * @attribute sdpConstraints
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.sdpConstraints = {
+    &#x27;mandatory&#x27;: {
+      &#x27;OfferToReceiveAudio&#x27;: true,
+      &#x27;OfferToReceiveVideo&#x27;: true
+    }
+  };
+  
+  /**
+   * The PeerConnection session description configuration.
+   * @attribute sdpConfig
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.sdpConfig = null;
+
+  /**
+   * The PeerConnection configuration.
+   * @attribute config
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.config = {
+    optional: [{
+      DtlsSrtpKeyAgreement: true
+    }]
+  };
+
+  /**
+   * The PeerConnection object.
+   * @attribute RTCPeerConnection
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.RTCPeerConnection = null;
+  
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @attribute handler
+   * @type Function
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    PeerHandler(com, event, data, listener);
+  };
+
+
+  /**
+   * Function to subscribe to when peer&#x27;s connection has been started.
+   * @method onconnect
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when peer&#x27;s ice connection state changes.
+   * @method oniceconnectionstatechange
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.oniceconnectionstatechange = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s ice gathering state changes.
+   * @method onicegatheringstatechange
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onicegatheringstatechange = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s remote stream is received.
+   * @method onaddstream
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onaddstream = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s signaling state has changed.
+   * @method onsignalingstatechange
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onsignalingstatechange = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s connection has been restarted.
+   * @method onreconnect
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onreconnect = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s connection has been restarted.
+   * @method onreconnect
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onreconnect = function () {};
+  
+  /**
+   * Function to subscribe to when a peer connection been disconnected.
+   * @method onremoveconnection
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+  
+  
+
+  /**
+   * Starts the peer connection.
+   * @method connect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.connect = function (stream) {
+    var peer = new window.RTCPeerConnection(com.constraints, com.config);
+  
+    // Send stream
+    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {    
+      
+      // Set the data
+      com.stereo = fn.isSafe(function () { return stream.audio.stereo; });
+    
+      // Check class type
+      peer.addStream(stream.MediaStream);
+      
+      listener(&#x27;peer:stream&#x27;, {
+        id: com.id,
+        sourceType: &#x27;local&#x27;,
+        stream: stream
+      });
+    }
+
+    com.bind(peer);
+  };
+  
+  /**
+   * Restarts the peer connection.
+   * @method reconnect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.reconnect = function (stream) {
+    var hasStream = !!stream;
+
+    stream = stream || fn.isSafe(function () { 
+      return com.RTCPeerConnection.getLocalStreams()[0]; });
+
+    com.RTCPeerConnection.close();
+    com.RTCPeerConnection = null;
+    
+    var peer = new window.RTCPeerConnection(com.constraints, com.config);
+
+    // Send stream
+    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {    
+      
+      // Set the data
+      com.stereo = fn.isSafe(function () { return stream.audio.stereo; });
+    
+      // Check class type
+      peer.addStream(stream.MediaStream);
+      
+      if (hasStream) {
+        listener(&#x27;peer:localstream&#x27;, {
+          id: com.id,
+          userId: com.userId,
+          stream: stream
+        });
+      }
+      
+      com.handler(&#x27;trigger:reconnect&#x27;, peer);
+    }
+    com.bind(peer);
+  };
+
+  /**
+   * Stops the peer connection.
+   * @method disconnect
+   * @private
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.disconnect = function () {
+    if (com.RTCPeerConnection.newSignalingState !== &#x27;closed&#x27;) {
+      com.RTCPeerConnection.close();
+    }
+    com.handler(&#x27;trigger:disconnect&#x27;);
+  };
+
+  /**
+   * Binds events to RTCPeerConnection object.
+   * @method bind
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.bind = function (bindPeer) {
+    bindPeer.iceConnectionFiredStates = [];
+    bindPeer.queueCandidate = [];
+    bindPeer.newSignalingState = &#x27;new&#x27;;
+    bindPeer.newIceConnectionState = &#x27;new&#x27;;
+
+    bindPeer.ondatachannel = function (event) {
+      com.handler(&#x27;trigger:datachannel&#x27;, {
+        sourceType: &#x27;remote&#x27;,
+        channel: event.channel || event
+      }); 
+    };
+
+    bindPeer.onaddstream = function (event) {
+      com.handler(&#x27;trigger:stream&#x27;, {
+        sourceType: &#x27;remote&#x27;,
+        stream: event.stream || event
+      }); 
+    };
+
+    bindPeer.onicecandidate = function (event) {
+      com.handler(&#x27;trigger:icecandidate&#x27;, {
+        sourceType: &#x27;local&#x27;,
+        candidate: event.candidate || event
+      }); 
+    };
+
+    bindPeer.oniceconnectionstatechange = function (event) {
+      ICE.parseIceConnectionState(bindPeer);
+    };
+
+    bindPeer.oniceconnectionnewstatechange = function (event) {
+      com.handler(&#x27;trigger:iceconnectionstate&#x27;, bindPeer); 
+    };
+
+    bindPeer.onsignalingstatechange = function (event) {
+      com.handler(&#x27;trigger:signalingstate&#x27;, bindPeer);
+    };
+
+    bindPeer.onicegatheringstatechange = function () {
+      com.handler(&#x27;trigger:icegatheringstate&#x27;, bindPeer); 
+    };
+    
+    com.RTCPeerConnection = bindPeer;
+
+    fn.runSync(function () {
+      listener(&#x27;peer:connect&#x27;, {
+        id: com.id
+      });
+      
+      if (typeof com.onconnect === &#x27;function&#x27;) {
+        com.onconnect(com.id);
+      }
+    });
+  };
+
+  /**
+   * Creates an offer session description.
+   * @method createOffer
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.createOffer = function () {
+    // Create datachannel
+    if (globals.dataChannel &amp;&amp; com.type === &#x27;user&#x27;) {
+      com.handler(&#x27;trigger:datachannel&#x27;, {
+        sourceType: &#x27;local&#x27;,
+        channel: com.RTCPeerConnection.createDataChannel(&#x27;main&#x27;)
+      });
+    }
+
+    com.RTCPeerConnection.createOffer(function (offer) {
+      var sdp = SDP.configure(offer.sdp, com.sdpConfig);
+
+      com.localDescription = offer;
+
+      listener(&#x27;peer:offer:success&#x27;, {
+        id: com.id,
+        sdp: sdp
+      });
+
+    }, function (error) {
+      listener(&#x27;peer:offer:error&#x27;, {
+        id: com.id,
+        error: error
+      });
+    }, com.sdpConstraints);
+  };
+
+  /**
+   * Creates an answer session description.
+   * @method createAnswer
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.createAnswer = function () {
+    com.RTCPeerConnection.createAnswer(function (answer) {
+      var sdp = SDP.configure(answer.sdp, com.sdpConfig);
+  
+      com.localDescription = answer;
+  
+      listener(&#x27;peer:answer:success&#x27;, {
+        id: com.id,
+        sdp: sdp
+      });
+      
+      com.setLocalDescription();
+
+    }, function (error) {
+      listener(&#x27;peer:answer:error&#x27;, {
+        id: com.id,
+        error: error
+      });
+      
+    }, com.sdpConstraints);
+  };
+
+  /**
+   * Sets local description.
+   * @method setLocalDescription
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.setLocalDescription = function () {
+    var localDescription = com.localDescription;
+  
+    com.RTCPeerConnection.setLocalDescription(localDescription, function () {
+      listener(&#x27;peer:localdescription:success&#x27;, {
+        id: com.id,
+        sdp: localDescription.sdp,
+        type: localDescription.type,
+      });
+
+      if (localDescription.type === &#x27;answer&#x27;) {
+        com.RTCPeerConnection.newSignalingState = &#x27;have-local-answer&#x27;;
+        
+        com.handler(&#x27;trigger:signalingstate&#x27;, com.RTCPeerConnection);
+      
+      } else {
+        com.setRemoteDescription();
+      }
+
+    }, function (error) {
+      listener(&#x27;peer:localdescription:error&#x27;, {
+        id: com.id,
+        sdp: localDescription.sdp,
+        type: localDescription.type,
+        error: error
+      });
+    });
+  };
+
+  /**
+   * Sets remote description.
+   * @method setRemoteDescription
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.setRemoteDescription = function () {
+    var remoteDescription = com.remoteDescription;
+
+    com.RTCPeerConnection.setRemoteDescription(remoteDescription, function () {
+      listener(&#x27;peer:remotedescription:success&#x27;, {
+        id: com.id,
+        sdp: remoteDescription.sdp,
+        type: remoteDescription.type
+      });
+  
+      if (remoteDescription.type === &#x27;answer&#x27;) {
+        com.RTCPeerConnection.newSignalingState = &#x27;have-remote-answer&#x27;;
+        
+        com.handler(&#x27;trigger:signalingstate&#x27;, com.RTCPeerConnection);
+      
+      } else {
+        com.createAnswer();
+      }
+      
+      // Add all ICE Candidate generated before remote description of answer and offer
+      ICE.popCandidate(com.RTCPeerConnection, com.handler);
+
+    }, function (error) {
+      listener(&#x27;peer:remotedescription:error&#x27;, {
+        id: com.id,
+        sdp: remoteDescription.sdp,
+        type: remoteDescription.type,
+        error: error
+      });
+    });
+  };
+
+
+  // Throw an error if adapterjs is not loaded
+  if (!window.RTCPeerConnection) {
+    throw new Error(&#x27;Required dependency adapterjs not found&#x27;);
+  }
+  
+  // Parse bandwidth
+  com.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
+
+  // Parse constraints ICE servers
+  com.constraints = config.constraints; //ICE.parseTURNServers(config.constraints);
+  //com.constraints = //ICE.parseSTUNServers(com.constraints);
+  
+  // Parse the sdp configuration
+  com.sdpConfig = {
+    stereo: fn.isSafe(function () { return config.streamingConfig.audio.stereo; }),
+    bandwidth: com.bandwidth
+  };
+  
+  listener(&#x27;peer:start&#x27;, {
+    id: com.id
+  });
+}
+    </pre>
+</div>
+
+      </div>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

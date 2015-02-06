@@ -50,17 +50,17 @@ var Debugger = {
   logs: [],
   
   console: {
-    log: window.console.log.bind(window.console, LogKey + '%s'),
+    log: window.console.log.bind(window.console, LogKey + '<<%s>> %s'),
     
-    error: window.console.error.bind(window.console, LogKey + '%s'),
+    error: window.console.error.bind(window.console, LogKey + '<<%s>> %s'),
     
     info: window.console.info.bind(window.console, 
-      (window.webrtcDetectedBrowser === 'safari' ? 'INFO: ' : '') + LogKey + '%s'),
+      (window.webrtcDetectedBrowser === 'safari' ? 'INFO: ' : '') + LogKey + '<<%s>> %s'),
     
-    warn: window.console.warn.bind(window.console, LogKey + '%s'),
+    warn: window.console.warn.bind(window.console, LogKey + '<<%s>> %s'),
 
     debug: window.console.newDebug.bind(window.console, 
-      (typeof window.console.debug !== 'function' ? 'DEBUG: ' : '') + LogKey + '%s')
+      (typeof window.console.debug !== 'function' ? 'DEBUG: ' : '') + LogKey + '<<%s>> %s')
   },
   
   traceTemplate: {
@@ -87,7 +87,7 @@ var Debugger = {
 
   setLevel: function (inputLevel) {
     // Debug level
-    if (inputLevel === 4) {
+    if (inputLevel > 3) {
       log.debug = this.applyConsole('debug');
     
     } else {
@@ -143,4 +143,4 @@ var Debugger = {
   }
 };
 
-Debugger.setLevel(2);
+Debugger.setLevel(4);

@@ -14,7 +14,6 @@ var ICE = {
   queueCandidate: function (peer, candidate) {
     peer.queueCandidate = peer.queueCandidate || [];
     peer.queueCandidate.push(candidate);
-    peer.queueCandidateDefer = defer;
   },
   
   popCandidate: function (peer, defer) {
@@ -99,6 +98,10 @@ var ICE = {
       peer.newIceConnectionState = newState;
       peer.oniceconnectionnewstatechange(peer);
     }
+  },
+  
+  parseICEServers: function (constraints) {
+    return constraints;
   },
   
   parseSTUNServers: function (constraints) {

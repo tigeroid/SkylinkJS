@@ -65,7 +65,7 @@ var Request = {
       var response = xhr.responseText || xhr.response;
       var status = xhr.status || 200;
       
-      log.info('Received response from API server', response, status);
+      log.info('Request', 'Received response from API server', response, status);
       
       try {
         response = JSON.parse( response || '{}' );
@@ -86,7 +86,7 @@ var Request = {
     };
 
     xhr.onprogress = function () {
-      log.log('Request load in progress');
+      log.log('Request', 'Request load in progress');
     };
 
     xhr.open('GET', this.protocol + this.server + path, true);
