@@ -109,6 +109,15 @@
             },
             "namespaces": {}
         },
+        "source/Skylink.js": {
+            "name": "source/Skylink.js",
+            "modules": {
+                "Skylink": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "source/Socket.js": {
             "name": "source/Socket.js",
             "modules": {},
@@ -172,7 +181,38 @@
             "namespaces": {}
         }
     },
-    "modules": {},
+    "modules": {
+        "Skylink": {
+            "name": "Skylink",
+            "submodules": {},
+            "classes": {
+                "DataChannel": 1,
+                "Skylink": 1,
+                "DataMessage": 1,
+                "Debugger": 1,
+                "Peer": 1,
+                "Request": 1,
+                "Room": 1,
+                "Self": 1,
+                "Socket": 1,
+                "Stream": 1,
+                "User": 1
+            },
+            "fors": {
+                "Skylink": 1,
+                "Socket": 1,
+                "Room": 1,
+                "Stream": 1,
+                "User": 1
+            },
+            "namespaces": {},
+            "tag": "module",
+            "file": "source/Stream.js",
+            "line": 1,
+            "description": "Handles the whole Skylink interface.",
+            "since": "0.6.0"
+        }
+    },
     "classes": {
         "DataChannel": {
             "name": "DataChannel",
@@ -182,9 +222,23 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
+            "module": "Skylink",
             "file": "source/DataChannel.js",
             "line": 1,
             "description": "Handles the DataChannel connections.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "channel",
+                    "description": "The RTCDataChannel object to parse and hook events on.",
+                    "type": "Object"
+                },
+                {
+                    "name": "listener",
+                    "description": "The listener that listens to all class events and \n   sub-classes objects events.",
+                    "type": "Function"
+                }
+            ],
             "since": "0.6.0"
         },
         "Skylink": {
@@ -194,7 +248,8 @@
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
-            "extension_for": []
+            "extension_for": [],
+            "module": "Skylink"
         },
         "DataMessage": {
             "name": "DataMessage",
@@ -203,7 +258,8 @@
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
-            "extension_for": []
+            "extension_for": [],
+            "module": "Skylink"
         },
         "Debugger": {
             "name": "Debugger",
@@ -212,7 +268,8 @@
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
-            "extension_for": []
+            "extension_for": [],
+            "module": "Skylink"
         },
         "Peer": {
             "name": "Peer",
@@ -222,6 +279,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
+            "module": "Skylink",
             "file": "source/Peer.js",
             "line": 1,
             "description": "Handles the PeerConnection and Peer data.",
@@ -234,7 +292,8 @@
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
-            "extension_for": []
+            "extension_for": [],
+            "module": "Skylink"
         },
         "Room": {
             "name": "Room",
@@ -244,6 +303,7 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
+            "module": "Skylink",
             "file": "source/Room.js",
             "line": 1,
             "description": "Handles the room connection.",
@@ -257,8 +317,9 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
+            "module": "Skylink",
             "file": "source/Room.js",
-            "line": 404,
+            "line": 366,
             "description": "Handles the self connection to the room.",
             "extends": "Room",
             "since": "0.6.0"
@@ -271,6 +332,8 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
+            "module": "Skylink",
+            "namespace": "",
             "file": "source/Socket.js",
             "line": 1,
             "description": "Handles the Socket connection.",
@@ -284,6 +347,8 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
+            "module": "Skylink",
+            "namespace": "",
             "file": "source/Stream.js",
             "line": 1,
             "description": "Handles the XMLHttpStream and API function calls.",
@@ -296,13 +361,15 @@
             "plugins": [],
             "extensions": [],
             "plugin_for": [],
-            "extension_for": []
+            "extension_for": [],
+            "module": "Skylink",
+            "namespace": ""
         }
     },
     "classitems": [
         {
             "file": "source/DataChannel.js",
-            "line": 13,
+            "line": 17,
             "description": "The datachannel label.",
             "itemtype": "attribute",
             "name": "id",
@@ -314,7 +381,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 23,
+            "line": 27,
             "description": "The type of datachannel",
             "itemtype": "attribute",
             "name": "type",
@@ -326,7 +393,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 33,
+            "line": 37,
             "description": "The DataChannel object.",
             "itemtype": "attribute",
             "name": "RTCDataChannel",
@@ -338,7 +405,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 43,
+            "line": 47,
             "description": "Binds events to RTCDataChannel object.",
             "itemtype": "method",
             "name": "bind",
@@ -348,7 +415,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 84,
+            "line": 88,
             "description": "Handles the event when DataChannel is opened.",
             "itemtype": "method",
             "name": "onOpen",
@@ -358,7 +425,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 98,
+            "line": 102,
             "description": "Handles the event when DataChannel is closed.",
             "itemtype": "method",
             "name": "onClose",
@@ -368,7 +435,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 112,
+            "line": 116,
             "description": "Handles the event when DataChannel has an exception.",
             "itemtype": "method",
             "name": "onClose",
@@ -378,7 +445,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 127,
+            "line": 131,
             "description": "Handles the event when DataChannel has a message received.",
             "itemtype": "method",
             "name": "onMessage",
@@ -388,7 +455,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 142,
+            "line": 146,
             "description": "Sends data over the datachannel.",
             "itemtype": "method",
             "name": "send",
@@ -407,7 +474,7 @@
             "file": "source/EventList.js",
             "line": 1,
             "description": "Stores the list of available events.",
-            "itemtype": "attribute",
+            "itemtype": "property",
             "name": "Event",
             "type": "JSON",
             "access": "private",
@@ -419,7 +486,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 12,
+            "line": 11,
             "description": "Event fired when the socket connection to the signaling\nserver is open.",
             "itemtype": "event",
             "name": "channelOpen",
@@ -428,7 +495,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 21,
+            "line": 20,
             "description": "Event fired when the socket connection to the signaling\nserver has closed.",
             "itemtype": "event",
             "name": "channelClose",
@@ -437,7 +504,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 30,
+            "line": 29,
             "description": "Event fired when the socket connection received a message\nfrom the signaling server.",
             "itemtype": "event",
             "name": "channelMessage",
@@ -453,7 +520,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 40,
+            "line": 39,
             "description": "Event fired when the socket connection has occurred an error.",
             "itemtype": "event",
             "name": "channelError",
@@ -469,7 +536,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 49,
+            "line": 48,
             "description": "Event fired when the socket re-tries to connection with fallback ports.",
             "itemtype": "event",
             "name": "channelRetry",
@@ -490,7 +557,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 59,
+            "line": 58,
             "description": "Event fired when the socket connection failed connecting.\n- The difference between this and <b>channelError</b> is that\n  channelError triggers during the connection. This throws\n  when connection failed to be established.",
             "itemtype": "event",
             "name": "socketError",
@@ -516,7 +583,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 74,
+            "line": 73,
             "description": "Event fired whether the room is ready for use.",
             "itemtype": "event",
             "name": "readyStateChange",
@@ -554,7 +621,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 89,
+            "line": 88,
             "description": "Event fired when a peer's handshake progress has changed.",
             "itemtype": "event",
             "name": "handshakeProgress",
@@ -580,7 +647,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 101,
+            "line": 100,
             "description": "Event fired when an ICE gathering state has changed.",
             "itemtype": "event",
             "name": "candidateGenerationState",
@@ -601,7 +668,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 113,
+            "line": 112,
             "description": "Event fired when a peer Connection state has changed.",
             "itemtype": "event",
             "name": "peerConnectionState",
@@ -622,7 +689,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 125,
+            "line": 124,
             "description": "Event fired when a peer connection health has changed.",
             "itemtype": "event",
             "name": "peerConnectionHealth",
@@ -643,7 +710,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 136,
+            "line": 135,
             "description": "Event fired when an ICE connection state has changed.",
             "iceconnectionstate": "",
             "params": [
@@ -663,7 +730,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 147,
+            "line": 146,
             "description": "Event fired when webcam or microphone media access fails.",
             "itemtype": "event",
             "name": "mediaAccessError",
@@ -679,7 +746,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 156,
+            "line": 155,
             "description": "Event fired when webcam or microphone media acces passes.",
             "itemtype": "event",
             "name": "mediaAccessSuccess",
@@ -695,7 +762,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 165,
+            "line": 164,
             "description": "Event fired when it's required to have audio or video access.",
             "itemtype": "event",
             "name": "mediaAccessRequired",
@@ -704,7 +771,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 173,
+            "line": 172,
             "description": "Event fired when media access to MediaStream has stopped.",
             "itemtype": "event",
             "name": "mediaAccessStopped",
@@ -713,7 +780,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 181,
+            "line": 180,
             "description": "Event fired when a peer joins the room.",
             "itemtype": "event",
             "name": "peerJoined",
@@ -836,7 +903,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 216,
+            "line": 215,
             "description": "Event fired when a peer's connection is restarted.",
             "itemtype": "event",
             "name": "peerRestart",
@@ -945,7 +1012,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 250,
+            "line": 249,
             "description": "Event fired when a peer information is updated.",
             "itemtype": "event",
             "name": "peerUpdated",
@@ -1068,7 +1135,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 285,
+            "line": 284,
             "description": "Event fired when a peer leaves the room",
             "itemtype": "event",
             "name": "peerLeft",
@@ -1191,7 +1258,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 320,
+            "line": 319,
             "description": "Event fired when a peer joins the room",
             "itemtype": "event",
             "name": "presenceChanged",
@@ -1210,7 +1277,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 331,
+            "line": 330,
             "description": "Event fired when a remote stream has become available.\n- This occurs after the user joins the room.\n- This is changed from <b>addPeerStream</b> event.\n- Note that <b>addPeerStream</b> is removed from the specs.\n- There has been a documentation error whereby the stream it is\n  supposed to be (stream, peerId, isSelf), but instead is received\n  as (peerId, stream, isSelf) in 0.5.0.",
             "itemtype": "event",
             "name": "incomingStream",
@@ -1241,7 +1308,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 349,
+            "line": 348,
             "description": "Event fired when a message being broadcasted is received.\n- This is changed from <b>chatMessageReceived</b>,\n  <b>privateMessage</b> and <b>publicMessage</b> event.\n- Note that <b>chatMessageReceived</b>, <b>privateMessage</b>\n  and <b>publicMessage</b> is removed from the specs.",
             "itemtype": "event",
             "name": "incomingMessage",
@@ -1396,7 +1463,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 396,
+            "line": 395,
             "description": "Event fired when connected to a room and the lock status has changed.",
             "itemtype": "event",
             "name": "roomLock",
@@ -1524,7 +1591,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 433,
+            "line": 432,
             "description": "Event fired when a peer's datachannel state has changed.",
             "itemtype": "event",
             "name": "dataChannelState",
@@ -1545,7 +1612,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 445,
+            "line": 444,
             "description": "Event fired when a data transfer state has changed.\n- Note that <u>transferInfo.data</u> sends the blob data, and\n  no longer a blob url.",
             "itemtype": "event",
             "name": "dataTransferState",
@@ -1620,7 +1687,7 @@
         },
         {
             "file": "source/EventList.js",
-            "line": 473,
+            "line": 472,
             "description": "Event fired when the signaling server warns the user.",
             "itemtype": "event",
             "name": "systemAction",
@@ -1646,7 +1713,7 @@
         },
         {
             "file": "source/Globals.js",
-            "line": 3,
+            "line": 1,
             "description": "Stores the preferences shared across classes.",
             "itemtype": "attribute",
             "name": "globals",
@@ -1798,6 +1865,30 @@
         {
             "file": "source/Peer.js",
             "line": 84,
+            "description": "The flag that indicates if trickle ICE is enable for this PeerConnection.",
+            "itemtype": "attribute",
+            "name": "iceTrickle",
+            "type": "Boolean",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Peer"
+        },
+        {
+            "file": "source/Peer.js",
+            "line": 94,
+            "description": "The timeout that would react if PeerConnection is unstable and refresh connection.",
+            "itemtype": "attribute",
+            "name": "healthTimer",
+            "type": "Function",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Peer"
+        },
+        {
+            "file": "source/Peer.js",
+            "line": 104,
             "description": "The stream send from this peer.",
             "itemtype": "attribute",
             "name": "stream",
@@ -1809,7 +1900,19 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 94,
+            "line": 114,
+            "description": "Stores the streaming configuration.",
+            "itemtype": "attribute",
+            "name": "streamingConfig",
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Peer"
+        },
+        {
+            "file": "source/Peer.js",
+            "line": 129,
             "description": "The PeerConnection session description constraints.",
             "itemtype": "attribute",
             "name": "sdpConstraints",
@@ -1821,7 +1924,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 109,
+            "line": 144,
             "description": "The PeerConnection session description configuration.",
             "itemtype": "attribute",
             "name": "sdpConfig",
@@ -1833,7 +1936,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 119,
+            "line": 154,
             "description": "The PeerConnection configuration.",
             "itemtype": "attribute",
             "name": "config",
@@ -1845,7 +1948,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 133,
+            "line": 168,
             "description": "The PeerConnection object.",
             "itemtype": "attribute",
             "name": "RTCPeerConnection",
@@ -1857,7 +1960,19 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 143,
+            "line": 178,
+            "description": "The peerconnection weight during handshake.",
+            "itemtype": "attribute",
+            "name": "weight",
+            "type": "Integer",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Peer"
+        },
+        {
+            "file": "source/Peer.js",
+            "line": 188,
             "description": "The handler that manages all triggers or relaying events.",
             "itemtype": "attribute",
             "name": "handler",
@@ -1869,7 +1984,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 156,
+            "line": 201,
             "description": "Function to subscribe to when peer's connection has been started.",
             "itemtype": "method",
             "name": "onconnect",
@@ -1878,7 +1993,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 164,
+            "line": 209,
             "description": "Function to subscribe to when peer's ice connection state changes.",
             "itemtype": "method",
             "name": "oniceconnectionstatechange",
@@ -1887,7 +2002,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 172,
+            "line": 217,
             "description": "Function to subscribe to when peer's ice gathering state changes.",
             "itemtype": "method",
             "name": "onicegatheringstatechange",
@@ -1896,7 +2011,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 180,
+            "line": 225,
             "description": "Function to subscribe to when peer's remote stream is received.",
             "itemtype": "method",
             "name": "onaddstream",
@@ -1905,7 +2020,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 188,
+            "line": 233,
             "description": "Function to subscribe to when peer's signaling state has changed.",
             "itemtype": "method",
             "name": "onsignalingstatechange",
@@ -1914,7 +2029,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 196,
+            "line": 241,
             "description": "Function to subscribe to when peer's connection has been restarted.",
             "itemtype": "method",
             "name": "onreconnect",
@@ -1923,7 +2038,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 204,
+            "line": 249,
             "description": "Function to subscribe to when peer's connection has been restarted.",
             "itemtype": "method",
             "name": "onreconnect",
@@ -1932,7 +2047,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 212,
+            "line": 257,
             "description": "Function to subscribe to when a peer connection been disconnected.",
             "itemtype": "method",
             "name": "onremoveconnection",
@@ -1941,7 +2056,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 222,
+            "line": 267,
             "description": "Starts the peer connection.",
             "itemtype": "method",
             "name": "connect",
@@ -1952,7 +2067,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 251,
+            "line": 297,
             "description": "Restarts the peer connection.",
             "itemtype": "method",
             "name": "reconnect",
@@ -1963,7 +2078,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 291,
+            "line": 335,
             "description": "Stops the peer connection.",
             "itemtype": "method",
             "name": "disconnect",
@@ -1975,7 +2090,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 306,
+            "line": 351,
             "description": "Binds events to RTCPeerConnection object.",
             "itemtype": "method",
             "name": "bind",
@@ -1985,7 +2100,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 369,
+            "line": 457,
             "description": "Creates an offer session description.",
             "itemtype": "method",
             "name": "createOffer",
@@ -1995,7 +2110,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 403,
+            "line": 497,
             "description": "Creates an answer session description.",
             "itemtype": "method",
             "name": "createAnswer",
@@ -2005,7 +2120,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 432,
+            "line": 524,
             "description": "Sets local description.",
             "itemtype": "method",
             "name": "setLocalDescription",
@@ -2014,7 +2129,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 467,
+            "line": 559,
             "description": "Sets remote description.",
             "itemtype": "method",
             "name": "setRemoteDescription",
@@ -2024,57 +2139,18 @@
         {
             "file": "source/PeerHandler.js",
             "line": 1,
-            "description": "Stores the peer class events.",
+            "description": "Handles all the events received from sub classes.",
             "itemtype": "attribute",
-            "name": "PeerHandlerEvent",
+            "name": "PeerEventReceivedHandler",
             "since": "0.6.0",
             "class": "Peer"
         },
         {
             "file": "source/PeerHandler.js",
-            "line": 8,
-            "description": "Handles stream events that will require the peer class to\ntrigger the listener.",
-            "itemtype": "property",
-            "name": "stream",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Peer"
-        },
-        {
-            "file": "source/PeerHandler.js",
-            "line": 17,
-            "description": "Handles the remote stream stop trigger.",
-            "itemtype": "property",
-            "name": "stop",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Peer"
-        },
-        {
-            "file": "source/PeerHandler.js",
-            "line": 36,
-            "description": "Handles the remote stream stop trigger.",
-            "itemtype": "property",
-            "name": "stop",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Peer"
-        },
-        {
-            "file": "source/PeerHandler.js",
-            "line": 50,
-            "description": "Handles events that will require the peer class to\ntrigger peer class events.",
-            "itemtype": "property",
-            "name": "trigger",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
+            "line": 21,
+            "description": "Handles all the events to respond to other parent classes.",
+            "itemtype": "attribute",
+            "name": "PeerEventResponseHandler",
             "since": "0.6.0",
             "class": "Peer"
         },
@@ -2092,7 +2168,7 @@
         },
         {
             "file": "source/PeerHandler.js",
-            "line": 79,
+            "line": 72,
             "description": "Handles the ice gathering state trigger.",
             "itemtype": "property",
             "name": "icegatheringstate",
@@ -2104,7 +2180,7 @@
         },
         {
             "file": "source/PeerHandler.js",
-            "line": 99,
+            "line": 85,
             "description": "Handles the ice candidate trigger.",
             "itemtype": "property",
             "name": "icecandidate",
@@ -2116,7 +2192,7 @@
         },
         {
             "file": "source/PeerHandler.js",
-            "line": 125,
+            "line": 94,
             "description": "Handles the signaling state trigger.",
             "itemtype": "property",
             "name": "signalingstate",
@@ -2128,7 +2204,7 @@
         },
         {
             "file": "source/PeerHandler.js",
-            "line": 145,
+            "line": 107,
             "description": "Handles the datachannel state trigger.",
             "itemtype": "property",
             "name": "datachannel",
@@ -2140,67 +2216,16 @@
         },
         {
             "file": "source/PeerHandler.js",
-            "line": 165,
-            "description": "Handles the stream trigger.",
-            "itemtype": "property",
-            "name": "icegatheringstate",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
+            "line": 125,
+            "description": "Handles all the message events received from socket.",
+            "itemtype": "attribute",
+            "name": "PeerEventMessageHandler",
             "since": "0.6.0",
             "class": "Peer"
         },
         {
             "file": "source/PeerHandler.js",
-            "line": 186,
-            "description": "Handles the reconnect state trigger.",
-            "itemtype": "property",
-            "name": "icegatheringstate",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Peer"
-        },
-        {
-            "file": "source/PeerHandler.js",
-            "line": 203,
-            "description": "Handles the handshake state trigger.",
-            "itemtype": "property",
-            "name": "handshake",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Peer"
-        },
-        {
-            "file": "source/PeerHandler.js",
-            "line": 234,
-            "description": "Handles the disconnected state trigger.",
-            "itemtype": "property",
-            "name": "mutestream",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Peer"
-        },
-        {
-            "file": "source/PeerHandler.js",
-            "line": 258,
-            "description": "Handles the disconnected state trigger.",
-            "itemtype": "property",
-            "name": "icegatheringstate",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Peer"
-        },
-        {
-            "file": "source/PeerHandler.js",
-            "line": 277,
+            "line": 193,
             "description": "Handles the peer class events.",
             "itemtype": "attribute",
             "name": "PeerHandler",
@@ -2629,7 +2654,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 290,
+            "line": 296,
             "description": "Stops the connection to the room.",
             "itemtype": "method",
             "name": "leave",
@@ -2639,7 +2664,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 301,
+            "line": 307,
             "description": "Locks the Room.",
             "itemtype": "method",
             "name": "lock",
@@ -2648,7 +2673,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 318,
+            "line": 326,
             "description": "Unlocks the Room.",
             "itemtype": "method",
             "name": "unlock",
@@ -2657,23 +2682,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 335,
-            "description": "Starts the handshake",
-            "itemtype": "method",
-            "name": "handshake",
-            "params": [
-                {
-                    "name": "data",
-                    "description": "The user information.",
-                    "type": "JSON"
-                }
-            ],
-            "since": "0.6.0",
-            "class": "Room"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 360,
+            "line": 345,
             "description": "Sends a another stream to users.",
             "itemtype": "method",
             "name": "addStreamConnection",
@@ -2682,12 +2691,6 @@
                     "name": "stream",
                     "description": "The stream object.",
                     "type": "Stream"
-                },
-                {
-                    "name": "targetUsers",
-                    "description": "The list of targeted users.",
-                    "type": "Array",
-                    "optional": true
                 }
             ],
             "since": "0.6.0",
@@ -2695,7 +2698,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 415,
+            "line": 377,
             "description": "The self user id.",
             "itemtype": "attribute",
             "name": "name",
@@ -2707,7 +2710,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 425,
+            "line": 387,
             "description": "The self user data.",
             "itemtype": "attribute",
             "name": "data",
@@ -2719,7 +2722,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 435,
+            "line": 397,
             "description": "The self user username.",
             "itemtype": "attribute",
             "name": "username",
@@ -2731,7 +2734,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 445,
+            "line": 407,
             "description": "The self user timestamp (ISO format).",
             "itemtype": "attribute",
             "name": "timeStamp",
@@ -2743,7 +2746,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 455,
+            "line": 417,
             "description": "The self user credential.",
             "itemtype": "attribute",
             "name": "token",
@@ -2755,7 +2758,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 465,
+            "line": 427,
             "description": "The self user local stream connection.",
             "itemtype": "attribute",
             "name": "stream",
@@ -2784,7 +2787,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 478,
+            "line": 440,
             "description": "The self user browser agent information.",
             "itemtype": "attribute",
             "name": "agent",
@@ -2796,7 +2799,31 @@
         },
         {
             "file": "source/Room.js",
-            "line": 493,
+            "line": 454,
+            "description": "The self user bandwidth configuration.",
+            "itemtype": "attribute",
+            "name": "agent",
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Room.js",
+            "line": 464,
+            "description": "The handler that manages all triggers or relaying events.",
+            "itemtype": "attribute",
+            "name": "handler",
+            "type": "Function",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Room.js",
+            "line": 481,
             "description": "Function to subscribe to when self user custom user data is updated.",
             "itemtype": "method",
             "name": "onupdate",
@@ -2805,7 +2832,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 501,
+            "line": 489,
             "description": "Function to subscribe to when self has added a stream connection.",
             "itemtype": "method",
             "name": "onaddstreamconnection",
@@ -2814,7 +2841,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 509,
+            "line": 497,
             "description": "Function to subscribe to when self has stopped a stream connection.",
             "itemtype": "method",
             "name": "onaddstream",
@@ -2823,7 +2850,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 517,
+            "line": 505,
             "description": "Function to subscribe to when self has been disconnected from the room.",
             "itemtype": "method",
             "name": "ondisconnect",
@@ -2832,7 +2859,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 526,
+            "line": 514,
             "description": "Updates the self user data.",
             "itemtype": "method",
             "name": "update",
@@ -2841,7 +2868,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 548,
+            "line": 535,
             "description": "Starts a new stream connection.",
             "itemtype": "method",
             "name": "addStreamConnection",
@@ -2862,7 +2889,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 575,
+            "line": 563,
             "description": "Stops a stream connection.",
             "itemtype": "method",
             "name": "removeStreamConnection",
@@ -2878,28 +2905,44 @@
         },
         {
             "file": "source/Room.js",
-            "line": 621,
+            "line": 608,
             "description": "Gets the self user info.",
             "itemtype": "method",
             "name": "getInfo",
+            "params": [
+                {
+                    "name": "connectionId",
+                    "description": "The connectionId of the stream.",
+                    "type": "String"
+                }
+            ],
             "since": "0.6.0",
             "class": "Self"
         },
         {
             "file": "source/RoomHandler.js",
             "line": 1,
-            "description": "Stores the room class events.",
+            "description": "Handles all the events received from sub classes.",
             "itemtype": "attribute",
-            "name": "RoomHandlerEvent",
+            "name": "RoomEventReceivedHandler",
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 89,
-            "description": "Handles the ice gathering state trigger.",
+            "line": 125,
+            "description": "Handles all the events to respond to other parent classes.",
+            "itemtype": "attribute",
+            "name": "RoomEventResponseHandler",
+            "since": "0.6.0",
+            "class": "Room"
+        },
+        {
+            "file": "source/RoomHandler.js",
+            "line": 132,
+            "description": "Handles the error state trigger.",
             "itemtype": "property",
-            "name": "icegatheringstate",
+            "name": "error",
             "type": "Function",
             "access": "private",
             "tagname": "",
@@ -2908,7 +2951,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 116,
+            "line": 157,
             "description": "Handles the room class events.",
             "itemtype": "attribute",
             "name": "RoomHandler",
@@ -2917,7 +2960,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 134,
+            "line": 183,
             "description": "Stores the room messaging events.",
             "itemtype": "attribute",
             "name": "MessageHandlerEvent",
@@ -2926,7 +2969,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 141,
+            "line": 190,
             "description": "Self is in the room.",
             "itemtype": "property",
             "name": "inRoom",
@@ -2938,7 +2981,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 174,
+            "line": 224,
             "description": "User has sent self an enter.",
             "itemtype": "property",
             "name": "enter",
@@ -2950,7 +2993,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 198,
+            "line": 241,
             "description": "User has sent self an welcome.",
             "itemtype": "property",
             "name": "enter",
@@ -2962,7 +3005,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 209,
+            "line": 258,
             "description": "A user has sent an offer to self.",
             "itemtype": "property",
             "name": "offer",
@@ -2974,7 +3017,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 222,
+            "line": 273,
             "description": "A user has sent an answer to self.",
             "itemtype": "property",
             "name": "answer",
@@ -2986,7 +3029,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 235,
+            "line": 288,
             "description": "A user has sent an ICE candidate to self.",
             "itemtype": "property",
             "name": "candidate",
@@ -2998,7 +3041,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 248,
+            "line": 303,
             "description": "A user has updated their own custom user data.",
             "itemtype": "property",
             "name": "updateUserEvent",
@@ -3010,7 +3053,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 261,
+            "line": 318,
             "description": "An audio stream muted status has been updated.",
             "itemtype": "property",
             "name": "muteAudioEvent",
@@ -3022,7 +3065,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 276,
+            "line": 333,
             "description": "A video stream muted status has been updated.",
             "itemtype": "property",
             "name": "muteVideoEvent",
@@ -3034,7 +3077,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 291,
+            "line": 348,
             "description": "The room is lock status has been updated.",
             "itemtype": "property",
             "name": "roomLockEvent",
@@ -3046,7 +3089,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 313,
+            "line": 370,
             "description": "The room is lock status has been updated.",
             "itemtype": "property",
             "name": "roomLockEvent",
@@ -3058,7 +3101,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 326,
+            "line": 385,
             "description": "The self is redirected or warned.",
             "itemtype": "property",
             "name": "redirect",
@@ -3070,7 +3113,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 353,
+            "line": 414,
             "description": "The a user or self is disconnected from room.",
             "itemtype": "property",
             "name": "bye",
@@ -3082,7 +3125,7 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 368,
+            "line": 431,
             "description": "Handles the room messaging events.",
             "itemtype": "attribute",
             "name": "MessageHandler",
@@ -3242,7 +3285,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3254,7 +3298,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3266,7 +3311,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3278,7 +3324,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3290,7 +3337,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3302,7 +3350,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3315,7 +3364,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3339,7 +3389,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3351,7 +3402,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3363,7 +3415,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3375,7 +3428,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
@@ -3387,178 +3441,210 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 140,
+            "line": 139,
+            "description": "The handler that manages all triggers or relaying events.",
+            "itemtype": "attribute",
+            "name": "handler",
+            "type": "Function",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Socket",
+            "module": "Skylink"
+        },
+        {
+            "file": "source/Socket.js",
+            "line": 160,
             "description": "Function to subscribe to when socket has been connected.",
             "itemtype": "method",
             "name": "onconnect",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 148,
+            "line": 168,
             "description": "Function to subscribe to when socket has been disconnected.",
             "itemtype": "method",
             "name": "ondisconnect",
             "since": "0.6.0",
-            "class": "Room"
+            "class": "Room",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 156,
+            "line": 176,
             "description": "Function to subscribe to when socket has connection error.",
             "itemtype": "method",
             "name": "onconnecterror",
             "since": "0.6.0",
-            "class": "Room"
+            "class": "Room",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 164,
+            "line": 184,
             "description": "Function to subscribe to when socket attempts to reconnect.",
             "itemtype": "method",
             "name": "onreconnect",
             "since": "0.6.0",
-            "class": "Room"
+            "class": "Room",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 172,
+            "line": 192,
             "description": "Function to subscribe to when socket has an exception.",
             "itemtype": "method",
             "name": "onerror",
             "since": "0.6.0",
-            "class": "Room"
+            "class": "Room",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 181,
+            "line": 201,
             "description": "Starts the connection to the signalling server",
             "itemtype": "method",
             "name": "connect",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 198,
+            "line": 218,
             "description": "Stops the connection to the Socket.",
             "itemtype": "method",
             "name": "disconnect",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 210,
+            "line": 230,
             "description": "Attaches a listener to a particular socket message event received.",
             "itemtype": "method",
             "name": "when",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 223,
+            "line": 243,
             "description": "Sends a socket data.",
             "itemtype": "method",
             "name": "send",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 242,
+            "line": 264,
             "description": "Handles the event when socket is connected to signaling.",
             "itemtype": "method",
             "name": "bindOnConnect",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 267,
+            "line": 286,
             "description": "Handles the event when socket is disconnected to signaling.",
             "itemtype": "method",
             "name": "bindOnDisconnect",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 284,
+            "line": 300,
             "description": "Handles the event when socket receives a message from signaling.",
             "itemtype": "method",
             "name": "bindOnMessage",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 311,
+            "line": 325,
             "description": "Handles the event when socket have a connection error.",
             "itemtype": "method",
             "name": "bindOnConnectError",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 351,
+            "line": 363,
             "description": "Handles the event when socket catches an exception.",
             "itemtype": "method",
             "name": "bindOnError",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 369,
+            "line": 379,
             "description": "Responses to the attached socket message responses.",
             "itemtype": "method",
             "name": "respond",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 385,
+            "line": 395,
             "description": "Restarts the connection to the Socket.",
             "itemtype": "method",
             "name": "reconnect",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 411,
+            "line": 421,
             "description": "Creates a WebSocket connection in socket.io.",
             "itemtype": "method",
             "name": "WebSocket",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 439,
+            "line": 449,
             "description": "Creates a XHR Long-polling connection in socket.io.",
             "itemtype": "method",
             "name": "XHRPolling",
             "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Socket"
+            "class": "Socket",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
@@ -3570,7 +3656,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
@@ -3582,7 +3669,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
@@ -3594,7 +3682,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
@@ -3606,7 +3695,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
@@ -3618,7 +3708,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
@@ -3630,7 +3721,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
@@ -3642,153 +3734,169 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 90,
+            "line": 92,
             "description": "Function to subscribe to when stream has ended.",
             "itemtype": "method",
             "name": "onstreamended",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 98,
+            "line": 100,
             "description": "Function to subscribe to when stream track has been ended.",
             "itemtype": "method",
             "name": "ontrackended",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 106,
+            "line": 108,
             "description": "Function to subscribe to when stream track has been muted.",
             "itemtype": "method",
             "name": "ontrackmute",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 114,
+            "line": 116,
             "description": "Function to subscribe to when stream track has been unmuted.",
             "itemtype": "method",
             "name": "ontrackunmute",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 123,
+            "line": 125,
             "description": "Starts a MediaStream object connection with getUserMedia.",
             "itemtype": "method",
             "name": "start",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 140,
+            "line": 142,
             "description": "Binds events to MediaStream object.",
             "itemtype": "method",
             "name": "bind",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 171,
+            "line": 173,
             "description": "Binds events to MediaStreamTrack object.",
             "itemtype": "method",
             "name": "bind",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 228,
+            "line": 230,
             "description": "Attaches the Stream object to a video element.",
             "itemtype": "method",
             "name": "attachElement",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 245,
+            "line": 247,
             "description": "Handles the non-implemented firefox onended event for stream.",
             "itemtype": "method",
             "name": "bindOnStreamEnded",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 321,
+            "line": 323,
             "description": "Mutes all audio MediaStreamTracks.",
             "itemtype": "method",
             "name": "muteAudio",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 349,
+            "line": 351,
             "description": "Unmutes all audio MediaStreamTracks.",
             "itemtype": "method",
             "name": "unmuteAudio",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 377,
+            "line": 379,
             "description": "Stops all audio MediaStreamTracks streaming.",
             "itemtype": "method",
             "name": "stopAudio",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 409,
+            "line": 411,
             "description": "Mutes all video MediaStreamTracks.",
             "itemtype": "method",
             "name": "muteVideo",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 437,
+            "line": 439,
             "description": "Unmutes all video MediaStreamTracks.",
             "itemtype": "method",
             "name": "unmuteVideo",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/Stream.js",
-            "line": 465,
+            "line": 467,
             "description": "Stops all video MediaStreamTracks streaming.",
             "itemtype": "method",
             "name": "stopVideo",
             "trigger": "StreamJoined, mediaAccessRequired",
             "since": "0.6.0",
-            "class": "Stream"
+            "class": "Stream",
+            "module": "Skylink"
         },
         {
             "file": "source/StreamParser.js",
@@ -3797,7 +3905,8 @@
             "itemtype": "attribute",
             "name": "StreamParser",
             "since": "0.6.0",
-            "class": "Skylink"
+            "class": "Skylink",
+            "module": "Skylink"
         },
         {
             "file": "source/StreamParser.js",
@@ -3810,6 +3919,7 @@
             "tagname": "",
             "since": "0.6.0",
             "class": "Skylink",
+            "module": "Skylink",
             "subprops": [
                 {
                     "name": "audio",
@@ -3891,6 +4001,7 @@
             "tagname": "",
             "since": "0.6.0",
             "class": "Skylink",
+            "module": "Skylink",
             "subprops": [
                 {
                     "name": "options",
@@ -3921,6 +4032,7 @@
             "tagname": "",
             "since": "0.6.0",
             "class": "Skylink",
+            "module": "Skylink",
             "subprops": [
                 {
                     "name": "options",
@@ -3968,6 +4080,7 @@
             "tagname": "",
             "since": "0.6.0",
             "class": "Skylink",
+            "module": "Skylink",
             "subprops": [
                 {
                     "name": "options",
@@ -4008,6 +4121,7 @@
             "tagname": "",
             "since": "0.6.0",
             "class": "Skylink",
+            "module": "Skylink",
             "subprops": [
                 {
                     "name": "options",
@@ -4039,7 +4153,8 @@
                 "type": "JSON"
             },
             "since": "0.6.0",
-            "class": "Skylink"
+            "class": "Skylink",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4050,7 +4165,8 @@
             "type": "String",
             "readonly": "",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4061,7 +4177,8 @@
             "type": "String",
             "readonly": "",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4073,7 +4190,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4085,23 +4203,12 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
             "line": 47,
-            "description": "Stores the bandwidth configuration.",
-            "itemtype": "attribute",
-            "name": "bandwidth",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/User.js",
-            "line": 57,
             "description": "Stores the list of peer connections to user.",
             "itemtype": "attribute",
             "name": "peers",
@@ -4109,7 +4216,21 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
+        },
+        {
+            "file": "source/User.js",
+            "line": 57,
+            "description": "Stores the list of peer streaming configuration.",
+            "itemtype": "attribute",
+            "name": "streamingConfigs",
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4121,7 +4242,8 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4130,7 +4252,8 @@
             "itemtype": "method",
             "name": "onupdate",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4139,7 +4262,8 @@
             "itemtype": "method",
             "name": "ondisconnect",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4148,7 +4272,8 @@
             "itemtype": "method",
             "name": "onaddconnection",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4157,7 +4282,8 @@
             "itemtype": "method",
             "name": "onremoveconnection",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4166,7 +4292,8 @@
             "itemtype": "method",
             "name": "ondatarequest",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4175,7 +4302,8 @@
             "itemtype": "method",
             "name": "ondata",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4184,7 +4312,8 @@
             "itemtype": "method",
             "name": "ondatatransfer",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
@@ -4193,143 +4322,72 @@
             "itemtype": "method",
             "name": "addConnection",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
-            "line": 172,
+            "line": 160,
             "description": "Stops a peer connection to user.",
             "itemtype": "method",
             "name": "addConnection",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
-            "line": 182,
+            "line": 174,
             "description": "Disconnects this user connection.",
             "itemtype": "method",
             "name": "disconnect",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/User.js",
-            "line": 194,
+            "line": 186,
+            "description": "Updates this user information.",
+            "itemtype": "method",
+            "name": "getInfo",
+            "since": "0.6.0",
+            "class": "User",
+            "module": "Skylink"
+        },
+        {
+            "file": "source/User.js",
+            "line": 200,
             "description": "Gets this user information.",
             "itemtype": "method",
             "name": "getInfo",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/UserHandler.js",
             "line": 1,
-            "description": "Stores the user class events.",
+            "description": "Handles all the events received from sub classes.",
             "itemtype": "attribute",
-            "name": "UserHandlerEvent",
+            "name": "UserHandlerReceivedHandler",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/UserHandler.js",
-            "line": 8,
-            "description": "Handles stream events that will require the user class to\ntrigger the listener.",
-            "itemtype": "property",
-            "name": "peer",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
+            "line": 57,
+            "description": "Handles all the events to respond to other parent classes.",
+            "itemtype": "attribute",
+            "name": "UserHandlerResponseHandler",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/UserHandler.js",
-            "line": 17,
-            "description": "Handles the event when peer is connected.",
-            "itemtype": "property",
-            "name": "connect",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 36,
-            "description": "Handles the event when peer is disconnected.",
-            "itemtype": "property",
-            "name": "disconnect",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 54,
-            "description": "Handles transfer events that will require the user class to\ntrigger the listener.",
-            "itemtype": "property",
-            "name": "transfer",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 63,
-            "description": "Handles the event when transfer is completed.",
-            "itemtype": "property",
-            "name": "complete",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 81,
-            "description": "Handles the event when a request transfer is received.",
-            "itemtype": "property",
-            "name": "request",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 100,
-            "description": "Handles events that will require the user class to\ntrigger user class events.",
-            "itemtype": "property",
-            "name": "trigger",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 109,
-            "description": "Handles the update user data trigger.",
-            "itemtype": "property",
-            "name": "update",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 129,
+            "line": 89,
             "description": "Handles the incoming message trigger.",
             "itemtype": "property",
             "name": "message",
@@ -4337,114 +4395,78 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/UserHandler.js",
-            "line": 147,
-            "description": "Handles the handshake trigger.",
-            "itemtype": "property",
-            "name": "handshake",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
+            "line": 110,
+            "description": "Handles all the message events received from socket.",
+            "itemtype": "attribute",
+            "name": "UserEventMessageHandler",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         },
         {
             "file": "source/UserHandler.js",
-            "line": 193,
-            "description": "Handles the candidate trigger.",
-            "itemtype": "property",
-            "name": "candidate",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 217,
-            "description": "Handles the mute stream trigger.",
-            "itemtype": "property",
-            "name": "mutestream",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 230,
-            "description": "Handles the peer connection restart trigger.",
-            "itemtype": "property",
-            "name": "restart",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "User"
-        },
-        {
-            "file": "source/UserHandler.js",
-            "line": 245,
+            "line": 208,
             "description": "Handles the user class events.",
             "itemtype": "attribute",
             "name": "UserHandler",
             "since": "0.6.0",
-            "class": "User"
+            "class": "User",
+            "module": "Skylink"
         }
     ],
     "warnings": [
         {
             "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:43"
+            "line": " source/DataChannel.js:47"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:84"
+            "line": " source/DataChannel.js:88"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:98"
+            "line": " source/DataChannel.js:102"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:112"
+            "line": " source/DataChannel.js:116"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:127"
+            "line": " source/DataChannel.js:131"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:142"
+            "line": " source/DataChannel.js:146"
         },
         {
             "message": "unknown tag: iceconnectionstate",
-            "line": " source/EventList.js:136"
+            "line": " source/EventList.js:135"
         },
         {
             "message": "unknown tag: unsupported",
-            "line": " source/EventList.js:320"
+            "line": " source/EventList.js:319"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Peer.js:291"
+            "line": " source/Peer.js:335"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Peer.js:306"
+            "line": " source/Peer.js:351"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Peer.js:369"
+            "line": " source/Peer.js:457"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Peer.js:403"
+            "line": " source/Peer.js:497"
         },
         {
             "message": "unknown tag: trigger",
@@ -4456,91 +4478,91 @@
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Room.js:290"
+            "line": " source/Room.js:296"
         },
         {
             "message": "replacing incorrect tag: extend with extends",
-            "line": " source/Room.js:404"
+            "line": " source/Room.js:366"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:181"
+            "line": " source/Socket.js:201"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:198"
+            "line": " source/Socket.js:218"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:210"
+            "line": " source/Socket.js:230"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:223"
+            "line": " source/Socket.js:243"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:284"
+            "line": " source/Socket.js:300"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:369"
+            "line": " source/Socket.js:379"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:385"
+            "line": " source/Socket.js:395"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:411"
+            "line": " source/Socket.js:421"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Socket.js:439"
+            "line": " source/Socket.js:449"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:123"
+            "line": " source/Stream.js:125"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:140"
+            "line": " source/Stream.js:142"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:171"
+            "line": " source/Stream.js:173"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:228"
+            "line": " source/Stream.js:230"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:245"
+            "line": " source/Stream.js:247"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:321"
+            "line": " source/Stream.js:323"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:349"
+            "line": " source/Stream.js:351"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:377"
+            "line": " source/Stream.js:379"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:409"
+            "line": " source/Stream.js:411"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:437"
+            "line": " source/Stream.js:439"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Stream.js:465"
+            "line": " source/Stream.js:467"
         },
         {
             "message": "replacing incorrect tag: returns with return",
@@ -4548,7 +4570,7 @@
         },
         {
             "message": "Missing item type\nEvent fired when an ICE connection state has changed.",
-            "line": " source/EventList.js:136"
+            "line": " source/EventList.js:135"
         }
     ]
 }

@@ -13,7 +13,15 @@ YUI.add("yuidoc-meta", function(Y) {
         "Stream",
         "User"
     ],
-    "modules": [],
-    "allModules": []
+    "modules": [
+        "Skylink"
+    ],
+    "allModules": [
+        {
+            "displayName": "Skylink",
+            "name": "Skylink",
+            "description": "Handles the whole Skylink interface."
+        }
+    ]
 } };
 });

@@ -1,11 +1,10 @@
 /**
  * Stores the list of available events.
- * @attribute Event
+ * @property Event
  * @type JSON
  * @private
  * @final
  * @required
- * @for Skylink
  * @since 0.6.0
  */
 var EventList = [

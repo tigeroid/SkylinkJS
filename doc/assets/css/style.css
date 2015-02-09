@@ -7,6 +7,20 @@
 /* Toggle Styles */
 body {
   font-weight: 350;
+  font-size: 14px;
+}
+
+h1, h2, h3 {
+  font-weight: 200;
+}
+
+h5 {
+  margin-top: 15px;
+}
+
+#main-wrapper {
+  width: 100%;
+  padding-left: 75px;
 }
 
 #wrapper {
@@ -35,6 +49,12 @@ body {
 }
 #wrapper.toggled #sidebar-wrapper {
   width: 250px;
+}
+.btn-list {
+  margin: 25px 0;
+}
+.btn-list .btn {
+  margin-right: 15px;
 }
 #page-content-wrapper {
   width: 100%;
@@ -68,6 +88,15 @@ body {
   float: right;
   margin: 12px 15px;
 }
+
+.sidebar-nav li.active {
+  background: teal;
+}
+
+.sidebar-nav li.active a {
+  color: #fff;
+}
+
 .sidebar-nav li a:hover {
   text-decoration: none;
   color: #fff;
@@ -115,6 +144,144 @@ body {
   font-size: 12px;
   color: #ccc;
 }
+
+.strike {
+  border-color: teal;
+}
+
+mark {
+  font-family: monospace, consolas;
+  color: maroon;
+}
+
+.badge {
+  border-radius: 0;
+  margin-left: 5px;
+  background: #888;
+}
+
+var {
+  font-family: monospace, consolas;
+  color: #444;
+}
+
+.table h5 {
+  margin: 0;
+}
+
+.section {
+  margin: 25px 0 35px;
+}
+
+.section-diagram {
+  margin: 15px 0;
+  display: block;
+}
+
+.code-section {
+  border-top: solid 1px #eee;
+  padding: 15px 0;
+}
+
+.code-section-item {
+  border-bottom: solid 1px #eee;
+}
+
+.code-section-item-param .type {
+  font-family: monospace, consolas;
+  margin-left: 5px;
+}
+
+.code-section-item-param .type em {
+  color: darkblue;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.code-section-item-param .name {
+  margin: 5px 0;
+}
+
+.code-section-item-param .description {
+  font-size: 12px;
+}
+
+blockquote {
+  font-size: 12px;
+  border-color: palegoldenrod;
+  border-width: 2px;
+  color: chocolate;
+  padding: 0;
+  opacity: 0.65;
+}
+
+blockquote p {
+  margin: 10px 7px;
+}
+
+blockquote p em {
+  margin-right: 15px;
+}
+
+pre {
+  margin: 15px 0;
+}
+
+.panel-code {
+  border: solid 1px #eee;
+  border-radius: 0;
+  margin: 25px 0;
+}
+
+.panel-code .panel-heading {
+  background: #eee;
+}
+
+.panel-code .panel-heading h5 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.panel-code .panel-heading h5 .items {
+  font-style: normal;
+}
+
+.panel-code .panel-heading h5 .badge {
+  font-size: 10px;
+  margin-left: 5px;
+}
+
+.panel-code .panel-heading p {
+  font-size: 12px;
+  margin: 5px 0;
+  color: #888;
+}
+
+.panel-code .panel-heading h5 .items item:last-child {
+  display: none;
+}
+
+.panel-code .panel-body {
+  border-radius: 0;
+  margin: 0;
+  border-bottom: solid 1px #eee;
+}
+
+.panel-code .panel-body:last-child {
+  margin: 0;
+  padding: 0;
+}
+
+.panel-code .panel-body ul {
+  padding-left: 15px;
+  margin: 15px 0;
+}
+
+strong {
+  font-weight: 500;
+}
+
+
 
 #menu-toggle {
   position: fixed;

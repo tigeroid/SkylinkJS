@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/User.js - skylinkjs">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>source/User.js - skylinkjs</title>
+    <title>Skylink Javascript API documentation</title>
     <!-- font and icon -->
     <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
@@ -36,32 +37,35 @@
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
     <li class="sidebar-brand">
-      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
-      <small>Version: 0.5.7</small>
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
     </li>
     <hr>
+    <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Debugger.html">Debugger </a></li>
     
-      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Peer.html">Peer </a></li>
     
-      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Request.html">Request </a></li>
     
-      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Room.html">Room </a></li>
     
-      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Self.html">Self </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Skylink.html">Skylink </a></li>
     
-      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Socket.html">Socket </a></li>
     
-      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Stream.html">Stream </a></li>
     
-      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/User.html">User </a></li>
     
   </ul>
 </div>
@@ -74,11 +78,10 @@
 </form>-->
 
   <!-- Page Content -->
-  <div id="page-content-wrapper">
-    <div class="container-fluid">
-      
-      <div class="content content-main">
-        <h1 class="file-heading">File: source/User.js</h1>
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/User.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/User.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/User.js">the current development branch</a>.</p>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -116,7 +119,7 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.data = config.userInfo.data || {};
+  com.data = config.userInfo.userData || {};
 
   /**
    * Stores the browser agent information.
@@ -129,16 +132,6 @@ function User (config, listener) {
   com.agent = config.agent || {};
   
   /**
-   * Stores the bandwidth configuration.
-   * @attribute bandwidth
-   * @type JSON
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.bandwidth = config.userInfo.settings.bandwidth || {};
-  
-  /**
    * Stores the list of peer connections to user.
    * @attribute peers
    * @type JSON
@@ -147,6 +140,16 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.peers = {};
+  
+  /**
+   * Stores the list of peer streaming configuration.
+   * @attribute streamingConfigs
+   * @type JSON
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.streamingConfigs = {};
   
   /**
    * The handler that manages all triggers or relaying events.
@@ -225,30 +228,18 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.addConnection = function (data, stream) {
-    console.info(data.iceServers);
-  
     var peerConfig = {
       id: data.prid,
       constraints: data.iceServers,
       bandwidth: data.bandwidth,
-      streamingConfig: {
-        audio: fn.isSafe(function () { 
-          return data.userInfo.settings.audio;
-        }),
-        video: fn.isSafe(function () { 
-          return data.userInfo.settings.video;
-        }),
-        status: fn.isSafe(function () { 
-          return data.userInfo.settings.mediaStatus;
-        })
-      }
+      streamingConfig: data.settings
     };
     
     var peer = new Peer(peerConfig, com.handler);
-
-    console.info(&#x27;data:&#x27;, stream);
-
+    
     peer.connect(stream);
+    
+    peer.SDPType = data.SDPType;
     
     com.peers[peer.id] = peer;
   };
@@ -260,7 +251,11 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.removeConnection = function (peerId) {
-    com.peers[peerId].disconnect();
+    var peer = com.peers[peerId];
+    
+    if (!fn.isEmpty(peer)) {
+      peer.disconnect();
+    }
   };
 
   /**
@@ -276,58 +271,48 @@ function User (config, listener) {
   };
   
   /**
+   * Updates this user information.
+   * @method getInfo
+   * @for User
+   * @since 0.6.0
+   */
+  com.update = function (data) {
+    com.data = data;
+    
+    com.handler(&#x27;user:update&#x27;, {
+      data: com.data
+    });
+  };
+  
+  /**
    * Gets this user information.
    * @method getInfo
    * @for User
    * @since 0.6.0
    */
-  com.getInfo = function () {
+  com.getInfo = function (peerId) {
     var data = {};
     
     data.userData = com.data;
     
     data.agent = com.agent;
     
-    data.settings = {};
+    data.settings = com.streamingConfigs;
     
-    if (fn.isEmpty(com.peers)) {
-      return data;
-    
-    } else {
-      fn.forEach(com.peers, function (peer, id) {
-        var stream = peer.stream;
-
-        // Check if there is stream
-        if (!fn.isEmpty(stream)) {
-          data.settings[stream.id] = {
-            audio: stream.config.audio,
-            video: stream.config.video,
-            mediaStatus: stream.config.status,
-            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
-          };
-        
-        // No stream
-        } else {
-          data.settings[id] = {
-            audio: false,
-            video: false,
-            mediaStatus: { audioMuted: true, videoMuted: true },
-            bandwidth: com.bandwidth || StreamParser.defaultConfig.bandwidth
-          };
-        }
-      
-      }, function () {
-        return data;
-      });
-    }
+    return data;
   };
+  
+  // Add the main streaming config
+  com.streamingConfigs[config.prid] = config.settings;
+
+  fn.runSync(function () {
+    com.handler(&#x27;user:start&#x27;, config);
+  });
 }
 
     </pre>
 </div>
 
-      </div>
-    </div>
   </div>
   <!-- /#page-content-wrapper -->
 

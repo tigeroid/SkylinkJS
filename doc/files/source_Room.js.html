@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/Room.js - skylinkjs">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>source/Room.js - skylinkjs</title>
+    <title>Skylink Javascript API documentation</title>
     <!-- font and icon -->
     <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
@@ -36,32 +37,35 @@
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
     <li class="sidebar-brand">
-      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
-      <small>Version: 0.5.7</small>
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
     </li>
     <hr>
+    <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Debugger.html">Debugger </a></li>
     
-      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Peer.html">Peer </a></li>
     
-      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Request.html">Request </a></li>
     
-      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Room.html">Room </a></li>
     
-      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Self.html">Self </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Skylink.html">Skylink </a></li>
     
-      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Socket.html">Socket </a></li>
     
-      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Stream.html">Stream </a></li>
     
-      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/User.html">User </a></li>
     
   </ul>
 </div>
@@ -74,11 +78,10 @@
 </form>-->
 
   <!-- Page Content -->
-  <div id="page-content-wrapper">
-    <div class="container-fluid">
-      
-      <div class="content content-main">
-        <h1 class="file-heading">File: source/Room.js</h1>
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/Room.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/Room.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/Room.js">the current development branch</a>.</p>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -364,10 +367,16 @@ function Room(name, listener) {
    * @for Room
    * @since 0.6.0
    */
-  com.join = function (stream) {
+  com.join = function (stream, config) {
+    config = config || {};
+
+    com.self.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
+    com.self.data = config.userData;
+  
     if (!fn.isEmpty(stream)) {
       com.self.addStreamConnection(stream, &#x27;main&#x27;);
     }
+
     com.socket.connect();
   };
 
@@ -396,7 +405,9 @@ function Room(name, listener) {
       lock: true
     });
     
-    com.handler(&#x27;trigger:lock&#x27;);
+    com.handler(&#x27;room:lock&#x27;, {
+      userId: com.self.id
+    });
   };
 
   /**
@@ -413,74 +424,28 @@ function Room(name, listener) {
       lock: false
     });
     
-    com.handler(&#x27;trigger:unlock&#x27;);
+    com.handler(&#x27;room:unlock&#x27;, {
+      userId: com.self.id
+    });
   };
 
-  /**
-   * Starts the handshake
-   * @method handshake
-   * @param {JSON} data The user information.
-   * @for Room
-   * @since 0.6.0
-   */
-  com.handshake = function (data, defer) {
-    if (fn.isEmpty(com.users[data.mid])) {
-      com.users[data.mid] = new User(data, com.handler);
-    }
-    
-    // Get stream
-    var connection = com.self.streams[data.prid];
-
-    // Check if stream connection exists
-    if (!fn.isEmpty(connection)) {
-      data.stream = connection.stream;
-    }
-    
-    data.iceServers = com.iceServers;
-
-    com.users[data.mid].handler(&#x27;trigger:handshake&#x27;, data);
-  };
- 
   /**
    * Sends a another stream to users.
    * @method addStreamConnection
    * @param {Stream} stream The stream object.
-   * @param {Array} [targetUsers] The list of targeted users.
    * @for Room
    * @since 0.6.0
    */
-  com.addStreamConnection = function (stream, targetUsers) {
+  com.addStreamConnection = function (stream) {
     var connectionId = fn.generateUID();
 
-    com.self.addStreamConnection(stream, connectionId, targetUsers);
+    com.self.addStreamConnection(stream, connectionId);
     
     stream.parentHandler = com.handler;
     
     fn.forEach(com.users, function (user, key) {
-      // Check if targetUsers is an array
-      var sendStream = typeof targetUsers === &#x27;object&#x27;;
-      // If it is check if it is a targeted user
-      // Else, just send anyway
-      sendStream = sendStream === true ? 
-        targetUsers.indexOf(key) &gt; -1 : true;
-        
-      if (sendStream) {
-        com.handler(&#x27;trigger:handshake&#x27;, {
-          type: &#x27;enter&#x27;,
-          mid: user.id,
-          rid: com.id,
-          prid: connectionId,
-          agent: user.agent.name,
-          version: user.agent.version,
-          webRTCType: user.agent.webRTCType,
-          userInfo: {
-            userData: user.data,
-            bandwidth: user.bandwidth,
-            settings: user.streamingConfig
-          },
-          stream: stream
-        });
-      }
+      data.stream = stream;
+      user.handler(&#x27;message:enter&#x27;, data);
     });
   };
 
@@ -572,6 +537,32 @@ function Room(name, listener) {
       version: window.webrtcDetectedVersion,
       webRTCType: window.webrtcDetectedType
     };
+    
+    /**
+     * The self user bandwidth configuration.
+     * @attribute agent
+     * @type JSON
+     * @private
+     * @for Self
+     * @since 0.6.0
+     */
+    subcom.bandwidth = {};
+    
+    /**
+     * The handler that manages all triggers or relaying events.
+     * @attribute handler
+     * @type Function
+     * @private
+     * @for Self
+     * @since 0.6.0
+     */
+    subcom.handler = function (event, data) {
+      data.id = subcom.id;
+      
+      log.debug(&#x27;SelfHandler:&#x27;, event, data); 
+
+      RoomHandler(com, event, data, listener);
+    };
 
     
     /**
@@ -623,8 +614,7 @@ function Room(name, listener) {
         userData: subcom.data
       });
       
-      listener(&#x27;self:update&#x27;, {
-        id: subcom.id,
+      subcom.handler(&#x27;self:update&#x27;, {
         data: subcom.data
       });
     };
@@ -637,20 +627,21 @@ function Room(name, listener) {
      * @for Self
      * @since 0.6.0
      */
-    subcom.addStreamConnection = function (stream, connectionId, targetUsers) {
+    subcom.addStreamConnection = function (stream, connectionId) {
       stream.sourceType = &#x27;local&#x27;;
 
-      subcom.streams[connectionId] = {
-        stream: stream,
-        targetUsers: targetUsers
+      var connection = {
+        id: connectionId,
+        stream: stream
       };
       
+      subcom.streams[connectionId] = connection;
+      
       if (typeof subcom.onaddstreamconnection === &#x27;function&#x27;) {
-        subcom.onaddstreamconnection(stream, connectionId, targetUsers);
+        subcom.onaddstreamconnection(connection);
       }
       
-      listener(&#x27;self:addstreamconnection&#x27;, {
-        id: subcom.id,
+      subcom.handler(&#x27;self:addstreamconnection&#x27;, {
         stream: stream,
         connectionId: connectionId
       });
@@ -696,8 +687,7 @@ function Room(name, listener) {
       // Remove connections to stream reference
       delete subcom.streams[streamId];
       
-      listener(&#x27;self:removestreamconnection&#x27;, {
-        id: subcom.id,
+      subcom.handler(&#x27;self:removestreamconnection&#x27;, {
         streamId: streamId
       });
     };
@@ -705,29 +695,64 @@ function Room(name, listener) {
     /**
      * Gets the self user info.
      * @method getInfo
+     * @param {String} connectionId The connectionId of the stream.
      * @for Self
      * @since 0.6.0
      */
-    subcom.getInfo = function () {
-      return {
+    subcom.getInfo = function (connectionId) {
+      var info = {
         userData: subcom.data,
-        settings: (function () {
-          var streaming = {};
-
-          fn.forEach(subcom.streams, function (value, key) {
-            streaming[key] = {
-              audio: value.stream.config.audio,
-              video: value.stream.config.video,
-              mediaStatus: value.stream.config.status,
-              bandwidth: {}
-            };
-          });
-
-          return streaming;
-        })(),
         agent: subcom.agent
       };
+  
+      if (fn.isEmpty(connectionId)) {
+        var streaming = {};
+
+        fn.forEach(subcom.streams, function (connection, key) {
+          var settings = subcom.streams[connectionId] || {};
+          var stream = settings.stream || { 
+            config: { 
+              audio: false, 
+              video: false, 
+              status: { audioMuted: true, videoMuted: true }
+            } 
+          };
+
+          streaming[key] = {
+            audio: stream.config.audio,
+            video: stream.config.video,
+            bandwidth: subcom.bandwidth,
+            mediaStatus: stream.config.status
+          };
+        
+        }, function () {
+          info.settings = streaming;
+          
+          return info;
+        });
+      
+      } else {
+        var settings = subcom.streams[connectionId] || {};
+        var stream = settings.stream || { 
+          config: { 
+            audio: false, 
+            video: false, 
+            status: { audioMuted: true, videoMuted: true }
+          } 
+        };
+  
+        info.settings = {
+          audio: stream.config.audio,
+          video: stream.config.video,
+          bandwidth: subcom.bandwidth,
+          mediaStatus: stream.config.status
+        };
+        
+        return info;
+      }
     };
+    
+    subcom.handler(&#x27;self:start&#x27;, config);
   }
 
 
@@ -795,8 +820,6 @@ function Room(name, listener) {
     </pre>
 </div>
 
-      </div>
-    </div>
   </div>
   <!-- /#page-content-wrapper -->
 

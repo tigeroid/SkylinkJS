@@ -1,3 +1,8 @@
+/**
+ * Handles the whole Skylink interface.
+ * @module Skylink
+ * @since 0.6.0
+ */
 var Skylink = {};
 
 var rooms = [];

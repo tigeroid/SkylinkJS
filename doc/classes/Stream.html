@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="Stream - skylinkjs">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Stream - skylinkjs</title>
+    <title>Skylink Javascript API documentation</title>
     <!-- font and icon -->
     <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
@@ -36,32 +37,35 @@
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
     <li class="sidebar-brand">
-      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
-      <small>Version: 0.5.7</small>
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
     </li>
     <hr>
+    <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Debugger.html">Debugger </a></li>
     
-      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Peer.html">Peer </a></li>
     
-      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Request.html">Request </a></li>
     
-      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Room.html">Room </a></li>
     
-      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Self.html">Self </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Skylink.html">Skylink </a></li>
     
-      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Socket.html">Socket </a></li>
     
-      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Stream.html">Stream </a></li>
     
-      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/User.html">User </a></li>
     
   </ul>
 </div>
@@ -74,31 +78,1185 @@
 </form>-->
 
   <!-- Page Content -->
-  <div id="page-content-wrapper">
-    <div class="container-fluid">
+  <div id="main-wrapper" class="container">
+    
+    <h1>Stream Class <small> <span class="badge">Version 0.6.0</span></small></h1>
+
+  <small>
+    Defined in: <a href="../files/source_Stream.js.html#l1"><code>source&#x2F;Stream.js:1</code></a>
+  </small>
+
+
+<hr class="strike">
+
+<ol class="breadcrumb">
+  <li><a href="./">Introduction</a></li>
+  
       
-      <div class="content content-main">
-        <div class="jumbotron no-padding">
-  <div class="container">
-    <h1>
-      Stream <span>Class</span>
+          <li> <a href="../modules/Skylink.html">Skylink</a></li>
       
-        <small>
-          <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l1"><code>source&#x2F;Stream.js:1</code></a>
-        </small>
+  
+  <li class="active">Stream</li>
+</ol>
+
+<div class="description"><p>Handles the XMLHttpStream and API function calls.</p>
+</p>
+
+
+
+
+
+
+  <div class="section code-section">
+    <h4>Methods</h4>
+    
+      <div id="method_attachElement" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      attachElement
       
+        <span class="paren">()</span>
       
-        <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+
       
-    </h1>
-    <br/>
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l230"><code>source&#x2F;Stream.js:230</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Attaches the Stream object to a video element.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor attachElement ()
+      
+    </pre>
   </div>
 </div>
+</div>
+    
+      <div id="method_bind" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bind
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l142"><code>source&#x2F;Stream.js:142</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Binds events to MediaStream object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bind ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_bind" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bind
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l173"><code>source&#x2F;Stream.js:173</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Binds events to MediaStreamTrack object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bind ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_bindOnStreamEnded" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bindOnStreamEnded
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l247"><code>source&#x2F;Stream.js:247</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Handles the non-implemented firefox onended event for stream.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bindOnStreamEnded ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_muteAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteAudio
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l323"><code>source&#x2F;Stream.js:323</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Mutes all audio MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor muteAudio ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_muteVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteVideo
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l411"><code>source&#x2F;Stream.js:411</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Mutes all video MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor muteVideo ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_onstreamended" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onstreamended
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l92"><code>source&#x2F;Stream.js:92</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream has ended.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onstreamended ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_ontrackended" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackended
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l100"><code>source&#x2F;Stream.js:100</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been ended.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackended ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_ontrackmute" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackmute
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l108"><code>source&#x2F;Stream.js:108</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been muted.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackmute ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_ontrackunmute" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackunmute
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l116"><code>source&#x2F;Stream.js:116</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been unmuted.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackunmute ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_start" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      start
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l125"><code>source&#x2F;Stream.js:125</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Starts a MediaStream object connection with getUserMedia.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor start ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_stopAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      stopAudio
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l379"><code>source&#x2F;Stream.js:379</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Stops all audio MediaStreamTracks streaming.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor stopAudio ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_stopVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      stopVideo
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l467"><code>source&#x2F;Stream.js:467</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Stops all video MediaStreamTracks streaming.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor stopVideo ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_unmuteAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      unmuteAudio
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l351"><code>source&#x2F;Stream.js:351</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Unmutes all audio MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor unmuteAudio ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+      <div id="method_unmuteVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      unmuteVideo
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l439"><code>source&#x2F;Stream.js:439</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Unmutes all video MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor unmuteVideo ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+  </div>
+
+
 <div class="page container">
   <section id="infodocs">
     <h2>Documentation Notes</h2>
-    <p><p>Handles the XMLHttpStream and API function calls.</p>
-</p>
+    
     <hr>
   </section>
   <section id="classdocs">
@@ -145,158 +1303,6 @@
               <a href="#method_Stream" class="list-group-item code-menu-item constructor-item">
                 &nbsp;&nbsp;Skylink ()
               </a>
-              
-                
-                  <a href="#method_attachElement" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;attachElement
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_bind" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;bind
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_bind" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;bind
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_bindOnStreamEnded" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;bindOnStreamEnded
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_muteAudio" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;muteAudio
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_muteVideo" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;muteVideo
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_onstreamended" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;onstreamended
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_ontrackended" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;ontrackended
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_ontrackmute" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;ontrackmute
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_ontrackunmute" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;ontrackunmute
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_start" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;start
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_stopAudio" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;stopAudio
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_stopVideo" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;stopVideo
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_unmuteAudio" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;unmuteAudio
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
-                  <a href="#method_unmuteVideo" class="list-group-item code-menu-item method-item ">
-                    &nbsp;&nbsp;unmuteVideo
-                    <span class="settings">
-                      
-                      
-                    </span>
-                    
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                  </a>
-                
               
               
               
@@ -363,1094 +1369,1144 @@
         
           <section id="methods">
             
-              <div id="method_attachElement" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>attachElement</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_attachElement" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      attachElement
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l230"><code>source&#x2F;Stream.js:230</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Attaches the Stream object to a video element.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l228"><code>source&#x2F;Stream.js:228</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Attaches the Stream object to a video element.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor attachElement ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_bind" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>bind</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_bind" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bind
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l142"><code>source&#x2F;Stream.js:142</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Binds events to MediaStream object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l140"><code>source&#x2F;Stream.js:140</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Binds events to MediaStream object.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bind ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_bind" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>bind</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_bind" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bind
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l173"><code>source&#x2F;Stream.js:173</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Binds events to MediaStreamTrack object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l171"><code>source&#x2F;Stream.js:171</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Binds events to MediaStreamTrack object.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bind ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_bindOnStreamEnded" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>bindOnStreamEnded</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_bindOnStreamEnded" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bindOnStreamEnded
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l247"><code>source&#x2F;Stream.js:247</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Handles the non-implemented firefox onended event for stream.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l245"><code>source&#x2F;Stream.js:245</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Handles the non-implemented firefox onended event for stream.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bindOnStreamEnded ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_muteAudio" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>muteAudio</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_muteAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteAudio
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l323"><code>source&#x2F;Stream.js:323</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Mutes all audio MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l321"><code>source&#x2F;Stream.js:321</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Mutes all audio MediaStreamTracks.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor muteAudio ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_muteVideo" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>muteVideo</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_muteVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteVideo
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l411"><code>source&#x2F;Stream.js:411</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Mutes all video MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l409"><code>source&#x2F;Stream.js:409</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Mutes all video MediaStreamTracks.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor muteVideo ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_onstreamended" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>onstreamended</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_onstreamended" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onstreamended
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
-        
       
-      
-      
-    </div>
-
     
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l90"><code>source&#x2F;Stream.js:90</code></a>
-      </small>
     
 
     
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l92"><code>source&#x2F;Stream.js:92</code></a>
+      </p>
     
   </div>
 
-  <div class="code-item-description">
-    <p>Function to subscribe to when stream has ended.</p>
+  <div class="panel-body">
+    <blockquote>
+      
 
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream has ended.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
   </div>
 
-  
 
-  
-
-  
-
-  
-  <hr>
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onstreamended ()
+      
+    </pre>
+  </div>
+</div>
 </div>
             
-              <div id="method_ontrackended" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>ontrackended</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_ontrackended" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackended
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
-        
       
-      
-      
-    </div>
-
     
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l98"><code>source&#x2F;Stream.js:98</code></a>
-      </small>
     
 
     
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l100"><code>source&#x2F;Stream.js:100</code></a>
+      </p>
     
   </div>
 
-  <div class="code-item-description">
-    <p>Function to subscribe to when stream track has been ended.</p>
+  <div class="panel-body">
+    <blockquote>
+      
 
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been ended.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
   </div>
 
-  
 
-  
-
-  
-
-  
-  <hr>
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackended ()
+      
+    </pre>
+  </div>
+</div>
 </div>
             
-              <div id="method_ontrackmute" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>ontrackmute</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_ontrackmute" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackmute
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
-        
       
-      
-      
-    </div>
-
     
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l106"><code>source&#x2F;Stream.js:106</code></a>
-      </small>
     
 
     
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l108"><code>source&#x2F;Stream.js:108</code></a>
+      </p>
     
   </div>
 
-  <div class="code-item-description">
-    <p>Function to subscribe to when stream track has been muted.</p>
+  <div class="panel-body">
+    <blockquote>
+      
 
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been muted.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
   </div>
 
-  
 
-  
-
-  
-
-  
-  <hr>
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackmute ()
+      
+    </pre>
+  </div>
+</div>
 </div>
             
-              <div id="method_ontrackunmute" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>ontrackunmute</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_ontrackunmute" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackunmute
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
-        
       
-      
-      
-    </div>
-
     
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l114"><code>source&#x2F;Stream.js:114</code></a>
-      </small>
     
 
     
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l116"><code>source&#x2F;Stream.js:116</code></a>
+      </p>
     
   </div>
 
-  <div class="code-item-description">
-    <p>Function to subscribe to when stream track has been unmuted.</p>
+  <div class="panel-body">
+    <blockquote>
+      
 
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been unmuted.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
   </div>
 
-  
 
-  
-
-  
-
-  
-  <hr>
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackunmute ()
+      
+    </pre>
+  </div>
+</div>
 </div>
             
-              <div id="method_start" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>start</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_start" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      start
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l125"><code>source&#x2F;Stream.js:125</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Starts a MediaStream object connection with getUserMedia.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l123"><code>source&#x2F;Stream.js:123</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Starts a MediaStream object connection with getUserMedia.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor start ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_stopAudio" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>stopAudio</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_stopAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      stopAudio
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l379"><code>source&#x2F;Stream.js:379</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Stops all audio MediaStreamTracks streaming.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l377"><code>source&#x2F;Stream.js:377</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Stops all audio MediaStreamTracks streaming.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor stopAudio ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_stopVideo" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>stopVideo</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_stopVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      stopVideo
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l467"><code>source&#x2F;Stream.js:467</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Stops all video MediaStreamTracks streaming.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l465"><code>source&#x2F;Stream.js:465</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Stops all video MediaStreamTracks streaming.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor stopVideo ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_unmuteAudio" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>unmuteAudio</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_unmuteAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      unmuteAudio
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l351"><code>source&#x2F;Stream.js:351</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Unmutes all audio MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l349"><code>source&#x2F;Stream.js:349</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Unmutes all audio MediaStreamTracks.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor unmuteAudio ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
-              <div id="method_unmuteVideo" class="code-item method item method-item ">
-  <h3 class="code-item-name"><code>unmuteVideo</code></h3>
-  
-    <span class="paren">()</span>
-  
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
+              <div id="method_unmuteVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      unmuteVideo
+      
+        <span class="paren">()</span>
       
 
       
-
+        <span class="badge">Version 0.6.0</span>
       
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
+    </h5>
+    
       
         
-          
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l439"><code>source&#x2F;Stream.js:439</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
         
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Unmutes all video MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
       
-      
-      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
     </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Stream.js.html#l437"><code>source&#x2F;Stream.js:437</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
   </div>
 
-  <div class="code-item-description">
-    <p>Unmutes all video MediaStreamTracks.</p>
 
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor unmuteVideo ()
+      
+    </pre>
   </div>
-
-  
-  <div class="code-item-section">
-    <h4>Triggers:</h4>
-    <span class="code-item-trigger">StreamJoined, mediaAccessRequired</span>
-  </div>
-  
-
-  
-
-  
-
-  
-  <hr>
+</div>
 </div>
             
           </section>
@@ -1917,12 +2973,13 @@
 
 
 
+    
+        Module: <a href="../modules/Skylink.html">Skylink</a>
+    
+
 
 
 -->
-
-      </div>
-    </div>
   </div>
   <!-- /#page-content-wrapper -->
 

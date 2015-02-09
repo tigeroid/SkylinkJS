@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/Log.js - skylinkjs">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>source/Log.js - skylinkjs</title>
+    <title>Skylink Javascript API documentation</title>
     <!-- font and icon -->
     <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
@@ -36,32 +37,35 @@
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
     <li class="sidebar-brand">
-      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
-      <small>Version: 0.5.7</small>
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
     </li>
     <hr>
+    <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Debugger.html">Debugger </a></li>
     
-      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Peer.html">Peer </a></li>
     
-      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Request.html">Request </a></li>
     
-      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Room.html">Room </a></li>
     
-      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Self.html">Self </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Skylink.html">Skylink </a></li>
     
-      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Socket.html">Socket </a></li>
     
-      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Stream.html">Stream </a></li>
     
-      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/User.html">User </a></li>
     
   </ul>
 </div>
@@ -74,11 +78,10 @@
 </form>-->
 
   <!-- Page Content -->
-  <div id="page-content-wrapper">
-    <div class="container-fluid">
-      
-      <div class="content content-main">
-        <h1 class="file-heading">File: source/Log.js</h1>
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/Log.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/Log.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/Log.js">the current development branch</a>.</p>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -134,17 +137,17 @@ var Debugger = {
   logs: [],
   
   console: {
-    log: window.console.log.bind(window.console, LogKey + &#x27;%s&#x27;),
+    log: window.console.log.bind(window.console, LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;),
     
-    error: window.console.error.bind(window.console, LogKey + &#x27;%s&#x27;),
+    error: window.console.error.bind(window.console, LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;),
     
     info: window.console.info.bind(window.console, 
-      (window.webrtcDetectedBrowser === &#x27;safari&#x27; ? &#x27;INFO: &#x27; : &#x27;&#x27;) + LogKey + &#x27;%s&#x27;),
+      (window.webrtcDetectedBrowser === &#x27;safari&#x27; ? &#x27;INFO: &#x27; : &#x27;&#x27;) + LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;),
     
-    warn: window.console.warn.bind(window.console, LogKey + &#x27;%s&#x27;),
+    warn: window.console.warn.bind(window.console, LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;),
 
     debug: window.console.newDebug.bind(window.console, 
-      (typeof window.console.debug !== &#x27;function&#x27; ? &#x27;DEBUG: &#x27; : &#x27;&#x27;) + LogKey + &#x27;%s&#x27;)
+      (typeof window.console.debug !== &#x27;function&#x27; ? &#x27;DEBUG: &#x27; : &#x27;&#x27;) + LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;)
   },
   
   traceTemplate: {
@@ -171,7 +174,7 @@ var Debugger = {
 
   setLevel: function (inputLevel) {
     // Debug level
-    if (inputLevel === 4) {
+    if (inputLevel &gt; 3) {
       log.debug = this.applyConsole(&#x27;debug&#x27;);
     
     } else {
@@ -227,13 +230,11 @@ var Debugger = {
   }
 };
 
-Debugger.setLevel(2);
+Debugger.setLevel(4);
 
     </pre>
 </div>
 
-      </div>
-    </div>
   </div>
   <!-- /#page-content-wrapper -->
 

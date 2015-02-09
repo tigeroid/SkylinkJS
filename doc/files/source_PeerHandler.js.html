@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/PeerHandler.js - skylinkjs">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>source/PeerHandler.js - skylinkjs</title>
+    <title>Skylink Javascript API documentation</title>
     <!-- font and icon -->
     <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
@@ -36,32 +37,35 @@
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
     <li class="sidebar-brand">
-      <img src="../assets/img/logo.svg" / data=""><span>JS</span>
-      <small>Version: 0.5.7</small>
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
     </li>
     <hr>
+    <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Debugger.html">Debugger </a></li>
     
-      <li><a href="../classes/Peer.html">Peer <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Peer.html">Peer </a></li>
     
-      <li><a href="../classes/Request.html">Request <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Request.html">Request </a></li>
     
-      <li><a href="../classes/Room.html">Room <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Room.html">Room </a></li>
     
-      <li><a href="../classes/Self.html">Self <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Self.html">Self </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Skylink.html">Skylink </a></li>
     
-      <li><a href="../classes/Socket.html">Socket <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Socket.html">Socket </a></li>
     
-      <li><a href="../classes/Stream.html">Stream <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/Stream.html">Stream </a></li>
     
-      <li><a href="../classes/User.html">User <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </a></li>
+      <li><a href="../classes/User.html">User </a></li>
     
   </ul>
 </div>
@@ -74,286 +78,201 @@
 </form>-->
 
   <!-- Page Content -->
-  <div id="page-content-wrapper">
-    <div class="container-fluid">
-      
-      <div class="content content-main">
-        <h1 class="file-heading">File: source/PeerHandler.js</h1>
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/PeerHandler.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/PeerHandler.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/PeerHandler.js">the current development branch</a>.</p>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * Stores the peer class events.
- * @attribute PeerHandlerEvent
+ * Handles all the events received from sub classes.
+ * @attribute PeerEventReceivedHandler
  * @for Peer
  * @since 0.6.0
  */
-var PeerHandlerEvent = {
-  /**
-   * Handles stream events that will require the peer class to
-   * trigger the listener.
-   * @property stream
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
+var PeerEventReceivedHandler = {
+  
   stream: {
-    /**
-     * Handles the remote stream stop trigger.
-     * @property stop
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    start: function (com, data, listener) {
-      if (fn.isSafe(function () { 
-        return com.stream.id === data.id &amp;&amp; com.stream.sourceType === &#x27;remote&#x27;;
-      })) {
-        listener(&#x27;peer:stream&#x27;, {
-          id: com.id,
-          stream: com.stream,
-          sourceType: &#x27;remote&#x27;
-        });
-      }
-    },
     
-    /**
-     * Handles the remote stream stop trigger.
-     * @property stop
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
     stop: function (com, data, listener) {
+      // If stream is not the main, disconnect the peer connection.
       if (com.id !== &#x27;main&#x27;) {
         com.disconnect();
       }
     }
+  }
+  
+};
+
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute PeerEventResponseHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerEventResponseHandler = {
+  
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === &#x27;function&#x27;) {
+      com.onconnect(com.id);
+    }
   },
   
+  reconnect: function (com, data, listener) {
+    if (typeof com.onreconnect === &#x27;function&#x27;) {
+      com.onreconnect();
+    }
+  },
+  
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === &#x27;function&#x27;) {
+      com.ondisconnect();
+    }
+  },
+  
+  stream: function (com, data, listener) {
+    data.stream.sourceType = data.sourceType;
+
+    if (data.sourceType === &#x27;remote&#x27;) {
+      com.stream = data.stream;
+    }
+    
+    if (typeof com.onaddstream === &#x27;function&#x27;) {
+      com.onaddstream(data.stream);
+    }
+  },
+
   /**
-   * Handles events that will require the peer class to
-   * trigger peer class events.
-   * @property trigger
-   * @type JSON
+   * Handles the ice connection state trigger.
+   * @property iceconnectionstate
+   * @type Function
    * @private
    * @since 0.6.0
    */
-  trigger: {
-    /**
-     * Handles the ice connection state trigger.
-     * @property iceconnectionstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    iceconnectionstate: function (com, data, listener) {
-      var state = com.RTCPeerConnection.newIceConnectionState;
+  iceconnectionstate: function (com, data, listener) {
+    if (typeof com.oniceconnectionstatechange === &#x27;function&#x27;) {
+      com.oniceconnectionstatechange(data.state);
+    }  
+  },
 
-      listener(&#x27;peer:iceconnectionstate&#x27;, {
-        id: com.id,
-        state: state
-      });
+  /**
+   * Handles the ice gathering state trigger.
+   * @property icegatheringstate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  icegatheringstate: function (com, data, listener) {
+    if (typeof com.onicegatheringstatechange === &#x27;function&#x27;) {
+      com.onicegatheringstatechange(data.state);
+    }
+  },
 
-      if (typeof com.oniceconnectionstatechange === &#x27;function&#x27;) {
-        com.oniceconnectionstatechange(state);
-      }  
-    },
+  /**
+   * Handles the ice candidate trigger.
+   * @property icecandidate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  icecandidate: function (com, data, listener) {},
+
+  /**
+   * Handles the signaling state trigger.
+   * @property signalingstate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  signalingstate: function (com, data, listener) {
+    if (typeof com.onsignalingstatechange === &#x27;function&#x27;) {
+      com.onsignalingstatechange(data.state);
+    }
+  },
+
+  /**
+   * Handles the datachannel state trigger.
+   * @property datachannel
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  datachannel: function (com, data, listener) {
+    data.channel.sourceType = data.sourceType;
+
+    com.datachannels[data.channel.id] = data.channel;
     
-    /**
-     * Handles the ice gathering state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    icegatheringstate: function (com, data, listener) {
-      var state = com.RTCPeerConnection.iceGatheringState;
+    if (typeof com.ondatachannel === &#x27;function&#x27;) {
+      com.ondatachannel(data.channel);
+    }
+  }
+};
 
-      listener(&#x27;peer:icegatheringstate&#x27;, {
-        id: com.id,
-        state: state
-      });
+/**
+ * Handles all the message events received from socket.
+ * @attribute PeerEventMessageHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerEventMessageHandler = {
 
-      if (typeof com.onicegatheringstatechange === &#x27;function&#x27;) {
-        com.onicegatheringstatechange(state);
-      }
-    },
-    
-    /**
-     * Handles the ice candidate trigger.
-     * @property icecandidate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    icecandidate: function (com, data, listener) {
-      var candidate = data.candidate;
+  offer: function (com, data, listener) {
+    com.remoteDescription = new window.RTCSessionDescription(data);
 
-      if (data.sourceType === &#x27;remote&#x27;) {
-        ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
-      
-      } else {
-        if (fn.isEmpty(data.candidate.candidate)) {
-          return listener(&#x27;candidate:gathered&#x27;, data.candidate);
-        }
-      }
-
-      listener(&#x27;peer:icecandidate&#x27;, {
-        id: com.id,
-        sourceType: data.sourceType,
-        candidate: data.candidate
-      });
-    },
-    
-    /**
-     * Handles the signaling state trigger.
-     * @property signalingstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    signalingstate: function (com, data, listener) {
-      var state = com.RTCPeerConnection.newSignalingState;
-
-      listener(&#x27;peer:signalingstate&#x27;, {
-        id: com.id,
-        state: state
-      });
-
-      if (typeof com.onsignalingstatechange === &#x27;function&#x27;) {
-        com.onsignalingstatechange(state);
-      }
-    },
-    
-    /**
-     * Handles the datachannel state trigger.
-     * @property datachannel
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    datachannel: function (com, data, listener) {
-      var channel = new DataChannel(data.channel, com.handler);
-      channel.sourceType = data.sourceType;
-
-      com.datachannels[channel.id] = channel;
-
-      listener(&#x27;peer:datachannel&#x27;, {
-        id: com.id,
-        channel: data.channel,
-        sourceType: data.sourceType
-      });
-    },
-    
-    /**
-     * Handles the stream trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    stream: function (com, data, listener) {
-      var stream;
-
-      if (data.stream instanceof Stream) {
-        stream = data.stream;
-
-      } else {
-        stream = new Stream(data.stream, data.config, com.handler);
-        stream.sourceType = &#x27;remote&#x27;;
-
-        com.stream = stream;
-      }
-    },
-    
-    /**
-     * Handles the reconnect state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    &#x27;reconnect&#x27;: function (com, data, listener) {
-      listener(&#x27;peer:reconnect&#x27;, {
-        id: com.id
-      });
-
-      if (typeof com.onreconnect === &#x27;function&#x27;) {
-        com.onreconnect();
-      }
-    },
-    
-    /**
-     * Handles the handshake state trigger.
-     * @property handshake
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    handshake: function (com, data, listener) {
-      if (data.type === &#x27;start&#x27;) {
-        if (com.SDPType === &#x27;offer&#x27;) {
-          com.createOffer();
-        }
-      }
-
-      if (data.type === &#x27;offer&#x27;) {
-        com.remoteDescription = new window.RTCSessionDescription(data);
-
-        listener(&#x27;peer:offer&#x27;, data);
+    com.handler(&#x27;peer:offer&#x27;, {
+      sourceType: &#x27;remote&#x27;,
+      offer: com.remoteDescription
+    });
         
-        com.setRemoteDescription();
-      }
-      
-      if (data.type === &#x27;answer&#x27;) {
-        com.remoteDescription = new window.RTCSessionDescription(data);
+    com.setRemoteDescription();
+  },
+  
+  answer: function (com, data, listener) {
+    com.remoteDescription = new window.RTCSessionDescription(data);
 
-        listener(&#x27;peer:answer&#x27;, data);
+    com.handler(&#x27;peer:answer&#x27;, {
+      sourceType: &#x27;remote&#x27;,
+      answer: com.remoteDescription
+    });
 
-        com.setLocalDescription();
-      }
-    },
+    com.setLocalDescription();
+  },
+
+  candidate: function (com, data, listener) {
+    var candidate = new window.RTCIceCandidate({
+      sdpMLineIndex: data.label,
+      candidate: data.candidate,
+      sdpMid: data.id,
+      label: data.label,
+      id: data.id
+    });
+
+    ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
+
+    com.handler(&#x27;peer:icecandidate&#x27;, {
+      sourceType: &#x27;remote&#x27;,
+      candidate: candidate
+    });
+  },
+  
+  restart: function (com, data, listener) {
     
-    /**
-     * Handles the disconnected state trigger.
-     * @property mutestream
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    mutestream: function (com, data, listener) {
-      if (data.muted) {
-        if (data.kind === &#x27;audio&#x27;) {
-          com.stream.muteAudio();
-        } else {
-          com.stream.muteVideo();
-        }
-        
-      } else {
-        if (data.kind === &#x27;audio&#x27;) {
-          com.stream.unmuteAudio();
-        } else {
-          com.stream.unmuteVideo();
-        }
-      }
-    },
+  },
+  
+  muteAudioEvent: function (com, data, listener) {
+    if (data.muted) {
+      com.stream.muteAudio();
+    } else {
+      com.stream.muteVideo();
+    }
+  },
     
-    /**
-     * Handles the disconnected state trigger.
-     * @property icegatheringstate
-     * @type Function
-     * @private
-     * @since 0.6.0
-     */
-    disconnect: function (com, data, listener) {
-      listener(&#x27;peer:disconnect&#x27;, {
-        id: com.id
-      });
-
-      if (typeof com.ondisconnect === &#x27;function&#x27;) {
-        com.ondisconnect();
-      }
+  muteVideoEvent: function (com, data, listener) {
+    if (data.muted) {
+      com.stream.unmuteAudio();
+    } else {
+      com.stream.unmuteVideo();
     }
   }
 };
@@ -365,21 +284,34 @@ var PeerHandlerEvent = {
  * @since 0.6.0
  */
 var PeerHandler = function (com, event, data, listener) {
-  if (event.indexOf(&#x27;trigger:&#x27;) !== 0) {
-    data.peerId = com.id;
+  var params = event.split(&#x27;:&#x27;);
 
+  // Messaging events
+  if (event.indexOf(&#x27;message:&#x27;) === 0) {
+    
+    fn.applyHandler(PeerEventMessageHandler, params, [com, data, listener]);
+  
+  } else {
+    // Class events
+    if (event.indexOf(&#x27;peer:&#x27;) === 0) {
+      data.id = com.id;
+
+      fn.applyHandler(PeerEventResponseHandler, params, [com, data, listener]);
+
+    } else {
+      data.peerId = com.id;
+
+      fn.applyHandler(PeerEventReceivedHandler, params, [com, data, listener]);
+    }
+    
     listener(event, data);
   }
   
-  var params = event.split(&#x27;:&#x27;);
-  
-  fn.applyHandler(PeerHandlerEvent, params, [com, data, listener]);
+  //log.debug(&#x27;PeerHandler&#x27;, event, data);
 };
     </pre>
 </div>
 
-      </div>
-    </div>
   </div>
   <!-- /#page-content-wrapper -->
 

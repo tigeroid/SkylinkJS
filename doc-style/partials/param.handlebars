@@ -1,0 +1,37 @@
+<li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">{{name}}</code>
+    <span class="type"> : <em>type</em> {{#crossLink type}}{{/crossLink}} </span>
+  </div>
+
+  <blockquote>
+    {{#if optdefault}}
+      <p>
+        <var> <b>value: </b> default = {{optdefault}}</var>
+      </p>
+    {{/if}}
+    {{#if optional}}
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    {{/if}}
+
+    {{#if multiple}}
+      <p> 
+        <em class="glyphicon glyphicon-random" aria-hidden="true"></em> This may occur one or more times.
+      </p>
+    {{/if}}
+  </blockquote>
+
+  <div class="description">
+    {{{description}}}
+  </div>
+
+  {{#if props}}
+    <ul class="params-list">
+      {{#props}}
+        {{>param}}
+      {{/props}}
+    </ul>
+  {{/if}}
+</li>

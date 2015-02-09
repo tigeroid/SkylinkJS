@@ -1,6 +1,10 @@
 /**
  * Handles the DataChannel connections.
  * @class DataChannel
+ * @constructor
+ * @param {Object} channel The RTCDataChannel object to parse and hook events on.
+ * @param {Function} listener The listener that listens to all class events and 
+ *    sub-classes objects events.
  * @for Skylink
  * @since 0.6.0
  */

@@ -1,0 +1,85 @@
+<div class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      {{name}}
+      {{#if params}}
+        <span class="paren">(</span>
+          <em class="items">
+            {{#params}}
+              {{#if optional}}
+                <item><code class="optional">[{{name}}{{#if optdefault}}={{optdefault}}{{/if}}]</code></item>
+              {{else}}
+                <item><code>{{name}}</code></item>
+              {{/if}}
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            {{/params}}
+          </em>
+        <span class="paren">)</span>
+      {{else}}
+        <span class="paren">()</span>
+      {{/if}}
+    </h5>
+    {{#if foundAt}}
+      <p>
+        Defined in: <a href="{{foundAt}}">`{{{file}}}:{{{line}}}`</a>
+      </p>
+    {{/if}}
+  </div>
+
+  <div class="panel-body">
+    <p>To create a {{name}} class object, these are the required parameters to be provided.</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      {{#if params}}
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          {{#params}}
+            {{>param}}
+          {{/params}}
+          </ul>
+        </div>
+      {{/if}}
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        {{#if return}}
+          {{#return}}
+            <li class="code-section-item-param">
+              <div class="name">
+                <code class="param-name">result</code>
+                {{#if type}}
+                  <span class="type"> : <em>type</em> {{#crossLink type}}{{/crossLink}} </span>
+                {{/if}}
+              </div>
+              {{#if description}}
+                <div class="description">
+                  {{{description}}}
+                </div>
+              {{/if}}
+            </li>
+          {{/return}}
+        {{else}}
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor {{name}} ()
+      {{#example}}
+        {{{.}}}
+      {{/example}}
+    </pre>
+  </div>
+</div>

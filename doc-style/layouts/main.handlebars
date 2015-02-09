@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="{{htmlTitle}}">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>{{htmlTitle}}</title>
+    <title>Skylink Javascript API documentation</title>
     <!-- font and icon -->
     <link rel="shortcut icon" type="image/ico" href="{{projectAssets}}/favicon.ico">
     <link rel="stylesheet" href="{{projectAssets}}/vendor/prettify/prettify-min.css">
@@ -29,13 +30,9 @@
   {{>sidebar}}
 
   <!-- Page Content -->
-  <div id="page-content-wrapper">
-    <div class="container-fluid">
-      {{>options}}
-      <div class="content content-main">
-        {{>layout_content}}
-      </div>
-    </div>
+  <div id="main-wrapper" class="container">
+    {{>options}}
+    {{>layout_content}}
   </div>
   <!-- /#page-content-wrapper -->
 
