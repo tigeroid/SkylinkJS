@@ -30,7 +30,7 @@
   <!-- Sidebar -->
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
-  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <img src="../assets/img/icons/menu.png">
   <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
@@ -45,27 +45,25 @@
     <hr>
     <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger </a></li>
+      <li><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Peer.html">Peer </a></li>
+      <li><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Request.html">Request </a></li>
+      <li><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Room.html">Room </a></li>
+      <li><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Self.html">Self </a></li>
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink </a></li>
+      <li><a href="../classes/Socket.html"> Socket </a></li>
     
-      <li><a href="../classes/Socket.html">Socket </a></li>
+      <li><a href="../classes/Stream.html"> Stream </a></li>
     
-      <li><a href="../classes/Stream.html">Stream </a></li>
-    
-      <li><a href="../classes/User.html">User </a></li>
+      <li><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -86,12 +84,11 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * Handles the DataChannel connections.
+ * Handles the RTCDataChannel object connection and events.
  * @class DataChannel
  * @constructor
  * @param {Object} channel The RTCDataChannel object to parse and hook events on.
- * @param {Function} listener The listener that listens to all class events and 
- *    sub-classes objects events.
+ * @param {Function} listener The listener function.
  * @for Skylink
  * @since 0.6.0
  */
@@ -116,7 +113,7 @@ function DataChannel(channel, listener) {
    * @attribute type
    * @type String
    * @private
-   * @for DataMessage
+   * @for DataChannel
    * @since 0.6.0
    */
   com.type = &#x27;message&#x27;;
@@ -130,111 +127,110 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.RTCDataChannel = null;
+
+
+  /**
+   * Function to subscribe to when datachannel has opened.
+   * @method onopen
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onopen = function () {};
   
+  /**
+   * Function to subscribe to when datachannel has closed.
+   * @method onclose
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onclose = function () {};
+  
+  /**
+   * Function to subscribe to when datachannel has an error.
+   * @method onerror
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onerror = function () {};
+  
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @method handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    DataChannelHandler(com, event, data, listener);
+  };
+
   /**
    * Binds events to RTCDataChannel object.
    * @method bind
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {Object} bindChannel The RTCDataChannel object to bind events to.
+   * @private
    * @for DataChannel
    * @since 0.6.0
    */
   com.bind = function (bindChannel) {
     // Prevent re-trigger
+    var onOpenFn = function () {
+      com.handler(&#x27;datachannel:connect&#x27;, {});
+  
+      if (typeof com.onopen === &#x27;function&#x27;) {
+        com.onopen();
+      }
+    };
+    
     if (bindChannel.readyState !== &#x27;open&#x27;) {
-      bindChannel.onopen = function () {
-        com.onOpen(bindChannel);
-      };
+      bindChannel.onopen = onOpenFn;
     
     } else {
-      com.onOpen(bindChannel);
+      onOpenFn();
     }
     
     bindChannel.onerror = function (error) {
-      com.onError(bindChannel, error);
+      com.handler(&#x27;datachannel:error&#x27;, {
+        error: error
+      });
+      
+      if (typeof com.onerror === &#x27;function&#x27;) {
+        com.onerror(error);
+      }
     };
 
     // NOTE: Older firefox might close the DataChannel earlier 
     bindChannel.onclose = function () {
-      com.onClose(bindChannel);
+      com.handler(&#x27;datachannel:disconnect&#x27;, {});
+      
+      if (typeof com.onclose === &#x27;function&#x27;) {
+        com.onclose();
+      }
     };
 
     bindChannel.onmessage = function (event) {
-      com.onMessage(bindChannel, event.data);
+      com.handler(&#x27;datachannel:message&#x27;, {
+        data: event.data
+      });
     };
     
     com.RTCDataChannel = bindChannel;
 
     fn.runSync(function () {
-      listener(&#x27;datachannel:start&#x27;, {
-        id: com.id,
-        peerId: com.peerId
-      });
+      com.handler(&#x27;datachannel:start&#x27;, {});
     });
   };
-  
-  /**
-   * Handles the event when DataChannel is opened.
-   * @method onOpen
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onOpen = function (bindChannel) {
-    listener(&#x27;datachannel:connect&#x27;, {
-      id: com.id,
-      peerId: com.peerId
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel is closed.
-   * @method onClose
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onClose = function (bindChannel) {
-    listener(&#x27;datachannel:disconnect&#x27;, {
-      id: com.id,
-      peerId: com.peerId
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel has an exception.
-   * @method onClose
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onError = function (bindChannel, error) {
-    listener(&#x27;datachannel:error&#x27;, {
-      id: com.id,
-      peerId: com.peerId,
-      error: error
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel has a message received.
-   * @method onMessage
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onMessage = function (bindChannel, data) {
-    listener(&#x27;datachannel:message&#x27;, {
-      id: com.id,
-      peerId: com.peerId,
-      data: data
-    });
-  };
-  
+
   /**
    * Sends data over the datachannel.
    * @method send
    * @param {JSON|String} data The data to send.
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for DataChannel
    * @since 0.6.0
    */
@@ -254,6 +250,7 @@ function DataChannel(channel, listener) {
     throw new Error(&#x27;Provided parameter channel is invalid.&#x27;);
   }
 
+  // Bind datachannel object
   com.bind(channel);
 }
     </pre>

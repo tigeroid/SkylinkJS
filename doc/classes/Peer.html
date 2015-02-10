@@ -30,7 +30,7 @@
   <!-- Sidebar -->
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
-  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <img src="../assets/img/icons/menu.png">
   <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
@@ -45,27 +45,25 @@
     <hr>
     <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger </a></li>
+      <li><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Peer.html">Peer </a></li>
+      <li><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Request.html">Request </a></li>
+      <li><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Room.html">Room </a></li>
+      <li><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Self.html">Self </a></li>
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink </a></li>
+      <li><a href="../classes/Socket.html"> Socket </a></li>
     
-      <li><a href="../classes/Socket.html">Socket </a></li>
+      <li><a href="../classes/Stream.html"> Stream </a></li>
     
-      <li><a href="../classes/Stream.html">Stream </a></li>
-    
-      <li><a href="../classes/User.html">User </a></li>
+      <li><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -82,7 +80,7 @@
     
     <h1>Peer Class <small> <span class="badge">Version 0.6.0</span></small></h1>
 
-  <small>
+<small>
     Defined in: <a href="../files/source_Peer.js.html#l1"><code>source&#x2F;Peer.js:1</code></a>
   </small>
 
@@ -90,25 +88,258 @@
 <hr class="strike">
 
 <ol class="breadcrumb">
-  <li><a href="./">Introduction</a></li>
-  
-      
-          <li> <a href="../modules/Skylink.html">Skylink</a></li>
-      
-  
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
   <li class="active">Peer</li>
 </ol>
 
 <div class="description"><p>Handles the PeerConnection and Peer data.</p>
 </p>
 
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <table class="table table-bordered">
+    
+  
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+            <tr> <td> <a href="#method_bind"> <code>bind()</code> </a> </td> <td> <p>Binds events to RTCPeerConnection object.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_connect"> <code>connect()</code> </a> </td> <td> <p>Starts the peer connection.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_createAnswer"> <code>createAnswer()</code> </a> </td> <td> <p>Creates an answer session description.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_createOffer"> <code>createOffer()</code> </a> </td> <td> <p>Creates an offer session description.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_disconnect"> <code>disconnect()</code> </a> </td> <td> <p>Stops the peer connection.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onaddstream"> <code>onaddstream()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s remote stream is received.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onconnect"> <code>onconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been started.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_oniceconnectionstatechange"> <code>oniceconnectionstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s ice connection state changes.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onicegatheringstatechange"> <code>onicegatheringstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s ice gathering state changes.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onremoveconnection"> <code>onremoveconnection()</code> </a> </td> <td> <p>Function to subscribe to when a peer connection been disconnected.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onsignalingstatechange"> <code>onsignalingstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s signaling state has changed.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_reconnect"> <code>reconnect()</code> </a> </td> <td> <p>Restarts the peer connection.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_setLocalDescription"> <code>setLocalDescription()</code> </a> </td> <td> <p>Sets local description.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_setRemoteDescription"> <code>setRemoteDescription()</code> </a> </td> <td> <p>Sets remote description.</p>
+ </td> </tr>
+          
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#property_datachannel"> <code>datachannel</code> </a> </td> <td> <p>Handles the datachannel state trigger.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_icecandidate"> <code>icecandidate</code> </a> </td> <td> <p>Handles the ice candidate trigger.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_iceconnectionstate"> <code>iceconnectionstate</code> </a> </td> <td> <p>Handles the ice connection state trigger.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_icegatheringstate"> <code>icegatheringstate</code> </a> </td> <td> <p>Handles the ice gathering state trigger.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_signalingstate"> <code>signalingstate</code> </a> </td> <td> <p>Handles the signaling state trigger.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Attributes</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#attr_config"> <code>config</code> </a> </td> <td> <p>The PeerConnection configuration.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_constraints"> <code>constraints</code> </a> </td> <td> <p>The PeerConnection constraints - iceServers.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_datachannels"> <code>datachannels</code> </a> </td> <td> <p>The datachannels connected to PeerConnection.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_healthTimer"> <code>healthTimer</code> </a> </td> <td> <p>The timeout that would react if PeerConnection is unstable and refresh connection.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_iceTrickle"> <code>iceTrickle</code> </a> </td> <td> <p>The flag that indicates if trickle ICE is enable for this PeerConnection.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The peer id.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_localDescription"> <code>localDescription</code> </a> </td> <td> <p>The local description to be set.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_PeerEventMessageHandler"> <code>PeerEventMessageHandler</code> </a> </td> <td> <p>Handles all the message events received from socket.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_PeerEventReceivedHandler"> <code>PeerEventReceivedHandler</code> </a> </td> <td> <p>Handles all the events received from sub classes.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_PeerEventResponseHandler"> <code>PeerEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_PeerHandler"> <code>PeerHandler</code> </a> </td> <td> <p>Handles the peer class events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_remoteDescription"> <code>remoteDescription</code> </a> </td> <td> <p>The remote description to be set.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_RTCPeerConnection"> <code>RTCPeerConnection</code> </a> </td> <td> <p>The PeerConnection object.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_sdpConfig"> <code>sdpConfig</code> </a> </td> <td> <p>The PeerConnection session description configuration.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_sdpConstraints"> <code>sdpConstraints</code> </a> </td> <td> <p>The PeerConnection session description constraints.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_SDPType"> <code>SDPType</code> </a> </td> <td> <p>The local description type peer sends.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_stream"> <code>stream</code> </a> </td> <td> <p>The stream send from this peer.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_streamingConfig"> <code>streamingConfig</code> </a> </td> <td> <p>Stores the streaming configuration.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The peer type.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_weight"> <code>weight</code> </a> </td> <td> <p>The peerconnection weight during handshake.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Event Handlers</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </tbody>
+    
+  </table>
+</div>
+
+ 
 
 
-
-
-
-  <div class="section code-section">
-    <h4>Methods</h4>
+<div class="section code-section">
+  <h4>Methods</h4>
+   
     
       <div id="method_bind" class="panel panel-code">
   <div class="panel-heading">
@@ -141,6 +372,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -185,6 +442,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_connect" class="panel panel-code">
   <div class="panel-heading">
@@ -217,6 +476,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
           <p> 
@@ -265,6 +550,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_createAnswer" class="panel panel-code">
   <div class="panel-heading">
@@ -297,6 +584,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -341,6 +654,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_createOffer" class="panel panel-code">
   <div class="panel-heading">
@@ -373,6 +688,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -417,6 +758,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_disconnect" class="panel panel-code">
   <div class="panel-heading">
@@ -449,6 +792,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
           <p> 
@@ -497,6 +866,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onaddstream" class="panel panel-code">
   <div class="panel-heading">
@@ -529,6 +900,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -573,6 +970,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onconnect" class="panel panel-code">
   <div class="panel-heading">
@@ -605,6 +1004,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -649,6 +1074,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_oniceconnectionstatechange" class="panel panel-code">
   <div class="panel-heading">
@@ -681,6 +1108,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -725,6 +1178,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onicegatheringstatechange" class="panel panel-code">
   <div class="panel-heading">
@@ -757,6 +1212,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -802,6 +1283,8 @@
 </div>
 </div>
     
+   
+    
       <div id="method_onreconnect" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -832,6 +1315,32 @@
     <blockquote>
       
 
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
         
 
         
@@ -877,6 +1386,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onreconnect" class="panel panel-code">
   <div class="panel-heading">
@@ -909,6 +1420,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -953,6 +1490,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onremoveconnection" class="panel panel-code">
   <div class="panel-heading">
@@ -985,6 +1524,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -1029,6 +1594,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onsignalingstatechange" class="panel panel-code">
   <div class="panel-heading">
@@ -1061,6 +1628,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -1105,6 +1698,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_reconnect" class="panel panel-code">
   <div class="panel-heading">
@@ -1137,6 +1732,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
           <p> 
@@ -1185,6 +1806,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_setLocalDescription" class="panel panel-code">
   <div class="panel-heading">
@@ -1217,6 +1840,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -1261,6 +1910,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_setRemoteDescription" class="panel panel-code">
   <div class="panel-heading">
@@ -1293,6 +1944,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -1338,1523 +2015,1061 @@
 </div>
 </div>
     
+  
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Attributes</h4>
+   <div id="attr_config" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      config
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l154"><code>source&#x2F;Peer.js:154</code></a>
+    </p>
+    
   </div>
 
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The PeerConnection configuration.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
 
-<div class="page container">
-  <section id="infodocs">
-    <h2>Documentation Notes</h2>
-    
-    <hr>
-  </section>
-  <section id="classdocs">
-    <ul class="nav nav-tabs" role="tablist">
-      <li  role="presentation" class="doc-selected active"><a href="#constructor">Constructor</a></li>
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor config ()
       
-        <li role="presentation" class="doc-selected"><a href="#methods">Methods</a></li>
-      
-      
-        <li role="presentation" class="doc-selected"><a href="#properties">Properties</a></li>
-      
-      
-         <li role="presentation" class="doc-selected"><a href="#attrs">Attributes</a></li>
-      
-      
-    </ul>
-    <div class="scroll-data"></div>
-  </section>
+    </pre>
+    </div>
+  </div>
 </div>
-<br><br>
-<div class="page container">
-  <div id="index" class="api-class-tabpanel index">
-    <ul id="doc-type-select" class="nav nav-pills" role="tablist">
-      <li role="presentation" class="doc-type-select-public active">
-        <a>Developer <span class="doc-private-label">methods</span></a>
-      </li>
-      <li role="presentation" class="doc-type-select-private">
-        <a>Internal <span class="doc-private-label">methods</span></a>
-      </li>
-      <div class="nav-links pull-right">
-        <span><i class="fa fa-external-link"></i>&nbsp;&nbsp;Navigate to</span>
-        <ul>
-          <li> <a href="#attr__SIG_MESSAGE_TYPE"> <i class="fa fa-hand-o-right"></i>Signalling Handshake Messaging </a> </li>
-          <li> <a href="#attr__DC_PROTOCOL_TYPE"> <i class="fa fa-exchange"></i>Datachannel Transfer Protocol </a> </li>
+
+<!--
+
+  
+-->  <div id="attr_constraints" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      constraints
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l43"><code>source&#x2F;Peer.js:43</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The PeerConnection constraints - iceServers.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor constraints ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_datachannels" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      datachannels
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l73"><code>source&#x2F;Peer.js:73</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The datachannels connected to PeerConnection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">&lt;channelId&gt;</code>
+    <span class="type"> : <em>type</em> <a href="../classes/DataChannel.html" class="crosslink">DataChannel</a> </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The datachannel connected to peer.</p>
+
+  </div>
+
+  
+</li> 
         </ul>
       </div>
-    </ul>
-    <div class="section-doc-group">
-      <h2 id="current-doc-selected-title">Methods</h2>
-      <div class="col-md-3">
-        <div></div>
-        <div class="list-group-o-wrapper">
-          <span class="title">Methods</span>
-          <div class="list-group-wrapper">
-            <div class="list-group ">
-              <a href="#method_Peer" class="list-group-item code-menu-item constructor-item">
-                &nbsp;&nbsp;Skylink ()
-              </a>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor datachannels ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_handler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      handler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l188"><code>source&#x2F;Peer.js:188</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
               
+    </blockquote>
+    <p><p>The handler that manages all triggers or relaying events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor handler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_healthTimer" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      healthTimer
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l94"><code>source&#x2F;Peer.js:94</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
               
-                
-                  <a href="#property_datachannel" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;datachannel
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_icecandidate" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;icecandidate
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_iceconnectionstate" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;iceconnectionstate
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_icegatheringstate" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;icegatheringstate
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_signalingstate" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;signalingstate
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
+    </blockquote>
+    <p><p>The timeout that would react if PeerConnection is unstable and refresh connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor healthTimer ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_iceTrickle" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      iceTrickle
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l84"><code>source&#x2F;Peer.js:84</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
               
+    </blockquote>
+    <p><p>The flag that indicates if trickle ICE is enable for this PeerConnection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor iceTrickle ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_id" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      id
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l13"><code>source&#x2F;Peer.js:13</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
               
-                
-                  <a href="#attr_config" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;config
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_constraints" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;constraints
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_datachannels" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;datachannels
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_handler" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;handler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_healthTimer" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;healthTimer
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_iceTrickle" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;iceTrickle
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_id" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;id
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_localDescription" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;localDescription
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_PeerEventMessageHandler" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;PeerEventMessageHandler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_PeerEventReceivedHandler" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;PeerEventReceivedHandler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_PeerEventResponseHandler" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;PeerEventResponseHandler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_PeerHandler" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;PeerHandler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_remoteDescription" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;remoteDescription
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_RTCPeerConnection" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;RTCPeerConnection
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_sdpConfig" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;sdpConfig
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_sdpConstraints" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;sdpConstraints
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_SDPType" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;SDPType
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_stream" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;stream
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_streamingConfig" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;streamingConfig
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_type" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;type
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_weight" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;weight
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
+    </blockquote>
+    <p><p>The peer id.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor id ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_localDescription" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      localDescription
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l53"><code>source&#x2F;Peer.js:53</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
               
+    </blockquote>
+    <p><p>The local description to be set.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor localDescription ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_PeerEventMessageHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      PeerEventMessageHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l125"><code>source&#x2F;PeerHandler.js:125</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles all the message events received from socket.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor PeerEventMessageHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_PeerEventReceivedHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      PeerEventReceivedHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l1"><code>source&#x2F;PeerHandler.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles all the events received from sub classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor PeerEventReceivedHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_PeerEventResponseHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      PeerEventResponseHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l21"><code>source&#x2F;PeerHandler.js:21</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles all the events to respond to other parent classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor PeerEventResponseHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_PeerHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      PeerHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l193"><code>source&#x2F;PeerHandler.js:193</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles the peer class events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor PeerHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_remoteDescription" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      remoteDescription
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l63"><code>source&#x2F;Peer.js:63</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
               
-            </div>
-          </div>
-          <div class="scroll-top">
-            <i class="fa fa-arrow-circle-o-up"></i>&nbsp;&nbsp;Scroll to top
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9 doc-content">
-        
-        
-          <section id="methods">
-            
-              <div id="method_bind" class="panel panel-code">
+    </blockquote>
+    <p><p>The remote description to be set.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor remoteDescription ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_RTCPeerConnection" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      bind
-      
-        <span class="paren">()</span>
-      
+      RTCPeerConnection
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l351"><code>source&#x2F;Peer.js:351</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l168"><code>source&#x2F;Peer.js:168</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Binds events to RTCPeerConnection object.</p>
+    <p><p>The PeerConnection object.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor bind ()
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor RTCPeerConnection ()
       
     </pre>
+    </div>
   </div>
 </div>
-</div>
-            
-              <div id="method_connect" class="panel panel-code">
+
+<!--
+
+  
+-->  <div id="attr_sdpConfig" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      connect
-      
-        <span class="paren">()</span>
-      
+      sdpConfig
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l267"><code>source&#x2F;Peer.js:267</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l144"><code>source&#x2F;Peer.js:144</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Starts the peer connection.</p>
+    <p><p>The PeerConnection session description configuration.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor connect ()
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor sdpConfig ()
       
     </pre>
+    </div>
   </div>
 </div>
-</div>
-            
-              <div id="method_createAnswer" class="panel panel-code">
+
+<!--
+
+  
+-->  <div id="attr_sdpConstraints" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      createAnswer
-      
-        <span class="paren">()</span>
-      
+      sdpConstraints
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l497"><code>source&#x2F;Peer.js:497</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l129"><code>source&#x2F;Peer.js:129</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Creates an answer session description.</p>
+    <p><p>The PeerConnection session description constraints.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor createAnswer ()
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor sdpConstraints ()
       
     </pre>
+    </div>
   </div>
 </div>
-</div>
-            
-              <div id="method_createOffer" class="panel panel-code">
+
+<!--
+
+  
+-->  <div id="attr_SDPType" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      createOffer
-      
-        <span class="paren">()</span>
-      
+      SDPType
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l457"><code>source&#x2F;Peer.js:457</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l33"><code>source&#x2F;Peer.js:33</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Creates an offer session description.</p>
+    <p><p>The local description type peer sends.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor createOffer ()
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor SDPType ()
       
     </pre>
+    </div>
   </div>
 </div>
-</div>
-            
-              <div id="method_disconnect" class="panel panel-code">
+
+<!--
+
+  
+-->  <div id="attr_stream" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      disconnect
-      
-        <span class="paren">()</span>
-      
+      stream
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l335"><code>source&#x2F;Peer.js:335</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l104"><code>source&#x2F;Peer.js:104</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Stops the peer connection.</p>
+    <p><p>The stream send from this peer.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor disconnect ()
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor stream ()
       
     </pre>
+    </div>
   </div>
 </div>
-</div>
-            
-              <div id="method_onaddstream" class="panel panel-code">
+
+<!--
+
+  
+-->  <div id="attr_streamingConfig" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      onaddstream
-      
-        <span class="paren">()</span>
-      
+      streamingConfig
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l225"><code>source&#x2F;Peer.js:225</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l114"><code>source&#x2F;Peer.js:114</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Function to subscribe to when peer&#39;s remote stream is received.</p>
+    <p><p>Stores the streaming configuration.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onaddstream ()
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor streamingConfig ()
       
     </pre>
+    </div>
   </div>
 </div>
-</div>
-            
-              <div id="method_onconnect" class="panel panel-code">
+
+<!--
+
+  
+-->  <div id="attr_type" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      onconnect
-      
-        <span class="paren">()</span>
-      
+      type
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l201"><code>source&#x2F;Peer.js:201</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l23"><code>source&#x2F;Peer.js:23</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Function to subscribe to when peer&#39;s connection has been started.</p>
+    <p><p>The peer type.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onconnect ()
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor type ()
       
     </pre>
+    </div>
   </div>
 </div>
-</div>
-            
-              <div id="method_oniceconnectionstatechange" class="panel panel-code">
+
+<!--
+
+  
+-->  <div id="attr_weight" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      oniceconnectionstatechange
-      
-        <span class="paren">()</span>
-      
+      weight
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l209"><code>source&#x2F;Peer.js:209</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l178"><code>source&#x2F;Peer.js:178</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Function to subscribe to when peer&#39;s ice connection state changes.</p>
+    <p><p>The peerconnection weight during handshake.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor oniceconnectionstatechange ()
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor weight ()
       
     </pre>
+    </div>
   </div>
 </div>
+
+<!--
+
+  
+--> 
 </div>
-            
-              <div id="method_onicegatheringstatechange" class="panel panel-code">
+
+
+
+<div class="section code-section">
+  <h4>Properties</h4>
+   <div id="property_datachannel" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      onicegatheringstatechange
-      
-        <span class="paren">()</span>
-      
+      datachannel
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l217"><code>source&#x2F;Peer.js:217</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l107"><code>source&#x2F;PeerHandler.js:107</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when peer&#39;s ice gathering state changes.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onicegatheringstatechange ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onreconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onreconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
+  
+       
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l249"><code>source&#x2F;Peer.js:249</code></a>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
       </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+              
     </blockquote>
-    <p><p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
+    <p><p>Handles the datachannel state trigger.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onreconnect ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onreconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onreconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l241"><code>source&#x2F;Peer.js:241</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
-</p>
-  </div>
-  <div class="panel-body">
     <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onreconnect ()
+      <pre class="prettyprint">
+      // Example for datachannel
       
     </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onremoveconnection" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onremoveconnection
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l257"><code>source&#x2F;Peer.js:257</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when a peer connection been disconnected.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
   </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onremoveconnection ()
-      
-    </pre>
-  </div>
 </div>
-</div>
-            
-              <div id="method_onsignalingstatechange" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onsignalingstatechange
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l233"><code>source&#x2F;Peer.js:233</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when peer&#39;s signaling state has changed.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onsignalingstatechange ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_reconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      reconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l297"><code>source&#x2F;Peer.js:297</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Restarts the peer connection.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor reconnect ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_setLocalDescription" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      setLocalDescription
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l524"><code>source&#x2F;Peer.js:524</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Sets local description.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor setLocalDescription ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_setRemoteDescription" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      setRemoteDescription
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l559"><code>source&#x2F;Peer.js:559</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Sets remote description.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor setRemoteDescription ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-          </section>
-        
-        
-          <section id="properties">
-            
-              <div id="property_datachannel" class="code-item property item private-property-item ">
+<!--<div id="property_datachannel" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>datachannel</code></h3>
 
   
@@ -2918,9 +3133,50 @@
 
   
   <hr>
+</div>-->  <div id="property_icecandidate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      icecandidate
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l85"><code>source&#x2F;PeerHandler.js:85</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Handles the ice candidate trigger.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for icecandidate
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_icecandidate" class="code-item property item private-property-item ">
+<!--<div id="property_icecandidate" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>icecandidate</code></h3>
 
   
@@ -2984,9 +3240,50 @@
 
   
   <hr>
+</div>-->  <div id="property_iceconnectionstate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      iceconnectionstate
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l59"><code>source&#x2F;PeerHandler.js:59</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Handles the ice connection state trigger.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for iceconnectionstate
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_iceconnectionstate" class="code-item property item private-property-item ">
+<!--<div id="property_iceconnectionstate" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>iceconnectionstate</code></h3>
 
   
@@ -3050,9 +3347,50 @@
 
   
   <hr>
+</div>-->  <div id="property_icegatheringstate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      icegatheringstate
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l72"><code>source&#x2F;PeerHandler.js:72</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Handles the ice gathering state trigger.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for icegatheringstate
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_icegatheringstate" class="code-item property item private-property-item ">
+<!--<div id="property_icegatheringstate" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>icegatheringstate</code></h3>
 
   
@@ -3116,9 +3454,50 @@
 
   
   <hr>
+</div>-->  <div id="property_signalingstate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      signalingstate
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l94"><code>source&#x2F;PeerHandler.js:94</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Handles the signaling state trigger.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for signalingstate
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_signalingstate" class="code-item property item private-property-item ">
+<!--<div id="property_signalingstate" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>signalingstate</code></h3>
 
   
@@ -3182,1591 +3561,84 @@
 
   
   <hr>
-</div>
-            
-          </section>
-        
-        
-          <section id="attrs">
-            
-              <div id="attr_config" class="code-item attr item private-attr-item ">
-  <a name="config_config"></a> 
-  <h3 class="code-item-name"><code>config</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l154"><code>source&#x2F;Peer.js:154</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The PeerConnection configuration.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_constraints" class="code-item attr item private-attr-item ">
-  <a name="config_constraints"></a> 
-  <h3 class="code-item-name"><code>constraints</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l43"><code>source&#x2F;Peer.js:43</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The PeerConnection constraints - iceServers.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_datachannels" class="code-item attr item private-attr-item ">
-  <a name="config_datachannels"></a> 
-  <h3 class="code-item-name"><code>datachannels</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l73"><code>source&#x2F;Peer.js:73</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The datachannels connected to PeerConnection.</p>
-
-  </div>
-
-  
-
-  
-
-  
-    <div class="code-item-section">
-      <h4>Keys:</h4>
-
-      <ul class="params-list">
-      
-          <li class="param">
-            <code class="param-name">&lt;channelId&gt;</code>
-            <span class="type"><b>{</b><a href="../classes/DataChannel.html" class="crosslink">DataChannel</a><b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The datachannel connected to peer.</p>
-
-            </div>
-
-            
-          </li>
-      
-      </ul>
-    </div>
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_handler" class="code-item attr item private-attr-item ">
-  <a name="config_handler"></a> 
-  <h3 class="code-item-name"><code>handler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Function<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l188"><code>source&#x2F;Peer.js:188</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The handler that manages all triggers or relaying events.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_healthTimer" class="code-item attr item private-attr-item ">
-  <a name="config_healthTimer"></a> 
-  <h3 class="code-item-name"><code>healthTimer</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Function<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l94"><code>source&#x2F;Peer.js:94</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The timeout that would react if PeerConnection is unstable and refresh connection.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_iceTrickle" class="code-item attr item private-attr-item ">
-  <a name="config_iceTrickle"></a> 
-  <h3 class="code-item-name"><code>iceTrickle</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Boolean<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l84"><code>source&#x2F;Peer.js:84</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The flag that indicates if trickle ICE is enable for this PeerConnection.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_id" class="code-item attr item private-attr-item ">
-  <a name="config_id"></a> 
-  <h3 class="code-item-name"><code>id</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l13"><code>source&#x2F;Peer.js:13</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The peer id.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_localDescription" class="code-item attr item private-attr-item ">
-  <a name="config_localDescription"></a> 
-  <h3 class="code-item-name"><code>localDescription</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Object<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l53"><code>source&#x2F;Peer.js:53</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The local description to be set.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_PeerEventMessageHandler" class="code-item attr item attr-item ">
-  <a name="config_PeerEventMessageHandler"></a> 
-  <h3 class="code-item-name"><code>PeerEventMessageHandler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l125"><code>source&#x2F;PeerHandler.js:125</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Handles all the message events received from socket.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_PeerEventReceivedHandler" class="code-item attr item attr-item ">
-  <a name="config_PeerEventReceivedHandler"></a> 
-  <h3 class="code-item-name"><code>PeerEventReceivedHandler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l1"><code>source&#x2F;PeerHandler.js:1</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Handles all the events received from sub classes.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_PeerEventResponseHandler" class="code-item attr item attr-item ">
-  <a name="config_PeerEventResponseHandler"></a> 
-  <h3 class="code-item-name"><code>PeerEventResponseHandler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l21"><code>source&#x2F;PeerHandler.js:21</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Handles all the events to respond to other parent classes.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_PeerHandler" class="code-item attr item attr-item ">
-  <a name="config_PeerHandler"></a> 
-  <h3 class="code-item-name"><code>PeerHandler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l193"><code>source&#x2F;PeerHandler.js:193</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Handles the peer class events.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_remoteDescription" class="code-item attr item private-attr-item ">
-  <a name="config_remoteDescription"></a> 
-  <h3 class="code-item-name"><code>remoteDescription</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Object<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l63"><code>source&#x2F;Peer.js:63</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The remote description to be set.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_RTCPeerConnection" class="code-item attr item private-attr-item ">
-  <a name="config_RTCPeerConnection"></a> 
-  <h3 class="code-item-name"><code>RTCPeerConnection</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l168"><code>source&#x2F;Peer.js:168</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The PeerConnection object.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_sdpConfig" class="code-item attr item private-attr-item ">
-  <a name="config_sdpConfig"></a> 
-  <h3 class="code-item-name"><code>sdpConfig</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l144"><code>source&#x2F;Peer.js:144</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The PeerConnection session description configuration.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_sdpConstraints" class="code-item attr item private-attr-item ">
-  <a name="config_sdpConstraints"></a> 
-  <h3 class="code-item-name"><code>sdpConstraints</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l129"><code>source&#x2F;Peer.js:129</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The PeerConnection session description constraints.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_SDPType" class="code-item attr item private-attr-item ">
-  <a name="config_SDPType"></a> 
-  <h3 class="code-item-name"><code>SDPType</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l33"><code>source&#x2F;Peer.js:33</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The local description type peer sends.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_stream" class="code-item attr item private-attr-item ">
-  <a name="config_stream"></a> 
-  <h3 class="code-item-name"><code>stream</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><a href="../classes/Stream.html" class="crosslink">Stream</a><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l104"><code>source&#x2F;Peer.js:104</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The stream send from this peer.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_streamingConfig" class="code-item attr item private-attr-item ">
-  <a name="config_streamingConfig"></a> 
-  <h3 class="code-item-name"><code>streamingConfig</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l114"><code>source&#x2F;Peer.js:114</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Stores the streaming configuration.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_type" class="code-item attr item private-attr-item ">
-  <a name="config_type"></a> 
-  <h3 class="code-item-name"><code>type</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l23"><code>source&#x2F;Peer.js:23</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The peer type.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_weight" class="code-item attr item private-attr-item ">
-  <a name="config_weight"></a> 
-  <h3 class="code-item-name"><code>weight</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Integer<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Peer.js.html#l178"><code>source&#x2F;Peer.js:178</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The peerconnection weight during handshake.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-          </section>
-        
-        
-      </div>
-    </div>
-  </div>
+</div>--> 
 </div>
 
-<!--
+
+
+<div class="section code-section">
+  <h4>Event Handlers</h4>
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+  
+</div>
+
+
+
+
+  <!--
 
 
 

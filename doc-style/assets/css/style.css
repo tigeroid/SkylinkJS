@@ -85,7 +85,6 @@ h5 {
   color: #999999;
 }
 .sidebar-nav li a .glyphicon {
-  float: right;
   margin: 12px 15px;
 }
 
@@ -158,6 +157,22 @@ mark {
   border-radius: 0;
   margin-left: 5px;
   background: #888;
+  float: right;
+}
+
+.table-browsers {
+  width: 515px;
+}
+.table-browsers img {
+  height: 25px;
+}
+
+.table-bordered {
+  margin: 15px 0;
+}
+
+.table-bordered th {
+  background: #eee;
 }
 
 var {

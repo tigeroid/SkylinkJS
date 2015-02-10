@@ -30,7 +30,7 @@
   <!-- Sidebar -->
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
-  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <img src="../assets/img/icons/menu.png">
   <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
@@ -45,27 +45,25 @@
     <hr>
     <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger </a></li>
+      <li><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Peer.html">Peer </a></li>
+      <li><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Request.html">Request </a></li>
+      <li><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Room.html">Room </a></li>
+      <li><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Self.html">Self </a></li>
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink </a></li>
+      <li><a href="../classes/Socket.html"> Socket </a></li>
     
-      <li><a href="../classes/Socket.html">Socket </a></li>
+      <li><a href="../classes/Stream.html"> Stream </a></li>
     
-      <li><a href="../classes/Stream.html">Stream </a></li>
-    
-      <li><a href="../classes/User.html">User </a></li>
+      <li><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -86,119 +84,155 @@
 <hr class="strike">
 
 <ol class="breadcrumb">
-  <li><a href="./">Introduction</a></li>
-  
-      
-          <li> <a href="../modules/Skylink.html">Skylink</a></li>
-      
-  
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
   <li class="active">Debugger</li>
 </ol>
 
 <div class="description"></p>
 
-
-
-
-
-
-
-<div class="page container">
-  <section id="infodocs">
-    <h2>Documentation Notes</h2>
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <table class="table table-bordered">
     
-    <hr>
-  </section>
-  <section id="classdocs">
-    <ul class="nav nav-tabs" role="tablist">
-      <li  role="presentation" class="doc-selected active"><a href="#constructor">Constructor</a></li>
-      
-      
-        <li role="presentation" class="doc-selected"><a href="#properties">Properties</a></li>
-      
-      
-         <li role="presentation" class="doc-selected"><a href="#attrs">Attributes</a></li>
-      
-      
-    </ul>
-    <div class="scroll-data"></div>
-  </section>
+  
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#property_level"> <code>level</code> </a> </td> <td> <p>The current log level of Skylink.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_store"> <code>store</code> </a> </td> <td> <p>The flag that indicates if Skylink should store the debug logs.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Attributes</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#attr_LogKey"> <code>LogKey</code> </a> </td> <td> <p>The log key</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+    
+    
+  </table>
 </div>
-<br><br>
-<div class="page container">
-  <div id="index" class="api-class-tabpanel index">
-    <ul id="doc-type-select" class="nav nav-pills" role="tablist">
-      <li role="presentation" class="doc-type-select-public active">
-        <a>Developer <span class="doc-private-label">methods</span></a>
-      </li>
-      <li role="presentation" class="doc-type-select-private">
-        <a>Internal <span class="doc-private-label">methods</span></a>
-      </li>
-      <div class="nav-links pull-right">
-        <span><i class="fa fa-external-link"></i>&nbsp;&nbsp;Navigate to</span>
-        <ul>
-          <li> <a href="#attr__SIG_MESSAGE_TYPE"> <i class="fa fa-hand-o-right"></i>Signalling Handshake Messaging </a> </li>
-          <li> <a href="#attr__DC_PROTOCOL_TYPE"> <i class="fa fa-exchange"></i>Datachannel Transfer Protocol </a> </li>
-        </ul>
-      </div>
-    </ul>
-    <div class="section-doc-group">
-      <h2 id="current-doc-selected-title">Methods</h2>
-      <div class="col-md-3">
-        <div></div>
-        <div class="list-group-o-wrapper">
-          <span class="title">Methods</span>
-          <div class="list-group-wrapper">
-            <div class="list-group ">
-              <a href="#method_Debugger" class="list-group-item code-menu-item constructor-item">
-                &nbsp;&nbsp;Skylink ()
-              </a>
+
+ 
+
+
+
+
+<div class="section code-section">
+  <h4>Attributes</h4>
+   <div id="attr_LogKey" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      LogKey
+
+      
+        <span class="badge">Version 0.5.4</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Log.js.html#l19"><code>source&#x2F;Log.js:19</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
               
-              
-                
-                  <a href="#property_level" class="list-group-item code-menu-item property-item ">
-                    &nbsp;&nbsp;level
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_store" class="list-group-item code-menu-item property-item ">
-                    &nbsp;&nbsp;store
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-              
-              
-                
-                  <a href="#attr_LogKey" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;LogKey
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-              
-              
-            </div>
-          </div>
-          <div class="scroll-top">
-            <i class="fa fa-arrow-circle-o-up"></i>&nbsp;&nbsp;Scroll to top
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9 doc-content">
-        
-        
-        
-          <section id="properties">
-            
-              <div id="property_level" class="code-item property item property-item ">
+      <span class="label label-info" title="This attribute is reference only.">readonly</span>
+       
+    </blockquote>
+    <p><p>The log key</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor LogKey ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+--> 
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Properties</h4>
+   <div id="property_level" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      level
+
+      
+        <span class="badge">Version 0.5.4</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Log.js.html#l30"><code>source&#x2F;Log.js:30</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>The current log level of Skylink.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for level
+      
+    </pre>
+    </div>
+  </div>
+</div>
+<!--<div id="property_level" class="code-item property item property-item ">
   <h3 class="code-item-name"><code>level</code></h3>
 
   
@@ -260,9 +294,46 @@
 
   
   <hr>
+</div>-->  <div id="property_store" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      store
+
+      
+        <span class="badge">Version 0.5.4</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Log.js.html#l41"><code>source&#x2F;Log.js:41</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>The flag that indicates if Skylink should store the debug logs.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for store
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_store" class="code-item property item property-item ">
+<!--<div id="property_store" class="code-item property item property-item ">
   <h3 class="code-item-name"><code>store</code></h3>
 
   
@@ -324,96 +395,15 @@
 
   
   <hr>
-</div>
-            
-          </section>
-        
-        
-          <section id="attrs">
-            
-              <div id="attr_LogKey" class="code-item attr item attr-item ">
-  <a name="config_LogKey"></a> 
-  <h3 class="code-item-name"><code>LogKey</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-info" title="This attribute is reference only.">readonly</span>
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Log.js.html#l19"><code>source&#x2F;Log.js:19</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.5.4</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The log key</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-          </section>
-        
-        
-      </div>
-    </div>
-  </div>
+</div>--> 
 </div>
 
-<!--
+
+
+
+
+
+  <!--
 
 
 

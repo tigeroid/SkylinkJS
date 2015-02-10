@@ -30,7 +30,7 @@
   <!-- Sidebar -->
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
-  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <img src="../assets/img/icons/menu.png">
   <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
@@ -45,27 +45,25 @@
     <hr>
     <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger </a></li>
+      <li><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Peer.html">Peer </a></li>
+      <li><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Request.html">Request </a></li>
+      <li><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Room.html">Room </a></li>
+      <li><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Self.html">Self </a></li>
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink </a></li>
+      <li><a href="../classes/Socket.html"> Socket </a></li>
     
-      <li><a href="../classes/Socket.html">Socket </a></li>
+      <li><a href="../classes/Stream.html"> Stream </a></li>
     
-      <li><a href="../classes/Stream.html">Stream </a></li>
-    
-      <li><a href="../classes/User.html">User </a></li>
+      <li><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -82,7 +80,7 @@
     
     <h1>Room Class <small> <span class="badge">Version 0.6.0</span></small></h1>
 
-  <small>
+<small>
     Defined in: <a href="../files/source_Room.js.html#l1"><code>source&#x2F;Room.js:1</code></a>
   </small>
 
@@ -90,25 +88,297 @@
 <hr class="strike">
 
 <ol class="breadcrumb">
-  <li><a href="./">Introduction</a></li>
-  
-      
-          <li> <a href="../modules/Skylink.html">Skylink</a></li>
-      
-  
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
   <li class="active">Room</li>
 </ol>
 
 <div class="description"><p>Handles the room connection.</p>
 </p>
 
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <table class="table table-bordered">
+    
+  
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+            <tr> <td> <a href="#method_addStreamConnection"> <code>addStreamConnection()</code> </a> </td> <td> <p>Sends a another stream to users.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_join"> <code>join()</code> </a> </td> <td> <p>Starts the connection to the room.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_leave"> <code>leave()</code> </a> </td> <td> <p>Stops the connection to the room.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_lock"> <code>lock()</code> </a> </td> <td> <p>Locks the Room.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onconnecterror"> <code>onconnecterror()</code> </a> </td> <td> <p>Function to subscribe to when socket has connection error.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_ondisconnect"> <code>ondisconnect()</code> </a> </td> <td> <p>Function to subscribe to when socket has been disconnected.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onerror"> <code>onerror()</code> </a> </td> <td> <p>Function to subscribe to when socket has an exception.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onjoin"> <code>onjoin()</code> </a> </td> <td> <p>Function to subscribe to when self has joined the room.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onleave"> <code>onleave()</code> </a> </td> <td> <p>Function to subscribe to when self has leave the room.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onlock"> <code>onlock()</code> </a> </td> <td> <p>Function to subscribe to when room has been locked.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onlock"> <code>onlock()</code> </a> </td> <td> <p>Function to subscribe to when self has been kicked out of room.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onreadystatechange"> <code>onreadystatechange()</code> </a> </td> <td> <p>Function to subscribe to when room ready state has changed.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when socket attempts to reconnect.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onunlock"> <code>onunlock()</code> </a> </td> <td> <p>Function to subscribe to when room has been unlocked.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onunlock"> <code>onunlock()</code> </a> </td> <td> <p>Function to subscribe to when self is warned by server.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_unlock"> <code>unlock()</code> </a> </td> <td> <p>Unlocks the Room.</p>
+ </td> </tr>
+          
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#property_answer"> <code>answer</code> </a> </td> <td> <p>A user has sent an answer to self.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_bye"> <code>bye</code> </a> </td> <td> <p>The a user or self is disconnected from room.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_candidate"> <code>candidate</code> </a> </td> <td> <p>A user has sent an ICE candidate to self.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_enter"> <code>enter</code> </a> </td> <td> <p>User has sent self an enter.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_enter"> <code>enter</code> </a> </td> <td> <p>User has sent self an welcome.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_error"> <code>error</code> </a> </td> <td> <p>Handles the error state trigger.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_inRoom"> <code>inRoom</code> </a> </td> <td> <p>Self is in the room.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_muteAudioEvent"> <code>muteAudioEvent</code> </a> </td> <td> <p>An audio stream muted status has been updated.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_muteVideoEvent"> <code>muteVideoEvent</code> </a> </td> <td> <p>A video stream muted status has been updated.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_offer"> <code>offer</code> </a> </td> <td> <p>A user has sent an offer to self.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_redirect"> <code>redirect</code> </a> </td> <td> <p>The self is redirected or warned.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_roomLockEvent"> <code>roomLockEvent</code> </a> </td> <td> <p>The room is lock status has been updated.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_roomLockEvent"> <code>roomLockEvent</code> </a> </td> <td> <p>The room is lock status has been updated.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_updateUserEvent"> <code>updateUserEvent</code> </a> </td> <td> <p>A user has updated their own custom user data.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Attributes</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#attr_credentials"> <code>credentials</code> </a> </td> <td> <p>The user set settings for the room.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_duration"> <code>duration</code> </a> </td> <td> <p>The room duration for persistent mode.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_iceServers"> <code>iceServers</code> </a> </td> <td> <p>The room TURN/STUN servers connection.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_key"> <code>key</code> </a> </td> <td> <p>The room key.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_locked"> <code>locked</code> </a> </td> <td> <p>The room locked state.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_MessageHandler"> <code>MessageHandler</code> </a> </td> <td> <p>Handles the room messaging events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_MessageHandlerEvent"> <code>MessageHandlerEvent</code> </a> </td> <td> <p>Stores the room messaging events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_name"> <code>name</code> </a> </td> <td> <p>The room token.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_name"> <code>name</code> </a> </td> <td> <p>The room name.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_name"> <code>name</code> </a> </td> <td> <p>The room id.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_owner"> <code>owner</code> </a> </td> <td> <p>The room api owner.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_path"> <code>path</code> </a> </td> <td> <p>The request path to the api server.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_readyState"> <code>readyState</code> </a> </td> <td> <p>The room readyState.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_RoomEventReceivedHandler"> <code>RoomEventReceivedHandler</code> </a> </td> <td> <p>Handles all the events received from sub classes.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_RoomEventResponseHandler"> <code>RoomEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_RoomHandler"> <code>RoomHandler</code> </a> </td> <td> <p>Handles the room class events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_self"> <code>self</code> </a> </td> <td> <p>The self user connection.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_self"> <code>self</code> </a> </td> <td> <p>The user self custom user data.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_startDateTime"> <code>startDateTime</code> </a> </td> <td> <p>The room start date timestamp (ISO format) for persistent mode.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_startDateTime"> <code>startDateTime</code> </a> </td> <td> <p>The room duration.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_stream"> <code>stream</code> </a> </td> <td> <p>The user self existing local stream connection.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_user"> <code>user</code> </a> </td> <td> <p>The list of components connected to room.</p>
+<ul>
+<li>E.g. MCU, Recording</li>
+</ul>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_users"> <code>users</code> </a> </td> <td> <p>The list of users connected to room.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Event Handlers</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </tbody>
+    
+  </table>
+</div>
+
+ 
 
 
-
-
-
-  <div class="section code-section">
-    <h4>Methods</h4>
+<div class="section code-section">
+  <h4>Methods</h4>
+   
     
       <div id="method_addStreamConnection" class="panel panel-code">
   <div class="panel-heading">
@@ -150,6 +420,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -222,6 +518,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_join" class="panel panel-code">
   <div class="panel-heading">
@@ -254,6 +552,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -298,6 +622,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_leave" class="panel panel-code">
   <div class="panel-heading">
@@ -330,6 +656,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -374,6 +726,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_lock" class="panel panel-code">
   <div class="panel-heading">
@@ -406,6 +760,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -450,6 +830,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onconnecterror" class="panel panel-code">
   <div class="panel-heading">
@@ -482,6 +864,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -526,6 +934,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_ondisconnect" class="panel panel-code">
   <div class="panel-heading">
@@ -558,6 +968,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -602,6 +1038,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onerror" class="panel panel-code">
   <div class="panel-heading">
@@ -634,6 +1072,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -678,6 +1142,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onjoin" class="panel panel-code">
   <div class="panel-heading">
@@ -710,6 +1176,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -754,6 +1246,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onleave" class="panel panel-code">
   <div class="panel-heading">
@@ -786,6 +1280,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -831,6 +1351,8 @@
 </div>
 </div>
     
+   
+    
       <div id="method_onlock" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -861,6 +1383,32 @@
     <blockquote>
       
 
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
         
 
         
@@ -907,6 +1455,8 @@
 </div>
 </div>
     
+   
+    
       <div id="method_onlock" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -937,6 +1487,32 @@
     <blockquote>
       
 
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
         
 
         
@@ -982,6 +1558,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onreadystatechange" class="panel panel-code">
   <div class="panel-heading">
@@ -1014,6 +1592,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -1058,6 +1662,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_onreconnect" class="panel panel-code">
   <div class="panel-heading">
@@ -1090,6 +1696,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -1135,6 +1767,8 @@
 </div>
 </div>
     
+   
+    
       <div id="method_onunlock" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1165,6 +1799,32 @@
     <blockquote>
       
 
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
         
 
         
@@ -1211,6 +1871,8 @@
 </div>
 </div>
     
+   
+    
       <div id="method_onunlock" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1241,6 +1903,32 @@
     <blockquote>
       
 
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
         
 
         
@@ -1286,6 +1974,8 @@
   </div>
 </div>
 </div>
+    
+   
     
       <div id="method_unlock" class="panel panel-code">
   <div class="panel-heading">
@@ -1318,6 +2008,32 @@
       
 
         
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
 
         
 
@@ -1363,451 +2079,1135 @@
 </div>
 </div>
     
-  </div>
-
-
-<div class="page container">
-  <section id="infodocs">
-    <h2>Documentation Notes</h2>
-    
-    <hr>
-  </section>
-  <section id="classdocs">
-    <ul class="nav nav-tabs" role="tablist">
-      <li  role="presentation" class="doc-selected active"><a href="#constructor">Constructor</a></li>
-      
-        <li role="presentation" class="doc-selected"><a href="#methods">Methods</a></li>
-      
-      
-        <li role="presentation" class="doc-selected"><a href="#properties">Properties</a></li>
-      
-      
-         <li role="presentation" class="doc-selected"><a href="#attrs">Attributes</a></li>
-      
-      
-    </ul>
-    <div class="scroll-data"></div>
-  </section>
+  
 </div>
-<br><br>
-<div class="page container">
-  <div id="index" class="api-class-tabpanel index">
-    <ul id="doc-type-select" class="nav nav-pills" role="tablist">
-      <li role="presentation" class="doc-type-select-public active">
-        <a>Developer <span class="doc-private-label">methods</span></a>
-      </li>
-      <li role="presentation" class="doc-type-select-private">
-        <a>Internal <span class="doc-private-label">methods</span></a>
-      </li>
-      <div class="nav-links pull-right">
-        <span><i class="fa fa-external-link"></i>&nbsp;&nbsp;Navigate to</span>
-        <ul>
-          <li> <a href="#attr__SIG_MESSAGE_TYPE"> <i class="fa fa-hand-o-right"></i>Signalling Handshake Messaging </a> </li>
-          <li> <a href="#attr__DC_PROTOCOL_TYPE"> <i class="fa fa-exchange"></i>Datachannel Transfer Protocol </a> </li>
-        </ul>
-      </div>
-    </ul>
-    <div class="section-doc-group">
-      <h2 id="current-doc-selected-title">Methods</h2>
-      <div class="col-md-3">
-        <div></div>
-        <div class="list-group-o-wrapper">
-          <span class="title">Methods</span>
-          <div class="list-group-wrapper">
-            <div class="list-group ">
-              <a href="#method_Room" class="list-group-item code-menu-item constructor-item">
-                &nbsp;&nbsp;Skylink ()
-              </a>
-              
-              
-                
-                  <a href="#property_answer" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;answer
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_bye" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;bye
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_candidate" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;candidate
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_enter" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;enter
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_enter" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;enter
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_error" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;error
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_inRoom" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;inRoom
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_muteAudioEvent" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;muteAudioEvent
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_muteVideoEvent" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;muteVideoEvent
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_offer" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;offer
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_redirect" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;redirect
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_roomLockEvent" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;roomLockEvent
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_roomLockEvent" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;roomLockEvent
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_updateUserEvent" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;updateUserEvent
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-              
-              
-                
-                  <a href="#attr_credentials" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;credentials
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_duration" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;duration
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_handler" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;handler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_iceServers" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;iceServers
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_key" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;key
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_locked" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;locked
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_MessageHandler" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;MessageHandler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_MessageHandlerEvent" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;MessageHandlerEvent
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_name" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;name
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_name" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;name
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_name" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;name
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_owner" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;owner
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_path" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;path
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_readyState" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;readyState
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_RoomEventReceivedHandler" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;RoomEventReceivedHandler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_RoomEventResponseHandler" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;RoomEventResponseHandler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_RoomHandler" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;RoomHandler
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_self" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;self
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_self" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;self
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_startDateTime" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;startDateTime
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_startDateTime" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;startDateTime
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_stream" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;stream
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_user" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;user
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_users" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;users
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-              
-              
-            </div>
-          </div>
-          <div class="scroll-top">
-            <i class="fa fa-arrow-circle-o-up"></i>&nbsp;&nbsp;Scroll to top
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9 doc-content">
-        
-        
-          <section id="methods">
-            
-              <div id="method_addStreamConnection" class="panel panel-code">
+
+
+
+<div class="section code-section">
+  <h4>Attributes</h4>
+   <div id="attr_credentials" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      addStreamConnection
-      
-        <span class="paren">(</span>
-          <em class="items">
-            
-              
-                <item><code>stream</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-          </em>
-        <span class="paren">)</span>
-      
+      credentials
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l345"><code>source&#x2F;Room.js:345</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l93"><code>source&#x2F;Room.js:93</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Sends a another stream to users.</p>
+    <p><p>The user set settings for the room.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-        <div class="code-section-item">
-          <h6>Parameters:</h6>
-          <ul class="params-list">
-          
-            <li class="code-section-item-param">
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream</code>
+    <code class="param-name">duration</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room duration set by user.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">hash</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The hashed secret generated by user.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">startDateTime</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room start date timestamp (ISO format) set by user.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor credentials ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_duration" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      duration
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l63"><code>source&#x2F;Room.js:63</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room duration for persistent mode.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor duration ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_handler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      handler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l206"><code>source&#x2F;Room.js:206</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The handler that manages all triggers or relaying events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor handler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_iceServers" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      iceServers
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l182"><code>source&#x2F;Room.js:182</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+         
+      <span class="label label-warning" title="This attribute is required for communication.">required</span>
+           
+    </blockquote>
+    <p><p>The room TURN/STUN servers connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">iceServers</code>
+    <span class="type"> : <em>type</em> Array </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The list of ICE servers.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">&lt;iceServers.n&gt;</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE server.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor iceServers ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_key" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      key
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l43"><code>source&#x2F;Room.js:43</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room key.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor key ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_locked" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      locked
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l195"><code>source&#x2F;Room.js:195</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+         
+      <span class="label label-warning" title="This attribute is required for communication.">required</span>
+           
+    </blockquote>
+    <p><p>The room locked state.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor locked ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_MessageHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      MessageHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l431"><code>source&#x2F;RoomHandler.js:431</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles the room messaging events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor MessageHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_MessageHandlerEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      MessageHandlerEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l183"><code>source&#x2F;RoomHandler.js:183</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Stores the room messaging events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor MessageHandlerEvent ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_name" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      name
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l33"><code>source&#x2F;Room.js:33</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room token.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor name ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_name" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      name
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l13"><code>source&#x2F;Room.js:13</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room name.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor name ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_name" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      name
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l23"><code>source&#x2F;Room.js:23</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room id.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor name ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_owner" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      owner
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l83"><code>source&#x2F;Room.js:83</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room api owner.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor owner ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_path" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      path
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l73"><code>source&#x2F;Room.js:73</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The request path to the api server.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor path ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_readyState" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      readyState
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l171"><code>source&#x2F;Room.js:171</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+         
+      <span class="label label-warning" title="This attribute is required for communication.">required</span>
+           
+    </blockquote>
+    <p><p>The room readyState.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor readyState ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_RoomEventReceivedHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      RoomEventReceivedHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l1"><code>source&#x2F;RoomHandler.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles all the events received from sub classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor RoomEventReceivedHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_RoomEventResponseHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      RoomEventResponseHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l125"><code>source&#x2F;RoomHandler.js:125</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles all the events to respond to other parent classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor RoomEventResponseHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_RoomHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      RoomHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l157"><code>source&#x2F;RoomHandler.js:157</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles the room class events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor RoomHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_self" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      self
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l106"><code>source&#x2F;Room.js:106</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The self user connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor self ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_self" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      self
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l116"><code>source&#x2F;Room.js:116</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The user self custom user data.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor self ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_startDateTime" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      startDateTime
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l53"><code>source&#x2F;Room.js:53</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room start date timestamp (ISO format) for persistent mode.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor startDateTime ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_startDateTime" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      startDateTime
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l160"><code>source&#x2F;Room.js:160</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+         
+      <span class="label label-warning" title="This attribute is required for communication.">required</span>
+           
+    </blockquote>
+    <p><p>The room duration.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor startDateTime ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_stream" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      stream
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l126"><code>source&#x2F;Room.js:126</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The user self existing local stream connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">&lt;streamId&gt;</code>
     <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
   </div>
 
@@ -1819,1188 +3219,238 @@
   </blockquote>
 
   <div class="description">
-    <p>The stream object.</p>
+    <p>The stream connected to room.</p>
 
   </div>
 
   
-</li>
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor stream ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_user" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      user
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
           
-          </ul>
-        </div>
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor addStreamConnection ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_join" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      join
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l276"><code>source&#x2F;Room.js:276</code></a>
-      </p>
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l148"><code>source&#x2F;Room.js:148</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Starts the connection to the room.</p>
+    <p><p>The list of components connected to room.</p>
+<ul>
+<li>E.g. MCU, Recording</li>
+</ul>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">n</code>
+    <span class="type"> : <em>type</em> <a href="../classes/User.html" class="crosslink">User</a> </span>
   </div>
 
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = *</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor join ()
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user connected to room.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor user ()
       
     </pre>
+    </div>
   </div>
 </div>
-</div>
-            
-              <div id="method_leave" class="panel panel-code">
+
+<!--
+
+  
+-->  <div id="attr_users" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      leave
-      
-        <span class="paren">()</span>
-      
+      users
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l296"><code>source&#x2F;Room.js:296</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l137"><code>source&#x2F;Room.js:137</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
     </blockquote>
-    <p><p>Stops the connection to the room.</p>
+    <p><p>The list of users connected to room.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">&lt;userId&gt;</code>
+    <span class="type"> : <em>type</em> <a href="../classes/User.html" class="crosslink">User</a> </span>
   </div>
 
+  <blockquote>
+    
+    
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor leave ()
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user connected to room.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor users ()
       
     </pre>
+    </div>
   </div>
 </div>
+
+<!--
+
+  
+--> 
 </div>
-            
-              <div id="method_lock" class="panel panel-code">
+
+
+
+<div class="section code-section">
+  <h4>Properties</h4>
+   <div id="property_answer" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      lock
-      
-        <span class="paren">()</span>
-      
+      answer
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l307"><code>source&#x2F;Room.js:307</code></a>
-      </p>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l273"><code>source&#x2F;RoomHandler.js:273</code></a>
+    </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
       
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Locks the Room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor lock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onconnecterror" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onconnecterror
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
+  
+       
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l176"><code>source&#x2F;Socket.js:176</code></a>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
       </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
+              
     </blockquote>
-    <p><p>Function to subscribe to when socket has connection error.</p>
+    <p><p>A user has sent an answer to self.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
       
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
-  </div>
 
 
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onconnecterror ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_ondisconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      ondisconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Socket.js.html#l168"><code>source&#x2F;Socket.js:168</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when socket has been disconnected.</p>
-</p>
-  </div>
-  <div class="panel-body">
     <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor ondisconnect ()
+      <pre class="prettyprint">
+      // Example for answer
       
     </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onerror" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onerror
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Socket.js.html#l192"><code>source&#x2F;Socket.js:192</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when socket has an exception.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
     </div>
   </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onerror ()
-      
-    </pre>
-  </div>
 </div>
-</div>
-            
-              <div id="method_onjoin" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onjoin
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l227"><code>source&#x2F;Room.js:227</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when self has joined the room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onjoin ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onleave" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onleave
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l267"><code>source&#x2F;Room.js:267</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when self has leave the room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onleave ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onlock" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onlock
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l251"><code>source&#x2F;Room.js:251</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when room has been locked.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onlock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onlock" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onlock
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l235"><code>source&#x2F;Room.js:235</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when self has been kicked out of room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onlock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onreadystatechange" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onreadystatechange
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l219"><code>source&#x2F;Room.js:219</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when room ready state has changed.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onreadystatechange ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onreconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onreconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Socket.js.html#l184"><code>source&#x2F;Socket.js:184</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when socket attempts to reconnect.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onreconnect ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onunlock" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onunlock
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l259"><code>source&#x2F;Room.js:259</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when room has been unlocked.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onunlock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_onunlock" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onunlock
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l243"><code>source&#x2F;Room.js:243</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Function to subscribe to when self is warned by server.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onunlock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-              <div id="method_unlock" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      unlock
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l326"><code>source&#x2F;Room.js:326</code></a>
-      </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
-    <p><p>Unlocks the Room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor unlock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-            
-          </section>
-        
-        
-          <section id="properties">
-            
-              <div id="property_answer" class="code-item property item private-property-item ">
+<!--<div id="property_answer" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>answer</code></h3>
 
   
@@ -3064,9 +3514,50 @@
 
   
   <hr>
+</div>-->  <div id="property_bye" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bye
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l414"><code>source&#x2F;RoomHandler.js:414</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The a user or self is disconnected from room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for bye
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_bye" class="code-item property item private-property-item ">
+<!--<div id="property_bye" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>bye</code></h3>
 
   
@@ -3130,9 +3621,50 @@
 
   
   <hr>
+</div>-->  <div id="property_candidate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      candidate
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l288"><code>source&#x2F;RoomHandler.js:288</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>A user has sent an ICE candidate to self.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for candidate
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_candidate" class="code-item property item private-property-item ">
+<!--<div id="property_candidate" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>candidate</code></h3>
 
   
@@ -3196,9 +3728,50 @@
 
   
   <hr>
+</div>-->  <div id="property_enter" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      enter
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l224"><code>source&#x2F;RoomHandler.js:224</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>User has sent self an enter.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for enter
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_enter" class="code-item property item private-property-item ">
+<!--<div id="property_enter" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>enter</code></h3>
 
   
@@ -3262,9 +3835,50 @@
 
   
   <hr>
+</div>-->  <div id="property_enter" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      enter
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l241"><code>source&#x2F;RoomHandler.js:241</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>User has sent self an welcome.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for enter
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_enter" class="code-item property item private-property-item ">
+<!--<div id="property_enter" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>enter</code></h3>
 
   
@@ -3328,9 +3942,50 @@
 
   
   <hr>
+</div>-->  <div id="property_error" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      error
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l132"><code>source&#x2F;RoomHandler.js:132</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Handles the error state trigger.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for error
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_error" class="code-item property item private-property-item ">
+<!--<div id="property_error" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>error</code></h3>
 
   
@@ -3394,9 +4049,50 @@
 
   
   <hr>
+</div>-->  <div id="property_inRoom" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      inRoom
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l190"><code>source&#x2F;RoomHandler.js:190</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Self is in the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for inRoom
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_inRoom" class="code-item property item private-property-item ">
+<!--<div id="property_inRoom" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>inRoom</code></h3>
 
   
@@ -3460,9 +4156,50 @@
 
   
   <hr>
+</div>-->  <div id="property_muteAudioEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteAudioEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l318"><code>source&#x2F;RoomHandler.js:318</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>An audio stream muted status has been updated.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for muteAudioEvent
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_muteAudioEvent" class="code-item property item private-property-item ">
+<!--<div id="property_muteAudioEvent" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>muteAudioEvent</code></h3>
 
   
@@ -3526,9 +4263,50 @@
 
   
   <hr>
+</div>-->  <div id="property_muteVideoEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteVideoEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l333"><code>source&#x2F;RoomHandler.js:333</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>A video stream muted status has been updated.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for muteVideoEvent
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_muteVideoEvent" class="code-item property item private-property-item ">
+<!--<div id="property_muteVideoEvent" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>muteVideoEvent</code></h3>
 
   
@@ -3592,9 +4370,50 @@
 
   
   <hr>
+</div>-->  <div id="property_offer" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      offer
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l258"><code>source&#x2F;RoomHandler.js:258</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>A user has sent an offer to self.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for offer
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_offer" class="code-item property item private-property-item ">
+<!--<div id="property_offer" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>offer</code></h3>
 
   
@@ -3658,9 +4477,50 @@
 
   
   <hr>
+</div>-->  <div id="property_redirect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      redirect
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l385"><code>source&#x2F;RoomHandler.js:385</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The self is redirected or warned.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for redirect
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_redirect" class="code-item property item private-property-item ">
+<!--<div id="property_redirect" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>redirect</code></h3>
 
   
@@ -3724,9 +4584,50 @@
 
   
   <hr>
+</div>-->  <div id="property_roomLockEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      roomLockEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l348"><code>source&#x2F;RoomHandler.js:348</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room is lock status has been updated.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for roomLockEvent
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_roomLockEvent" class="code-item property item private-property-item ">
+<!--<div id="property_roomLockEvent" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>roomLockEvent</code></h3>
 
   
@@ -3790,9 +4691,50 @@
 
   
   <hr>
+</div>-->  <div id="property_roomLockEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      roomLockEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l370"><code>source&#x2F;RoomHandler.js:370</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The room is lock status has been updated.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for roomLockEvent
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_roomLockEvent" class="code-item property item private-property-item ">
+<!--<div id="property_roomLockEvent" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>roomLockEvent</code></h3>
 
   
@@ -3856,9 +4798,50 @@
 
   
   <hr>
+</div>-->  <div id="property_updateUserEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      updateUserEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l303"><code>source&#x2F;RoomHandler.js:303</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>A user has updated their own custom user data.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for updateUserEvent
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_updateUserEvent" class="code-item property item private-property-item ">
+<!--<div id="property_updateUserEvent" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>updateUserEvent</code></h3>
 
   
@@ -3922,1959 +4905,84 @@
 
   
   <hr>
-</div>
-            
-          </section>
-        
-        
-          <section id="attrs">
-            
-              <div id="attr_credentials" class="code-item attr item private-attr-item ">
-  <a name="config_credentials"></a> 
-  <h3 class="code-item-name"><code>credentials</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l93"><code>source&#x2F;Room.js:93</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The user set settings for the room.</p>
-
-  </div>
-
-  
-
-  
-
-  
-    <div class="code-item-section">
-      <h4>Keys:</h4>
-
-      <ul class="params-list">
-      
-          <li class="param">
-            <code class="param-name">duration</code>
-            <span class="type"><b>{</b>Integer<b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The room duration set by user.</p>
-
-            </div>
-
-            
-          </li>
-      
-          <li class="param">
-            <code class="param-name">hash</code>
-            <span class="type"><b>{</b>String<b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The hashed secret generated by user.</p>
-
-            </div>
-
-            
-          </li>
-      
-          <li class="param">
-            <code class="param-name">startDateTime</code>
-            <span class="type"><b>{</b>String<b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The room start date timestamp (ISO format) set by user.</p>
-
-            </div>
-
-            
-          </li>
-      
-      </ul>
-    </div>
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_duration" class="code-item attr item private-attr-item ">
-  <a name="config_duration"></a> 
-  <h3 class="code-item-name"><code>duration</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Integer<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l63"><code>source&#x2F;Room.js:63</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room duration for persistent mode.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_handler" class="code-item attr item private-attr-item ">
-  <a name="config_handler"></a> 
-  <h3 class="code-item-name"><code>handler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Function<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l206"><code>source&#x2F;Room.js:206</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The handler that manages all triggers or relaying events.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_iceServers" class="code-item attr item private-attr-item ">
-  <a name="config_iceServers"></a> 
-  <h3 class="code-item-name"><code>iceServers</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-        <span class="label label-warning" title="This attribute is required for communication.">required</span>
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l182"><code>source&#x2F;Room.js:182</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room TURN/STUN servers connection.</p>
-
-  </div>
-
-  
-
-  
-
-  
-    <div class="code-item-section">
-      <h4>Keys:</h4>
-
-      <ul class="params-list">
-      
-          <li class="param">
-            <code class="param-name">iceServers</code>
-            <span class="type"><b>{</b>Array<b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The list of ICE servers.</p>
-
-            </div>
-
-            
-          </li>
-      
-          <li class="param">
-            <code class="param-name">&lt;iceServers.n&gt;</code>
-            <span class="type"><b>{</b>JSON<b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The ICE server.</p>
-
-            </div>
-
-            
-          </li>
-      
-      </ul>
-    </div>
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_key" class="code-item attr item private-attr-item ">
-  <a name="config_key"></a> 
-  <h3 class="code-item-name"><code>key</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l43"><code>source&#x2F;Room.js:43</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room key.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_locked" class="code-item attr item private-attr-item ">
-  <a name="config_locked"></a> 
-  <h3 class="code-item-name"><code>locked</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Boolean<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-        <span class="label label-warning" title="This attribute is required for communication.">required</span>
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l195"><code>source&#x2F;Room.js:195</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room locked state.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_MessageHandler" class="code-item attr item attr-item ">
-  <a name="config_MessageHandler"></a> 
-  <h3 class="code-item-name"><code>MessageHandler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l431"><code>source&#x2F;RoomHandler.js:431</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Handles the room messaging events.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_MessageHandlerEvent" class="code-item attr item attr-item ">
-  <a name="config_MessageHandlerEvent"></a> 
-  <h3 class="code-item-name"><code>MessageHandlerEvent</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l183"><code>source&#x2F;RoomHandler.js:183</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Stores the room messaging events.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_name" class="code-item attr item private-attr-item ">
-  <a name="config_name"></a> 
-  <h3 class="code-item-name"><code>name</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l33"><code>source&#x2F;Room.js:33</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room token.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_name" class="code-item attr item private-attr-item ">
-  <a name="config_name"></a> 
-  <h3 class="code-item-name"><code>name</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l13"><code>source&#x2F;Room.js:13</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room name.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_name" class="code-item attr item private-attr-item ">
-  <a name="config_name"></a> 
-  <h3 class="code-item-name"><code>name</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l23"><code>source&#x2F;Room.js:23</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room id.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_owner" class="code-item attr item private-attr-item ">
-  <a name="config_owner"></a> 
-  <h3 class="code-item-name"><code>owner</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l83"><code>source&#x2F;Room.js:83</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room api owner.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_path" class="code-item attr item private-attr-item ">
-  <a name="config_path"></a> 
-  <h3 class="code-item-name"><code>path</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l73"><code>source&#x2F;Room.js:73</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The request path to the api server.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_readyState" class="code-item attr item private-attr-item ">
-  <a name="config_readyState"></a> 
-  <h3 class="code-item-name"><code>readyState</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>Integer<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-        <span class="label label-warning" title="This attribute is required for communication.">required</span>
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l171"><code>source&#x2F;Room.js:171</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room readyState.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_RoomEventReceivedHandler" class="code-item attr item attr-item ">
-  <a name="config_RoomEventReceivedHandler"></a> 
-  <h3 class="code-item-name"><code>RoomEventReceivedHandler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l1"><code>source&#x2F;RoomHandler.js:1</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Handles all the events received from sub classes.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_RoomEventResponseHandler" class="code-item attr item attr-item ">
-  <a name="config_RoomEventResponseHandler"></a> 
-  <h3 class="code-item-name"><code>RoomEventResponseHandler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l125"><code>source&#x2F;RoomHandler.js:125</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Handles all the events to respond to other parent classes.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_RoomHandler" class="code-item attr item attr-item ">
-  <a name="config_RoomHandler"></a> 
-  <h3 class="code-item-name"><code>RoomHandler</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l157"><code>source&#x2F;RoomHandler.js:157</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Handles the room class events.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_self" class="code-item attr item private-attr-item ">
-  <a name="config_self"></a> 
-  <h3 class="code-item-name"><code>self</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><a href="../classes/Self.html" class="crosslink">Self</a><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l106"><code>source&#x2F;Room.js:106</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The self user connection.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_self" class="code-item attr item private-attr-item ">
-  <a name="config_self"></a> 
-  <h3 class="code-item-name"><code>self</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON | String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l116"><code>source&#x2F;Room.js:116</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The user self custom user data.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_startDateTime" class="code-item attr item private-attr-item ">
-  <a name="config_startDateTime"></a> 
-  <h3 class="code-item-name"><code>startDateTime</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>String<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l53"><code>source&#x2F;Room.js:53</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room start date timestamp (ISO format) for persistent mode.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_startDateTime" class="code-item attr item private-attr-item ">
-  <a name="config_startDateTime"></a> 
-  <h3 class="code-item-name"><code>startDateTime</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><a href="../classes/Socket.html" class="crosslink">Socket</a><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-        <span class="label label-warning" title="This attribute is required for communication.">required</span>
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l160"><code>source&#x2F;Room.js:160</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The room duration.</p>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_stream" class="code-item attr item private-attr-item ">
-  <a name="config_stream"></a> 
-  <h3 class="code-item-name"><code>stream</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l126"><code>source&#x2F;Room.js:126</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The user self existing local stream connection.</p>
-
-  </div>
-
-  
-
-  
-
-  
-    <div class="code-item-section">
-      <h4>Keys:</h4>
-
-      <ul class="params-list">
-      
-          <li class="param">
-            <code class="param-name">&lt;streamId&gt;</code>
-            <span class="type"><b>{</b><a href="../classes/Stream.html" class="crosslink">Stream</a><b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The stream connected to room.</p>
-
-            </div>
-
-            
-          </li>
-      
-      </ul>
-    </div>
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_user" class="code-item attr item private-attr-item ">
-  <a name="config_user"></a> 
-  <h3 class="code-item-name"><code>user</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l148"><code>source&#x2F;Room.js:148</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The list of components connected to room.</p>
-<ul>
-<li>E.g. MCU, Recording</li>
-</ul>
-
-  </div>
-
-  
-
-  
-
-  
-    <div class="code-item-section">
-      <h4>Keys:</h4>
-
-      <ul class="params-list">
-      
-          <li class="param">
-            <code class="param-name">n</code>
-            <span class="type"><b>{</b><a href="../classes/User.html" class="crosslink">User</a><b>}</b></span>
-
-            <span class="label">Optional</span>
-            
-
-            <div class="param-description">
-                <p>The user connected to room.</p>
-
-            </div>
-
-            
-          </li>
-      
-      </ul>
-    </div>
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_users" class="code-item attr item private-attr-item ">
-  <a name="config_users"></a> 
-  <h3 class="code-item-name"><code>users</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Room.js.html#l137"><code>source&#x2F;Room.js:137</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>The list of users connected to room.</p>
-
-  </div>
-
-  
-
-  
-
-  
-    <div class="code-item-section">
-      <h4>Keys:</h4>
-
-      <ul class="params-list">
-      
-          <li class="param">
-            <code class="param-name">&lt;userId&gt;</code>
-            <span class="type"><b>{</b><a href="../classes/User.html" class="crosslink">User</a><b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The user connected to room.</p>
-
-            </div>
-
-            
-          </li>
-      
-      </ul>
-    </div>
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-          </section>
-        
-        
-      </div>
-    </div>
-  </div>
+</div>--> 
 </div>
 
-<!--
+
+
+<div class="section code-section">
+  <h4>Event Handlers</h4>
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+  
+</div>
+
+
+
+
+  <!--
 
 
 

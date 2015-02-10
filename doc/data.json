@@ -14,8 +14,16 @@
             },
             "fors": {
                 "Skylink": 1,
-                "DataChannel": 1,
-                "DataMessage": 1
+                "DataChannel": 1
+            },
+            "namespaces": {}
+        },
+        "source/DataChannelHandler.js": {
+            "name": "source/DataChannelHandler.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "DataChannel": 1
             },
             "namespaces": {}
         },
@@ -188,7 +196,6 @@
             "classes": {
                 "DataChannel": 1,
                 "Skylink": 1,
-                "DataMessage": 1,
                 "Debugger": 1,
                 "Peer": 1,
                 "Request": 1,
@@ -225,7 +232,7 @@
             "module": "Skylink",
             "file": "source/DataChannel.js",
             "line": 1,
-            "description": "Handles the DataChannel connections.",
+            "description": "Handles the RTCDataChannel object connection and events.",
             "is_constructor": 1,
             "params": [
                 {
@@ -235,7 +242,7 @@
                 },
                 {
                     "name": "listener",
-                    "description": "The listener that listens to all class events and \n   sub-classes objects events.",
+                    "description": "The listener function.",
                     "type": "Function"
                 }
             ],
@@ -244,16 +251,6 @@
         "Skylink": {
             "name": "Skylink",
             "shortname": "Skylink",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "Skylink"
-        },
-        "DataMessage": {
-            "name": "DataMessage",
-            "shortname": "DataMessage",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -369,7 +366,7 @@
     "classitems": [
         {
             "file": "source/DataChannel.js",
-            "line": 17,
+            "line": 16,
             "description": "The datachannel label.",
             "itemtype": "attribute",
             "name": "id",
@@ -381,7 +378,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 27,
+            "line": 26,
             "description": "The type of datachannel",
             "itemtype": "attribute",
             "name": "type",
@@ -389,11 +386,11 @@
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
-            "class": "DataMessage"
+            "class": "DataChannel"
         },
         {
             "file": "source/DataChannel.js",
-            "line": 37,
+            "line": 36,
             "description": "The DataChannel object.",
             "itemtype": "attribute",
             "name": "RTCDataChannel",
@@ -406,56 +403,77 @@
         {
             "file": "source/DataChannel.js",
             "line": 47,
+            "description": "Function to subscribe to when datachannel has opened.",
+            "itemtype": "method",
+            "name": "onopen",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannel.js",
+            "line": 56,
+            "description": "Function to subscribe to when datachannel has closed.",
+            "itemtype": "method",
+            "name": "onclose",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannel.js",
+            "line": 65,
+            "description": "Function to subscribe to when datachannel has an error.",
+            "itemtype": "method",
+            "name": "onerror",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannel.js",
+            "line": 74,
+            "description": "The handler that manages all triggers or relaying events.",
+            "itemtype": "method",
+            "name": "handler",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The event name.",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "The response data.",
+                    "type": "JSON"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannel.js",
+            "line": 87,
             "description": "Binds events to RTCDataChannel object.",
             "itemtype": "method",
             "name": "bind",
-            "trigger": "StreamJoined, mediaAccessRequired",
+            "params": [
+                {
+                    "name": "bindChannel",
+                    "description": "The RTCDataChannel object to bind events to.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "DataChannel"
         },
         {
             "file": "source/DataChannel.js",
-            "line": 88,
-            "description": "Handles the event when DataChannel is opened.",
-            "itemtype": "method",
-            "name": "onOpen",
-            "trigger": "peerJoined, mediaAccessRequired",
-            "since": "0.6.0",
-            "class": "DataChannel"
-        },
-        {
-            "file": "source/DataChannel.js",
-            "line": 102,
-            "description": "Handles the event when DataChannel is closed.",
-            "itemtype": "method",
-            "name": "onClose",
-            "trigger": "peerJoined, mediaAccessRequired",
-            "since": "0.6.0",
-            "class": "DataChannel"
-        },
-        {
-            "file": "source/DataChannel.js",
-            "line": 116,
-            "description": "Handles the event when DataChannel has an exception.",
-            "itemtype": "method",
-            "name": "onClose",
-            "trigger": "peerJoined, mediaAccessRequired",
-            "since": "0.6.0",
-            "class": "DataChannel"
-        },
-        {
-            "file": "source/DataChannel.js",
-            "line": 131,
-            "description": "Handles the event when DataChannel has a message received.",
-            "itemtype": "method",
-            "name": "onMessage",
-            "trigger": "peerJoined, mediaAccessRequired",
-            "since": "0.6.0",
-            "class": "DataChannel"
-        },
-        {
-            "file": "source/DataChannel.js",
-            "line": 146,
+            "line": 144,
             "description": "Sends data over the datachannel.",
             "itemtype": "method",
             "name": "send",
@@ -466,7 +484,91 @@
                     "type": "JSON|String"
                 }
             ],
-            "trigger": "peerJoined, mediaAccessRequired",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannelHandler.js",
+            "line": 1,
+            "description": "Handles all the events to respond to other parent classes.",
+            "itemtype": "attribute",
+            "name": "DataChannelEventResponseHandler",
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannelHandler.js",
+            "line": 10,
+            "description": "Event fired when the datachannel object is ready to use.",
+            "itemtype": "event",
+            "name": "datachannel:start",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannelHandler.js",
+            "line": 18,
+            "description": "Event fired when the datachannel has opened.",
+            "itemtype": "event",
+            "name": "datachannel:connect",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannelHandler.js",
+            "line": 26,
+            "description": "Event fired when the datachannel has an exception occurred.",
+            "itemtype": "event",
+            "name": "datachannel:error",
+            "params": [
+                {
+                    "name": "error",
+                    "description": "The RTCDataChannel error.",
+                    "type": "Object"
+                }
+            ],
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannelHandler.js",
+            "line": 35,
+            "description": "Event fired when the datachannel receives data.",
+            "itemtype": "event",
+            "name": "datachannel:message",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The data received.",
+                    "type": "JSON|String"
+                }
+            ],
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannelHandler.js",
+            "line": 44,
+            "description": "Event fired when the datachannel has closed.",
+            "itemtype": "event",
+            "name": "datachannel:disconnect",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannelHandler.js",
+            "line": 53,
+            "description": "Handles the datachannel class events.",
+            "itemtype": "attribute",
+            "name": "DataChannelHandler",
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "DataChannel"
         },
@@ -4421,28 +4523,16 @@
     ],
     "warnings": [
         {
-            "message": "unknown tag: trigger",
+            "message": "unknown tag: eventhandler",
             "line": " source/DataChannel.js:47"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:88"
+            "message": "unknown tag: eventhandler",
+            "line": " source/DataChannel.js:56"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:102"
-        },
-        {
-            "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:116"
-        },
-        {
-            "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:131"
-        },
-        {
-            "message": "unknown tag: trigger",
-            "line": " source/DataChannel.js:146"
+            "message": "unknown tag: eventhandler",
+            "line": " source/DataChannel.js:65"
         },
         {
             "message": "unknown tag: iceconnectionstate",

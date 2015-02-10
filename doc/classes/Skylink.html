@@ -30,7 +30,7 @@
   <!-- Sidebar -->
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
-  <img class="icon icons8-Menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAApElEQVRoQ+2XUQrAIBTD9P6H3saO0FIoJf63+BIFvWdk3ZE5DoO0mcQIRkIEOFohsHLtfb4lp4uCO4MUQbW2wmW38AXCGAlAtSoxYuELhDESgGpVYsTCFwhjJADVqtx5/c78RyyfRWEue5GMfysYwUiIAEcrBFauxYiMLhTESAisXLtjZOb1OzOIfCjLgjt3pAysvB2MyOhCQYyEwMq1GJHRhYIvlEsYG7K8RJ8AAAAASUVORK5CYII=">
+  <img src="../assets/img/icons/menu.png">
   <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
@@ -45,27 +45,25 @@
     <hr>
     <li><a href="../" data="">Introduction</a></li>
     
-      <li><a href="../classes/DataChannel.html">DataChannel </a></li>
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/DataMessage.html">DataMessage </a></li>
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Debugger.html">Debugger </a></li>
+      <li><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Peer.html">Peer </a></li>
+      <li><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Request.html">Request </a></li>
+      <li><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Room.html">Room </a></li>
+      <li><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Self.html">Self </a></li>
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/Skylink.html">Skylink </a></li>
+      <li><a href="../classes/Socket.html"> Socket </a></li>
     
-      <li><a href="../classes/Socket.html">Socket </a></li>
+      <li><a href="../classes/Stream.html"> Stream </a></li>
     
-      <li><a href="../classes/Stream.html">Stream </a></li>
-    
-      <li><a href="../classes/User.html">User </a></li>
+      <li><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -86,459 +84,533 @@
 <hr class="strike">
 
 <ol class="breadcrumb">
-  <li><a href="./">Introduction</a></li>
-  
-      
-          <li> <a href="../modules/Skylink.html">Skylink</a></li>
-      
-  
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
   <li class="active">Skylink</li>
 </ol>
 
 <div class="description"></p>
 
-
-
-
-
-
-
-<div class="page container">
-  <section id="infodocs">
-    <h2>Documentation Notes</h2>
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <table class="table table-bordered">
     
-    <hr>
-  </section>
-  <section id="classdocs">
-    <ul class="nav nav-tabs" role="tablist">
-      <li  role="presentation" class="doc-selected active"><a href="#constructor">Constructor</a></li>
-      
-      
-        <li role="presentation" class="doc-selected"><a href="#properties">Properties</a></li>
-      
-      
-         <li role="presentation" class="doc-selected"><a href="#attrs">Attributes</a></li>
-      
-      
-        <li role="presentation" class="doc-selected"><a href="#events">Events</a></li>
-      
-    </ul>
-    <div class="scroll-data"></div>
-  </section>
+  
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#property_defaultConfig"> <code>defaultConfig</code> </a> </td> <td> <p>Stores the default Stream / Bandwidth settings.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_Event"> <code>Event</code> </a> </td> <td> <p>Stores the list of available events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_isXDomainRequest"> <code>isXDomainRequest</code> </a> </td> <td> <p>The flag to check if request should use XDomainRequest.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_parseAudioConfig"> <code>parseAudioConfig</code> </a> </td> <td> <p>Parses the audio configuration for the getUserMedia constraints.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_parseBandwidthConfig"> <code>parseBandwidthConfig</code> </a> </td> <td> <p>Parses the bandwidth configuration.</p>
+<ul>
+<li>In low-bandwidth environment, it&#39;s mostly managed by the browser.
+However, this option enables you to set low bandwidth for high-bandwidth
+environment whichever way is possible.</li>
+</ul>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_parseMutedConfig"> <code>parseMutedConfig</code> </a> </td> <td> <p>Parses the stream muted configuration.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_parseVideoConfig"> <code>parseVideoConfig</code> </a> </td> <td> <p>Parses the video configuration for the getUserMedia constraints.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_protocol"> <code>protocol</code> </a> </td> <td> <p>The protocol the request uses to connect to.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_SDP.addStereo"> <code>SDP.addStereo</code> </a> </td> <td> <p>Enables the stereo feature if OPUS is enabled.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_SDP.configure"> <code>SDP.configure</code> </a> </td> <td> <p>Modifies a local session description with the configuration provided</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_SDP.find"> <code>SDP.find</code> </a> </td> <td> <p>Finds a line in the sdp based on the condition provided</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_SDP.removeH264Support"> <code>SDP.removeH264Support</code> </a> </td> <td> <p>Removes the H264 preference in sdp because other browsers does not support it yet.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_SDP.setBitrate"> <code>SDP.setBitrate</code> </a> </td> <td> <p>Sets the audio, video and DataChannel data bitrate in the sdp.</p>
+<ul>
+<li>In low-environment cases, bandwidth is managed by the browsers
+and the quality of the resolution or audio may change to suit.</li>
+</ul>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_SDP.setResolution"> <code>SDP.setResolution</code> </a> </td> <td> <p>Set video stream resolution in the sdp.</p>
+<ul>
+<li>As noted, this is not working.</li>
+</ul>
+ </td> </tr>
+        
+          <tr> <td> <a href="#property_server"> <code>server</code> </a> </td> <td> <p>The api server.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Attributes</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#attr_globals"> <code>globals</code> </a> </td> <td> <p>Stores the preferences shared across classes.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_Request"> <code>Request</code> </a> </td> <td> <p>Handles the XMLHttpRequest and API function calls.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_StreamParser"> <code>StreamParser</code> </a> </td> <td> <p>Handles the parsing of Stream / Bandwidth settings.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_StreamTrackList"> <code>StreamTrackList</code> </a> </td> <td> <p>Stores the list of available StreamTrackList.</p>
+<ul>
+<li>This is not supported in Firefox yet, but you can select the tracklist
+in Firefox when getUserMedia is invoked.</li>
+</ul>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Events</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#event_candidateGenerationState"> <code>candidateGenerationState</code> </a> </td> <td> <p>Event fired when an ICE gathering state has changed.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_channelClose"> <code>channelClose</code> </a> </td> <td> <p>Event fired when the socket connection to the signaling
+server has closed.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_channelError"> <code>channelError</code> </a> </td> <td> <p>Event fired when the socket connection has occurred an error.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_channelMessage"> <code>channelMessage</code> </a> </td> <td> <p>Event fired when the socket connection received a message
+from the signaling server.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_channelOpen"> <code>channelOpen</code> </a> </td> <td> <p>Event fired when the socket connection to the signaling
+server is open.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_channelRetry"> <code>channelRetry</code> </a> </td> <td> <p>Event fired when the socket re-tries to connection with fallback ports.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_dataChannelState"> <code>dataChannelState</code> </a> </td> <td> <p>Event fired when a peer&#39;s datachannel state has changed.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_dataTransferState"> <code>dataTransferState</code> </a> </td> <td> <p>Event fired when a data transfer state has changed.</p>
+<ul>
+<li>Note that <u>transferInfo.data</u> sends the blob data, and
+no longer a blob url.</li>
+</ul>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_handshakeProgress"> <code>handshakeProgress</code> </a> </td> <td> <p>Event fired when a peer&#39;s handshake progress has changed.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_incomingMessage"> <code>incomingMessage</code> </a> </td> <td> <p>Event fired when a message being broadcasted is received.</p>
+<ul>
+<li>This is changed from <b>chatMessageReceived</b>,
+<b>privateMessage</b> and <b>publicMessage</b> event.</li>
+<li>Note that <b>chatMessageReceived</b>, <b>privateMessage</b>
+and <b>publicMessage</b> is removed from the specs.</li>
+</ul>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_incomingStream"> <code>incomingStream</code> </a> </td> <td> <p>Event fired when a remote stream has become available.</p>
+<ul>
+<li>This occurs after the user joins the room.</li>
+<li>This is changed from <b>addPeerStream</b> event.</li>
+<li>Note that <b>addPeerStream</b> is removed from the specs.</li>
+<li>There has been a documentation error whereby the stream it is
+supposed to be (stream, peerId, isSelf), but instead is received
+as (peerId, stream, isSelf) in 0.5.0.</li>
+</ul>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_mediaAccessError"> <code>mediaAccessError</code> </a> </td> <td> <p>Event fired when webcam or microphone media access fails.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_mediaAccessRequired"> <code>mediaAccessRequired</code> </a> </td> <td> <p>Event fired when it&#39;s required to have audio or video access.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_mediaAccessStopped"> <code>mediaAccessStopped</code> </a> </td> <td> <p>Event fired when media access to MediaStream has stopped.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_mediaAccessSuccess"> <code>mediaAccessSuccess</code> </a> </td> <td> <p>Event fired when webcam or microphone media acces passes.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_peerConnectionHealth"> <code>peerConnectionHealth</code> </a> </td> <td> <p>Event fired when a peer connection health has changed.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_peerConnectionState"> <code>peerConnectionState</code> </a> </td> <td> <p>Event fired when a peer Connection state has changed.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_peerJoined"> <code>peerJoined</code> </a> </td> <td> <p>Event fired when a peer joins the room.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_peerLeft"> <code>peerLeft</code> </a> </td> <td> <p>Event fired when a peer leaves the room</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_peerRestart"> <code>peerRestart</code> </a> </td> <td> <p>Event fired when a peer&#39;s connection is restarted.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_peerUpdated"> <code>peerUpdated</code> </a> </td> <td> <p>Event fired when a peer information is updated.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_presenceChanged"> <code>presenceChanged</code> </a> </td> <td> <p>Event fired when a peer joins the room</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_readyStateChange"> <code>readyStateChange</code> </a> </td> <td> <p>Event fired whether the room is ready for use.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_roomLock"> <code>roomLock</code> </a> </td> <td> <p>Event fired when connected to a room and the lock status has changed.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_socketError"> <code>socketError</code> </a> </td> <td> <p>Event fired when the socket connection failed connecting.</p>
+<ul>
+<li>The difference between this and <b>channelError</b> is that
+channelError triggers during the connection. This throws
+when connection failed to be established.</li>
+</ul>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_systemAction"> <code>systemAction</code> </a> </td> <td> <p>Event fired when the signaling server warns the user.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+  </table>
 </div>
-<br><br>
-<div class="page container">
-  <div id="index" class="api-class-tabpanel index">
-    <ul id="doc-type-select" class="nav nav-pills" role="tablist">
-      <li role="presentation" class="doc-type-select-public active">
-        <a>Developer <span class="doc-private-label">methods</span></a>
-      </li>
-      <li role="presentation" class="doc-type-select-private">
-        <a>Internal <span class="doc-private-label">methods</span></a>
-      </li>
-      <div class="nav-links pull-right">
-        <span><i class="fa fa-external-link"></i>&nbsp;&nbsp;Navigate to</span>
-        <ul>
-          <li> <a href="#attr__SIG_MESSAGE_TYPE"> <i class="fa fa-hand-o-right"></i>Signalling Handshake Messaging </a> </li>
-          <li> <a href="#attr__DC_PROTOCOL_TYPE"> <i class="fa fa-exchange"></i>Datachannel Transfer Protocol </a> </li>
+
+ 
+
+
+
+
+<div class="section code-section">
+  <h4>Attributes</h4>
+   <div id="attr_globals" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      globals
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Globals.js.html#l1"><code>source&#x2F;Globals.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Stores the preferences shared across classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">apiKey</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The developer API Key.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">region</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The regional server to connect to.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">defaultRoom</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The default room that joinRoom should connect to.</p>
+
+  </div>
+
+  
+</li> 
         </ul>
       </div>
-    </ul>
-    <div class="section-doc-group">
-      <h2 id="current-doc-selected-title">Methods</h2>
-      <div class="col-md-3">
-        <div></div>
-        <div class="list-group-o-wrapper">
-          <span class="title">Methods</span>
-          <div class="list-group-wrapper">
-            <div class="list-group ">
-              <a href="#method_Skylink" class="list-group-item code-menu-item constructor-item">
-                &nbsp;&nbsp;Skylink ()
-              </a>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor globals ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_Request" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Request
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Request.js.html#l1"><code>source&#x2F;Request.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles the XMLHttpRequest and API function calls.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Request ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_StreamParser" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      StreamParser
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_StreamParser.js.html#l1"><code>source&#x2F;StreamParser.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles the parsing of Stream / Bandwidth settings.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor StreamParser ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_StreamTrackList" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      StreamTrackList
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_StreamTrackList.js.html#l1"><code>source&#x2F;StreamTrackList.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Stores the list of available StreamTrackList.</p>
+<ul>
+<li>This is not supported in Firefox yet, but you can select the tracklist
+in Firefox when getUserMedia is invoked.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor StreamTrackList ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+--> 
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Properties</h4>
+   <div id="property_defaultConfig" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      defaultConfig
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_StreamParser.js.html#l8"><code>source&#x2F;StreamParser.js:8</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
               
-              
-                
-                  <a href="#property_defaultConfig" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;defaultConfig
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_Event" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;Event
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_isXDomainRequest" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;isXDomainRequest
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_parseAudioConfig" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;parseAudioConfig
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_parseBandwidthConfig" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;parseBandwidthConfig
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_parseMutedConfig" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;parseMutedConfig
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_parseVideoConfig" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;parseVideoConfig
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_protocol" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;protocol
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_SDP.addStereo" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;SDP.addStereo
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_SDP.configure" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;SDP.configure
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_SDP.find" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;SDP.find
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_SDP.removeH264Support" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;SDP.removeH264Support
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_SDP.setBitrate" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;SDP.setBitrate
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_SDP.setResolution" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;SDP.setResolution
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#property_server" class="list-group-item code-menu-item  private-property-item ">
-                    &nbsp;&nbsp;server
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-              
-              
-                
-                  <a href="#attr_globals" class="list-group-item code-menu-item  private-attr-item ">
-                    &nbsp;&nbsp;globals
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_Request" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;Request
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_StreamParser" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;StreamParser
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#attr_StreamTrackList" class="list-group-item code-menu-item attr-item ">
-                    &nbsp;&nbsp;StreamTrackList
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-              
-              
-                
-                  <a href="#event_candidateGenerationState" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;candidateGenerationState
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_channelClose" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;channelClose
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_channelError" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;channelError
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_channelMessage" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;channelMessage
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_channelOpen" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;channelOpen
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_channelRetry" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;channelRetry
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_dataChannelState" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;dataChannelState
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_dataTransferState" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;dataTransferState
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_handshakeProgress" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;handshakeProgress
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_incomingMessage" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;incomingMessage
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_incomingStream" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;incomingStream
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_mediaAccessError" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;mediaAccessError
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_mediaAccessRequired" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;mediaAccessRequired
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_mediaAccessStopped" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;mediaAccessStopped
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_mediaAccessSuccess" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;mediaAccessSuccess
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_peerConnectionHealth" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;peerConnectionHealth
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_peerConnectionState" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;peerConnectionState
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_peerJoined" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;peerJoined
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_peerLeft" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;peerLeft
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_peerRestart" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;peerRestart
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_peerUpdated" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;peerUpdated
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_presenceChanged" class="list-group-item code-menu-item  private-event-item ">
-                    &nbsp;&nbsp;presenceChanged
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_readyStateChange" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;readyStateChange
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_roomLock" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;roomLock
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_socketError" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;socketError
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-                  <a href="#event_systemAction" class="list-group-item code-menu-item event-item ">
-                    &nbsp;&nbsp;systemAction
-                    <span class="settings">
-                      
-                      
-                    </span>
-                  </a>
-                
-              
-            </div>
-          </div>
-          <div class="scroll-top">
-            <i class="fa fa-arrow-circle-o-up"></i>&nbsp;&nbsp;Scroll to top
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9 doc-content">
-        
-        
-        
-          <section id="properties">
-            
-              <div id="property_defaultConfig" class="code-item property item private-property-item ">
+    </blockquote>
+    <p><p>Stores the default Stream / Bandwidth settings.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for defaultConfig
+      
+    </pre>
+    </div>
+  </div>
+</div>
+<!--<div id="property_defaultConfig" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>defaultConfig</code></h3>
 
   
@@ -655,9 +727,56 @@
 
   
   <hr>
+</div>-->  <div id="property_Event" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Event
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l1"><code>source&#x2F;EventList.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+       
+      <p>
+        <em class="glyphicon glyphicon-lock" aria-hidden="true"></em> This method cannot be overwritten.
+      </p>
+        
+      <span class="label label-warning" title="This attribute is required for communication.">required</span>
+           
+    </blockquote>
+    <p><p>Stores the list of available events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for Event
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_Event" class="code-item property item private-property-item ">
+<!--<div id="property_Event" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>Event</code></h3>
 
   
@@ -723,9 +842,50 @@
 
   
   <hr>
+</div>-->  <div id="property_isXDomainRequest" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      isXDomainRequest
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Request.js.html#l17"><code>source&#x2F;Request.js:17</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The flag to check if request should use XDomainRequest.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for isXDomainRequest
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_isXDomainRequest" class="code-item property item private-property-item ">
+<!--<div id="property_isXDomainRequest" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>isXDomainRequest</code></h3>
 
   
@@ -789,9 +949,50 @@
 
   
   <hr>
+</div>-->  <div id="property_parseAudioConfig" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      parseAudioConfig
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_StreamParser.js.html#l44"><code>source&#x2F;StreamParser.js:44</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Parses the audio configuration for the getUserMedia constraints.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for parseAudioConfig
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_parseAudioConfig" class="code-item property item private-property-item ">
+<!--<div id="property_parseAudioConfig" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>parseAudioConfig</code></h3>
 
   
@@ -895,9 +1096,55 @@
 
   
   <hr>
+</div>-->  <div id="property_parseBandwidthConfig" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      parseBandwidthConfig
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_StreamParser.js.html#l162"><code>source&#x2F;StreamParser.js:162</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Parses the bandwidth configuration.</p>
+<ul>
+<li>In low-bandwidth environment, it&#39;s mostly managed by the browser.
+However, this option enables you to set low bandwidth for high-bandwidth
+environment whichever way is possible.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for parseBandwidthConfig
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_parseBandwidthConfig" class="code-item property item private-property-item ">
+<!--<div id="property_parseBandwidthConfig" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>parseBandwidthConfig</code></h3>
 
   
@@ -1006,9 +1253,50 @@ environment whichever way is possible.</li>
 
   
   <hr>
+</div>-->  <div id="property_parseMutedConfig" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      parseMutedConfig
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_StreamParser.js.html#l198"><code>source&#x2F;StreamParser.js:198</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Parses the stream muted configuration.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for parseMutedConfig
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_parseMutedConfig" class="code-item property item private-property-item ">
+<!--<div id="property_parseMutedConfig" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>parseMutedConfig</code></h3>
 
   
@@ -1112,9 +1400,50 @@ environment whichever way is possible.</li>
 
   
   <hr>
+</div>-->  <div id="property_parseVideoConfig" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      parseVideoConfig
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_StreamParser.js.html#l85"><code>source&#x2F;StreamParser.js:85</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Parses the video configuration for the getUserMedia constraints.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for parseVideoConfig
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_parseVideoConfig" class="code-item property item private-property-item ">
+<!--<div id="property_parseVideoConfig" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>parseVideoConfig</code></h3>
 
   
@@ -1218,9 +1547,50 @@ environment whichever way is possible.</li>
 
   
   <hr>
+</div>-->  <div id="property_protocol" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      protocol
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Request.js.html#l28"><code>source&#x2F;Request.js:28</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The protocol the request uses to connect to.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for protocol
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_protocol" class="code-item property item private-property-item ">
+<!--<div id="property_protocol" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>protocol</code></h3>
 
   
@@ -1284,9 +1654,50 @@ environment whichever way is possible.</li>
 
   
   <hr>
+</div>-->  <div id="property_SDP.addStereo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      SDP.addStereo
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SDP.js.html#l29"><code>source&#x2F;SDP.js:29</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Enables the stereo feature if OPUS is enabled.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for SDP.addStereo
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_SDP.addStereo" class="code-item property item private-property-item ">
+<!--<div id="property_SDP.addStereo" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>SDP.addStereo</code></h3>
 
   
@@ -1387,9 +1798,50 @@ environment whichever way is possible.</li>
 
   
   <hr>
+</div>-->  <div id="property_SDP.configure" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      SDP.configure
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SDP.js.html#l149"><code>source&#x2F;SDP.js:149</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Modifies a local session description with the configuration provided</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for SDP.configure
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_SDP.configure" class="code-item property item private-property-item ">
+<!--<div id="property_SDP.configure" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>SDP.configure</code></h3>
 
   
@@ -1490,9 +1942,50 @@ environment whichever way is possible.</li>
 
   
   <hr>
+</div>-->  <div id="property_SDP.find" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      SDP.find
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SDP.js.html#l2"><code>source&#x2F;SDP.js:2</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Finds a line in the sdp based on the condition provided</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for SDP.find
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_SDP.find" class="code-item property item private-property-item ">
+<!--<div id="property_SDP.find" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>SDP.find</code></h3>
 
   
@@ -1608,9 +2101,50 @@ environment whichever way is possible.</li>
 
   
   <hr>
+</div>-->  <div id="property_SDP.removeH264Support" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      SDP.removeH264Support
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SDP.js.html#l129"><code>source&#x2F;SDP.js:129</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Removes the H264 preference in sdp because other browsers does not support it yet.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for SDP.removeH264Support
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_SDP.removeH264Support" class="code-item property item private-property-item ">
+<!--<div id="property_SDP.removeH264Support" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>SDP.removeH264Support</code></h3>
 
   
@@ -1711,9 +2245,54 @@ environment whichever way is possible.</li>
 
   
   <hr>
+</div>-->  <div id="property_SDP.setBitrate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      SDP.setBitrate
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SDP.js.html#l59"><code>source&#x2F;SDP.js:59</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Sets the audio, video and DataChannel data bitrate in the sdp.</p>
+<ul>
+<li>In low-environment cases, bandwidth is managed by the browsers
+and the quality of the resolution or audio may change to suit.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for SDP.setBitrate
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_SDP.setBitrate" class="code-item property item private-property-item ">
+<!--<div id="property_SDP.setBitrate" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>SDP.setBitrate</code></h3>
 
   
@@ -1818,9 +2397,53 @@ and the quality of the resolution or audio may change to suit.</li>
 
   
   <hr>
+</div>-->  <div id="property_SDP.setResolution" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      SDP.setResolution
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SDP.js.html#l105"><code>source&#x2F;SDP.js:105</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Set video stream resolution in the sdp.</p>
+<ul>
+<li>As noted, this is not working.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for SDP.setResolution
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_SDP.setResolution" class="code-item property item private-property-item ">
+<!--<div id="property_SDP.setResolution" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>SDP.setResolution</code></h3>
 
   
@@ -1924,9 +2547,50 @@ and the quality of the resolution or audio may change to suit.</li>
 
   
   <hr>
+</div>-->  <div id="property_server" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      server
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Request.js.html#l8"><code>source&#x2F;Request.js:8</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The api server.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for server
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="property_server" class="code-item property item private-property-item ">
+<!--<div id="property_server" class="code-item property item private-property-item ">
   <h3 class="code-item-name"><code>server</code></h3>
 
   
@@ -1990,384 +2654,108 @@ and the quality of the resolution or audio may change to suit.</li>
 
   
   <hr>
+</div>--> 
 </div>
-            
-          </section>
-        
-        
-          <section id="attrs">
-            
-              <div id="attr_globals" class="code-item attr item private-attr-item ">
-  <a name="config_globals"></a> 
-  <h3 class="code-item-name"><code>globals</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b>JSON<b>}</b></span>
 
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
+
+
+
+
+<div class="section code-section">
+  <h4>Events</h4>
+   <div id="event_candidateGenerationState" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      candidateGenerationState
 
       
-
+        <span class="badge">Version 0.1.0</span>
       
-
-      
-
-      
-        <span class="label label-default" title="This attribute is private.">private</span>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
+    </h5>
           
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Globals.js.html#l1"><code>source&#x2F;Globals.js:1</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l100"><code>source&#x2F;EventList.js:100</code></a>
+    </p>
     
   </div>
 
-  <div class="code-item-description">
-    <p>Stores the preferences shared across classes.</p>
-
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when an ICE gathering state has changed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">state</code>
+    <span class="type"> : <em>type</em> String </span>
   </div>
 
-  
-
-  
-
-  
-    <div class="code-item-section">
-      <h4>Keys:</h4>
-
-      <ul class="params-list">
-      
-          <li class="param">
-            <code class="param-name">apiKey</code>
-            <span class="type"><b>{</b>String<b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The developer API Key.</p>
-
-            </div>
-
-            
-          </li>
-      
-          <li class="param">
-            <code class="param-name">region</code>
-            <span class="type"><b>{</b>String<b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The regional server to connect to.</p>
-
-            </div>
-
-            
-          </li>
-      
-          <li class="param">
-            <code class="param-name">defaultRoom</code>
-            <span class="type"><b>{</b>String<b>}</b></span>
-
-            
-            
-
-            <div class="param-description">
-                <p>The default room that joinRoom should connect to.</p>
-
-            </div>
-
-            
-          </li>
-      
-      </ul>
-    </div>
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_Request" class="code-item attr item attr-item ">
-  <a name="config_Request"></a> 
-  <h3 class="code-item-name"><code>Request</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
+  <blockquote>
     
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_Request.js.html#l1"><code>source&#x2F;Request.js:1</code></a>
-      </small>
     
 
     
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
+  </blockquote>
 
-  <div class="code-item-description">
-    <p>Handles the XMLHttpRequest and API function calls.</p>
+  <div class="description">
+    <p>The ice candidate generation state.
+  [Rel: Skylink.CANDIDATE_GENERATION_STATE]</p>
 
   </div>
 
   
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_StreamParser" class="code-item attr item attr-item ">
-  <a name="config_StreamParser"></a> 
-  <h3 class="code-item-name"><code>StreamParser</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_StreamParser.js.html#l1"><code>source&#x2F;StreamParser.js:1</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
   </div>
 
-  <div class="code-item-description">
-    <p>Handles the parsing of Stream / Bandwidth settings.</p>
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that had an ice candidate
+   generation state change.</p>
 
   </div>
 
   
-
-  
-
-  
-
-  
-
-  
-  <hr>
-</div>
-            
-              <div id="attr_StreamTrackList" class="code-item attr item attr-item ">
-  <a name="config_StreamTrackList"></a> 
-  <h3 class="code-item-name"><code>StreamTrackList</code></h3>
-  <span class="code-item-type"><i>Attribute Type</i>: <b>{</b><b>}</b></span>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_StreamTrackList.js.html#l1"><code>source&#x2F;StreamTrackList.js:1</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Stores the list of available StreamTrackList.</p>
-<ul>
-<li>This is not supported in Firefox yet, but you can select the tracklist
-in Firefox when getUserMedia is invoked.</li>
-</ul>
-
-  </div>
-
-  
-
-  
-
-  
-
-  
-    <div class="code-item-section">
-      <h4>Returns:</h4>
-
-      <div class="returns-description">
-        
-          
-            <span class="type"><b>{</b>JSON<b>}</b></span>:
-          
-          <p>Returns an array of audio and video tracks.</p>
-<ul>
-<li>audio: The audio track list.</li>
-<li>video: The video track list.</li>
-</ul>
-
-        
+</li> 
+        </ul>
       </div>
+      
     </div>
-  
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor candidateGenerationState ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
 
   
-  <hr>
-</div>
-            
-          </section>
-        
-        
-          <section id="events">
-            
-              <div id="event_candidateGenerationState" class="code-item attr item event-item ">
+-->
+<!--
+<div id="event_candidateGenerationState" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>candidateGenerationState</code></h3>
 
   <div class="code-item-properties">
@@ -2461,9 +2849,53 @@ in Firefox when getUserMedia is invoked.</li>
 
   
   <hr>
+</div>-->  <div id="event_channelClose" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      channelClose
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l20"><code>source&#x2F;EventList.js:20</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the socket connection to the signaling
+server has closed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor channelClose ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_channelClose" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_channelClose" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>channelClose</code></h3>
 
   <div class="code-item-properties">
@@ -2518,9 +2950,78 @@ server has closed.</p>
 
   
   <hr>
+</div>-->  <div id="event_channelError" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      channelError
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l39"><code>source&#x2F;EventList.js:39</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the socket connection has occurred an error.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> Object | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Error message or object thrown.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor channelError ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_channelError" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_channelError" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>channelError</code></h3>
 
   <div class="code-item-properties">
@@ -2597,9 +3098,78 @@ server has closed.</p>
 
   
   <hr>
+</div>-->  <div id="event_channelMessage" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      channelMessage
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l29"><code>source&#x2F;EventList.js:29</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the socket connection received a message
+from the signaling server.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+     
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor channelMessage ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_channelMessage" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_channelMessage" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>channelMessage</code></h3>
 
   <div class="code-item-properties">
@@ -2676,9 +3246,53 @@ from the signaling server.</p>
 
   
   <hr>
+</div>-->  <div id="event_channelOpen" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      channelOpen
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l11"><code>source&#x2F;EventList.js:11</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the socket connection to the signaling
+server is open.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor channelOpen ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_channelOpen" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_channelOpen" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>channelOpen</code></h3>
 
   <div class="code-item-properties">
@@ -2733,9 +3347,97 @@ server is open.</p>
 
   
   <hr>
+</div>-->  <div id="event_channelRetry" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      channelRetry
+
+      
+        <span class="badge">Version 0.5.6</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l48"><code>source&#x2F;EventList.js:48</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the socket re-tries to connection with fallback ports.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">fallbackType</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of fallback [Rel: Skylink.SOCKET_FALLBACK]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">currentAttempt</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The current attempt of the fallback re-try attempt.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor channelRetry ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_channelRetry" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_channelRetry" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>channelRetry</code></h3>
 
   <div class="code-item-properties">
@@ -2827,9 +3529,99 @@ server is open.</p>
 
   
   <hr>
+</div>-->  <div id="event_dataChannelState" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      dataChannelState
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l432"><code>source&#x2F;EventList.js:432</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a peer&#39;s datachannel state has changed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">state</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The datachannel state.
+  [Rel: Skylink.DATA_CHANNEL_STATE]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of peer that has a datachannel
+  state change.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor dataChannelState ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_dataChannelState" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_dataChannelState" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>dataChannelState</code></h3>
 
   <div class="code-item-properties">
@@ -2923,9 +3715,319 @@ server is open.</p>
 
   
   <hr>
+</div>-->  <div id="event_dataTransferState" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      dataTransferState
+
+      
+        <span class="badge">Version 0.4.1</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l444"><code>source&#x2F;EventList.js:444</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a data transfer state has changed.</p>
+<ul>
+<li>Note that <u>transferInfo.data</u> sends the blob data, and
+no longer a blob url.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">state</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The data transfer state.
+  [Rel: Skylink.DATA_TRANSFER_STATE]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">transferId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>TransferId of the data.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that has a data
+  transfer state change.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">transferInfo</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Data transfer information.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">percentage</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The percetange of data being
+  uploaded / downloaded.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">senderPeerId</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the sender.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The blob data. See the
+  <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL.createObjectURL">createObjectURL</a>
+  method on how you can convert the blob to a download link.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Data name.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">size</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Data size.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The error object.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Error message thrown.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">transferType</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is error from uploading or downloading.
+  [Rel: Skylink.DATA_TRANSFER_TYPE]</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor dataTransferState ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_dataTransferState" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_dataTransferState" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>dataTransferState</code></h3>
 
   <div class="code-item-properties">
@@ -3185,9 +4287,117 @@ no longer a blob url.</li>
 
   
   <hr>
+</div>-->  <div id="event_handshakeProgress" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      handshakeProgress
+
+      
+        <span class="badge">Version 0.3.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l88"><code>source&#x2F;EventList.js:88</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a peer&#39;s handshake progress has changed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">step</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The handshake progress step.
+  [Rel: Skylink.HANDSHAKE_PROGRESS]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer&#39;s handshake progress.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> Object | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Error message or object thrown.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor handshakeProgress ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_handshakeProgress" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_handshakeProgress" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>handshakeProgress</code></h3>
 
   <div class="code-item-properties">
@@ -3295,9 +4505,633 @@ no longer a blob url.</li>
 
   
   <hr>
+</div>-->  <div id="event_incomingMessage" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      incomingMessage
+
+      
+        <span class="badge">Version 0.5.2</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l348"><code>source&#x2F;EventList.js:348</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a message being broadcasted is received.</p>
+<ul>
+<li>This is changed from <b>chatMessageReceived</b>,
+<b>privateMessage</b> and <b>publicMessage</b> event.</li>
+<li>Note that <b>chatMessageReceived</b>, <b>privateMessage</b>
+and <b>publicMessage</b> is removed from the specs.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Message object that is received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">content</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Data that is broadcasted.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">senderPeerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the sender peer.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">targetPeerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId that is specifically
+  targeted to receive the message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isPrivate</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is data received a private message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isDataChannel</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is data received from a
+  data channel.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the sender peer.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerInfo</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s information.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">settings</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s stream settings.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's audio stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer has stereo
+  enabled or not.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution [Rel: Skylink.VIDEO_RESOLUTION]
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution height.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution minimum frame rate.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mediaStatus</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer stream status.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's audio
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's video
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s custom user data.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">agent</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s browser agent.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent name.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">version</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent version.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isSelf</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is the peer self.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor incomingMessage ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_incomingMessage" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_incomingMessage" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>incomingMessage</code></h3>
 
   <div class="code-item-properties">
@@ -3719,9 +5553,143 @@ and <b>publicMessage</b> is removed from the specs.</li>
 
   
   <hr>
+</div>-->  <div id="event_incomingStream" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      incomingStream
+
+      
+        <span class="badge">Version 0.5.5</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l330"><code>source&#x2F;EventList.js:330</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a remote stream has become available.</p>
+<ul>
+<li>This occurs after the user joins the room.</li>
+<li>This is changed from <b>addPeerStream</b> event.</li>
+<li>Note that <b>addPeerStream</b> is removed from the specs.</li>
+<li>There has been a documentation error whereby the stream it is
+supposed to be (stream, peerId, isSelf), but instead is received
+as (peerId, stream, isSelf) in 0.5.0.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that is sending the stream.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>MediaStream object.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isSelf</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is the peer self.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerInfo</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s information.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor incomingStream ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_incomingStream" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_incomingStream" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>incomingStream</code></h3>
 
   <div class="code-item-properties">
@@ -3851,9 +5819,78 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_mediaAccessError" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      mediaAccessError
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l146"><code>source&#x2F;EventList.js:146</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when webcam or microphone media access fails.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> Object | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Error object thrown.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor mediaAccessError ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_mediaAccessError" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_mediaAccessError" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>mediaAccessError</code></h3>
 
   <div class="code-item-properties">
@@ -3930,9 +5967,52 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_mediaAccessRequired" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      mediaAccessRequired
+
+      
+        <span class="badge">Version 0.5.5</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l164"><code>source&#x2F;EventList.js:164</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when it&#39;s required to have audio or video access.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor mediaAccessRequired ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_mediaAccessRequired" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_mediaAccessRequired" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>mediaAccessRequired</code></h3>
 
   <div class="code-item-properties">
@@ -3986,9 +6066,52 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_mediaAccessStopped" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      mediaAccessStopped
+
+      
+        <span class="badge">Version 0.5.6</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l172"><code>source&#x2F;EventList.js:172</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when media access to MediaStream has stopped.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor mediaAccessStopped ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_mediaAccessStopped" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_mediaAccessStopped" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>mediaAccessStopped</code></h3>
 
   <div class="code-item-properties">
@@ -4042,9 +6165,78 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_mediaAccessSuccess" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      mediaAccessSuccess
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l155"><code>source&#x2F;EventList.js:155</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when webcam or microphone media acces passes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>MediaStream object.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor mediaAccessSuccess ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_mediaAccessSuccess" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_mediaAccessSuccess" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>mediaAccessSuccess</code></h3>
 
   <div class="code-item-properties">
@@ -4121,9 +6313,99 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_peerConnectionHealth" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peerConnectionHealth
+
+      
+        <span class="badge">Version 0.5.5</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l124"><code>source&#x2F;EventList.js:124</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a peer connection health has changed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">health</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection health.
+  [Rel: Skylink.PEER_CONNECTION_HEALTH]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that had a peer connection health
+   change.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peerConnectionHealth ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_peerConnectionHealth" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peerConnectionHealth" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>peerConnectionHealth</code></h3>
 
   <div class="code-item-properties">
@@ -4217,9 +6499,99 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_peerConnectionState" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peerConnectionState
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l112"><code>source&#x2F;EventList.js:112</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a peer Connection state has changed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">state</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection state.
+  [Rel: Skylink.PEER_CONNECTION_STATE]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that had a peer connection state
+   change.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peerConnectionState ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_peerConnectionState" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peerConnectionState" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>peerConnectionState</code></h3>
 
   <div class="code-item-properties">
@@ -4313,9 +6685,497 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_peerJoined" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peerJoined
+
+      
+        <span class="badge">Version 0.5.2</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l180"><code>source&#x2F;EventList.js:180</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a peer joins the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that joined the room.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerInfo</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s information.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">settings</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s stream settings.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's audio stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer has stereo
+  enabled or not.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution [Rel: Skylink.VIDEO_RESOLUTION]
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution height.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution minimum frame rate.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mediaStatus</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer stream status.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's audio
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's video
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s custom user data.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">agent</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s browser agent.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent name.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">version</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent version.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isSelf</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is the peer self.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peerJoined ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_peerJoined" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peerJoined" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>peerJoined</code></h3>
 
   <div class="code-item-properties">
@@ -4635,9 +7495,497 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_peerLeft" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peerLeft
+
+      
+        <span class="badge">Version 0.5.2</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l284"><code>source&#x2F;EventList.js:284</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a peer leaves the room</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that left.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerInfo</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s information.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">settings</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s stream settings.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's audio stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer has stereo
+  enabled or not.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution [Rel: Skylink.VIDEO_RESOLUTION]
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution height.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution minimum frame rate.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mediaStatus</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer stream status.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's audio
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's video
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s custom user data.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">agent</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s browser agent.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent name.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">version</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent version.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isSelf</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is the peer self.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peerLeft ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_peerLeft" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peerLeft" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>peerLeft</code></h3>
 
   <div class="code-item-properties">
@@ -4957,9 +8305,441 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_peerRestart" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peerRestart
+
+      
+        <span class="badge">Version 0.5.5</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l215"><code>source&#x2F;EventList.js:215</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a peer&#39;s connection is restarted.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that is being restarted.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerInfo</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s information.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">settings</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s stream settings.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's audio stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer has stereo
+  enabled or not.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution [Rel: Skylink.VIDEO_RESOLUTION]
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution height.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution minimum frame rate.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mediaStatus</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer stream status.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's audio
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's video
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s custom user data.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">agent</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s browser agent.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent name.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">version</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent version.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isSelfInitiateRestart</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is it us who initiated the restart.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peerRestart ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_peerRestart" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peerRestart" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>peerRestart</code></h3>
 
   <div class="code-item-properties">
@@ -5279,9 +9059,497 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_peerUpdated" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peerUpdated
+
+      
+        <span class="badge">Version 0.5.2</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l249"><code>source&#x2F;EventList.js:249</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when a peer information is updated.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that had information updaed.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerInfo</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s information.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">settings</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s stream settings.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's audio stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer has stereo
+  enabled or not.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution [Rel: Skylink.VIDEO_RESOLUTION]
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution height.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution minimum frame rate.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mediaStatus</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer stream status.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's audio
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's video
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s custom user data.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">agent</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s browser agent.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent name.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">version</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent version.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isSelf</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is the peer self.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peerUpdated ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_peerUpdated" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peerUpdated" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>peerUpdated</code></h3>
 
   <div class="code-item-properties">
@@ -5601,9 +9869,82 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_presenceChanged" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      presenceChanged
+
+      
+        <span class="badge">Version 0.1.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l319"><code>source&#x2F;EventList.js:319</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Event fired when a peer joins the room</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">users</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The list of users</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor presenceChanged ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_presenceChanged" class="code-item attr item private-event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_presenceChanged" class="code-item attr item private-event-item ">
   <h3 class="code-item-name"><code>presenceChanged</code></h3>
 
   <div class="code-item-properties">
@@ -5684,9 +10025,166 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_readyStateChange" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      readyStateChange
+
+      
+        <span class="badge">Version 0.4.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l73"><code>source&#x2F;EventList.js:73</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired whether the room is ready for use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">readyState</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>[Rel: Skylink.READY_STATE_CHANGE]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Error object thrown.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">status</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Http status when retrieving information.
+  May be empty for other errors.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">content</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Error message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">errorCode</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Error code.
+  [Rel: Skylink.READY_STATE_CHANGE_ERROR]</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor readyStateChange ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_readyStateChange" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_readyStateChange" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>readyStateChange</code></h3>
 
   <div class="code-item-properties">
@@ -5829,9 +10327,517 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_roomLock" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      roomLock
+
+      
+        <span class="badge">Version 0.5.2</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l395"><code>source&#x2F;EventList.js:395</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when connected to a room and the lock status has changed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isLocked</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is the room locked.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>PeerId of the peer that is locking/unlocking
+  the room.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerInfo</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s information.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">settings</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s stream settings.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's audio stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer has stereo
+  enabled or not.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean | JSON </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream
+  settings.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution [Rel: Skylink.VIDEO_RESOLUTION]
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution height.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's video stream resolution minimum frame rate.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mediaStatus</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer stream status.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's audio
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = true</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    If peer's video
+  stream is muted.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s custom user data.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">agent</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Peer&#39;s browser agent.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent name.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">version</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Peer's browser agent version.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">isSelf</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>Is the peer self.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor roomLock ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_roomLock" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_roomLock" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>roomLock</code></h3>
 
   <div class="code-item-properties">
@@ -6167,9 +11173,122 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   
   <hr>
+</div>-->  <div id="event_socketError" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      socketError
+
+      
+        <span class="badge">Version 0.5.5</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l58"><code>source&#x2F;EventList.js:58</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the socket connection failed connecting.</p>
+<ul>
+<li>The difference between this and <b>channelError</b> is that
+channelError triggers during the connection. This throws
+when connection failed to be established.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">errorCode</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The error code.
+  [Rel: Skylink.SOCKET_ERROR]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> Integer | String | Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The reconnection attempt or error object.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">fallbackType</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of fallback [Rel: Skylink.SOCKET_FALLBACK]</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor socketError ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_socketError" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_socketError" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>socketError</code></h3>
 
   <div class="code-item-properties">
@@ -6282,9 +11401,118 @@ when connection failed to be established.</li>
 
   
   <hr>
+</div>-->  <div id="event_systemAction" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      systemAction
+
+      
+        <span class="badge">Version 0.5.1</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_EventList.js.html#l472"><code>source&#x2F;EventList.js:472</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the signaling server warns the user.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">action</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The action that is required for
+  the user to follow. [Rel: Skylink.SYSTEM_ACTION]</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The reason for the action.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">reason</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The reason why the action is given.
+  [Rel: Skylink.SYSTEM_ACTION_REASON]</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor systemAction ()
+      
+    </pre>
+    </div>
+  </div>
 </div>
-            
-              <div id="event_systemAction" class="code-item attr item event-item ">
+
+<!--
+
+  
+-->
+<!--
+<div id="event_systemAction" class="code-item attr item event-item ">
   <h3 class="code-item-name"><code>systemAction</code></h3>
 
   <div class="code-item-properties">
@@ -6393,16 +11621,11 @@ when connection failed to be established.</li>
 
   
   <hr>
-</div>
-            
-          </section>
-        
-      </div>
-    </div>
-  </div>
+</div>--> 
 </div>
 
-<!--
+
+  <!--
 
 
 
