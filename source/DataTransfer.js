@@ -33,6 +33,12 @@ function DataTransfer(channel, peerId, listener) {
     DOWNLOAD_COMPLETED: 'downloadCompleted'
   };
 
+  com.DATA_TRANSFER_DATA_TYPE = {
+    BINARY_STRING: 'binaryString',
+    ARRAY_BUFFER: 'arrayBuffer',
+    BLOB: 'blob'
+  };
+
   com._uploadDataTransfers = [];
 
   com._uploadDataSessions = [];
@@ -43,48 +49,53 @@ function DataTransfer(channel, peerId, listener) {
 
   com._dataTransfersTimeout = [];
   
-  com.dataHandler = function(dataString){
-    if (typeof dataString === 'string'){
+  /*//Overwrite previous handler
+  com.bind = function (bindChannel) {
+    bindChannel.onmessage = function (event) {
+      com.onMessage(bindChannel, event.data);
+    };
+  }; 
+
+  com.onMessage = function(bindChannel, data){
+    com._dataChannelProtocolHandler(data);
+  }*/
+
+  com.channel.RTCDataChannel.onmessage = function(event){
+    console.log('binding');
+    com._dataChannelProtocolHandler(event.data);
+  }
+
+  console.log(com.channel.RTCDataChannel.onmessage);
+
+  com._dataChannelProtocolHandler = function(dataString) {
+    // PROTOCOL ESTABLISHMENT
+    if (typeof dataString === 'string') {
       var data = {};
-      try{
+      try {
         data = JSON.parse(dataString);
-      }
-      catch(error){
-        listener('datatransfer:binary',{
-          id: com.id,
-          peerId: com.peerId,
-          data: dataString
-        });
-        com.DATAProtocolHandler(dataString);
+      } catch (error) {
+        com._DATAProtocolHandler(dataString,
+          com.DATA_TRANSFER_DATA_TYPE.BINARY_STRING);
         return;
       }
-
-      listener('datatransfer:generic',{
-        peerId: com.peerId,
-        data: data
-      });
-
-      switch(data.type){
-        case com._DC_PROTOCOL_TYPE.WRQ:
-          com.WRQProtocolHandler(data);
-          break;
-        case com._DC_PROTOCOL_TYPE.ACK:
-          com.ACKProtocolHandler(data);
-          break;
-        case com._DC_PROTOCOL_TYPE.ERROR:
-          com.ERRORProtocolHandler(data);
-          break;
-        case com._DC_PROTOCOL_TYPE.CANCEL:
-          com.CANCELProtocolHandler(data);
-          break;
-        case com._DC_PROTOCOL_TYPE.MESSAGE:
-          com.MESSAGEProtocolHandler(data);
-          break;
-        default:
-          listener('datatransfer:unsupported',{
-            peerId: com.peerId,
-            data: data
-          })
+      switch (data.type) {
+      case com._DC_PROTOCOL_TYPE.WRQ:
+        com.WRQProtocolHandler(data);
+        break;
+      case com._DC_PROTOCOL_TYPE.ACK:
+        com.ACKProtocolHandler(data);
+        break;
+      case com._DC_PROTOCOL_TYPE.ERROR:
+        com.ERRORProtocolHandler(data);
+        break;
+      case com._DC_PROTOCOL_TYPE.CANCEL:
+        com.CANCELProtocolHandler(data);
+        break;
+      case com._DC_PROTOCOL_TYPE.MESSAGE: // Not considered a protocol actually?
+        com.MESSAGEProtocolHandler(data);
+        break;
+      default:
+        console.error('Unsupported type: '+data.type);
       }
     }
   };
@@ -134,13 +145,6 @@ function DataTransfer(channel, peerId, listener) {
   com.WRQProtocolHandler = function(data){
     var transferId = com.peerId + com.DATA_TRANSFER_TYPE.DOWNLOAD +
       (((new Date()).toISOString().replace(/-/g, '').replace(/:/g, ''))).replace('.', '');
-
-    listener('datatransfer:wrq',{
-      transferId: transferId,
-      peerId: com.peerId,
-      data: data
-    });
-
     var name = data.name;
     var binarySize = data.size;
     var expectedSize = data.chunkSize;
@@ -154,6 +158,16 @@ function DataTransfer(channel, peerId, listener) {
       chunkSize: expectedSize,
       timeout: timeout
     };
+    console.log('wrq here');
+    listener('datatransfer:uploadrequest',{
+      peerId: com.peerId,
+      transferId: transferId,
+      name: name,
+      size: binarySize,
+      expectedSize: expectedSize,
+      timeout: timeout,
+      dataTransfer: com
+    });
   };
 
   com.ACKProtocolHandler = function(data){
@@ -215,6 +229,8 @@ function DataTransfer(channel, peerId, listener) {
 
   com.ERRORProtocolHandler = function(data){
     var isUploader = data.isUploadError;
+    console.log(com.peerId);
+    console.log(com._uploadDataSessions);
     var transferId = (isUploader) ? com._uploadDataSessions[com.peerId].transferId :
       com._downloadDataSessions[com.peerId].transferId;
     listener('datatransfer:error',{
@@ -309,7 +325,7 @@ function DataTransfer(channel, peerId, listener) {
 
       com.channel.send({
         type: com._DC_PROTOCOL_TYPE.ACK,
-        sender: null
+        sender: null,
         ackN: transferStatus.ackN
       });
 
@@ -352,7 +368,7 @@ function DataTransfer(channel, peerId, listener) {
     dataInfo.transferId = com.DATA_TRANSFER_TYPE.UPLOAD +
       (((new Date()).toISOString().replace(/-/g, '').replace(/:/g, ''))).replace('.', '');
     console.log('Sending blob data');
-    com.sendBlobDataToPeer(data, dataInfo, targetPeerId, true);
+    com.sendBlobDataToPeer(data, dataInfo, true);
 
     listener('datatransfer:uploadstarted',{
       peerId: com.peerId,
@@ -402,6 +418,7 @@ function DataTransfer(channel, peerId, listener) {
       transferId: dataInfo.transferId,
       timeout: dataInfo.timeout
     };
+    console.log(com.channel);
     com.channel.send({
       type: com._DC_PROTOCOL_TYPE.WRQ,
       //sender: this._user.sid,
@@ -410,7 +427,7 @@ function DataTransfer(channel, peerId, listener) {
       size: binarySize,
       chunkSize: chunkSize,
       timeout: dataInfo.timeout,
-      target: com.peerId
+      target: com.peerId,
       isPrivate: !!isPrivate
     });
     com._setDataChannelTimeout(dataInfo.timeout, true);
@@ -465,7 +482,7 @@ function DataTransfer(channel, peerId, listener) {
         });
       } else {
         listener('datatransfer:error',{
-          peerId: com.peerId
+          peerId: com.peerId,
           transferId: dataInfo.transferId,
           name: dataInfo.name,
           message: 'Unable to cancel upload transfer. There is ' +
@@ -493,7 +510,7 @@ function DataTransfer(channel, peerId, listener) {
         });
       } else {
         listener('datatransfer:error',{
-          peerId: com.peerId
+          peerId: com.peerId,
           transferId: dataInfo.transferId,
           name: dataInfo.name,
           message: 'Unable to cancel download transfer. There is ' +
@@ -503,7 +520,6 @@ function DataTransfer(channel, peerId, listener) {
       }
     }
   };
-
 }
 
 

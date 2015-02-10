@@ -292,7 +292,8 @@ function Peer(config, listener) {
   com.onDataChannel = function (event) {
     var channel = new DataChannel(event.channel || event, com.id, listener);
     
-    com.RTCPeerConnection.channels['main'] = channel;
+    //com.RTCPeerConnection.channels['main'] = channel;
+    com.RTCPeerConnection.channels[channel.id] = channel;
 
     if (channel.id === 'main') {
       //com.datamessenger = new DataMessage(channel, listener);
@@ -572,9 +573,26 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.transferData = function (data) {
-    var channel = com.RTCPeerConnection.createDataChannel(fn.generateUID());
-    
-    //com.datatransfers[channel.label] = new DataTransfer(channel, data, listener);
+    var dt = 0;
+    for (var channel in com.RTCPeerConnection.channels){
+      if (com.RTCPeerConnection.channels.hasOwnProperty(channel) /*&& channel.indexOf('transfer_')>-1*/){
+        dt = new DataTransfer(com.RTCPeerConnection.channels[channel], com.userId, listener);
+        dt.sendBlobData(data,{
+          name: data.name,
+          size: data.size
+        });
+        return;
+      }
+    }
+
+    /*var id = 'transfer_'+fn.generateUID();
+    var dc = new DataChannel(com.RTCPeerConnection.createDataChannel(fn.generateUID()) , com.id , listener);
+    com.RTCPeerConnection.channels[id] = dc;
+    var dt = new DataTransfer(dc, com.id, listener);
+    dt.sendBlobData(data,{
+      name: data.name,
+      size: data.size
+    });*/
   };
   
   /**
@@ -632,6 +650,7 @@ function Peer(config, listener) {
   
   com.sendMessage = function(message){
     if (com.RTCPeerConnection.channels['main']){
+      console.log(com.RTCPeerConnection.channels['main']);
       com.RTCPeerConnection.channels['main'].send(message);
     }
   }

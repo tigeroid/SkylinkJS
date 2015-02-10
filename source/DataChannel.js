@@ -63,7 +63,6 @@ function DataChannel(channel, peerId, listener) {
       bindChannel.onopen = function () {
         com.onOpen(bindChannel);
       };
-    
     } else {
       com.onOpen(bindChannel);
     }
@@ -78,10 +77,13 @@ function DataChannel(channel, peerId, listener) {
     };
 
     bindChannel.onmessage = function (event) {
+      //console.log('xbinding');
       com.onMessage(bindChannel, event.data);
     };
     
     com.RTCDataChannel = bindChannel;
+
+    console.log(com.RTCDataChannel.onmessage);
 
     fn.runSync(function () {
       listener('datachannel:start', {
@@ -148,26 +150,7 @@ function DataChannel(channel, peerId, listener) {
       peerId: com.peerId,
       data: data
     });
-    /*com.dataHandler(data);*/
   };
-
-  /*com.dataHandler = function(dataString, dataTransfer){
-    if (typeof dataString === 'string'){
-      var data = {};
-      try{
-        data = JSON.parse(dataString);
-      }
-      catch(error){
-        listener('datachannel:binary',{
-          id: com.id,
-          peerId: com.peerId,
-          data: dataString
-        });
-        dataTransfer
-      }
-    }
-
-  }*/
 
   com.close = function(){
     channel.close();

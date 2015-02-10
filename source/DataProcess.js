@@ -27,7 +27,7 @@ var DataProcess = {
     return chunksArray;
   },
 
-  unchunk: function (data) {
+  unchunk: function (dataURL) {
     var byteString = atob(dataURL.replace(/\s\r\n/g, ''));
     // write the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
