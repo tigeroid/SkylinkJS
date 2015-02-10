@@ -45,10 +45,6 @@
     </div>
   </div>
 
-  <div id="container">
-    <div id="infobox"></div>
-  </div>
-
   <div class="col-md-4">
     <select id="videoTrackList"></select>
     <select id="audioTrackList"></select><br><br>
@@ -124,7 +120,7 @@
       }
 
       if (event === 'datachannel:message'){
-        console.log('->'+data.data);
+        addMessage(data.data);
       }
 
       if (event === 'datatransfer:uploadrequest'){
@@ -133,12 +129,10 @@
       }
 
       if (event === 'datatransfer:downloadcompleted'){
-        console.log('done download');
-        var infobox = document.getElementById('infobox');
+        var infobox = document.getElementById('output');
         var transferStatus = document.createElement('a');
         transferStatus.innerHTML = 'Download';
         transferStatus.href = URL.createObjectURL(data.data);
-        console.log(transferStatus.href);
         infobox.appendChild(transferStatus);
       }
     }
@@ -208,10 +202,9 @@
       });
     };
 
-    function addMessage(message, className) {
-      var infobox = document.getElementById('infobox'),
+    function addMessage(message) {
+      var infobox = document.getElementById('output'),
       div = document.createElement('div');
-      div.className = className;
       div.innerHTML = message;
       infobox.appendChild(div);
     }
