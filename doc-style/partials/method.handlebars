@@ -56,85 +56,9 @@
     {{/if}}
   </div>
 
+  {{>supported}}
   <div class="panel-body">
-    <blockquote>
-      {{#if deprecated}}
-          <p> 
-            <em class="glyphicon glyphicon-alert" aria-hidden="true"></em> This method is deprecated. Please refrain from using this as this would be unsupported in future releases.
-            {{#if deprecationMessage}}
-              <br><br><small>{{deprecationMessage}}</small>
-            {{/if}}
-          </p>
-        {{/if}}
-
-        {{#if support}}
-          <p>
-            <em class="glyphicon glyphicon-check" aria-hidden="true"></em> {{{support}}}
-          </p>
-          {{else}}
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        {{/if}}
-
-        {{#if access}}
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: {{{access}}}
-          </p>
-        {{/if}}
-
-        {{#if final}}
-          <p> 
-            <em class="glyphicon glyphicon-lock" aria-hidden="true"></em> This method cannot be overwritten.
-          </p>
-        {{/if}}
-
-        {{#if overwritten_from}}
-          <p> 
-            <em class="glyphicon glyphicon-edit" aria-hidden="true"></em> This method overwrites inherited class method.
-          </p>
-        {{/if}}
-
-        {{#if static}}
-          <p> 
-            <em class="glyphicon glyphicon-arrow-left" aria-hidden="true"></em> This method is a static method
-          </p>
-        {{/if}}
-
-        {{#if chainable}}
-          <p> 
-            <em class="glyphicon glyphicon-refresh" aria-hidden="true"></em> This method is chainable.
-          </p>
-        {{/if}}
-
-        {{#if async}}
-          <p> 
-            <em class="glyphicon glyphicon-random" aria-hidden="true"></em> This method invokes asycronously.
-          </p>
-        {{/if}}
-    </blockquote>
+    {{>settings}}
     <p>{{{methodDescription}}}</p>
   </div>
   <div class="panel-body">

@@ -31,7 +31,6 @@
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
   <img src="../assets/img/icons/menu.png">
-  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
 <div id="sidebar-wrapper">
@@ -42,12 +41,16 @@
         <small>Version: 0.5.7</small>
       </a>
     </li>
-    <hr>
+    <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
+    <li><a href="./testing.html">Running Tests</a></li>
+    <li class="header">Classes</li>
     
       <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
       <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Messaging.html"> Messaging </a></li>
     
       <li><a href="../classes/Peer.html"> Peer </a></li>
     
@@ -101,132 +104,134 @@
 
 <div class="section code-section">
   <h4>Table of Contents</h4>
-  <table class="table table-bordered">
-    
-      <thead>
-        <tr> <th colspan="2">Constructor</th> </tr>
-      </thead>
-      <tbody>
-        <tr> <td> <a href="#constructor"> <code>DataChannel()</code> </a> </td> <td> Instantiate a DataChannel class constructor. </td> </tr>
-      </tbody>
-    
-  
-    
-      <thead>
-        <tr> <th colspan="2">Methods</th> </tr>
-      </thead>
-      <tbody>
-        
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      
+        <thead>
+          <tr> <th colspan="2">Constructor</th> </tr>
+        </thead>
+        <tbody>
+          <tr> <td> <a href="#constructor"> <code>DataChannel()</code> </a> </td> <td> Instantiate a DataChannel class constructor. </td> </tr>
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Methods</th> </tr>
+        </thead>
+        <tbody>
           
-            <tr> <td> <a href="#method_bind"> <code>bind()</code> </a> </td> <td> <p>Binds events to RTCDataChannel object.</p>
+            
+              <tr> <td> <a href="#method_bind"> <code>bind()</code> </a> </td> <td> <p>Binds events to RTCDataChannel object.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+ </td> </tr>
+            
+          
+            
+
+            
+          
+            
+
+            
+          
+            
+
+            
+          
+            
+              <tr> <td> <a href="#method_send"> <code>send()</code> </a> </td> <td> <p>Sends data over the datachannel.</p>
+ </td> </tr>
+            
+          
+        </tbody>
+      
+
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Attributes</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#attr_DataChannelEventResponseHandler"> <code>DataChannelEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+            <tr> <td> <a href="#attr_DataChannelHandler"> <code>DataChannelHandler</code> </a> </td> <td> <p>Handles the datachannel class events.</p>
  </td> </tr>
           
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-            <tr> <td> <a href="#method_send"> <code>send()</code> </a> </td> <td> <p>Sends data over the datachannel.</p>
+            <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The datachannel label.</p>
  </td> </tr>
           
-        
-      </tbody>
-    
-    
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Attributes</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#attr_DataChannelEventResponseHandler"> <code>DataChannelEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_DataChannelHandler"> <code>DataChannelHandler</code> </a> </td> <td> <p>Handles the datachannel class events.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The datachannel label.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_RTCDataChannel"> <code>RTCDataChannel</code> </a> </td> <td> <p>The DataChannel object.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The type of datachannel</p>
- </td> </tr>
-        
-      </tbody>
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Events</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#event_datachannel:connect"> <code>datachannel:connect</code> </a> </td> <td> <p>Event fired when the datachannel has opened.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#event_datachannel:disconnect"> <code>datachannel:disconnect</code> </a> </td> <td> <p>Event fired when the datachannel has closed.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#event_datachannel:error"> <code>datachannel:error</code> </a> </td> <td> <p>Event fired when the datachannel has an exception occurred.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#event_datachannel:message"> <code>datachannel:message</code> </a> </td> <td> <p>Event fired when the datachannel receives data.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#event_datachannel:start"> <code>datachannel:start</code> </a> </td> <td> <p>Event fired when the datachannel object is ready to use.</p>
- </td> </tr>
-        
-      </tbody>
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Event Handlers</th> </tr>
-      </thead>
-      <tbody>
-        
-          
-        
-          
-        
-          
-            <tr> <td> <a href="#method_onclose"> <code>onclose</code> </a> </td> <td> <p>Function to subscribe to when datachannel has closed.</p>
+            <tr> <td> <a href="#attr_RTCDataChannel"> <code>RTCDataChannel</code> </a> </td> <td> <p>The DataChannel object.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_onerror"> <code>onerror</code> </a> </td> <td> <p>Function to subscribe to when datachannel has an error.</p>
+            <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The type of datachannel</p>
  </td> </tr>
           
-        
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Events</th> </tr>
+        </thead>
+        <tbody>
           
-            <tr> <td> <a href="#method_onopen"> <code>onopen</code> </a> </td> <td> <p>Function to subscribe to when datachannel has opened.</p>
+            <tr> <td> <a href="#event_datachannel:connect"> <code>datachannel:connect</code> </a> </td> <td> <p>Event fired when the datachannel has opened.</p>
  </td> </tr>
           
-        
+            <tr> <td> <a href="#event_datachannel:disconnect"> <code>datachannel:disconnect</code> </a> </td> <td> <p>Event fired when the datachannel has closed.</p>
+ </td> </tr>
           
-        
-      </tbody>
-    
-  </table>
+            <tr> <td> <a href="#event_datachannel:error"> <code>datachannel:error</code> </a> </td> <td> <p>Event fired when the datachannel has an exception occurred.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_datachannel:message"> <code>datachannel:message</code> </a> </td> <td> <p>Event fired when the datachannel receives data.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_datachannel:start"> <code>datachannel:start</code> </a> </td> <td> <p>Event fired when the datachannel object is ready to use.</p>
+ </td> </tr>
+          
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Event Handlers</th> </tr>
+        </thead>
+        <tbody>
+          
+            
+          
+            
+          
+            
+              <tr> <td> <a href="#handler_onclose"> <code>onclose</code> </a> </td> <td> <p>Function to subscribe to when datachannel has closed.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onerror"> <code>onerror</code> </a> </td> <td> <p>Function to subscribe to when datachannel has an error.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onopen"> <code>onopen</code> </a> </td> <td> <p>Function to subscribe to when datachannel has opened.</p>
+ </td> </tr>
+            
+          
+            
+          
+        </tbody>
+      
+    </table>
+  </div>
 </div>
 
 
@@ -323,20 +328,6 @@
         </ul>
       </div>
       
-
-      <div class="code-section-item">
-        <h6>Returns:</h6>
-        <ul>
-          
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-          
-        </ul>
-      </div>
     </div>
 
 
@@ -385,59 +376,65 @@
 
     
       <p>
-        Defined in: <a href="../files/source_DataChannel.js.html#l87"><code>source&#x2F;DataChannel.js:87</code></a>
+        Defined in: <a href="../files/source_DataChannel.js.html#l90"><code>source&#x2F;DataChannel.js:90</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Binds events to RTCDataChannel object.</p>
 </p>
   </div>
@@ -535,59 +532,65 @@
 
     
       <p>
-        Defined in: <a href="../files/source_DataChannel.js.html#l74"><code>source&#x2F;DataChannel.js:74</code></a>
+        Defined in: <a href="../files/source_DataChannel.js.html#l77"><code>source&#x2F;DataChannel.js:77</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>The handler that manages all triggers or relaying events.</p>
 </p>
   </div>
@@ -713,59 +716,65 @@
 
     
       <p>
-        Defined in: <a href="../files/source_DataChannel.js.html#l144"><code>source&#x2F;DataChannel.js:144</code></a>
+        Defined in: <a href="../files/source_DataChannel.js.html#l147"><code>source&#x2F;DataChannel.js:147</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Sends data over the datachannel.</p>
 </p>
   </div>
@@ -851,14 +860,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles all the events to respond to other parent classes.</p>
 </p>
   </div>
@@ -898,14 +925,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles the datachannel class events.</p>
 </p>
   </div>
@@ -938,21 +983,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_DataChannel.js.html#l16"><code>source&#x2F;DataChannel.js:16</code></a>
+      Defined in: <a href="../files/source_DataChannel.js.html#l19"><code>source&#x2F;DataChannel.js:19</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The datachannel label.</p>
 </p>
   </div>
@@ -985,21 +1048,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_DataChannel.js.html#l36"><code>source&#x2F;DataChannel.js:36</code></a>
+      Defined in: <a href="../files/source_DataChannel.js.html#l39"><code>source&#x2F;DataChannel.js:39</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The DataChannel object.</p>
 </p>
   </div>
@@ -1032,21 +1113,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_DataChannel.js.html#l26"><code>source&#x2F;DataChannel.js:26</code></a>
+      Defined in: <a href="../files/source_DataChannel.js.html#l29"><code>source&#x2F;DataChannel.js:29</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The type of datachannel</p>
 </p>
   </div>
@@ -1108,45 +1207,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_DataChannel.js.html#l56"><code>source&#x2F;DataChannel.js:56</code></a>
+        Defined in: <a href="../files/source_DataChannel.js.html#l59"><code>source&#x2F;DataChannel.js:59</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-      
-        <p>
-          <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-          <div class="table-responsive">
-            <table class="table table-condensed table-browsers">
-              <thead>
-                <tr> 
-                  <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                  <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                  <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                  <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                  <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td> 35+ </td>
-                  <td> 30+ </td>
-                  <td> 21+ </td>
-                  <td> 7+ </td>
-                  <td> 11+ </td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-        </p>
-      
-
-      
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when datachannel has closed.</p>
 </p>
   </div>
@@ -1202,45 +1317,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_DataChannel.js.html#l65"><code>source&#x2F;DataChannel.js:65</code></a>
+        Defined in: <a href="../files/source_DataChannel.js.html#l68"><code>source&#x2F;DataChannel.js:68</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-      
-        <p>
-          <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-          <div class="table-responsive">
-            <table class="table table-condensed table-browsers">
-              <thead>
-                <tr> 
-                  <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                  <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                  <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                  <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                  <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td> 35+ </td>
-                  <td> 30+ </td>
-                  <td> 21+ </td>
-                  <td> 7+ </td>
-                  <td> 11+ </td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-        </p>
-      
-
-      
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when datachannel has an error.</p>
 </p>
   </div>
@@ -1296,45 +1427,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_DataChannel.js.html#l47"><code>source&#x2F;DataChannel.js:47</code></a>
+        Defined in: <a href="../files/source_DataChannel.js.html#l50"><code>source&#x2F;DataChannel.js:50</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-      
-        <p>
-          <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-          <div class="table-responsive">
-            <table class="table table-condensed table-browsers">
-              <thead>
-                <tr> 
-                  <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                  <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                  <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                  <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                  <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td> 35+ </td>
-                  <td> 30+ </td>
-                  <td> 21+ </td>
-                  <td> 7+ </td>
-                  <td> 11+ </td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-        </p>
-      
-
-      
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when datachannel has opened.</p>
 </p>
   </div>
@@ -1396,10 +1543,28 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the datachannel has opened.</p>
 </p>
   </div>
@@ -1495,10 +1660,28 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the datachannel has closed.</p>
 </p>
   </div>
@@ -1594,10 +1777,28 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the datachannel has an exception occurred.</p>
 </p>
   </div>
@@ -1742,10 +1943,28 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the datachannel receives data.</p>
 </p>
   </div>
@@ -1890,10 +2109,28 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the datachannel object is ready to use.</p>
 </p>
   </div>
@@ -1991,6 +2228,9 @@
   </div>
   <!-- /#page-content-wrapper -->
 
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>

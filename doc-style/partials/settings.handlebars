@@ -1,0 +1,74 @@
+<blockquote>
+  {{#if default}}
+    <div class="code-item-section">
+      <strong>Default value:</strong>
+      <code class="prettyprint">{{default}}</code>
+    </div>
+  {{/if}} 
+  
+  {{#if deprecated}}
+    <p>
+      <em class="glyphicon glyphicon-alert" aria-hidden="true"></em> This is deprecated. Please refrain from using this as this would be unsupported in future releases. 
+      {{#if deprecationMessage}}
+        <br>
+        <br><small>{{deprecationMessage}}</small>
+        
+      {{/if}}
+    </p>
+  {{/if}} 
+  
+  {{#if access}}
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: {{{access}}}
+    </p>
+  {{/if}} 
+  
+  {{#if final}}
+    <p>
+      <em class="glyphicon glyphicon-lock" aria-hidden="true"></em> This cannot be overwritten.
+    </p>
+  {{/if}} 
+  
+  {{#if multiple}}
+    <p>
+      <em class="glyphicon glyphicon-th" aria-hidden="true"></em> This may occur more than one time.
+    </p>
+  {{/if}} 
+  
+  {{#if required}}
+    <p>
+      <em class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></em> This is required for other functionalities to work.
+    </p>
+  {{/if}}  
+  
+  {{#if static}}
+    <p>
+      <em class="glyphicon glyphicon-arrow-left" aria-hidden="true"></em> This is static.
+    </p>
+  
+  {{/if}} 
+  
+  {{#if chainable}}
+    <p>
+      <em class="glyphicon glyphicon-refresh" aria-hidden="true"></em> This method is chainable.
+    </p>
+  {{/if}} 
+  
+  {{#if readonly}}
+    <p>
+      <em class="glyphicon glyphicon-minus-sign" aria-hidden="true"></em> This can only be read, not set.
+    </p>
+  {{/if}}
+
+  {{#if overwritten_from}}
+    <p>
+      <em class="glyphicon glyphicon-edit" aria-hidden="true"></em> This overwrites inherited class {{name}}.
+    </p>
+  {{/if}} 
+  
+  {{#if async}}
+    <p>
+      <em class="glyphicon glyphicon-random" aria-hidden="true"></em> This invokes asycronously.
+    </p>
+  {{/if}}
+</blockquote>

@@ -30,53 +30,7 @@
   </div>
 
   <div class="panel-body">
-    <blockquote>
-      {{#if default}}
-        <div class="code-item-section">
-          <h4>Default value:</h4>
-          <code class="prettyprint">{{default}}</code>
-        </div>
-      {{/if}}
-  
-      {{#if deprecated}}
-      <p>
-        <em class="glyphicon glyphicon-alert" aria-hidden="true"></em> This method is deprecated. Please refrain from using this as this would be unsupported in future releases. {{#if deprecationMessage}}
-        <br>
-        <br><small>{{deprecationMessage}}</small>
-        {{/if}}
-      </p>
-      {{/if}} {{#if access}}
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: {{{access}}}
-      </p>
-      {{/if}} {{#if final}}
-      <p>
-        <em class="glyphicon glyphicon-lock" aria-hidden="true"></em> This method cannot be overwritten.
-      </p>
-      {{/if}} {{#if multiple}}
-      <span class="label label-warning" title="This argument may occur one or more times.">multiple</span>
-      {{/if}} {{#if required}}
-      <span class="label label-warning" title="This attribute is required for communication.">required</span>
-      {{/if}} {{#if overwritten_from}}
-      <p>
-        <em class="glyphicon glyphicon-edit" aria-hidden="true"></em> This method overwrites inherited class method.
-      </p>
-      {{/if}} {{#if static}}
-      <p>
-        <em class="glyphicon glyphicon-arrow-left" aria-hidden="true"></em> This method is a static method
-      </p>
-      {{/if}} {{#if chainable}}
-      <p>
-        <em class="glyphicon glyphicon-refresh" aria-hidden="true"></em> This method is chainable.
-      </p>
-      {{/if}} {{#if readonly}}
-      <span class="label label-info" title="This attribute is reference only.">readonly</span>
-      {{/if}} {{#if async}}
-      <p>
-        <em class="glyphicon glyphicon-random" aria-hidden="true"></em> This method invokes asycronously.
-      </p>
-      {{/if}}
-    </blockquote>
+    {{>settings}}
     <p>{{{propertyDescription}}}</p>
   </div>
   <div class="panel-body">

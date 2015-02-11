@@ -7,7 +7,7 @@ $(document).ready(function () {
   $('.sidebar-nav li').each(function () {
     var link =  $(this).find('a');
     
-    if (link) {
+    if (link.length > 0) {
       var currentUrlParts = location.pathname.split('/');
       var urlParts = link.attr('href').split('/');
       

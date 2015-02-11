@@ -31,7 +31,6 @@
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
   <img src="../assets/img/icons/menu.png">
-  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
 <div id="sidebar-wrapper">
@@ -42,12 +41,16 @@
         <small>Version: 0.5.7</small>
       </a>
     </li>
-    <hr>
+    <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
+    <li><a href="./testing.html">Running Tests</a></li>
+    <li class="header">Classes</li>
     
       <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
       <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Messaging.html"> Messaging </a></li>
     
       <li><a href="../classes/Peer.html"> Peer </a></li>
     
@@ -101,237 +104,243 @@
 
 <div class="section code-section">
   <h4>Table of Contents</h4>
-  <table class="table table-bordered">
-    
-  
-    
-      <thead>
-        <tr> <th colspan="2">Methods</th> </tr>
-      </thead>
-      <tbody>
-        
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Methods</th> </tr>
+        </thead>
+        <tbody>
           
-            <tr> <td> <a href="#method_bind"> <code>bind()</code> </a> </td> <td> <p>Binds events to RTCPeerConnection object.</p>
+            
+              <tr> <td> <a href="#method_bind"> <code>bind()</code> </a> </td> <td> <p>Binds events to RTCPeerConnection object.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_connect"> <code>connect()</code> </a> </td> <td> <p>Starts the peer connection.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_createAnswer"> <code>createAnswer()</code> </a> </td> <td> <p>Creates an answer session description.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_createOffer"> <code>createOffer()</code> </a> </td> <td> <p>Creates an offer session description.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_disconnect"> <code>disconnect()</code> </a> </td> <td> <p>Stops the peer connection.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onaddstream"> <code>onaddstream()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s remote stream is received.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onconnect"> <code>onconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been started.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_oniceconnectionstatechange"> <code>oniceconnectionstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s ice connection state changes.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onicegatheringstatechange"> <code>onicegatheringstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s ice gathering state changes.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onremoveconnection"> <code>onremoveconnection()</code> </a> </td> <td> <p>Function to subscribe to when a peer connection been disconnected.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onsignalingstatechange"> <code>onsignalingstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s signaling state has changed.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_PeerHandler"> <code>PeerHandler()</code> </a> </td> <td> <p>Handles the peer class events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_reconnect"> <code>reconnect()</code> </a> </td> <td> <p>Restarts the peer connection.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_setLocalDescription"> <code>setLocalDescription()</code> </a> </td> <td> <p>Sets local description.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_setRemoteDescription"> <code>setRemoteDescription()</code> </a> </td> <td> <p>Sets remote description.</p>
+ </td> </tr>
+            
+          
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Methods</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#property_datachannel"> <code>datachannel</code> </a> </td> <td> <p>Handles the datachannel state trigger.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_connect"> <code>connect()</code> </a> </td> <td> <p>Starts the peer connection.</p>
+            <tr> <td> <a href="#property_icecandidate"> <code>icecandidate</code> </a> </td> <td> <p>Handles the ice candidate trigger.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_createAnswer"> <code>createAnswer()</code> </a> </td> <td> <p>Creates an answer session description.</p>
+            <tr> <td> <a href="#property_iceconnectionstate"> <code>iceconnectionstate</code> </a> </td> <td> <p>Handles the ice connection state trigger.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_createOffer"> <code>createOffer()</code> </a> </td> <td> <p>Creates an offer session description.</p>
+            <tr> <td> <a href="#property_icegatheringstate"> <code>icegatheringstate</code> </a> </td> <td> <p>Handles the ice gathering state trigger.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_disconnect"> <code>disconnect()</code> </a> </td> <td> <p>Stops the peer connection.</p>
+            <tr> <td> <a href="#property_signalingstate"> <code>signalingstate</code> </a> </td> <td> <p>Handles the signaling state trigger.</p>
  </td> </tr>
           
-        
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Attributes</th> </tr>
+        </thead>
+        <tbody>
           
-            <tr> <td> <a href="#method_onaddstream"> <code>onaddstream()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s remote stream is received.</p>
+            <tr> <td> <a href="#attr_config"> <code>config</code> </a> </td> <td> <p>The PeerConnection configuration.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_onconnect"> <code>onconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been started.</p>
+            <tr> <td> <a href="#attr_constraints"> <code>constraints</code> </a> </td> <td> <p>The PeerConnection constraints - iceServers.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_oniceconnectionstatechange"> <code>oniceconnectionstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s ice connection state changes.</p>
+            <tr> <td> <a href="#attr_datachannels"> <code>datachannels</code> </a> </td> <td> <p>The datachannels connected to PeerConnection.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_onicegatheringstatechange"> <code>onicegatheringstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s ice gathering state changes.</p>
+            <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
+            <tr> <td> <a href="#attr_healthTimer"> <code>healthTimer</code> </a> </td> <td> <p>The timeout that would react if PeerConnection is unstable and refresh connection.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
+            <tr> <td> <a href="#attr_iceTrickle"> <code>iceTrickle</code> </a> </td> <td> <p>The flag that indicates if trickle ICE is enable for this PeerConnection.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_onremoveconnection"> <code>onremoveconnection()</code> </a> </td> <td> <p>Function to subscribe to when a peer connection been disconnected.</p>
+            <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The peer id.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_onsignalingstatechange"> <code>onsignalingstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s signaling state has changed.</p>
+            <tr> <td> <a href="#attr_localDescription"> <code>localDescription</code> </a> </td> <td> <p>The local description to be set.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_reconnect"> <code>reconnect()</code> </a> </td> <td> <p>Restarts the peer connection.</p>
+            <tr> <td> <a href="#attr_PeerEventMessageHandler"> <code>PeerEventMessageHandler</code> </a> </td> <td> <p>Handles all the message events received from socket.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_setLocalDescription"> <code>setLocalDescription()</code> </a> </td> <td> <p>Sets local description.</p>
+            <tr> <td> <a href="#attr_PeerEventReceivedHandler"> <code>PeerEventReceivedHandler</code> </a> </td> <td> <p>Handles all the events received from sub classes.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_setRemoteDescription"> <code>setRemoteDescription()</code> </a> </td> <td> <p>Sets remote description.</p>
+            <tr> <td> <a href="#attr_PeerEventResponseHandler"> <code>PeerEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
  </td> </tr>
           
-        
-      </tbody>
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Methods</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#property_datachannel"> <code>datachannel</code> </a> </td> <td> <p>Handles the datachannel state trigger.</p>
+            <tr> <td> <a href="#attr_remoteDescription"> <code>remoteDescription</code> </a> </td> <td> <p>The remote description to be set.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_icecandidate"> <code>icecandidate</code> </a> </td> <td> <p>Handles the ice candidate trigger.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#property_iceconnectionstate"> <code>iceconnectionstate</code> </a> </td> <td> <p>Handles the ice connection state trigger.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#property_icegatheringstate"> <code>icegatheringstate</code> </a> </td> <td> <p>Handles the ice gathering state trigger.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#property_signalingstate"> <code>signalingstate</code> </a> </td> <td> <p>Handles the signaling state trigger.</p>
- </td> </tr>
-        
-      </tbody>
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Attributes</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#attr_config"> <code>config</code> </a> </td> <td> <p>The PeerConnection configuration.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_constraints"> <code>constraints</code> </a> </td> <td> <p>The PeerConnection constraints - iceServers.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_datachannels"> <code>datachannels</code> </a> </td> <td> <p>The datachannels connected to PeerConnection.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_healthTimer"> <code>healthTimer</code> </a> </td> <td> <p>The timeout that would react if PeerConnection is unstable and refresh connection.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_iceTrickle"> <code>iceTrickle</code> </a> </td> <td> <p>The flag that indicates if trickle ICE is enable for this PeerConnection.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The peer id.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_localDescription"> <code>localDescription</code> </a> </td> <td> <p>The local description to be set.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_PeerEventMessageHandler"> <code>PeerEventMessageHandler</code> </a> </td> <td> <p>Handles all the message events received from socket.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_PeerEventReceivedHandler"> <code>PeerEventReceivedHandler</code> </a> </td> <td> <p>Handles all the events received from sub classes.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_PeerEventResponseHandler"> <code>PeerEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_PeerHandler"> <code>PeerHandler</code> </a> </td> <td> <p>Handles the peer class events.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_remoteDescription"> <code>remoteDescription</code> </a> </td> <td> <p>The remote description to be set.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_RTCPeerConnection"> <code>RTCPeerConnection</code> </a> </td> <td> <p>The PeerConnection object.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_sdpConfig"> <code>sdpConfig</code> </a> </td> <td> <p>The PeerConnection session description configuration.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_sdpConstraints"> <code>sdpConstraints</code> </a> </td> <td> <p>The PeerConnection session description constraints.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_SDPType"> <code>SDPType</code> </a> </td> <td> <p>The local description type peer sends.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_stream"> <code>stream</code> </a> </td> <td> <p>The stream send from this peer.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_streamingConfig"> <code>streamingConfig</code> </a> </td> <td> <p>Stores the streaming configuration.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The peer type.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_weight"> <code>weight</code> </a> </td> <td> <p>The peerconnection weight during handshake.</p>
- </td> </tr>
-        
-      </tbody>
-    
-    
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Event Handlers</th> </tr>
-      </thead>
-      <tbody>
-        
           
-        
+            <tr> <td> <a href="#attr_RTCPeerConnection"> <code>RTCPeerConnection</code> </a> </td> <td> <p>The PeerConnection object.</p>
+ </td> </tr>
           
-        
+            <tr> <td> <a href="#attr_sdpConfig"> <code>sdpConfig</code> </a> </td> <td> <p>The PeerConnection session description configuration.</p>
+ </td> </tr>
           
-        
+            <tr> <td> <a href="#attr_sdpConstraints"> <code>sdpConstraints</code> </a> </td> <td> <p>The PeerConnection session description constraints.</p>
+ </td> </tr>
           
-        
+            <tr> <td> <a href="#attr_SDPType"> <code>SDPType</code> </a> </td> <td> <p>The local description type peer sends.</p>
+ </td> </tr>
           
-        
+            <tr> <td> <a href="#attr_stream"> <code>stream</code> </a> </td> <td> <p>The stream send from this peer.</p>
+ </td> </tr>
           
-        
+            <tr> <td> <a href="#attr_streamingConfig"> <code>streamingConfig</code> </a> </td> <td> <p>Stores the streaming configuration.</p>
+ </td> </tr>
           
-        
+            <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The peer type.</p>
+ </td> </tr>
           
-        
+            <tr> <td> <a href="#attr_weight"> <code>weight</code> </a> </td> <td> <p>The peerconnection weight during handshake.</p>
+ </td> </tr>
           
-        
+        </tbody>
+      
+
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Event Handlers</th> </tr>
+        </thead>
+        <tbody>
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
-      </tbody>
-    
-  </table>
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+        </tbody>
+      
+    </table>
+  </div>
 </div>
 
  
@@ -367,50 +376,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Binds events to RTCPeerConnection object.</p>
 </p>
   </div>
@@ -471,54 +486,60 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Starts the peer connection.</p>
 </p>
   </div>
@@ -579,50 +600,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Creates an answer session description.</p>
 </p>
   </div>
@@ -683,50 +710,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Creates an offer session description.</p>
 </p>
   </div>
@@ -787,54 +820,60 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Stops the peer connection.</p>
 </p>
   </div>
@@ -895,50 +934,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when peer&#39;s remote stream is received.</p>
 </p>
   </div>
@@ -999,50 +1044,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when peer&#39;s connection has been started.</p>
 </p>
   </div>
@@ -1103,50 +1154,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when peer&#39;s ice connection state changes.</p>
 </p>
   </div>
@@ -1207,50 +1264,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when peer&#39;s ice gathering state changes.</p>
 </p>
   </div>
@@ -1311,50 +1374,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
 </p>
   </div>
@@ -1415,50 +1484,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
 </p>
   </div>
@@ -1519,50 +1594,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when a peer connection been disconnected.</p>
 </p>
   </div>
@@ -1623,50 +1704,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when peer&#39;s signaling state has changed.</p>
 </p>
   </div>
@@ -1701,6 +1788,235 @@
     
    
     
+      <div id="method_PeerHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      PeerHandler
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>com</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>listener</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_PeerHandler.js.html#l196"><code>source&#x2F;PeerHandler.js:196</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Handles the peer class events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">com</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The reference to the class object.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event data response.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">listener</code>
+    <span class="type"> : <em>type</em> Function </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The listener function.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor PeerHandler ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="method_reconnect" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1727,54 +2043,60 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-          <p> 
-            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Restarts the peer connection.</p>
 </p>
   </div>
@@ -1835,50 +2157,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Sets local description.</p>
 </p>
   </div>
@@ -1939,50 +2267,56 @@
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Sets remote description.</p>
 </p>
   </div>
@@ -2040,14 +2374,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The PeerConnection configuration.</p>
 </p>
   </div>
@@ -2087,14 +2439,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The PeerConnection constraints - iceServers.</p>
 </p>
   </div>
@@ -2134,14 +2504,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The datachannels connected to PeerConnection.</p>
 </p>
   </div>
@@ -2207,14 +2595,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The handler that manages all triggers or relaying events.</p>
 </p>
   </div>
@@ -2254,14 +2660,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The timeout that would react if PeerConnection is unstable and refresh connection.</p>
 </p>
   </div>
@@ -2301,14 +2725,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The flag that indicates if trickle ICE is enable for this PeerConnection.</p>
 </p>
   </div>
@@ -2348,14 +2790,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The peer id.</p>
 </p>
   </div>
@@ -2395,14 +2855,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The local description to be set.</p>
 </p>
   </div>
@@ -2435,17 +2913,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l125"><code>source&#x2F;PeerHandler.js:125</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l127"><code>source&#x2F;PeerHandler.js:127</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles all the message events received from socket.</p>
 </p>
   </div>
@@ -2485,10 +2985,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles all the events received from sub classes.</p>
 </p>
   </div>
@@ -2521,17 +3043,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l21"><code>source&#x2F;PeerHandler.js:21</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l22"><code>source&#x2F;PeerHandler.js:22</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles all the events to respond to other parent classes.</p>
 </p>
   </div>
@@ -2544,49 +3088,6 @@
     <div class="col-md-6">
       <pre class="prettyprint">
       // Example for constructor PeerEventResponseHandler ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_PeerHandler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      PeerHandler
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l193"><code>source&#x2F;PeerHandler.js:193</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-  
-               
-    </blockquote>
-    <p><p>Handles the peer class events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor PeerHandler ()
       
     </pre>
     </div>
@@ -2614,14 +3115,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The remote description to be set.</p>
 </p>
   </div>
@@ -2661,14 +3180,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The PeerConnection object.</p>
 </p>
   </div>
@@ -2708,14 +3245,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The PeerConnection session description configuration.</p>
 </p>
   </div>
@@ -2755,14 +3310,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The PeerConnection session description constraints.</p>
 </p>
   </div>
@@ -2802,14 +3375,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The local description type peer sends.</p>
 </p>
   </div>
@@ -2849,14 +3440,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The stream send from this peer.</p>
 </p>
   </div>
@@ -2896,14 +3505,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Stores the streaming configuration.</p>
 </p>
   </div>
@@ -2943,14 +3570,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The peer type.</p>
 </p>
   </div>
@@ -2990,14 +3635,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The peerconnection weight during handshake.</p>
 </p>
   </div>
@@ -3037,21 +3700,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l107"><code>source&#x2F;PeerHandler.js:107</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l109"><code>source&#x2F;PeerHandler.js:109</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles the datachannel state trigger.</p>
 </p>
   </div>
@@ -3111,7 +3792,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l107"><code>source&#x2F;PeerHandler.js:107</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l109"><code>source&#x2F;PeerHandler.js:109</code></a>
       </small>
     
 
@@ -3144,21 +3825,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l85"><code>source&#x2F;PeerHandler.js:85</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l87"><code>source&#x2F;PeerHandler.js:87</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles the ice candidate trigger.</p>
 </p>
   </div>
@@ -3218,7 +3917,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l85"><code>source&#x2F;PeerHandler.js:85</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l87"><code>source&#x2F;PeerHandler.js:87</code></a>
       </small>
     
 
@@ -3251,21 +3950,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l59"><code>source&#x2F;PeerHandler.js:59</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l61"><code>source&#x2F;PeerHandler.js:61</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles the ice connection state trigger.</p>
 </p>
   </div>
@@ -3325,7 +4042,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l59"><code>source&#x2F;PeerHandler.js:59</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l61"><code>source&#x2F;PeerHandler.js:61</code></a>
       </small>
     
 
@@ -3358,21 +4075,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l72"><code>source&#x2F;PeerHandler.js:72</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l74"><code>source&#x2F;PeerHandler.js:74</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles the ice gathering state trigger.</p>
 </p>
   </div>
@@ -3432,7 +4167,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l72"><code>source&#x2F;PeerHandler.js:72</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l74"><code>source&#x2F;PeerHandler.js:74</code></a>
       </small>
     
 
@@ -3465,21 +4200,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l94"><code>source&#x2F;PeerHandler.js:94</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l96"><code>source&#x2F;PeerHandler.js:96</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles the signaling state trigger.</p>
 </p>
   </div>
@@ -3539,7 +4292,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l94"><code>source&#x2F;PeerHandler.js:94</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l96"><code>source&#x2F;PeerHandler.js:96</code></a>
       </small>
     
 
@@ -3632,6 +4385,10 @@
     
       <em></em>
     
+   
+    
+      <em></em>
+    
   
 </div>
 
@@ -3654,6 +4411,9 @@
   </div>
   <!-- /#page-content-wrapper -->
 
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>

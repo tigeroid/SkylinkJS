@@ -31,7 +31,6 @@
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
   <img src="../assets/img/icons/menu.png">
-  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
 <div id="sidebar-wrapper">
@@ -42,12 +41,16 @@
         <small>Version: 0.5.7</small>
       </a>
     </li>
-    <hr>
+    <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
+    <li><a href="./testing.html">Running Tests</a></li>
+    <li class="header">Classes</li>
     
       <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
       <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Messaging.html"> Messaging </a></li>
     
       <li><a href="../classes/Peer.html"> Peer </a></li>
     
@@ -96,42 +99,44 @@
 
 <div class="section code-section">
   <h4>Table of Contents</h4>
-  <table class="table table-bordered">
-    
-  
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Methods</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#property_level"> <code>level</code> </a> </td> <td> <p>The current log level of Skylink.</p>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      
+
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Methods</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#property_level"> <code>level</code> </a> </td> <td> <p>The current log level of Skylink.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_store"> <code>store</code> </a> </td> <td> <p>The flag that indicates if Skylink should store the debug logs.</p>
+          
+            <tr> <td> <a href="#property_store"> <code>store</code> </a> </td> <td> <p>The flag that indicates if Skylink should store the debug logs.</p>
  </td> </tr>
-        
-      </tbody>
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Attributes</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#attr_LogKey"> <code>LogKey</code> </a> </td> <td> <p>The log key</p>
+          
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Attributes</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#attr_LogKey"> <code>LogKey</code> </a> </td> <td> <p>The log key</p>
  </td> </tr>
-        
-      </tbody>
-    
-    
-    
-    
-    
-  </table>
+          
+        </tbody>
+      
+
+      
+
+      
+    </table>
+  </div>
 </div>
 
  
@@ -159,12 +164,32 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-              
-      <span class="label label-info" title="This attribute is reference only.">readonly</span>
-       
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-minus-sign" aria-hidden="true"></em> This can only be read, not set.
+    </p>
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The log key</p>
 </p>
   </div>
@@ -211,10 +236,28 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The current log level of Skylink.</p>
 </p>
   </div>
@@ -312,10 +355,28 @@
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The flag that indicates if Skylink should store the debug logs.</p>
 </p>
   </div>
@@ -419,6 +480,9 @@
   </div>
   <!-- /#page-content-wrapper -->
 
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>

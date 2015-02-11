@@ -1,0 +1,72 @@
+<h1>{{name}} Documentation <small> <span class="badge">Version {{since}}</span></small></h1>
+{{#if foundAt}}
+<small>
+    Defined in: <a href="{{foundAt}}">`{{{file}}}:{{{line}}}`</a>
+  </small>
+{{/if}}
+
+<hr class="strike">
+
+<div class="description">{{{classDescription}}}</p>
+
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      {{#if events}}
+        <thead>
+          <tr> <th colspan="2">Events</th> </tr>
+        </thead>
+        <tbody>
+          {{#events}}
+            <tr> <td> <a href="#event_{{name}}"> <code>{{name}}</code> </a> </td> <td> {{{eventDescription}}} </td> </tr>
+          {{/events}}
+        </tbody>
+      {{/if}}
+    </table>
+  </div>
+</div>
+
+{{#if events}}
+<div class="section code-section">
+  <h4>Events</h4>
+  {{#events}} {{>events}} {{/events}}
+</div>
+{{/if}}
+
+  <!--
+{{#if uses}}
+    <ul class="inline commas">
+      {{#uses}}
+        <li><a href="{{.}}.html">{{.}}</a></li>
+      {{/uses}}
+    </ul>
+{{/if}}
+
+{{#if extends}}
+    <div class="extends">
+        Extends {{#crossLink extends}}{{/crossLink}}
+    </div>
+{{/if}}
+
+{{#if module}}
+    {{#if submodule}}
+        Module: {{#crossLinkModule submodule}}{{/crossLinkModule}}<br>
+        Parent Module: {{#crossLinkModule module}}{{/crossLinkModule}}
+    {{else}}
+        Module: {{#crossLinkModule module}}{{/crossLinkModule}}
+    {{/if}}
+{{/if}}
+
+{{#if deprecated}}
+<div class="box deprecated">
+        <p>
+        {{#if deprecationMessage}}
+            <strong>Deprecated:</strong> {{deprecationMessage}}
+        {{else}}
+            This class is deprecated.
+        {{/if}}
+        </p>
+    </div>
+{{/if}}
+-->

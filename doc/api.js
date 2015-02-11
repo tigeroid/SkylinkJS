@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "DataChannel",
         "Debugger",
+        "Messaging",
         "Peer",
         "Request",
         "Room",

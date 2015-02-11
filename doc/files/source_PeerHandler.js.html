@@ -31,7 +31,6 @@
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
   <img src="../assets/img/icons/menu.png">
-  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
 <div id="sidebar-wrapper">
@@ -42,12 +41,16 @@
         <small>Version: 0.5.7</small>
       </a>
     </li>
-    <hr>
+    <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
+    <li><a href="./testing.html">Running Tests</a></li>
+    <li class="header">Classes</li>
     
       <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
       <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Messaging.html"> Messaging </a></li>
     
       <li><a href="../classes/Peer.html"> Peer </a></li>
     
@@ -86,6 +89,7 @@
 /**
  * Handles all the events received from sub classes.
  * @attribute PeerEventReceivedHandler
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -106,6 +110,7 @@ var PeerEventReceivedHandler = {
 /**
  * Handles all the events to respond to other parent classes.
  * @attribute PeerEventResponseHandler
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -210,6 +215,7 @@ var PeerEventResponseHandler = {
 /**
  * Handles all the message events received from socket.
  * @attribute PeerEventMessageHandler
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -277,7 +283,12 @@ var PeerEventMessageHandler = {
 
 /**
  * Handles the peer class events.
- * @attribute PeerHandler
+ * @method PeerHandler
+ * @param {Object} com The reference to the class object.
+ * @param {String} event The event name.
+ * @param {JSON} data The event data response.
+ * @param {Function} listener The listener function.
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -313,6 +324,9 @@ var PeerHandler = function (com, event, data, listener) {
   </div>
   <!-- /#page-content-wrapper -->
 
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>

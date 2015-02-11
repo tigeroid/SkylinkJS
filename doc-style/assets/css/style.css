@@ -8,6 +8,7 @@
 body {
   font-weight: 350;
   font-size: 14px;
+  overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -74,10 +75,25 @@ h5 {
   margin: 0;
   padding: 0;
   list-style: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.sidebar-nav hr {
+  margin-bottom: 0;
 }
 .sidebar-nav li {
   text-indent: 20px;
   line-height: 40px;
+}
+.sidebar-nav li.header {
+  color: teal;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 25px;
+}
+.sidebar-nav li.header.first-item {
+  margin-top: 0;
 }
 .sidebar-nav li a {
   display: block;
@@ -161,10 +177,25 @@ mark {
 }
 
 .table-browsers {
-  width: 515px;
+  font-size: 10px;
+  padding: 0;
+  color: chocolate;
 }
-.table-browsers img {
-  height: 25px;
+
+.table-browsers table {
+  margin: 0;
+  border: 0;
+}
+.table-browsers table th,
+.table-browsers table td {
+  padding: 5px 7px;
+  text-align: center;
+  border: 0!important;
+}
+
+.table-browsers table img {
+  height: 15px;
+  margin-right: 5px;
 }
 
 .table-bordered {
@@ -219,6 +250,10 @@ var {
 
 .code-section-item-param .description {
   font-size: 12px;
+}
+
+.code-section-item-param .description ul li {
+  margin: 7px 0;
 }
 
 blockquote {
@@ -330,5 +365,36 @@ strong {
   #wrapper.toggled #page-content-wrapper {
     position: relative;
     margin-right: 0;
+  }
+}
+
+@media(max-width:768px) {
+  #main-wrapper {
+    padding: 35px 15px 0;
+  }
+  .badge {
+    float: none;
+    margin: 5px 0;
+  }
+  
+  .sidebar-nav {
+    padding-bottom: 75px;
+  }
+  
+  #wrapper {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+  #wrapper.toggled {
+    padding-left: 250px;
+    overflow-y: hidden;
+  }
+  #sidebar-wrapper {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
   }
 }

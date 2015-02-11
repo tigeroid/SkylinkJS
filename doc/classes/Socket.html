@@ -31,7 +31,6 @@
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
   <img src="../assets/img/icons/menu.png">
-  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
 <div id="sidebar-wrapper">
@@ -42,12 +41,16 @@
         <small>Version: 0.5.7</small>
       </a>
     </li>
-    <hr>
+    <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
+    <li><a href="./testing.html">Running Tests</a></li>
+    <li class="header">Classes</li>
     
       <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
       <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Messaging.html"> Messaging </a></li>
     
       <li><a href="../classes/Peer.html"> Peer </a></li>
     
@@ -96,184 +99,465 @@
   <li class="active">Socket</li>
 </ol>
 
-<div class="description"><p>Handles the Socket connection.</p>
+<div class="description"><p>Handles the socket.io object connection and events.</p>
 </p>
 
 <div class="section code-section">
   <h4>Table of Contents</h4>
-  <table class="table table-bordered">
-    
-  
-    
-      <thead>
-        <tr> <th colspan="2">Methods</th> </tr>
-      </thead>
-      <tbody>
-        
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      
+        <thead>
+          <tr> <th colspan="2">Constructor</th> </tr>
+        </thead>
+        <tbody>
+          <tr> <td> <a href="#constructor"> <code>Socket()</code> </a> </td> <td> Instantiate a Socket class constructor. </td> </tr>
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Methods</th> </tr>
+        </thead>
+        <tbody>
           
-            <tr> <td> <a href="#method_bindOnConnect"> <code>bindOnConnect()</code> </a> </td> <td> <p>Handles the event when socket is connected to signaling.</p>
+            
+              <tr> <td> <a href="#method_bindOnConnect"> <code>bindOnConnect()</code> </a> </td> <td> <p>Handles the event when socket is connected to signaling.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_bindOnConnectError"> <code>bindOnConnectError()</code> </a> </td> <td> <p>Handles the event when socket have a connection error.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_bindOnDisconnect"> <code>bindOnDisconnect()</code> </a> </td> <td> <p>Handles the event when socket is disconnected to signaling.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_bindOnError"> <code>bindOnError()</code> </a> </td> <td> <p>Handles the event when socket catches an exception.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_bindOnMessage"> <code>bindOnMessage()</code> </a> </td> <td> <p>Handles the event when socket receives a message from signaling.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_connect"> <code>connect()</code> </a> </td> <td> <p>Starts the connection to the signalling server</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_disconnect"> <code>disconnect()</code> </a> </td> <td> <p>Stops the connection to the Socket.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onconnect"> <code>onconnect()</code> </a> </td> <td> <p>Function to subscribe to when socket has been connected.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onconnecterror"> <code>onconnecterror()</code> </a> </td> <td> <p>Function to subscribe to when socket has connection error.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_ondisconnect"> <code>ondisconnect()</code> </a> </td> <td> <p>Function to subscribe to when socket has been disconnected.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onerror"> <code>onerror()</code> </a> </td> <td> <p>Function to subscribe to when socket has an exception.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when socket attempts to reconnect.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_reconnect"> <code>reconnect()</code> </a> </td> <td> <p>Restarts the connection to the Socket.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_respond"> <code>respond()</code> </a> </td> <td> <p>Responses to the attached socket message responses.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_send"> <code>send()</code> </a> </td> <td> <p>Sends a socket data.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_SocketHandler"> <code>SocketHandler()</code> </a> </td> <td> <p>Handles the Socket class events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_WebSocket"> <code>WebSocket()</code> </a> </td> <td> <p>Creates a WebSocket connection in socket.io.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_when"> <code>when()</code> </a> </td> <td> <p>Attaches a listener to a particular socket message event received.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_XHRPolling"> <code>XHRPolling()</code> </a> </td> <td> <p>Creates a XHR Long-polling connection in socket.io.</p>
+ </td> </tr>
+            
+          
+        </tbody>
+      
+
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Attributes</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#attr_config"> <code>config</code> </a> </td> <td> <p>The socket configuration passed into the <code>io.socket</code>.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_bindOnConnectError"> <code>bindOnConnectError()</code> </a> </td> <td> <p>Handles the event when socket have a connection error.</p>
+            <tr> <td> <a href="#attr_messageInterval"> <code>messageInterval</code> </a> </td> <td> <p>The interval to wait before sending the next message.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_bindOnDisconnect"> <code>bindOnDisconnect()</code> </a> </td> <td> <p>Handles the event when socket is disconnected to signaling.</p>
+            <tr> <td> <a href="#attr_messageQueue"> <code>messageQueue</code> </a> </td> <td> <p>The queue of messages (throttle) before sending the next</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_bindOnError"> <code>bindOnError()</code> </a> </td> <td> <p>Handles the event when socket catches an exception.</p>
+            <tr> <td> <a href="#attr_ports"> <code>ports</code> </a> </td> <td> <p>The list of available signalling server ports.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_bindOnMessage"> <code>bindOnMessage()</code> </a> </td> <td> <p>Handles the event when socket receives a message from signaling.</p>
+            <tr> <td> <a href="#attr_protocol"> <code>protocol</code> </a> </td> <td> <p>The signalling server protocol to connect with.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_connect"> <code>connect()</code> </a> </td> <td> <p>Starts the connection to the signalling server</p>
+            <tr> <td> <a href="#attr_responses"> <code>responses</code> </a> </td> <td> <p>The responses attached to message events.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_disconnect"> <code>disconnect()</code> </a> </td> <td> <p>Stops the connection to the Socket.</p>
+            <tr> <td> <a href="#attr_server"> <code>server</code> </a> </td> <td> <p>The signalling server port to connect with.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_onconnect"> <code>onconnect()</code> </a> </td> <td> <p>Function to subscribe to when socket has been connected.</p>
+            <tr> <td> <a href="#attr_server"> <code>server</code> </a> </td> <td> <p>The signalling server.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_reconnect"> <code>reconnect()</code> </a> </td> <td> <p>Restarts the connection to the Socket.</p>
+            <tr> <td> <a href="#attr_Socket"> <code>Socket</code> </a> </td> <td> <p>The socket.io object.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_respond"> <code>respond()</code> </a> </td> <td> <p>Responses to the attached socket message responses.</p>
+            <tr> <td> <a href="#attr_SocketEventResponseHandler"> <code>SocketEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_send"> <code>send()</code> </a> </td> <td> <p>Sends a socket data.</p>
+            <tr> <td> <a href="#attr_timeout"> <code>timeout</code> </a> </td> <td> <p>The timeout the Socket should wait for before throwing an error.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_WebSocket"> <code>WebSocket()</code> </a> </td> <td> <p>Creates a WebSocket connection in socket.io.</p>
+            <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The type of socket connection. There are two types:</p>
+<ul>
+<li><code>&quot;WebSocket&quot;</code> indicates a WebSocket connection.</li>
+<li><code>&quot;XHRPolling&quot;</code> indicates a LongPolling connection.</li>
+</ul>
  </td> </tr>
           
-        
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Events</th> </tr>
+        </thead>
+        <tbody>
           
-            <tr> <td> <a href="#method_when"> <code>when()</code> </a> </td> <td> <p>Attaches a listener to a particular socket message event received.</p>
+            <tr> <td> <a href="#event_Socket:error"> <code>Socket:error</code> </a> </td> <td> <p>Event fired when usually getUserMedia fails or an exception has occurred during the
+  MediaSocket object handling.</p>
  </td> </tr>
           
-        
-          
-            <tr> <td> <a href="#method_XHRPolling"> <code>XHRPolling()</code> </a> </td> <td> <p>Creates a XHR Long-polling connection in socket.io.</p>
+            <tr> <td> <a href="#event_Socket:start"> <code>Socket:start</code> </a> </td> <td> <p>Event fired when the MediaSocket has started and that the Socket object is ready to use.</p>
  </td> </tr>
           
-        
-      </tbody>
-    
-    
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Attributes</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#attr_config"> <code>config</code> </a> </td> <td> <p>The socket configuratin.</p>
+            <tr> <td> <a href="#event_Socket:stop"> <code>Socket:stop</code> </a> </td> <td> <p>Event fired when the MediaSocket object has stopped.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+          
+            <tr> <td> <a href="#event_Socket:track:mute"> <code>Socket:track:mute</code> </a> </td> <td> <p>Event fired when the MediaSocketTrack of the MediaSocket object has been disabled (muted).</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#attr_messageInterval"> <code>messageInterval</code> </a> </td> <td> <p>The interval to wait before sending the next message.</p>
+          
+            <tr> <td> <a href="#event_Socket:track:start"> <code>Socket:track:start</code> </a> </td> <td> <p>Event fired when the MediaSocketTrack of the MediaSocket object has started and
+  that the track is ready to use.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#attr_messageQueue"> <code>messageQueue</code> </a> </td> <td> <p>The queue of messages (throttle) before sending the next</p>
+          
+            <tr> <td> <a href="#event_Socket:track:stop"> <code>Socket:track:stop</code> </a> </td> <td> <p>Event fired when the MediaSocketTrack of the MediaSocket object has stopped.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#attr_ports"> <code>ports</code> </a> </td> <td> <p>The list of available signalling server ports.</p>
+          
+            <tr> <td> <a href="#event_Socket:track:unmute"> <code>Socket:track:unmute</code> </a> </td> <td> <p>Event fired when the MediaSocketTrack of the MediaSocket object has been enabled (unmuted).</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#attr_protocol"> <code>protocol</code> </a> </td> <td> <p>The signalling server protocol to connect with.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_readyState"> <code>readyState</code> </a> </td> <td> <p>The socket readyState.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_responses"> <code>responses</code> </a> </td> <td> <p>The responses attached to message events.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_server"> <code>server</code> </a> </td> <td> <p>The signalling server port to connect with.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_server"> <code>server</code> </a> </td> <td> <p>The signalling server.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_Socket"> <code>Socket</code> </a> </td> <td> <p>The Socket.io object.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_timeout"> <code>timeout</code> </a> </td> <td> <p>The timeout the Socket should wait for before throwing an error.</p>
- </td> </tr>
-        
-          <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The type of socket connection.</p>
- </td> </tr>
-        
-      </tbody>
-    
-    
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Event Handlers</th> </tr>
-      </thead>
-      <tbody>
-        
           
-        
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Event Handlers</th> </tr>
+        </thead>
+        <tbody>
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
+            
           
-        
-      </tbody>
-    
-  </table>
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+        </tbody>
+      
+    </table>
+  </div>
 </div>
 
+
+<div class="section code-section">
+  <h4>Constructor</h4>
+  <div id="constructor" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Socket
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>config</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>listener</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+      
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+    <p>
+      Defined in: <a href="../files/source_Socket.js.html#l1"><code>source&#x2F;Socket.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+        <p> 
+          <em class="glyphicon glyphicon-ban-circle" aria-hidden="true"></em> This <mark>Socket</mark> constructor cannot be instantiable, meaning you cannot create a new <mark>Socket</mark> class object that would require certain parent dependencies functionalities. E.g. <mark>DataChannel</mark> class relies on <mark>Peer</mark> class.
+        </p>
+      
+    </blockquote>
+    <p>To create a Socket class object, these are the required parameters to be provided.</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Parameters:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">config</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The socket connection configuration.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">server</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The socket signaling server.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">httpsPortList</code>
+    <span class="type"> : <em>type</em> Array </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The list of HTTPS ports that the socket connection
+   would use. It uses the first port and fallbacks to the next alternative port when connection fails.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">httpPortList</code>
+    <span class="type"> : <em>type</em> Array </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The list of HTTP ports that the socket connection
+   would use. It uses the first port and fallbacks to the next alternative port when connection fails.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of socket connection. There are two types:</p>
+<ul>
+<li><code>&quot;WebSocket&quot;</code> indicates a WebSocket connection.</li>
+<li><code>&quot;XHRPolling&quot;</code> indicates a LongPolling connection.</li>
+</ul>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">listener</code>
+    <span class="type"> : <em>type</em> Function </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The listener function.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Socket ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
  
 
 
@@ -302,55 +586,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l264"><code>source&#x2F;Socket.js:264</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l263"><code>source&#x2F;Socket.js:263</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Handles the event when socket is connected to signaling.</p>
 </p>
   </div>
@@ -406,55 +696,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l325"><code>source&#x2F;Socket.js:325</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l324"><code>source&#x2F;Socket.js:324</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Handles the event when socket have a connection error.</p>
 </p>
   </div>
@@ -510,55 +806,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l286"><code>source&#x2F;Socket.js:286</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l285"><code>source&#x2F;Socket.js:285</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Handles the event when socket is disconnected to signaling.</p>
 </p>
   </div>
@@ -614,55 +916,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l363"><code>source&#x2F;Socket.js:363</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l362"><code>source&#x2F;Socket.js:362</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Handles the event when socket catches an exception.</p>
 </p>
   </div>
@@ -718,55 +1026,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l300"><code>source&#x2F;Socket.js:300</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l299"><code>source&#x2F;Socket.js:299</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Handles the event when socket receives a message from signaling.</p>
 </p>
   </div>
@@ -822,55 +1136,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l201"><code>source&#x2F;Socket.js:201</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l200"><code>source&#x2F;Socket.js:200</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Starts the connection to the signalling server</p>
 </p>
   </div>
@@ -926,55 +1246,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l218"><code>source&#x2F;Socket.js:218</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l217"><code>source&#x2F;Socket.js:217</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Stops the connection to the Socket.</p>
 </p>
   </div>
@@ -1009,6 +1335,183 @@
     
    
     
+      <div id="method_handler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      handler
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Socket.js.html#l187"><code>source&#x2F;Socket.js:187</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler that manages all triggers or relaying events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor handler ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="method_onconnect" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1030,55 +1533,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l160"><code>source&#x2F;Socket.js:160</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l146"><code>source&#x2F;Socket.js:146</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Function to subscribe to when socket has been connected.</p>
 </p>
   </div>
@@ -1113,6 +1622,446 @@
     
    
     
+      <div id="method_onconnecterror" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onconnecterror
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Socket.js.html#l162"><code>source&#x2F;Socket.js:162</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when socket has connection error.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onconnecterror ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_ondisconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ondisconnect
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Socket.js.html#l154"><code>source&#x2F;Socket.js:154</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when socket has been disconnected.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ondisconnect ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_onerror" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onerror
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Socket.js.html#l178"><code>source&#x2F;Socket.js:178</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when socket has an exception.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onerror ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_onreconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onreconnect
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Socket.js.html#l170"><code>source&#x2F;Socket.js:170</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when socket attempts to reconnect.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onreconnect ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="method_reconnect" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1134,55 +2083,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l395"><code>source&#x2F;Socket.js:395</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l394"><code>source&#x2F;Socket.js:394</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Restarts the connection to the Socket.</p>
 </p>
   </div>
@@ -1238,55 +2193,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l379"><code>source&#x2F;Socket.js:379</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l378"><code>source&#x2F;Socket.js:378</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Responses to the attached socket message responses.</p>
 </p>
   </div>
@@ -1342,55 +2303,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l243"><code>source&#x2F;Socket.js:243</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l242"><code>source&#x2F;Socket.js:242</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Sends a socket data.</p>
 </p>
   </div>
@@ -1425,6 +2392,235 @@
     
    
     
+      <div id="method_SocketHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      SocketHandler
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>com</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>listener</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_SocketHandler.js.html#l100"><code>source&#x2F;SocketHandler.js:100</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Handles the Socket class events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">com</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The reference to the class object.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event data response.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">listener</code>
+    <span class="type"> : <em>type</em> Function </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The listener function.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor SocketHandler ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="method_WebSocket" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1446,55 +2642,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l421"><code>source&#x2F;Socket.js:421</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l420"><code>source&#x2F;Socket.js:420</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Creates a WebSocket connection in socket.io.</p>
 </p>
   </div>
@@ -1550,55 +2752,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l230"><code>source&#x2F;Socket.js:230</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l229"><code>source&#x2F;Socket.js:229</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Attaches a listener to a particular socket message event received.</p>
 </p>
   </div>
@@ -1654,55 +2862,61 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l449"><code>source&#x2F;Socket.js:449</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l448"><code>source&#x2F;Socket.js:448</code></a>
       </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
-      
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
 
-        
-            <p>
-              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-              <div class="table-responsive">
-                <table class="table table-condensed table-browsers">
-                  <thead>
-                    <tr> 
-                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> 35+ </td>
-                      <td> 30+ </td>
-                      <td> 21+ </td>
-                      <td> 7+ </td>
-                      <td> 11+ </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-          </p>
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-    </blockquote>
+   
+  
+  
+</blockquote>
     <p><p>Creates a XHR Long-polling connection in socket.io.</p>
 </p>
   </div>
@@ -1753,22 +2967,40 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l99"><code>source&#x2F;Socket.js:99</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l102"><code>source&#x2F;Socket.js:102</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
-    <p><p>The socket configuratin.</p>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The socket configuration passed into the <code>io.socket</code>.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -1789,53 +3021,6 @@
 <!--
 
   
--->  <div id="attr_handler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      handler
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Socket.js.html#l139"><code>source&#x2F;Socket.js:139</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-  
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
-    <p><p>The handler that manages all triggers or relaying events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor handler ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
 -->  <div id="attr_messageInterval" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1847,21 +3032,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l53"><code>source&#x2F;Socket.js:53</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l67"><code>source&#x2F;Socket.js:67</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The interval to wait before sending the next message.</p>
 </p>
   </div>
@@ -1894,21 +3097,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l63"><code>source&#x2F;Socket.js:63</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l77"><code>source&#x2F;Socket.js:77</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The queue of messages (throttle) before sending the next</p>
 </p>
   </div>
@@ -1941,21 +3162,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l84"><code>source&#x2F;Socket.js:84</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l87"><code>source&#x2F;Socket.js:87</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The list of available signalling server ports.</p>
 </p>
   </div>
@@ -1979,7 +3218,7 @@
   </blockquote>
 
   <div class="description">
-    <p>The list of Http ports.</p>
+    <p>The list of HTTP ports.</p>
 
   </div>
 
@@ -1998,7 +3237,7 @@
   </blockquote>
 
   <div class="description">
-    <p>The list of Https ports.</p>
+    <p>The list of HTTPS ports.</p>
 
   </div>
 
@@ -2033,21 +3272,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l23"><code>source&#x2F;Socket.js:23</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l37"><code>source&#x2F;Socket.js:37</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The signalling server protocol to connect with.</p>
 </p>
   </div>
@@ -2069,55 +3326,6 @@
 <!--
 
   
--->  <div id="attr_readyState" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      readyState
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Socket.js.html#l73"><code>source&#x2F;Socket.js:73</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-      
-  
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-         
-      <span class="label label-warning" title="This attribute is required for communication.">required</span>
-           
-    </blockquote>
-    <p><p>The socket readyState.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor readyState ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
 -->  <div id="attr_responses" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -2129,21 +3337,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l129"><code>source&#x2F;Socket.js:129</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l135"><code>source&#x2F;Socket.js:135</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The responses attached to message events.</p>
 </p>
   </div>
@@ -2176,21 +3402,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l33"><code>source&#x2F;Socket.js:33</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l47"><code>source&#x2F;Socket.js:47</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The signalling server port to connect with.</p>
 </p>
   </div>
@@ -2223,21 +3467,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l13"><code>source&#x2F;Socket.js:13</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l27"><code>source&#x2F;Socket.js:27</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The signalling server.</p>
 </p>
   </div>
@@ -2270,22 +3532,40 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l119"><code>source&#x2F;Socket.js:119</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l125"><code>source&#x2F;Socket.js:125</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
-    <p><p>The Socket.io object.</p>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The socket.io object.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2306,6 +3586,71 @@
 <!--
 
   
+-->  <div id="attr_SocketEventResponseHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      SocketEventResponseHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l1"><code>source&#x2F;SocketHandler.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Handles all the events to respond to other parent classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor SocketEventResponseHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
 -->  <div id="attr_timeout" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -2317,21 +3662,39 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l43"><code>source&#x2F;Socket.js:43</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l57"><code>source&#x2F;Socket.js:57</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The timeout the Socket should wait for before throwing an error.</p>
 </p>
   </div>
@@ -2364,22 +3727,49 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Socket.js.html#l109"><code>source&#x2F;Socket.js:109</code></a>
+      Defined in: <a href="../files/source_Socket.js.html#l112"><code>source&#x2F;Socket.js:112</code></a>
     </p>
     
   </div>
 
   <div class="panel-body">
     <blockquote>
-      
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
-    <p><p>The type of socket connection.</p>
+    <div class="code-item-section">
+      <strong>Default value:</strong>
+      <code class="prettyprint">&quot;WebSocket&quot;</code>
+    </div>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The type of socket connection. There are two types:</p>
+<ul>
+<li><code>&quot;WebSocket&quot;</code> indicates a WebSocket connection.</li>
+<li><code>&quot;XHRPolling&quot;</code> indicates a LongPolling connection.</li>
+</ul>
 </p>
   </div>
   <div class="panel-body">
@@ -2465,10 +3855,911 @@
     
       <em></em>
     
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
   
 </div>
 
 
+
+<div class="section code-section">
+  <h4>Events</h4>
+   <div id="event_Socket:error" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Socket:error
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l22"><code>source&#x2F;SocketHandler.js:22</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when usually getUserMedia fails or an exception has occurred during the
+  MediaSocket object handling.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The getUserMedia or event error.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Socket:error ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_Socket:error" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>Socket:error</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l22"><code>source&#x2F;SocketHandler.js:22</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when usually getUserMedia fails or an exception has occurred during the
+  MediaSocket object handling.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">error</code>
+            <span class="type"><b>{</b>Object<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The getUserMedia or event error.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_Socket:start" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Socket:start
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l10"><code>source&#x2F;SocketHandler.js:10</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when the MediaSocket has started and that the Socket object is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Socket:start ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_Socket:start" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>Socket:start</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l10"><code>source&#x2F;SocketHandler.js:10</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the MediaSocket has started and that the Socket object is ready to use.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_Socket:stop" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Socket:stop
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l87"><code>source&#x2F;SocketHandler.js:87</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when the MediaSocket object has stopped.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Socket:stop ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_Socket:stop" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>Socket:stop</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l87"><code>source&#x2F;SocketHandler.js:87</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the MediaSocket object has stopped.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_Socket:track:mute" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Socket:track:mute
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l62"><code>source&#x2F;SocketHandler.js:62</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when the MediaSocketTrack of the MediaSocket object has been disabled (muted).</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Socket:track:mute ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_Socket:track:mute" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>Socket:track:mute</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l62"><code>source&#x2F;SocketHandler.js:62</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the MediaSocketTrack of the MediaSocket object has been disabled (muted).</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_Socket:track:start" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Socket:track:start
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l37"><code>source&#x2F;SocketHandler.js:37</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when the MediaSocketTrack of the MediaSocket object has started and
+  that the track is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Socket:track:start ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_Socket:track:start" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>Socket:track:start</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l37"><code>source&#x2F;SocketHandler.js:37</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the MediaSocketTrack of the MediaSocket object has started and
+  that the track is ready to use.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_Socket:track:stop" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Socket:track:stop
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l50"><code>source&#x2F;SocketHandler.js:50</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when the MediaSocketTrack of the MediaSocket object has stopped.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Socket:track:stop ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_Socket:track:stop" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>Socket:track:stop</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l50"><code>source&#x2F;SocketHandler.js:50</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the MediaSocketTrack of the MediaSocket object has stopped.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_Socket:track:unmute" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Socket:track:unmute
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l74"><code>source&#x2F;SocketHandler.js:74</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when the MediaSocketTrack of the MediaSocket object has been enabled (unmuted).</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Socket:track:unmute ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_Socket:track:unmute" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>Socket:track:unmute</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l74"><code>source&#x2F;SocketHandler.js:74</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the MediaSocketTrack of the MediaSocket object has been enabled (unmuted).</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>--> 
+</div>
 
 
   <!--
@@ -2487,6 +4778,9 @@
   </div>
   <!-- /#page-content-wrapper -->
 
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>

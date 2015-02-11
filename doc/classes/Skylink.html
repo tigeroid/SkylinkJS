@@ -31,7 +31,6 @@
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
   <img src="../assets/img/icons/menu.png">
-  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
 <div id="sidebar-wrapper">
@@ -42,12 +41,16 @@
         <small>Version: 0.5.7</small>
       </a>
     </li>
-    <hr>
+    <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
+    <li><a href="./testing.html">Running Tests</a></li>
+    <li class="header">Classes</li>
     
       <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
       <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Messaging.html"> Messaging </a></li>
     
       <li><a href="../classes/Peer.html"> Peer </a></li>
     
@@ -96,143 +99,144 @@
 
 <div class="section code-section">
   <h4>Table of Contents</h4>
-  <table class="table table-bordered">
-    
-  
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Methods</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#property_defaultConfig"> <code>defaultConfig</code> </a> </td> <td> <p>Stores the default Stream / Bandwidth settings.</p>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      
+
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Methods</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#property_defaultConfig"> <code>defaultConfig</code> </a> </td> <td> <p>Stores the default Stream / Bandwidth settings.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_Event"> <code>Event</code> </a> </td> <td> <p>Stores the list of available events.</p>
+          
+            <tr> <td> <a href="#property_Event"> <code>Event</code> </a> </td> <td> <p>Stores the list of available events.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_isXDomainRequest"> <code>isXDomainRequest</code> </a> </td> <td> <p>The flag to check if request should use XDomainRequest.</p>
+          
+            <tr> <td> <a href="#property_isXDomainRequest"> <code>isXDomainRequest</code> </a> </td> <td> <p>The flag to check if request should use XDomainRequest.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_parseAudioConfig"> <code>parseAudioConfig</code> </a> </td> <td> <p>Parses the audio configuration for the getUserMedia constraints.</p>
+          
+            <tr> <td> <a href="#property_parseAudioConfig"> <code>parseAudioConfig</code> </a> </td> <td> <p>Parses the audio configuration for the getUserMedia constraints.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_parseBandwidthConfig"> <code>parseBandwidthConfig</code> </a> </td> <td> <p>Parses the bandwidth configuration.</p>
+          
+            <tr> <td> <a href="#property_parseBandwidthConfig"> <code>parseBandwidthConfig</code> </a> </td> <td> <p>Parses the bandwidth configuration.</p>
 <ul>
 <li>In low-bandwidth environment, it&#39;s mostly managed by the browser.
 However, this option enables you to set low bandwidth for high-bandwidth
 environment whichever way is possible.</li>
 </ul>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_parseMutedConfig"> <code>parseMutedConfig</code> </a> </td> <td> <p>Parses the stream muted configuration.</p>
+          
+            <tr> <td> <a href="#property_parseMutedConfig"> <code>parseMutedConfig</code> </a> </td> <td> <p>Parses the stream muted configuration.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_parseVideoConfig"> <code>parseVideoConfig</code> </a> </td> <td> <p>Parses the video configuration for the getUserMedia constraints.</p>
+          
+            <tr> <td> <a href="#property_parseVideoConfig"> <code>parseVideoConfig</code> </a> </td> <td> <p>Parses the video configuration for the getUserMedia constraints.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_protocol"> <code>protocol</code> </a> </td> <td> <p>The protocol the request uses to connect to.</p>
+          
+            <tr> <td> <a href="#property_protocol"> <code>protocol</code> </a> </td> <td> <p>The protocol the request uses to connect to.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_SDP.addStereo"> <code>SDP.addStereo</code> </a> </td> <td> <p>Enables the stereo feature if OPUS is enabled.</p>
+          
+            <tr> <td> <a href="#property_SDP.addStereo"> <code>SDP.addStereo</code> </a> </td> <td> <p>Enables the stereo feature if OPUS is enabled.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_SDP.configure"> <code>SDP.configure</code> </a> </td> <td> <p>Modifies a local session description with the configuration provided</p>
+          
+            <tr> <td> <a href="#property_SDP.configure"> <code>SDP.configure</code> </a> </td> <td> <p>Modifies a local session description with the configuration provided</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_SDP.find"> <code>SDP.find</code> </a> </td> <td> <p>Finds a line in the sdp based on the condition provided</p>
+          
+            <tr> <td> <a href="#property_SDP.find"> <code>SDP.find</code> </a> </td> <td> <p>Finds a line in the sdp based on the condition provided</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_SDP.removeH264Support"> <code>SDP.removeH264Support</code> </a> </td> <td> <p>Removes the H264 preference in sdp because other browsers does not support it yet.</p>
+          
+            <tr> <td> <a href="#property_SDP.removeH264Support"> <code>SDP.removeH264Support</code> </a> </td> <td> <p>Removes the H264 preference in sdp because other browsers does not support it yet.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_SDP.setBitrate"> <code>SDP.setBitrate</code> </a> </td> <td> <p>Sets the audio, video and DataChannel data bitrate in the sdp.</p>
+          
+            <tr> <td> <a href="#property_SDP.setBitrate"> <code>SDP.setBitrate</code> </a> </td> <td> <p>Sets the audio, video and DataChannel data bitrate in the sdp.</p>
 <ul>
 <li>In low-environment cases, bandwidth is managed by the browsers
 and the quality of the resolution or audio may change to suit.</li>
 </ul>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_SDP.setResolution"> <code>SDP.setResolution</code> </a> </td> <td> <p>Set video stream resolution in the sdp.</p>
+          
+            <tr> <td> <a href="#property_SDP.setResolution"> <code>SDP.setResolution</code> </a> </td> <td> <p>Set video stream resolution in the sdp.</p>
 <ul>
 <li>As noted, this is not working.</li>
 </ul>
  </td> </tr>
-        
-          <tr> <td> <a href="#property_server"> <code>server</code> </a> </td> <td> <p>The api server.</p>
+          
+            <tr> <td> <a href="#property_server"> <code>server</code> </a> </td> <td> <p>The api server.</p>
  </td> </tr>
-        
-      </tbody>
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Attributes</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#attr_globals"> <code>globals</code> </a> </td> <td> <p>Stores the preferences shared across classes.</p>
+          
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Attributes</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#attr_globals"> <code>globals</code> </a> </td> <td> <p>Stores the preferences shared across classes.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#attr_Request"> <code>Request</code> </a> </td> <td> <p>Handles the XMLHttpRequest and API function calls.</p>
+          
+            <tr> <td> <a href="#attr_Request"> <code>Request</code> </a> </td> <td> <p>Handles the XMLHttpRequest and API function calls.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#attr_StreamParser"> <code>StreamParser</code> </a> </td> <td> <p>Handles the parsing of Stream / Bandwidth settings.</p>
+          
+            <tr> <td> <a href="#attr_StreamParser"> <code>StreamParser</code> </a> </td> <td> <p>Handles the parsing of Stream / Bandwidth settings.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#attr_StreamTrackList"> <code>StreamTrackList</code> </a> </td> <td> <p>Stores the list of available StreamTrackList.</p>
+          
+            <tr> <td> <a href="#attr_StreamTrackList"> <code>StreamTrackList</code> </a> </td> <td> <p>Stores the list of available StreamTrackList.</p>
 <ul>
 <li>This is not supported in Firefox yet, but you can select the tracklist
 in Firefox when getUserMedia is invoked.</li>
 </ul>
  </td> </tr>
-        
-      </tbody>
-    
-    
-    
-      <thead>
-        <tr> <th colspan="2">Events</th> </tr>
-      </thead>
-      <tbody>
-        
-          <tr> <td> <a href="#event_candidateGenerationState"> <code>candidateGenerationState</code> </a> </td> <td> <p>Event fired when an ICE gathering state has changed.</p>
+          
+        </tbody>
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Events</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#event_candidateGenerationState"> <code>candidateGenerationState</code> </a> </td> <td> <p>Event fired when an ICE gathering state has changed.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_channelClose"> <code>channelClose</code> </a> </td> <td> <p>Event fired when the socket connection to the signaling
+          
+            <tr> <td> <a href="#event_channelClose"> <code>channelClose</code> </a> </td> <td> <p>Event fired when the socket connection to the signaling
 server has closed.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_channelError"> <code>channelError</code> </a> </td> <td> <p>Event fired when the socket connection has occurred an error.</p>
+          
+            <tr> <td> <a href="#event_channelError"> <code>channelError</code> </a> </td> <td> <p>Event fired when the socket connection has occurred an error.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_channelMessage"> <code>channelMessage</code> </a> </td> <td> <p>Event fired when the socket connection received a message
+          
+            <tr> <td> <a href="#event_channelMessage"> <code>channelMessage</code> </a> </td> <td> <p>Event fired when the socket connection received a message
 from the signaling server.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_channelOpen"> <code>channelOpen</code> </a> </td> <td> <p>Event fired when the socket connection to the signaling
+          
+            <tr> <td> <a href="#event_channelOpen"> <code>channelOpen</code> </a> </td> <td> <p>Event fired when the socket connection to the signaling
 server is open.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_channelRetry"> <code>channelRetry</code> </a> </td> <td> <p>Event fired when the socket re-tries to connection with fallback ports.</p>
+          
+            <tr> <td> <a href="#event_channelRetry"> <code>channelRetry</code> </a> </td> <td> <p>Event fired when the socket re-tries to connection with fallback ports.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_dataChannelState"> <code>dataChannelState</code> </a> </td> <td> <p>Event fired when a peer&#39;s datachannel state has changed.</p>
+          
+            <tr> <td> <a href="#event_dataChannelState"> <code>dataChannelState</code> </a> </td> <td> <p>Event fired when a peer&#39;s datachannel state has changed.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_dataTransferState"> <code>dataTransferState</code> </a> </td> <td> <p>Event fired when a data transfer state has changed.</p>
+          
+            <tr> <td> <a href="#event_dataTransferState"> <code>dataTransferState</code> </a> </td> <td> <p>Event fired when a data transfer state has changed.</p>
 <ul>
 <li>Note that <u>transferInfo.data</u> sends the blob data, and
 no longer a blob url.</li>
 </ul>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_handshakeProgress"> <code>handshakeProgress</code> </a> </td> <td> <p>Event fired when a peer&#39;s handshake progress has changed.</p>
+          
+            <tr> <td> <a href="#event_handshakeProgress"> <code>handshakeProgress</code> </a> </td> <td> <p>Event fired when a peer&#39;s handshake progress has changed.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_incomingMessage"> <code>incomingMessage</code> </a> </td> <td> <p>Event fired when a message being broadcasted is received.</p>
+          
+            <tr> <td> <a href="#event_incomingMessage"> <code>incomingMessage</code> </a> </td> <td> <p>Event fired when a message being broadcasted is received.</p>
 <ul>
 <li>This is changed from <b>chatMessageReceived</b>,
 <b>privateMessage</b> and <b>publicMessage</b> event.</li>
@@ -240,8 +244,8 @@ no longer a blob url.</li>
 and <b>publicMessage</b> is removed from the specs.</li>
 </ul>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_incomingStream"> <code>incomingStream</code> </a> </td> <td> <p>Event fired when a remote stream has become available.</p>
+          
+            <tr> <td> <a href="#event_incomingStream"> <code>incomingStream</code> </a> </td> <td> <p>Event fired when a remote stream has become available.</p>
 <ul>
 <li>This occurs after the user joins the room.</li>
 <li>This is changed from <b>addPeerStream</b> event.</li>
@@ -251,62 +255,63 @@ supposed to be (stream, peerId, isSelf), but instead is received
 as (peerId, stream, isSelf) in 0.5.0.</li>
 </ul>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_mediaAccessError"> <code>mediaAccessError</code> </a> </td> <td> <p>Event fired when webcam or microphone media access fails.</p>
+          
+            <tr> <td> <a href="#event_mediaAccessError"> <code>mediaAccessError</code> </a> </td> <td> <p>Event fired when webcam or microphone media access fails.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_mediaAccessRequired"> <code>mediaAccessRequired</code> </a> </td> <td> <p>Event fired when it&#39;s required to have audio or video access.</p>
+          
+            <tr> <td> <a href="#event_mediaAccessRequired"> <code>mediaAccessRequired</code> </a> </td> <td> <p>Event fired when it&#39;s required to have audio or video access.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_mediaAccessStopped"> <code>mediaAccessStopped</code> </a> </td> <td> <p>Event fired when media access to MediaStream has stopped.</p>
+          
+            <tr> <td> <a href="#event_mediaAccessStopped"> <code>mediaAccessStopped</code> </a> </td> <td> <p>Event fired when media access to MediaStream has stopped.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_mediaAccessSuccess"> <code>mediaAccessSuccess</code> </a> </td> <td> <p>Event fired when webcam or microphone media acces passes.</p>
+          
+            <tr> <td> <a href="#event_mediaAccessSuccess"> <code>mediaAccessSuccess</code> </a> </td> <td> <p>Event fired when webcam or microphone media acces passes.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_peerConnectionHealth"> <code>peerConnectionHealth</code> </a> </td> <td> <p>Event fired when a peer connection health has changed.</p>
+          
+            <tr> <td> <a href="#event_peerConnectionHealth"> <code>peerConnectionHealth</code> </a> </td> <td> <p>Event fired when a peer connection health has changed.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_peerConnectionState"> <code>peerConnectionState</code> </a> </td> <td> <p>Event fired when a peer Connection state has changed.</p>
+          
+            <tr> <td> <a href="#event_peerConnectionState"> <code>peerConnectionState</code> </a> </td> <td> <p>Event fired when a peer Connection state has changed.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_peerJoined"> <code>peerJoined</code> </a> </td> <td> <p>Event fired when a peer joins the room.</p>
+          
+            <tr> <td> <a href="#event_peerJoined"> <code>peerJoined</code> </a> </td> <td> <p>Event fired when a peer joins the room.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_peerLeft"> <code>peerLeft</code> </a> </td> <td> <p>Event fired when a peer leaves the room</p>
+          
+            <tr> <td> <a href="#event_peerLeft"> <code>peerLeft</code> </a> </td> <td> <p>Event fired when a peer leaves the room</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_peerRestart"> <code>peerRestart</code> </a> </td> <td> <p>Event fired when a peer&#39;s connection is restarted.</p>
+          
+            <tr> <td> <a href="#event_peerRestart"> <code>peerRestart</code> </a> </td> <td> <p>Event fired when a peer&#39;s connection is restarted.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_peerUpdated"> <code>peerUpdated</code> </a> </td> <td> <p>Event fired when a peer information is updated.</p>
+          
+            <tr> <td> <a href="#event_peerUpdated"> <code>peerUpdated</code> </a> </td> <td> <p>Event fired when a peer information is updated.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_presenceChanged"> <code>presenceChanged</code> </a> </td> <td> <p>Event fired when a peer joins the room</p>
+          
+            <tr> <td> <a href="#event_presenceChanged"> <code>presenceChanged</code> </a> </td> <td> <p>Event fired when a peer joins the room</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_readyStateChange"> <code>readyStateChange</code> </a> </td> <td> <p>Event fired whether the room is ready for use.</p>
+          
+            <tr> <td> <a href="#event_readyStateChange"> <code>readyStateChange</code> </a> </td> <td> <p>Event fired whether the room is ready for use.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_roomLock"> <code>roomLock</code> </a> </td> <td> <p>Event fired when connected to a room and the lock status has changed.</p>
+          
+            <tr> <td> <a href="#event_roomLock"> <code>roomLock</code> </a> </td> <td> <p>Event fired when connected to a room and the lock status has changed.</p>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_socketError"> <code>socketError</code> </a> </td> <td> <p>Event fired when the socket connection failed connecting.</p>
+          
+            <tr> <td> <a href="#event_socketError"> <code>socketError</code> </a> </td> <td> <p>Event fired when the socket connection failed connecting.</p>
 <ul>
 <li>The difference between this and <b>channelError</b> is that
 channelError triggers during the connection. This throws
 when connection failed to be established.</li>
 </ul>
  </td> </tr>
-        
-          <tr> <td> <a href="#event_systemAction"> <code>systemAction</code> </a> </td> <td> <p>Event fired when the signaling server warns the user.</p>
+          
+            <tr> <td> <a href="#event_systemAction"> <code>systemAction</code> </a> </td> <td> <p>Event fired when the signaling server warns the user.</p>
  </td> </tr>
-        
-      </tbody>
-    
-    
-    
-  </table>
+          
+        </tbody>
+      
+
+      
+    </table>
+  </div>
 </div>
 
  
@@ -334,14 +339,32 @@ when connection failed to be established.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Stores the preferences shared across classes.</p>
 </p>
   </div>
@@ -445,10 +468,28 @@ when connection failed to be established.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles the XMLHttpRequest and API function calls.</p>
 </p>
   </div>
@@ -488,10 +529,28 @@ when connection failed to be established.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Handles the parsing of Stream / Bandwidth settings.</p>
 </p>
   </div>
@@ -531,10 +590,28 @@ when connection failed to be established.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Stores the list of available StreamTrackList.</p>
 <ul>
 <li>This is not supported in Firefox yet, but you can select the tracklist
@@ -585,14 +662,32 @@ in Firefox when getUserMedia is invoked.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Stores the default Stream / Bandwidth settings.</p>
 </p>
   </div>
@@ -745,20 +840,40 @@ in Firefox when getUserMedia is invoked.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-       
-      <p>
-        <em class="glyphicon glyphicon-lock" aria-hidden="true"></em> This method cannot be overwritten.
-      </p>
-        
-      <span class="label label-warning" title="This attribute is required for communication.">required</span>
-           
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-lock" aria-hidden="true"></em> This cannot be overwritten.
+    </p>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></em> This is required for other functionalities to work.
+    </p>
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Stores the list of available events.</p>
 </p>
   </div>
@@ -860,14 +975,32 @@ in Firefox when getUserMedia is invoked.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The flag to check if request should use XDomainRequest.</p>
 </p>
   </div>
@@ -967,14 +1100,32 @@ in Firefox when getUserMedia is invoked.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Parses the audio configuration for the getUserMedia constraints.</p>
 </p>
   </div>
@@ -1114,14 +1265,32 @@ in Firefox when getUserMedia is invoked.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Parses the bandwidth configuration.</p>
 <ul>
 <li>In low-bandwidth environment, it&#39;s mostly managed by the browser.
@@ -1271,14 +1440,32 @@ environment whichever way is possible.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Parses the stream muted configuration.</p>
 </p>
   </div>
@@ -1418,14 +1605,32 @@ environment whichever way is possible.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Parses the video configuration for the getUserMedia constraints.</p>
 </p>
   </div>
@@ -1565,14 +1770,32 @@ environment whichever way is possible.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The protocol the request uses to connect to.</p>
 </p>
   </div>
@@ -1672,14 +1895,32 @@ environment whichever way is possible.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Enables the stereo feature if OPUS is enabled.</p>
 </p>
   </div>
@@ -1816,14 +2057,32 @@ environment whichever way is possible.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Modifies a local session description with the configuration provided</p>
 </p>
   </div>
@@ -1960,14 +2219,32 @@ environment whichever way is possible.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Finds a line in the sdp based on the condition provided</p>
 </p>
   </div>
@@ -2119,14 +2396,32 @@ environment whichever way is possible.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Removes the H264 preference in sdp because other browsers does not support it yet.</p>
 </p>
   </div>
@@ -2263,14 +2558,32 @@ environment whichever way is possible.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Sets the audio, video and DataChannel data bitrate in the sdp.</p>
 <ul>
 <li>In low-environment cases, bandwidth is managed by the browsers
@@ -2415,14 +2728,32 @@ and the quality of the resolution or audio may change to suit.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Set video stream resolution in the sdp.</p>
 <ul>
 <li>As noted, this is not working.</li>
@@ -2565,14 +2896,32 @@ and the quality of the resolution or audio may change to suit.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>The api server.</p>
 </p>
   </div>
@@ -2681,10 +3030,28 @@ and the quality of the resolution or audio may change to suit.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when an ICE gathering state has changed.</p>
 </p>
   </div>
@@ -2867,10 +3234,28 @@ and the quality of the resolution or audio may change to suit.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the socket connection to the signaling
 server has closed.</p>
 </p>
@@ -2968,10 +3353,28 @@ server has closed.</p>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the socket connection has occurred an error.</p>
 </p>
   </div>
@@ -3116,10 +3519,28 @@ server has closed.</p>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the socket connection received a message
 from the signaling server.</p>
 </p>
@@ -3264,10 +3685,28 @@ from the signaling server.</p>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the socket connection to the signaling
 server is open.</p>
 </p>
@@ -3365,10 +3804,28 @@ server is open.</p>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the socket re-tries to connection with fallback ports.</p>
 </p>
   </div>
@@ -3547,10 +4004,28 @@ server is open.</p>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer&#39;s datachannel state has changed.</p>
 </p>
   </div>
@@ -3733,10 +4208,28 @@ server is open.</p>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a data transfer state has changed.</p>
 <ul>
 <li>Note that <u>transferInfo.data</u> sends the blob data, and
@@ -4305,10 +4798,28 @@ no longer a blob url.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer&#39;s handshake progress has changed.</p>
 </p>
   </div>
@@ -4523,10 +5034,28 @@ no longer a blob url.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a message being broadcasted is received.</p>
 <ul>
 <li>This is changed from <b>chatMessageReceived</b>,
@@ -5571,10 +6100,28 @@ and <b>publicMessage</b> is removed from the specs.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a remote stream has become available.</p>
 <ul>
 <li>This occurs after the user joins the room.</li>
@@ -5837,10 +6384,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when webcam or microphone media access fails.</p>
 </p>
   </div>
@@ -5985,10 +6550,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when it&#39;s required to have audio or video access.</p>
 </p>
   </div>
@@ -6084,10 +6667,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when media access to MediaStream has stopped.</p>
 </p>
   </div>
@@ -6183,10 +6784,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when webcam or microphone media acces passes.</p>
 </p>
   </div>
@@ -6331,10 +6950,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer connection health has changed.</p>
 </p>
   </div>
@@ -6517,10 +7154,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer Connection state has changed.</p>
 </p>
   </div>
@@ -6703,10 +7358,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer joins the room.</p>
 </p>
   </div>
@@ -7513,10 +8186,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer leaves the room</p>
 </p>
   </div>
@@ -8323,10 +9014,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer&#39;s connection is restarted.</p>
 </p>
   </div>
@@ -9077,10 +9786,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer information is updated.</p>
 </p>
   </div>
@@ -9887,14 +10614,32 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-       
-      <p>
-        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-      </p>
-              
-    </blockquote>
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when a peer joins the room</p>
 </p>
   </div>
@@ -10043,10 +10788,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired whether the room is ready for use.</p>
 </p>
   </div>
@@ -10345,10 +11108,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when connected to a room and the lock status has changed.</p>
 </p>
   </div>
@@ -11191,10 +11972,28 @@ as (peerId, stream, isSelf) in 0.5.0.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the socket connection failed connecting.</p>
 <ul>
 <li>The difference between this and <b>channelError</b> is that
@@ -11419,10 +12218,28 @@ when connection failed to be established.</li>
 
   <div class="panel-body">
     <blockquote>
-      
+   
   
-               
-    </blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
     <p><p>Event fired when the signaling server warns the user.</p>
 </p>
   </div>
@@ -11641,6 +12458,9 @@ when connection failed to be established.</li>
   </div>
   <!-- /#page-content-wrapper -->
 
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>

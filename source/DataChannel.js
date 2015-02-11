@@ -10,6 +10,9 @@
 function DataChannel(channel, listener) {
   'use strict';
 
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
+
   // Reference of instance
   var com = this;
 

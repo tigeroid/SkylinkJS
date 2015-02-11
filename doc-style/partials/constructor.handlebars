@@ -34,7 +34,7 @@
     <blockquote>
       {{#if instantiable}}
         <p> 
-          <em class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></em> This <mark>{{name}}</mark>mark> constructor is instantiable, meaning you can create a new <mark>{{name}}</mark> class object that would not require any parent dependencies functionalities.
+          <em class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></em> This <mark>{{name}}</mark> constructor is instantiable, meaning you can create a new <mark>{{name}}</mark> class object that would not require any parent dependencies functionalities.
         </p>
       {{else}}
         <p> 
@@ -54,34 +54,6 @@
         </ul>
       </div>
       {{/if}}
-
-      <div class="code-section-item">
-        <h6>Returns:</h6>
-        <ul>
-          {{#if return}} {{#return}}
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              {{#if type}}
-              <span class="type"> : <em>type</em> {{#crossLink type}}{{/crossLink}} </span>
-              {{/if}}
-            </div>
-            {{#if description}}
-            <div class="description">
-              {{{description}}}
-            </div>
-            {{/if}}
-          </li>
-          {{/return}} {{else}}
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-          {{/if}}
-        </ul>
-      </div>
     </div>
 
 

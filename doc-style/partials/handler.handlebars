@@ -56,55 +56,9 @@
     {{/if}}
   </div>
 
+  {{>supported}}
   <div class="panel-body">
-    <blockquote>
-      {{#if deprecated}}
-        <p> 
-          <em class="glyphicon glyphicon-alert" aria-hidden="true"></em> This event handler is deprecated. Please refrain from using this as this would be unsupported in future releases.
-          {{#if deprecationMessage}}
-            <br><br><small>{{deprecationMessage}}</small>
-          {{/if}}
-        </p>
-      {{/if}}
-
-      {{#if support}}
-        <p>
-          <em class="glyphicon glyphicon-check" aria-hidden="true"></em> {{{support}}}
-        </p>
-      {{else}}
-        <p>
-          <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
-          <div class="table-responsive">
-            <table class="table table-condensed table-browsers">
-              <thead>
-                <tr> 
-                  <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-                  <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-                  <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-                  <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-                  <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td> 35+ </td>
-                  <td> 30+ </td>
-                  <td> 21+ </td>
-                  <td> 7+ </td>
-                  <td> 11+ </td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-        </p>
-      {{/if}}
-
-      {{#if overwritten_from}}
-        <p> 
-          <em class="glyphicon glyphicon-edit" aria-hidden="true"></em> This event handler overwrites inherited class method.
-        </p>
-      {{/if}}
-    </blockquote>
+    {{>settings}}
     <p>{{{methodDescription}}}</p>
   </div>
   <div class="panel-body">

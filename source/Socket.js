@@ -1,11 +1,25 @@
 /**
- * Handles the Socket connection.
+ * Handles the socket.io object connection and events.
  * @class Socket
+ * @constructor
+ * @param {JSON} config The socket connection configuration.
+ * @param {String} config.server The socket signaling server.
+ * @param {Array} config.httpsPortList The list of HTTPS ports that the socket connection
+ *    would use. It uses the first port and fallbacks to the next alternative port when connection fails.
+ * @param {Array} config.httpPortList The list of HTTP ports that the socket connection
+ *    would use. It uses the first port and fallbacks to the next alternative port when connection fails.
+ * @parma {String} config.type The type of socket connection. There are two types:
+ * - <code>"WebSocket"</code> indicates a WebSocket connection.
+ * - <code>"XHRPolling"</code> indicates a LongPolling connection.
+ * @param {Function} listener The listener function.
  * @for Skylink
  * @since 0.6.0
  */
 function Socket(config, listener) {
   'use strict';
+  
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
 
   // Reference of instance
   var com = this;
@@ -69,23 +83,12 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.messageQueue = [];
-  
-  /**
-   * The socket readyState.
-   * @attribute readyState
-   * @type String
-   * @required
-   * @private
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.readyState = 'new';
 
   /**
    * The list of available signalling server ports.
    * @attribute ports
-   * @param {Array} http: The list of Http ports.
-   * @param {Array} https: The list of Https ports.
+   * @param {Array} http: The list of HTTP ports.
+   * @param {Array} https: The list of HTTPS ports.
    * @type JSON
    * @private
    * @for Socket
@@ -97,7 +100,7 @@ function Socket(config, listener) {
   };
 
   /**
-   * The socket configuratin.
+   * The socket configuration passed into the <code>io.socket</code>.
    * @attribute config
    * @type JSON
    * @private
@@ -107,9 +110,12 @@ function Socket(config, listener) {
   com.config = {};
 
   /**
-   * The type of socket connection.
+   * The type of socket connection. There are two types:
+   * - <code>"WebSocket"</code> indicates a WebSocket connection.
+   * - <code>"XHRPolling"</code> indicates a LongPolling connection.
    * @attribute type
    * @type String
+   * @default "WebSocket"
    * @private
    * @for Socket
    * @since 0.6.0
@@ -117,7 +123,7 @@ function Socket(config, listener) {
   com.type = config.type || 'WebSocket';
 
   /**
-   * The Socket.io object.
+   * The socket.io object.
    * @attribute Socket
    * @type Object
    * @private
@@ -135,26 +141,6 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.responses = {};
-  
-  /**
-   * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
-   * @private
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.handler = function (event, data) {
-    data.server = com.server;
-    data.port = com.port;
-    data.type = com.type;
-    data.protocol = com.protocol;
-    
-    //log.debug('SocketHandler', event, data); 
-  
-    listener(event, data);
-  };
-
 
   
   /**
@@ -168,7 +154,7 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket has been disconnected.
    * @method ondisconnect
-   * @for Room
+   * @for Socket
    * @since 0.6.0
    */
   com.ondisconnect = function () {};
@@ -176,7 +162,7 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket has connection error.
    * @method onconnecterror
-   * @for Room
+   * @for Socket
    * @since 0.6.0
    */
   com.onconnecterror = function () {};
@@ -184,7 +170,7 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket attempts to reconnect.
    * @method onreconnect
-   * @for Room
+   * @for Socket
    * @since 0.6.0
    */
   com.onreconnect = function () {};
@@ -192,12 +178,25 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket has an exception.
    * @method onerror
-   * @for Room
+   * @for Socket
    * @since 0.6.0
    */
   com.onerror = function () {};
 
   
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @method handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    SocketHandler(com, event, data, listener);
+  };
+
   /**
    * Starts the connection to the signalling server
    * @method connect

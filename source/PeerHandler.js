@@ -1,6 +1,7 @@
 /**
  * Handles all the events received from sub classes.
  * @attribute PeerEventReceivedHandler
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -21,6 +22,7 @@ var PeerEventReceivedHandler = {
 /**
  * Handles all the events to respond to other parent classes.
  * @attribute PeerEventResponseHandler
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -125,6 +127,7 @@ var PeerEventResponseHandler = {
 /**
  * Handles all the message events received from socket.
  * @attribute PeerEventMessageHandler
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -192,7 +195,12 @@ var PeerEventMessageHandler = {
 
 /**
  * Handles the peer class events.
- * @attribute PeerHandler
+ * @method PeerHandler
+ * @param {Object} com The reference to the class object.
+ * @param {String} event The event name.
+ * @param {JSON} data The event data response.
+ * @param {Function} listener The listener function.
+ * @private
  * @for Peer
  * @since 0.6.0
  */

@@ -64,7 +64,7 @@ var DataChannelHandler = function (com, event, data, listener) {
   // Class events
   data.id = com.id;
 
-  fn.applyHandler(RoomEventResponseHandler, params, [com, data, listener]);
+  fn.applyHandler(DataChannelEventResponseHandler, params, [com, data, listener]);
 
   listener(event, data);
 };

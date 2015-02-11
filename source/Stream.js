@@ -1,11 +1,18 @@
 /**
- * Handles the XMLHttpStream and API function calls.
+ * Handles the MediaStream object connection and events.
  * @class Stream
+ * @constructor
+ * @param {Object} channel The MediaStream object to parse and hook events on.
+ * @param {Function} listener The listener function.
+ * @instantiable true
  * @for Skylink
  * @since 0.6.0
  */
 function Stream(stream, config, listener) {
   'use strict';
+
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
 
   // Reference of instance
   var com = this;
@@ -60,10 +67,76 @@ function Stream(stream, config, listener) {
    */
   com.MediaStream = null;
 
+  
   /**
-   * The parent handler that redirects the stream object messages to.
-   * @attribute MediaStream
-   * @type Object
+   * Function to subscribe to when stream object is ready to use.
+   * @method onstart
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.onstart = function () { };
+
+  /**
+   * Function to subscribe to when getUserMedia throws an exception or event has error.
+   * @method onerror
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.onerror = function () { };
+  
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has started.
+   * @method ontrackstart
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackstart = function () { };
+
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has stopped.
+   * @method ontrackstop
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackstop = function () { };
+  
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has been disabled (muted).
+   * @method ontrackmute
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackmute = function () { };
+
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has been enabled (unmuted).
+   * @method ontrackunmute
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackunmute = function () { };
+  
+  /**
+   * Function to subscribe to when MediaStream object has ended.
+   * @method onstop
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.onstop = function () { };
+  
+
+  /**
+   * The handler that the parent classes utilises to listen to events.
+   * @method parentHandler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
    * @private
    * @for Stream
    * @since 0.6.0
@@ -72,67 +145,31 @@ function Stream(stream, config, listener) {
 
   /**
    * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
+   * @method handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
    * @private
-   * @for User
+   * @for Stream
    * @since 0.6.0
    */
   com.handler = function (event, data) {
-    listener(event, data);
-    
-    //log.debug('StreamHandler', event, data); 
-
+    StreamHandler(com, event, data, listener);
+  
     if (typeof com.parentHandler === 'function') {
       com.parentHandler(event, data);
     }
   };
 
-  
   /**
-   * Function to subscribe to when stream has ended.
-   * @method onstreamended
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.onstreamended = function () { };
-  
-  /**
-   * Function to subscribe to when stream track has been ended.
-   * @method ontrackended
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.ontrackended = function () { };
-  
-  /**
-   * Function to subscribe to when stream track has been muted.
-   * @method ontrackmute
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.ontrackmute = function () { };
-
-  /**
-   * Function to subscribe to when stream track has been unmuted.
-   * @method ontrackunmute
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.ontrackunmute = function () { };
-  
-
-  /**
-   * Starts a MediaStream object connection with getUserMedia.
+   * Starts a MediaStream connection with getUserMedia.
    * @method start
-   * @trigger StreamJoined, mediaAccessRequired
+   * @private
    * @for Stream
    * @since 0.6.0
    */
   com.start = function () {
     window.getUserMedia(com.constraints, com.bind, function (error) {
       com.handler('stream:error', {
-        id: com.id,
         error: error,
         sourceType: com.sourceType
       });
@@ -142,7 +179,8 @@ function Stream(stream, config, listener) {
   /**
    * Binds events to MediaStream object.
    * @method bind
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {Object} bindStream The MediaStream object to bind events to.
+   * @private
    * @for Stream
    * @since 0.6.0
    */
@@ -163,7 +201,6 @@ function Stream(stream, config, listener) {
     com.MediaStream = bindStream;
  
     com.handler('stream:start', {
-      id: com.id,
       label: bindStream.label,
       constraints: com.constraints,
       sourceType: com.sourceType
@@ -172,8 +209,10 @@ function Stream(stream, config, listener) {
 
   /**
    * Binds events to MediaStreamTrack object.
-   * @method bind
-   * @trigger StreamJoined, mediaAccessRequired
+   * @method bindTracks
+   * @param {Array} bindTracks The MediaStreamTracks from the MediaStream object.
+   * @param {Object} bindTracks.n The MediaStreamTrack object to bind events to.
+   * @private
    * @for Stream
    * @since 0.6.0
    */
@@ -185,8 +224,7 @@ function Stream(stream, config, listener) {
       // bindTracks[i].onstarted = com.onStarted;
       track.onended = function () {
         com.handler('stream:track:stop', {
-          streamId: com.id,
-          id: track.newId,
+          trackId: track.newId,
           kind: track.kind,
           label: track.label,
           enabled: track.enabled,
@@ -217,8 +255,7 @@ function Stream(stream, config, listener) {
       track.enabled = isEnabled;
 
       com.handler('stream:track:start', {
-        streamId: com.id,
-        id: track.newId,
+        trackId: track.newId,
         kind: track.kind,
         label: track.label,
         enabled: track.enabled,
@@ -228,9 +265,9 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Attaches the Stream object to a video element.
+   * Attaches the MediaStream object to a video element.
    * @method attachElement
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {DOM} element The video DOM element to bind the MediaStream to.
    * @for Stream
    * @since 0.6.0
    */
@@ -245,16 +282,18 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Handles the non-implemented firefox onended event for stream.
+   * Handles the differences for non-implemented onended event for MediaStream.
    * @method bindOnStreamEnded
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {Object} bindStream The MediaStream object to bind the event to.
+   * @return {Function|Object} The interval object workaround for Firefox or the
+   *   event handler function for supported browsers.
+   * @private
    * @for Stream
    * @since 0.6.0
    */
   com.bindOnStreamEnded = function (bindStream) {
     var fn = function () {
       com.handler('stream:stop', {
-        id: com.id,
         label: stream.label,
         constraints: com.constraints,
         sourceType: com.sourceType
@@ -321,9 +360,8 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Mutes all audio MediaStreamTracks.
+   * Mutes all audio MediaStreamTracks of the MediaStream object.
    * @method muteAudio
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
@@ -334,8 +372,7 @@ function Stream(stream, config, listener) {
       track.enabled = false;
       
       com.handler('stream:track:mute', {
-        streamId: com.id,
-        id: track.newId,
+        trackId: track.newId,
         kind: track.kind,
         label: track.label,
         enabled: track.enabled,
@@ -349,9 +386,8 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Unmutes all audio MediaStreamTracks.
+   * Unmutes all audio MediaStreamTracks of the MediaStream object.
    * @method unmuteAudio
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
@@ -362,8 +398,7 @@ function Stream(stream, config, listener) {
       track.enabled = true;
       
       com.handler('stream:track:unmute', {
-        streamId: com.id,
-        id: track.newId,
+        trackId: track.newId,
         kind: track.kind,
         label: track.label,
         enabled: track.enabled,
@@ -377,9 +412,8 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Stops all audio MediaStreamTracks streaming.
+   * Stops all audio MediaStreamTracks streaming in the MediaStream object.
    * @method stopAudio
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
@@ -409,9 +443,8 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Mutes all video MediaStreamTracks.
+   * Mutes all video MediaStreamTracks of the MediaStream object.
    * @method muteVideo
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
@@ -422,8 +455,7 @@ function Stream(stream, config, listener) {
       track.enabled = false;
       
       com.handler('stream:track:mute', {
-        streamId: com.id,
-        id: track.newId,
+        trackId: track.newId,
         kind: track.kind,
         label: track.label,
         enabled: track.enabled,
@@ -437,9 +469,8 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Unmutes all video MediaStreamTracks.
+   * Unmutes all video MediaStreamTracks of the MediaStream object.
    * @method unmuteVideo
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
@@ -450,8 +481,7 @@ function Stream(stream, config, listener) {
       track.enabled = true;
       
       com.handler('stream:track:unmute', {
-        streamId: com.id,
-        id: track.newId,
+        trackId: track.newId,
         kind: track.kind,
         label: track.label,
         enabled: track.enabled,
@@ -465,9 +495,8 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Stops all video MediaStreamTracks streaming.
+   * Stops all video MediaStreamTracks streaming of the MediaStream object.
    * @method stopVideo
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
@@ -496,6 +525,12 @@ function Stream(stream, config, listener) {
     });
   };
 
+  /**
+   * Stops MediaStream object streaming.
+   * @method stop
+   * @for Stream
+   * @since 0.6.0
+   */
   com.stop = function () {
     // Stop MediaStream tracks
     com.stopVideo();
@@ -504,6 +539,7 @@ function Stream(stream, config, listener) {
     com.MediaStream.stop();
   };
   
+
   // Throw an error if adapterjs is not loaded
   if (!window.attachMediaStream) {
     throw new Error('Required dependency adapterjs not found');

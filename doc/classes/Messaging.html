@@ -1,0 +1,6745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="Messaging - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <li class="header first-item">Information</li>
+    <li><a href="../" data="">Introduction</a></li>
+    <li><a href="./testing.html">Running Tests</a></li>
+    <li class="header">Classes</li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Messaging.html"> Messaging </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1>Messaging Class <small> <span class="badge">Version </span></small></h1>
+
+
+<hr class="strike">
+
+<ol class="breadcrumb">
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
+  <li class="active">Messaging</li>
+</ol>
+
+<div class="description"></p>
+
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      
+
+      
+
+      
+
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Events</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#event_answer"> <code>answer</code> </a> </td> <td> <p>The message that responses to a user&#39;s peer connection offer.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_bye"> <code>bye</code> </a> </td> <td> <p>The message that is received when user has left the room.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_candidate"> <code>candidate</code> </a> </td> <td> <p>The message that is received when candidate is generated from the user&#39;s peer connection.
+It&#39;s recommend to add all the relevant information when instianting a new <var>RTCIceCandidate</var>
+  object.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_enter"> <code>enter</code> </a> </td> <td> <p>The message that indicates that a user has joined the room.
+This is sent when user has just started a connection to the room.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_inRoom"> <code>inRoom</code> </a> </td> <td> <p>The message that indicates that self user is in the room.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_muteAudioEvent"> <code>muteAudioEvent</code> </a> </td> <td> <p>The message that is received when user&#39;s peer connection audio stream mute status
+  have changed. This is inline with <var>MediaStreamTrack</var> API&#39;s <code>enabled = true/false</code>.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_muteVideoEvent"> <code>muteVideoEvent</code> </a> </td> <td> <p>The message that is received when user&#39;s peer connection video stream mute status
+  have changed. This is inline with <var>MediaStreamTrack</var> API&#39;s <code>enabled = true/false</code>.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_offer"> <code>offer</code> </a> </td> <td> <p>The message that starts a user&#39;s peer connection offer and answer handshake.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_redirect"> <code>redirect</code> </a> </td> <td> <p>The message that is received when user is receiving a rejection or warning from signaling server.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_restart"> <code>restart</code> </a> </td> <td> <p>The message that is received when user&#39;s peer connection is going through a refresh.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_roomLockEvent"> <code>roomLockEvent</code> </a> </td> <td> <p>The message that is received when the current room lock status have changed.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_updateUserEvent"> <code>updateUserEvent</code> </a> </td> <td> <p>The message that is received when user&#39;s custom data is updated.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_welcome"> <code>welcome</code> </a> </td> <td> <p>The message that indicates that a user has joined the room.
+This is sent as a response to user&#39;s &quot;enter&quot; message.</p>
+ </td> </tr>
+          
+        </tbody>
+      
+
+      
+    </table>
+  </div>
+</div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+<div class="section code-section">
+  <h4>Events</h4>
+   <div id="event_answer" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      answer
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l223"><code>source&#x2F;RoomMessageHandler.js:223</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that responses to a user&#39;s peer connection offer.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">sdp</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The answer session description.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">prid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">target</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The targeted user id to receive answer.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor answer ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_answer" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>answer</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l223"><code>source&#x2F;RoomMessageHandler.js:223</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that responses to a user&#39;s peer connection offer.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">sdp</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The answer session description.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">prid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The peer connection id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">target</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The targeted user id to receive answer.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_bye" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bye
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l426"><code>source&#x2F;RoomMessageHandler.js:426</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that is received when user has left the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor bye ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_bye" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>bye</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l426"><code>source&#x2F;RoomMessageHandler.js:426</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that is received when user has left the room.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_candidate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      candidate
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l245"><code>source&#x2F;RoomMessageHandler.js:245</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that is received when candidate is generated from the user&#39;s peer connection.
+It&#39;s recommend to add all the relevant information when instianting a new <var>RTCIceCandidate</var>
+  object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">candidate</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The candidate&#39;s candidate session description.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">id</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The candidate&#39;s sdpMid.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">label</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The candidate&#39;s sdpMLineIndex.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">prid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">target</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The targeted user id to receive generated candidate.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor candidate ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_candidate" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>candidate</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l245"><code>source&#x2F;RoomMessageHandler.js:245</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that is received when candidate is generated from the user&#39;s peer connection.
+It&#39;s recommend to add all the relevant information when instianting a new <var>RTCIceCandidate</var>
+  object.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">candidate</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The candidate&#39;s candidate session description.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">id</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The candidate&#39;s sdpMid.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">label</code>
+                    <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The candidate&#39;s sdpMLineIndex.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">prid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The peer connection id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">target</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The targeted user id to receive generated candidate.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_enter" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      enter
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l61"><code>source&#x2F;RoomMessageHandler.js:61</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that indicates that a user has joined the room.
+This is sent when user has just started a connection to the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">prid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The shared peer connection id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection streaming configuration.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> JSON | Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The audio stream configuration.
+   If parsed as a boolean, other configuration settings under the audio
+   configuration would be set as the default setting in the connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The flag that indiciates
+   if stereo is enabled for this connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.sourceId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The source id of the audio MediaStreamTrack
+   used for this connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> String | Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video stream configuration.
+   If parsed as a boolean, other configuration settings under the video
+   configuration would be set as the default setting in the connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video streaming resolution.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video resolution height.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video stream framerate.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.sourceId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The source id of the video MediaStreamTrack
+   used for this connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">status</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The stream MediaStreamTrack status.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">status.audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The flag that indicates if audio is muted.
+   If audio is set to false, this would be set as true.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">status.videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The flag that indicates if video is muted.
+   If video is set to false, this would be set as true.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user custom data. Only given for &quot;main&quot; peer connections.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">agent</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user&#39;s browser agent information. Only given for &quot;main&quot; peer connections.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The user's browser agent name. For other SDKs, it's indicated
+   by their type of device <code>E.g. ios, android</code>. For components, it's indicated
+   by their type <code>E.g. MCU, Recording</code>.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">version</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The user's browser agent version. For other SDKs, it's indicated
+   by their version of device OS <code>ios8 = 8. android kitkat = 4.4</code>. For components, it's indicated
+   by their version <code>E.g. 0.1.0, 0.2.0</code>.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">webRTCType</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The user's browser agent webrtc implementation type. For other SDKs or
+   components, use <code>other</code>.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">bandwidth</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection bandwidth configuration.
+   This does fixes the bandwidth but doesn&#39;t prevent alterations done by browser for smoother streaming.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The bandwidth configuration for the audio stream.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The bandwidth configuration for the video stream.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The bandwidth configuration for the data stream.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor enter ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_enter" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>enter</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l61"><code>source&#x2F;RoomMessageHandler.js:61</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that indicates that a user has joined the room.
+This is sent when user has just started a connection to the room.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">prid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The shared peer connection id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">stream</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The peer connection streaming configuration.</p>
+
+                    </div>
+
+                    
+                      <ul class="params-list">
+                        
+                          <li class="param">
+                            <code class="param-name">audio</code>
+                            <span class="type"><b>{</b>JSON | Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The audio stream configuration.
+   If parsed as a boolean, other configuration settings under the audio
+   configuration would be set as the default setting in the connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">audio.stereo</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The flag that indiciates
+   if stereo is enabled for this connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">audio.sourceId</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The source id of the audio MediaStreamTrack
+   used for this connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video</code>
+                            <span class="type"><b>{</b>String | Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The video stream configuration.
+   If parsed as a boolean, other configuration settings under the video
+   configuration would be set as the default setting in the connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.resolution</code>
+                            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The video streaming resolution.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.resolution.width</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The video resolution width.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.resolution.height</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The video resolution height.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.frameRate</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The video stream framerate.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.sourceId</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The source id of the video MediaStreamTrack
+   used for this connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">status</code>
+                            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The stream MediaStreamTrack status.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">status.audioMuted</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The flag that indicates if audio is muted.
+   If audio is set to false, this would be set as true.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">status.videoMuted</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The flag that indicates if video is muted.
+   If video is set to false, this would be set as true.
+                            </div>
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">userData</code>
+                    <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user custom data. Only given for &quot;main&quot; peer connections.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">agent</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user&#39;s browser agent information. Only given for &quot;main&quot; peer connections.</p>
+
+                    </div>
+
+                    
+                      <ul class="params-list">
+                        
+                          <li class="param">
+                            <code class="param-name">name</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The user's browser agent name. For other SDKs, it's indicated
+   by their type of device <code>E.g. ios, android</code>. For components, it's indicated
+   by their type <code>E.g. MCU, Recording</code>.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">version</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The user's browser agent version. For other SDKs, it's indicated
+   by their version of device OS <code>ios8 = 8. android kitkat = 4.4</code>. For components, it's indicated
+   by their version <code>E.g. 0.1.0, 0.2.0</code>.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">webRTCType</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The user's browser agent webrtc implementation type. For other SDKs or
+   components, use <code>other</code>.
+                            </div>
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">bandwidth</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The peer connection bandwidth configuration.
+   This does fixes the bandwidth but doesn&#39;t prevent alterations done by browser for smoother streaming.</p>
+
+                    </div>
+
+                    
+                      <ul class="params-list">
+                        
+                          <li class="param">
+                            <code class="param-name">audio</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The bandwidth configuration for the audio stream.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The bandwidth configuration for the video stream.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">data</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The bandwidth configuration for the data stream.
+                            </div>
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_inRoom" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      inRoom
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l18"><code>source&#x2F;RoomMessageHandler.js:18</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that indicates that self user is in the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">sid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The self user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">pc_config</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCPeerConnection configuration.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">iceServers</code>
+    <span class="type"> : <em>type</em> Array </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The list of ICE servers.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor inRoom ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_inRoom" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>inRoom</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l18"><code>source&#x2F;RoomMessageHandler.js:18</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that indicates that self user is in the room.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">sid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The self user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">pc_config</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The RTCPeerConnection configuration.</p>
+
+                    </div>
+
+                    
+                      <ul class="params-list">
+                        
+                          <li class="param">
+                            <code class="param-name">iceServers</code>
+                            <span class="type"><b>{</b>Array<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The list of ICE servers.
+                            </div>
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_muteAudioEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteAudioEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l291"><code>source&#x2F;RoomMessageHandler.js:291</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that is received when user&#39;s peer connection audio stream mute status
+  have changed. This is inline with <var>MediaStreamTrack</var> API&#39;s <code>enabled = true/false</code>.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">muted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The updated audio stream mute status.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">prid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The shared peer connection id.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor muteAudioEvent ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_muteAudioEvent" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>muteAudioEvent</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l291"><code>source&#x2F;RoomMessageHandler.js:291</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that is received when user&#39;s peer connection audio stream mute status
+  have changed. This is inline with <var>MediaStreamTrack</var> API&#39;s <code>enabled = true/false</code>.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">muted</code>
+                    <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The updated audio stream mute status.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">prid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The shared peer connection id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_muteVideoEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteVideoEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l313"><code>source&#x2F;RoomMessageHandler.js:313</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that is received when user&#39;s peer connection video stream mute status
+  have changed. This is inline with <var>MediaStreamTrack</var> API&#39;s <code>enabled = true/false</code>.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">muted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The updated video stream mute status.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">prid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The shared peer connection id.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor muteVideoEvent ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_muteVideoEvent" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>muteVideoEvent</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l313"><code>source&#x2F;RoomMessageHandler.js:313</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that is received when user&#39;s peer connection video stream mute status
+  have changed. This is inline with <var>MediaStreamTrack</var> API&#39;s <code>enabled = true/false</code>.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">muted</code>
+                    <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The updated video stream mute status.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">prid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The shared peer connection id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_offer" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      offer
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l201"><code>source&#x2F;RoomMessageHandler.js:201</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that starts a user&#39;s peer connection offer and answer handshake.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">sdp</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The offer session description.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">prid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">target</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The targeted user id to receive offer.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor offer ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_offer" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>offer</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l201"><code>source&#x2F;RoomMessageHandler.js:201</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that starts a user&#39;s peer connection offer and answer handshake.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">sdp</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The offer session description.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">prid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The peer connection id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">target</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The targeted user id to receive offer.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_redirect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      redirect
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l388"><code>source&#x2F;RoomMessageHandler.js:388</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that is received when user is receiving a rejection or warning from signaling server.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">action</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The action received that indicates if user is warned or rejected.
+   <code>&quot;warning&quot;</code> is when signaling is warning user of the action and comply accordingly.
+   <code>&quot;reject&quot;</code> is when signaling has kicked user out of the room.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">info</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The signaling message for the redirect message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">reason</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The reason for the action taken by signaling.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor redirect ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_redirect" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>redirect</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l388"><code>source&#x2F;RoomMessageHandler.js:388</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that is received when user is receiving a rejection or warning from signaling server.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">action</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The action received that indicates if user is warned or rejected.
+   <code>&quot;warning&quot;</code> is when signaling is warning user of the action and comply accordingly.
+   <code>&quot;reject&quot;</code> is when signaling has kicked user out of the room.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">info</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The signaling message for the redirect message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">reason</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The reason for the action taken by signaling.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_restart" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      restart
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l362"><code>source&#x2F;RoomMessageHandler.js:362</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that is received when user&#39;s peer connection is going through a refresh.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">prid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The shared peer connection id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">SDPType</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The handshake SDP type. <code>&quot;offer&quot;</code> is for the peer 
+  connection that initiated the restart. <code>&quot;answer&quot;</code> is for the peer
+  connection that is responding to the restart.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">sdp</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The session description message for restart.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The <var>RTCSessionDescription</var> type.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">sdp</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The <var>RTCSessionDescription</var> session description.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor restart ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_restart" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>restart</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l362"><code>source&#x2F;RoomMessageHandler.js:362</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that is received when user&#39;s peer connection is going through a refresh.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">prid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The shared peer connection id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">SDPType</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The handshake SDP type. <code>&quot;offer&quot;</code> is for the peer 
+  connection that initiated the restart. <code>&quot;answer&quot;</code> is for the peer
+  connection that is responding to the restart.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">sdp</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The session description message for restart.</p>
+
+                    </div>
+
+                    
+                      <ul class="params-list">
+                        
+                          <li class="param">
+                            <code class="param-name">type</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The <var>RTCSessionDescription</var> type.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">sdp</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The <var>RTCSessionDescription</var> session description.
+                            </div>
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_roomLockEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      roomLockEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l335"><code>source&#x2F;RoomMessageHandler.js:335</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that is received when the current room lock status have changed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">locked</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The updated room lock status.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor roomLockEvent ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_roomLockEvent" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>roomLockEvent</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l335"><code>source&#x2F;RoomMessageHandler.js:335</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that is received when the current room lock status have changed.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">locked</code>
+                    <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The updated room lock status.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_updateUserEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      updateUserEvent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l271"><code>source&#x2F;RoomMessageHandler.js:271</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that is received when user&#39;s custom data is updated.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The updated custom user data.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor updateUserEvent ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_updateUserEvent" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>updateUserEvent</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l271"><code>source&#x2F;RoomMessageHandler.js:271</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that is received when user&#39;s custom data is updated.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">userData</code>
+                    <span class="type"><b>{</b>JSON | String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The updated custom user data.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_welcome" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      welcome
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l129"><code>source&#x2F;RoomMessageHandler.js:129</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The message that indicates that a user has joined the room.
+This is sent as a response to user&#39;s &quot;enter&quot; message.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">type</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The type of message.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">prid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The shared peer connection id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection streaming configuration.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> JSON | Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The audio stream configuration.
+   If parsed as a boolean, other configuration settings under the audio
+   configuration would be set as the default setting in the connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The flag that indiciates
+   if stereo is enabled for this connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio.sourceId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The source id of the audio MediaStreamTrack
+   used for this connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> String | Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video stream configuration.
+   If parsed as a boolean, other configuration settings under the video
+   configuration would be set as the default setting in the connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video streaming resolution.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.resolution.height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video resolution height.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video stream framerate.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video.sourceId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The source id of the video MediaStreamTrack
+   used for this connection.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">status</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The stream MediaStreamTrack status.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">status.audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The flag that indicates if audio is muted.
+   If audio is set to false, this would be set as true.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">status.videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The flag that indicates if video is muted.
+   If video is set to false, this would be set as true.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user custom data. Only given for &quot;main&quot; peer connections.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">agent</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user&#39;s browser agent information. Only given for &quot;main&quot; peer connections.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The user's browser agent name. For other SDKs, it's indicated
+   by their type of device <code>E.g. ios, android</code>. For components, it's indicated
+   by their type <code>E.g. MCU, Recording</code>.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">version</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The user's browser agent version. For other SDKs, it's indicated
+   by their version of device OS <code>ios8 = 8. android kitkat = 4.4</code>. For components, it's indicated
+   by their version <code>E.g. 0.1.0, 0.2.0</code>.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">webRTCType</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The user's browser agent webrtc implementation type. For other SDKs or
+   components, use <code>other</code>.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">weight</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The priority weight of the message. In use-cases where both users receives each
+   others &quot;enter&quot; message during the first handshake, the priority would indicate which user gets to do 
+   the offer.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">bandwidth</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The peer connection bandwidth configuration.
+   This does fixes the bandwidth but doesn&#39;t prevent alterations done by browser for smoother streaming.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The bandwidth configuration for the audio stream.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The bandwidth configuration for the video stream.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The bandwidth configuration for the data stream.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">rid</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room id.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">target</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The targeted user id to receive welcome.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor welcome ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_welcome" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>welcome</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomMessageHandler.js.html#l129"><code>source&#x2F;RoomMessageHandler.js:129</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>The message that indicates that a user has joined the room.
+This is sent as a response to user&#39;s &quot;enter&quot; message.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">message</code>
+            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The message received.</p>
+
+            </div>
+
+            
+              <ul class="params-list">
+                
+                  <li class="param">
+                    <code class="param-name">type</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The type of message.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">mid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">prid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The shared peer connection id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">stream</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The peer connection streaming configuration.</p>
+
+                    </div>
+
+                    
+                      <ul class="params-list">
+                        
+                          <li class="param">
+                            <code class="param-name">audio</code>
+                            <span class="type"><b>{</b>JSON | Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The audio stream configuration.
+   If parsed as a boolean, other configuration settings under the audio
+   configuration would be set as the default setting in the connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">audio.stereo</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The flag that indiciates
+   if stereo is enabled for this connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">audio.sourceId</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The source id of the audio MediaStreamTrack
+   used for this connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video</code>
+                            <span class="type"><b>{</b>String | Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The video stream configuration.
+   If parsed as a boolean, other configuration settings under the video
+   configuration would be set as the default setting in the connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.resolution</code>
+                            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The video streaming resolution.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.resolution.width</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The video resolution width.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.resolution.height</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The video resolution height.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.frameRate</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The video stream framerate.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video.sourceId</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The source id of the video MediaStreamTrack
+   used for this connection.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">status</code>
+                            <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The stream MediaStreamTrack status.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">status.audioMuted</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The flag that indicates if audio is muted.
+   If audio is set to false, this would be set as true.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">status.videoMuted</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The flag that indicates if video is muted.
+   If video is set to false, this would be set as true.
+                            </div>
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">userData</code>
+                    <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user custom data. Only given for &quot;main&quot; peer connections.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">agent</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The user&#39;s browser agent information. Only given for &quot;main&quot; peer connections.</p>
+
+                    </div>
+
+                    
+                      <ul class="params-list">
+                        
+                          <li class="param">
+                            <code class="param-name">name</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The user's browser agent name. For other SDKs, it's indicated
+   by their type of device <code>E.g. ios, android</code>. For components, it's indicated
+   by their type <code>E.g. MCU, Recording</code>.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">version</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The user's browser agent version. For other SDKs, it's indicated
+   by their version of device OS <code>ios8 = 8. android kitkat = 4.4</code>. For components, it's indicated
+   by their version <code>E.g. 0.1.0, 0.2.0</code>.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">webRTCType</code>
+                            <span class="type"><b>{</b>String<b>}</b></span>
+
+                            
+                            
+
+                            <div class="param-description">
+                              The user's browser agent webrtc implementation type. For other SDKs or
+   components, use <code>other</code>.
+                            </div>
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">weight</code>
+                    <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The priority weight of the message. In use-cases where both users receives each
+   others &quot;enter&quot; message during the first handshake, the priority would indicate which user gets to do 
+   the offer.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">bandwidth</code>
+                    <span class="type"><b>{</b>JSON<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The peer connection bandwidth configuration.
+   This does fixes the bandwidth but doesn&#39;t prevent alterations done by browser for smoother streaming.</p>
+
+                    </div>
+
+                    
+                      <ul class="params-list">
+                        
+                          <li class="param">
+                            <code class="param-name">audio</code>
+                            <span class="type"><b>{</b>Integer<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The bandwidth configuration for the audio stream.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">video</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The bandwidth configuration for the video stream.
+                            </div>
+                          </li>
+                        
+                          <li class="param">
+                            <code class="param-name">data</code>
+                            <span class="type"><b>{</b>Boolean<b>}</b></span>
+
+                            <span class="label">Optional</span>
+                            
+
+                            <div class="param-description">
+                              The bandwidth configuration for the data stream.
+                            </div>
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">rid</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The room id.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+                  <li class="param">
+                    <code class="param-name">target</code>
+                    <span class="type"><b>{</b>String<b>}</b></span>
+
+                    
+                    
+
+                    <div class="param-description">
+                      <p>The targeted user id to receive welcome.</p>
+
+                    </div>
+
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>--> 
+</div>
+
+
+  <!--
+
+
+
+
+
+    
+        Module: <a href="../modules/Skylink.html">Skylink</a>
+    
+
+
+
+-->
+  </div>
+  <!-- /#page-content-wrapper -->
+
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

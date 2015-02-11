@@ -31,7 +31,6 @@
 <a href="#menu-toggle" id="menu-toggle">
   <!-- Menu icon by Icons8 -->
   <img src="../assets/img/icons/menu.png">
-  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
   </span>
 </a>
 <div id="sidebar-wrapper">
@@ -42,12 +41,16 @@
         <small>Version: 0.5.7</small>
       </a>
     </li>
-    <hr>
+    <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
+    <li><a href="./testing.html">Running Tests</a></li>
+    <li class="header">Classes</li>
     
       <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
       <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Messaging.html"> Messaging </a></li>
     
       <li><a href="../classes/Peer.html"> Peer </a></li>
     
@@ -86,6 +89,7 @@
 /**
  * Handles all the events received from sub classes.
  * @attribute RoomEventReceivedHandler
+ * @private
  * @for Room
  * @since 0.6.0
  */
@@ -241,7 +245,12 @@ var RoomEventResponseHandler = {
 
 /**
  * Handles the room class events.
- * @attribute RoomHandler
+ * @method RoomHandler
+ * @param {Object} com The reference to the class object.
+ * @param {String} event The event name.
+ * @param {JSON} data The event data response.
+ * @param {Function} listener The listener function.
+ * @private
  * @for Room
  * @since 0.6.0
  */
@@ -264,275 +273,15 @@ var RoomHandler = function (com, event, data, listener) {
   
   log.debug(&#x27;RoomHandler&#x27;, event, data);
 };
-
-/**
- * Stores the room messaging events.
- * @attribute MessageHandlerEvent
- * @for Room
- * @since 0.6.0
- */
-var MessageHandlerEvent = {
-  /**
-   * Self is in the room.
-   * @property inRoom
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
-  inRoom: function (com, data, listener) {
-    com.self.id = data.sid;
-
-    com.iceServers = data.pc_config;
-
-    com.socket.send({
-      type: &#x27;enter&#x27;,
-      mid: com.self.id,
-      rid: com.id,
-      prid: &#x27;main&#x27;,
-      agent: window.webrtcDetectedBrowser,
-      version: window.webrtcDetectedVersion,
-      webRTCType: window.webrtcDetectedType,
-      userInfo: com.self.getInfo(&#x27;main&#x27;)
-    });
-
-    com.handler(&#x27;room:join&#x27;, {
-      userId: com.self.id,
-      user: com.self,
-      isSelf: true
-    });
-
-    if (typeof com.onjoin === &#x27;function&#x27;) {
-      com.onjoin(data.mid);
-    }
-  },
-
-  /**
-   * User has sent self an enter.
-   * @property enter
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
-  enter: function (com, data, listener) {
-    var user = com.users[data.mid];
-    
-    if (fn.isEmpty(user)) {
-      user = new User(data, com.handler);
-      
-      com.users[data.mid] = user;
-    }
-  },
-
-  /**
-   * User has sent self an welcome.
-   * @property enter
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
-  welcome: function (com, data, listener) {
-    var user = com.users[data.mid];
-    
-    if (fn.isEmpty(user)) {
-      user = new User(data, com.handler);
-      
-      com.users[data.mid] = user;
-    }
-  },
-
-  /**
-   * A user has sent an offer to self.
-   * @property offer
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
-  offer: function (com, data, listener) {
-    var user = com.users[data.mid];
-
-    if (!fn.isEmpty(user)) {
-      user.handler(&#x27;message:offer&#x27;, data);
-    }
-  },
-
-  /**
-   * A user has sent an answer to self.
-   * @property answer
-   * @type JSON
-   * @private
-   * @since 0.6.0
-   */
-  answer: function (com, data, listener) {
-    var user = com.users[data.mid];
-
-    if (!fn.isEmpty(user)) {
-      user.handler(&#x27;message:answer&#x27;, data);
-    }
-  },
-
-  /**
-   * A user has sent an ICE candidate to self.
-   * @property candidate
-   * @type Function
-   * @private
-   * @since 0.6.0
-   */
-  candidate: function (com, data, listener) {
-    var user = com.users[data.mid];
-
-    if (!fn.isEmpty(user)) {
-      user.handler(&#x27;message:candidate&#x27;, data);
-    }
-  },
-
-  /**
-   * A user has updated their own custom user data.
-   * @property updateUserEvent
-   * @type Function
-   * @private
-   * @since 0.6.0
-   */
-  updateUserEvent: function (com, data, listener) {
-    var user = com.users[data.mid];
-
-    if (!fn.isEmpty(user)) {
-      user.handler(&#x27;message:updateUserEvent&#x27;, data.userData);
-    }
-  },
-
-  /**
-   * An audio stream muted status has been updated.
-   * @property muteAudioEvent
-   * @type Function
-   * @private
-   * @since 0.6.0
-   */
-  muteAudioEvent: function (com, data, listener) {
-    var user = com.users[data.mid];
-
-    if (!fn.isEmpty(user)) {
-      user.handler(&#x27;message:muteAudioEvent&#x27;, data);
-    }
-  },
-
-  /**
-   * A video stream muted status has been updated.
-   * @property muteVideoEvent
-   * @type Function
-   * @private
-   * @since 0.6.0
-   */
-  muteVideoEvent: function (com, data, listener) {
-    var user = com.users[data.mid];
-
-    if (!fn.isEmpty(user)) {
-      user.handler(&#x27;message:muteVideoEvent&#x27;, data);
-    }
-  },
-
-  /**
-   * The room is lock status has been updated.
-   * @property roomLockEvent
-   * @type Function
-   * @private
-   * @since 0.6.0
-   */
-  roomLockEvent: function (com, data, listener) {
-    com.locked = data.lock;
-
-    if (com.locked) {
-      if (typeof com.onlock === &#x27;function&#x27;) {
-        com.onlock(data.mid);
-      }
-
-    } else {
-      if (typeof com.onunlock === &#x27;function&#x27;) {
-        com.onunlock(data.mid);
-      }
-    }
-  },
-
-  /**
-   * The room is lock status has been updated.
-   * @property roomLockEvent
-   * @type Function
-   * @private
-   * @since 0.6.0
-   */
-  restart: function (com, data, listener) {
-    var user = com.users[data.mid];
-
-    if (!fn.isEmpty(user)) {
-      user.handler(&#x27;message:restart&#x27;, data);
-    }
-  },
-
-  /**
-   * The self is redirected or warned.
-   * @property redirect
-   * @type Function
-   * @private
-   * @since 0.6.0
-   */
-  redirect: function (com, data, listener) {
-    if (data.action === &#x27;reject&#x27;) {
-      if (typeof com.onkick === &#x27;function&#x27;) {
-        com.onkick({
-          message: data.info,
-          reason: data.reason
-        });
-        
-        com.leave();
-      }
-    }
-
-    if (data.action === &#x27;warning&#x27;) {
-      if (typeof com.onwarn === &#x27;function&#x27;) {
-        com.onwarn({
-          message: data.info,
-          reason: data.reason
-        });
-      }
-    }
-  },
-
-  /**
-   * The a user or self is disconnected from room.
-   * @property bye
-   * @type Function
-   * @private
-   * @since 0.6.0
-   */
-  bye: function (com, data, listener) {
-    var user = com.users[data.mid];
-
-    if (!fn.isEmpty(user)) {
-      user.disconnect();
-    }
-  }
-
-};
-
-/**
- * Handles the room messaging events.
- * @attribute MessageHandler
- * @for Room
- * @since 0.6.0
- */
-var MessageHandler = function (com, listener) {
-  // Handles the socket events
-  fn.forEach(MessageHandlerEvent, function (response, event) {
-    com.socket.when(event, function (data) {
-      response(com, data, listener);
-    });
-  });
-};
     </pre>
 </div>
 
   </div>
   <!-- /#page-content-wrapper -->
 
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
 </div>
 <script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
