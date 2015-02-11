@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="Stream - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1>Stream Class <small> <span class="badge">Version 0.6.0</span></small></h1>
+
+<small>
+    Defined in: <a href="../files/source_Stream.js.html#l1"><code>source&#x2F;Stream.js:1</code></a>
+  </small>
+
+
+<hr class="strike">
+
+<ol class="breadcrumb">
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
+  <li class="active">Stream</li>
+</ol>
+
+<div class="description"><p>Handles the XMLHttpStream and API function calls.</p>
+</p>
+
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <table class="table table-bordered">
+    
+  
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+            <tr> <td> <a href="#method_attachElement"> <code>attachElement()</code> </a> </td> <td> <p>Attaches the Stream object to a video element.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_bind"> <code>bind()</code> </a> </td> <td> <p>Binds events to MediaStream object.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_bind"> <code>bind()</code> </a> </td> <td> <p>Binds events to MediaStreamTrack object.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_bindOnStreamEnded"> <code>bindOnStreamEnded()</code> </a> </td> <td> <p>Handles the non-implemented firefox onended event for stream.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_muteAudio"> <code>muteAudio()</code> </a> </td> <td> <p>Mutes all audio MediaStreamTracks.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_muteVideo"> <code>muteVideo()</code> </a> </td> <td> <p>Mutes all video MediaStreamTracks.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onstreamended"> <code>onstreamended()</code> </a> </td> <td> <p>Function to subscribe to when stream has ended.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_ontrackended"> <code>ontrackended()</code> </a> </td> <td> <p>Function to subscribe to when stream track has been ended.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_ontrackmute"> <code>ontrackmute()</code> </a> </td> <td> <p>Function to subscribe to when stream track has been muted.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_ontrackunmute"> <code>ontrackunmute()</code> </a> </td> <td> <p>Function to subscribe to when stream track has been unmuted.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_start"> <code>start()</code> </a> </td> <td> <p>Starts a MediaStream object connection with getUserMedia.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_stopAudio"> <code>stopAudio()</code> </a> </td> <td> <p>Stops all audio MediaStreamTracks streaming.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_stopVideo"> <code>stopVideo()</code> </a> </td> <td> <p>Stops all video MediaStreamTracks streaming.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_unmuteAudio"> <code>unmuteAudio()</code> </a> </td> <td> <p>Unmutes all audio MediaStreamTracks.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_unmuteVideo"> <code>unmuteVideo()</code> </a> </td> <td> <p>Unmutes all video MediaStreamTracks.</p>
+ </td> </tr>
+          
+        
+      </tbody>
+    
+    
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Attributes</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#attr_config"> <code>config</code> </a> </td> <td> <p>The streaming configuration.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_constraints"> <code>constraints</code> </a> </td> <td> <p>The getUserMedia constraints.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The stream id.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_MediaStream"> <code>MediaStream</code> </a> </td> <td> <p>The MediaStream object.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_MediaStream"> <code>MediaStream</code> </a> </td> <td> <p>The parent handler that redirects the stream object messages to.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_sourceType"> <code>sourceType</code> </a> </td> <td> <p>The stream source type.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Event Handlers</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </tbody>
+    
+  </table>
+</div>
+
+ 
+
+
+<div class="section code-section">
+  <h4>Methods</h4>
+   
+    
+      <div id="method_attachElement" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      attachElement
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l230"><code>source&#x2F;Stream.js:230</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Attaches the Stream object to a video element.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor attachElement ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_bind" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bind
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l142"><code>source&#x2F;Stream.js:142</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Binds events to MediaStream object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bind ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_bind" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bind
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l173"><code>source&#x2F;Stream.js:173</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Binds events to MediaStreamTrack object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bind ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_bindOnStreamEnded" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bindOnStreamEnded
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l247"><code>source&#x2F;Stream.js:247</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Handles the non-implemented firefox onended event for stream.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bindOnStreamEnded ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_muteAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteAudio
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l323"><code>source&#x2F;Stream.js:323</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Mutes all audio MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor muteAudio ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_muteVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      muteVideo
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l411"><code>source&#x2F;Stream.js:411</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Mutes all video MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor muteVideo ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_onstreamended" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onstreamended
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l92"><code>source&#x2F;Stream.js:92</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream has ended.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onstreamended ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_ontrackended" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackended
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l100"><code>source&#x2F;Stream.js:100</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been ended.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackended ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_ontrackmute" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackmute
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l108"><code>source&#x2F;Stream.js:108</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been muted.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackmute ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_ontrackunmute" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ontrackunmute
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l116"><code>source&#x2F;Stream.js:116</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when stream track has been unmuted.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ontrackunmute ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_start" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      start
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l125"><code>source&#x2F;Stream.js:125</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Starts a MediaStream object connection with getUserMedia.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor start ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_stopAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      stopAudio
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l379"><code>source&#x2F;Stream.js:379</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Stops all audio MediaStreamTracks streaming.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor stopAudio ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_stopVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      stopVideo
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l467"><code>source&#x2F;Stream.js:467</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Stops all video MediaStreamTracks streaming.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor stopVideo ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_unmuteAudio" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      unmuteAudio
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l351"><code>source&#x2F;Stream.js:351</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Unmutes all audio MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor unmuteAudio ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_unmuteVideo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      unmuteVideo
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l439"><code>source&#x2F;Stream.js:439</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Unmutes all video MediaStreamTracks.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor unmuteVideo ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+  
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Attributes</h4>
+   <div id="attr_config" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      config
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Stream.js.html#l33"><code>source&#x2F;Stream.js:33</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The streaming configuration.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor config ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_constraints" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      constraints
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Stream.js.html#l23"><code>source&#x2F;Stream.js:23</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The getUserMedia constraints.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor constraints ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_id" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      id
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Stream.js.html#l13"><code>source&#x2F;Stream.js:13</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The stream id.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor id ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_MediaStream" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      MediaStream
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Stream.js.html#l53"><code>source&#x2F;Stream.js:53</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The MediaStream object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor MediaStream ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_MediaStream" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      MediaStream
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Stream.js.html#l63"><code>source&#x2F;Stream.js:63</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The parent handler that redirects the stream object messages to.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor MediaStream ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_sourceType" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      sourceType
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Stream.js.html#l43"><code>source&#x2F;Stream.js:43</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The stream source type.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor sourceType ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+--> 
+</div>
+
+
+
+
+
+<div class="section code-section">
+  <h4>Event Handlers</h4>
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+  
+</div>
+
+
+
+
+  <!--
+
+
+
+
+
+    
+        Module: <a href="../modules/Skylink.html">Skylink</a>
+    
+
+
+
+-->
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

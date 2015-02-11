@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/Log.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/Log.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/Log.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/Log.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+var log = {};
+
+// Parse if debug is not defined
+if (typeof window.console.debug !== &#x27;function&#x27;) {
+  window.console.newDebug = window.console.log;
+
+} else {
+  window.console.newDebug = window.console.debug;
+}
+
+// Parse if trace is not defined
+if (typeof window.console.trace !== &#x27;function&#x27;) {
+  window.console.newTrace = window.console.log;
+
+} else {
+  window.console.newTrace = window.console.trace;
+}
+
+/**
+ * The log key
+ * @attribute LogKey
+ * @type String
+ * @readOnly
+ * @for Debugger
+ * @since 0.5.4
+ */
+var LogKey = &#x27;Skylink - &#x27;;
+
+var Debugger = {
+  /**
+   * The current log level of Skylink.
+   * @property level
+   * @type Integer
+   * @for Debugger
+   * @since 0.5.4
+   */
+  level: 2,
+  
+  trace: false,
+  
+  /**
+   * The flag that indicates if Skylink should store the debug logs.
+   * @property store
+   * @type Boolean
+   * @for Debugger
+   * @since 0.5.4
+   */
+  store: false, 
+  
+  logs: [],
+  
+  console: {
+    log: window.console.log.bind(window.console, LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;),
+    
+    error: window.console.error.bind(window.console, LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;),
+    
+    info: window.console.info.bind(window.console, 
+      (window.webrtcDetectedBrowser === &#x27;safari&#x27; ? &#x27;INFO: &#x27; : &#x27;&#x27;) + LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;),
+    
+    warn: window.console.warn.bind(window.console, LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;),
+
+    debug: window.console.newDebug.bind(window.console, 
+      (typeof window.console.debug !== &#x27;function&#x27; ? &#x27;DEBUG: &#x27; : &#x27;&#x27;) + LogKey + &#x27;&lt;&lt;%s&gt;&gt; %s&#x27;)
+  },
+  
+  traceTemplate: {
+    log: &#x27;==LOG== &#x27; + LogKey + &#x27;%s&#x27;,
+    error: &#x27;==ERROR== &#x27; + LogKey + &#x27;%s&#x27;,
+    info: &#x27;==INFO== &#x27; + LogKey + &#x27;%s&#x27;,
+    warn: &#x27;==WARN== &#x27; + LogKey + &#x27;%s&#x27;,
+    debug: &#x27;==DEBUG== &#x27; + LogKey + &#x27;%s&#x27;
+  },
+
+  applyConsole: function (type) {
+    var args = Array.prototype.slice.call(arguments);
+    args.shift();
+
+    if (this.store) {
+      logs.push(type, args, (new Date()));   
+    }
+    
+    if (this.trace) {
+      return window.console.newTrace.bind(window.console, this.traceTemplate[type]);
+    }
+    return this.console[type];
+  },
+
+  setLevel: function (inputLevel) {
+    // Debug level
+    if (inputLevel &gt; 3) {
+      log.debug = this.applyConsole(&#x27;debug&#x27;);
+    
+    } else {
+      log.debug = function () { };
+    }
+    
+    // Log level
+    if (inputLevel &gt; 2) {
+      log.log = this.applyConsole(&#x27;log&#x27;);
+    
+    } else {
+      log.log = function () { };
+    }
+    
+    // Info level
+    if (inputLevel &gt; 1) {
+      log.info = this.applyConsole(&#x27;info&#x27;);
+    
+    } else {
+      log.info = function () { };
+    }
+    
+    // Warn level
+    if (inputLevel &gt; 0) {
+      log.warn = this.applyConsole(&#x27;warn&#x27;);
+  
+    } else {
+      log.warn = function () { };
+    }
+    
+    // Error level
+    if (inputLevel &gt; -1) {
+      log.error = this.applyConsole(&#x27;error&#x27;);
+      
+    } else {
+      log.error = function () { };
+    }
+
+    this.level = inputLevel;
+  },
+  
+  configure: function (options) {
+    options = options || {};
+
+    // Set if should store logs
+    Debugger.store = !!options.store;
+
+    // Set if should trace
+    Debugger.trace = !!options.trace;
+
+    // Set log level
+    Debugger.setLevel( typeof options.level === &#x27;number&#x27; ? options.level : 2 );    
+  }
+};
+
+Debugger.setLevel(4);
+
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

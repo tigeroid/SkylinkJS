@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/PeerHandler.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/PeerHandler.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/PeerHandler.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/PeerHandler.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles all the events received from sub classes.
+ * @attribute PeerEventReceivedHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerEventReceivedHandler = {
+  
+  stream: {
+    
+    stop: function (com, data, listener) {
+      // If stream is not the main, disconnect the peer connection.
+      if (com.id !== &#x27;main&#x27;) {
+        com.disconnect();
+      }
+    }
+  }
+  
+};
+
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute PeerEventResponseHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerEventResponseHandler = {
+  
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === &#x27;function&#x27;) {
+      com.onconnect(com.id);
+    }
+  },
+  
+  reconnect: function (com, data, listener) {
+    if (typeof com.onreconnect === &#x27;function&#x27;) {
+      com.onreconnect();
+    }
+  },
+  
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === &#x27;function&#x27;) {
+      com.ondisconnect();
+    }
+  },
+  
+  stream: function (com, data, listener) {
+    data.stream.sourceType = data.sourceType;
+
+    if (data.sourceType === &#x27;remote&#x27;) {
+      com.stream = data.stream;
+    }
+    
+    if (typeof com.onaddstream === &#x27;function&#x27;) {
+      com.onaddstream(data.stream);
+    }
+  },
+
+  /**
+   * Handles the ice connection state trigger.
+   * @property iceconnectionstate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  iceconnectionstate: function (com, data, listener) {
+    if (typeof com.oniceconnectionstatechange === &#x27;function&#x27;) {
+      com.oniceconnectionstatechange(data.state);
+    }  
+  },
+
+  /**
+   * Handles the ice gathering state trigger.
+   * @property icegatheringstate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  icegatheringstate: function (com, data, listener) {
+    if (typeof com.onicegatheringstatechange === &#x27;function&#x27;) {
+      com.onicegatheringstatechange(data.state);
+    }
+  },
+
+  /**
+   * Handles the ice candidate trigger.
+   * @property icecandidate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  icecandidate: function (com, data, listener) {},
+
+  /**
+   * Handles the signaling state trigger.
+   * @property signalingstate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  signalingstate: function (com, data, listener) {
+    if (typeof com.onsignalingstatechange === &#x27;function&#x27;) {
+      com.onsignalingstatechange(data.state);
+    }
+  },
+
+  /**
+   * Handles the datachannel state trigger.
+   * @property datachannel
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  datachannel: function (com, data, listener) {
+    data.channel.sourceType = data.sourceType;
+
+    com.datachannels[data.channel.id] = data.channel;
+    
+    if (typeof com.ondatachannel === &#x27;function&#x27;) {
+      com.ondatachannel(data.channel);
+    }
+  }
+};
+
+/**
+ * Handles all the message events received from socket.
+ * @attribute PeerEventMessageHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerEventMessageHandler = {
+
+  offer: function (com, data, listener) {
+    com.remoteDescription = new window.RTCSessionDescription(data);
+
+    com.handler(&#x27;peer:offer&#x27;, {
+      sourceType: &#x27;remote&#x27;,
+      offer: com.remoteDescription
+    });
+        
+    com.setRemoteDescription();
+  },
+  
+  answer: function (com, data, listener) {
+    com.remoteDescription = new window.RTCSessionDescription(data);
+
+    com.handler(&#x27;peer:answer&#x27;, {
+      sourceType: &#x27;remote&#x27;,
+      answer: com.remoteDescription
+    });
+
+    com.setLocalDescription();
+  },
+
+  candidate: function (com, data, listener) {
+    var candidate = new window.RTCIceCandidate({
+      sdpMLineIndex: data.label,
+      candidate: data.candidate,
+      sdpMid: data.id,
+      label: data.label,
+      id: data.id
+    });
+
+    ICE.addCandidate(com.RTCPeerConnection, candidate, com.handler);
+
+    com.handler(&#x27;peer:icecandidate&#x27;, {
+      sourceType: &#x27;remote&#x27;,
+      candidate: candidate
+    });
+  },
+  
+  restart: function (com, data, listener) {
+    
+  },
+  
+  muteAudioEvent: function (com, data, listener) {
+    if (data.muted) {
+      com.stream.muteAudio();
+    } else {
+      com.stream.muteVideo();
+    }
+  },
+    
+  muteVideoEvent: function (com, data, listener) {
+    if (data.muted) {
+      com.stream.unmuteAudio();
+    } else {
+      com.stream.unmuteVideo();
+    }
+  }
+};
+
+/**
+ * Handles the peer class events.
+ * @attribute PeerHandler
+ * @for Peer
+ * @since 0.6.0
+ */
+var PeerHandler = function (com, event, data, listener) {
+  var params = event.split(&#x27;:&#x27;);
+
+  // Messaging events
+  if (event.indexOf(&#x27;message:&#x27;) === 0) {
+    
+    fn.applyHandler(PeerEventMessageHandler, params, [com, data, listener]);
+  
+  } else {
+    // Class events
+    if (event.indexOf(&#x27;peer:&#x27;) === 0) {
+      data.id = com.id;
+
+      fn.applyHandler(PeerEventResponseHandler, params, [com, data, listener]);
+
+    } else {
+      data.peerId = com.id;
+
+      fn.applyHandler(PeerEventReceivedHandler, params, [com, data, listener]);
+    }
+    
+    listener(event, data);
+  }
+  
+  //log.debug(&#x27;PeerHandler&#x27;, event, data);
+};
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

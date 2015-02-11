@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="User - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1>User Class <small> <span class="badge">Version </span></small></h1>
+
+
+<hr class="strike">
+
+<ol class="breadcrumb">
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
+  <li class="active">User</li>
+</ol>
+
+<div class="description"></p>
+
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <table class="table table-bordered">
+    
+  
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+            <tr> <td> <a href="#method_addConnection"> <code>addConnection()</code> </a> </td> <td> <p>Starts a new peer connection to user.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_addConnection"> <code>addConnection()</code> </a> </td> <td> <p>Stops a peer connection to user.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_disconnect"> <code>disconnect()</code> </a> </td> <td> <p>Disconnects this user connection.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_getInfo"> <code>getInfo()</code> </a> </td> <td> <p>Gets this user information.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_getInfo"> <code>getInfo()</code> </a> </td> <td> <p>Updates this user information.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onaddconnection"> <code>onaddconnection()</code> </a> </td> <td> <p>Function to subscribe to when a new peer connection is established to user.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_ondata"> <code>ondata()</code> </a> </td> <td> <p>Function to subscribe to when a new data is received after transfer is completed from user.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_ondatarequest"> <code>ondatarequest()</code> </a> </td> <td> <p>Function to subscribe to when a new data transfer request is initialized from user.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_ondatatransfer"> <code>ondatatransfer()</code> </a> </td> <td> <p>Function to subscribe to when a new message is received from user.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_ondisconnect"> <code>ondisconnect()</code> </a> </td> <td> <p>Function to subscribe to when user is disconnected from the room.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onremoveconnection"> <code>onremoveconnection()</code> </a> </td> <td> <p>Function to subscribe to when a peer connection to user has added.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onupdate"> <code>onupdate()</code> </a> </td> <td> <p>Function to subscribe to when user&#39;s custom data is updated.</p>
+ </td> </tr>
+          
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#property_message"> <code>message</code> </a> </td> <td> <p>Handles the incoming message trigger.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Attributes</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#attr_agent"> <code>agent</code> </a> </td> <td> <p>Stores the browser agent information.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_data"> <code>data</code> </a> </td> <td> <p>Stores the user data.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The user id.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_peers"> <code>peers</code> </a> </td> <td> <p>Stores the list of peer connections to user.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_streamingConfigs"> <code>streamingConfigs</code> </a> </td> <td> <p>Stores the list of peer streaming configuration.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The user type.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_UserEventMessageHandler"> <code>UserEventMessageHandler</code> </a> </td> <td> <p>Handles all the message events received from socket.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_UserHandler"> <code>UserHandler</code> </a> </td> <td> <p>Handles the user class events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_UserHandlerReceivedHandler"> <code>UserHandlerReceivedHandler</code> </a> </td> <td> <p>Handles all the events received from sub classes.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_UserHandlerResponseHandler"> <code>UserHandlerResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Event Handlers</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </tbody>
+    
+  </table>
+</div>
+
+ 
+
+
+<div class="section code-section">
+  <h4>Methods</h4>
+   
+    
+      <div id="method_addConnection" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      addConnection
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l137"><code>source&#x2F;User.js:137</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Starts a new peer connection to user.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor addConnection ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_addConnection" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      addConnection
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l160"><code>source&#x2F;User.js:160</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Stops a peer connection to user.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor addConnection ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_disconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      disconnect
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l174"><code>source&#x2F;User.js:174</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Disconnects this user connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor disconnect ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_getInfo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      getInfo
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l200"><code>source&#x2F;User.js:200</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Gets this user information.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor getInfo ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_getInfo" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      getInfo
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l186"><code>source&#x2F;User.js:186</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Updates this user information.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor getInfo ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_onaddconnection" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onaddconnection
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l96"><code>source&#x2F;User.js:96</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when a new peer connection is established to user.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onaddconnection ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_ondata" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ondata
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l120"><code>source&#x2F;User.js:120</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when a new data is received after transfer is completed from user.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ondata ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_ondatarequest" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ondatarequest
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l112"><code>source&#x2F;User.js:112</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when a new data transfer request is initialized from user.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ondatarequest ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_ondatatransfer" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ondatatransfer
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l128"><code>source&#x2F;User.js:128</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when a new message is received from user.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ondatatransfer ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_ondisconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ondisconnect
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l88"><code>source&#x2F;User.js:88</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when user is disconnected from the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor ondisconnect ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_onremoveconnection" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onremoveconnection
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l104"><code>source&#x2F;User.js:104</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when a peer connection to user has added.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onremoveconnection ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_onupdate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onupdate
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l80"><code>source&#x2F;User.js:80</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Function to subscribe to when user&#39;s custom data is updated.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onupdate ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+  
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Attributes</h4>
+   <div id="attr_agent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      agent
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_User.js.html#l37"><code>source&#x2F;User.js:37</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Stores the browser agent information.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor agent ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_data" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      data
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_User.js.html#l27"><code>source&#x2F;User.js:27</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Stores the user data.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor data ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_handler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      handler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Stream.js.html#l73"><code>source&#x2F;Stream.js:73</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The handler that manages all triggers or relaying events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor handler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_handler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      handler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_User.js.html#l67"><code>source&#x2F;User.js:67</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The handler that manages all triggers or relaying events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor handler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_id" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      id
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_User.js.html#l7"><code>source&#x2F;User.js:7</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+              
+      <span class="label label-info" title="This attribute is reference only.">readonly</span>
+       
+    </blockquote>
+    <p><p>The user id.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor id ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_peers" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peers
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_User.js.html#l47"><code>source&#x2F;User.js:47</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Stores the list of peer connections to user.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peers ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_streamingConfigs" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      streamingConfigs
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_User.js.html#l57"><code>source&#x2F;User.js:57</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Stores the list of peer streaming configuration.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor streamingConfigs ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_type" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      type
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_User.js.html#l17"><code>source&#x2F;User.js:17</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+              
+      <span class="label label-info" title="This attribute is reference only.">readonly</span>
+       
+    </blockquote>
+    <p><p>The user type.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor type ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_UserEventMessageHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      UserEventMessageHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_UserHandler.js.html#l110"><code>source&#x2F;UserHandler.js:110</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles all the message events received from socket.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor UserEventMessageHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_UserHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      UserHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_UserHandler.js.html#l208"><code>source&#x2F;UserHandler.js:208</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles the user class events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor UserHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_UserHandlerReceivedHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      UserHandlerReceivedHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_UserHandler.js.html#l1"><code>source&#x2F;UserHandler.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles all the events received from sub classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor UserHandlerReceivedHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_UserHandlerResponseHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      UserHandlerResponseHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_UserHandler.js.html#l57"><code>source&#x2F;UserHandler.js:57</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Handles all the events to respond to other parent classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor UserHandlerResponseHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+--> 
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Properties</h4>
+   <div id="property_message" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      message
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_UserHandler.js.html#l89"><code>source&#x2F;UserHandler.js:89</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Handles the incoming message trigger.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for message
+      
+    </pre>
+    </div>
+  </div>
+</div>
+<!--<div id="property_message" class="code-item property item private-property-item ">
+  <h3 class="code-item-name"><code>message</code></h3>
+
+  
+    <span class="paren">()</span>
+  
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This property is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_UserHandler.js.html#l89"><code>source&#x2F;UserHandler.js:89</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Handles the incoming message trigger.</p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <hr>
+</div>--> 
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Event Handlers</h4>
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+  
+</div>
+
+
+
+
+  <!--
+
+
+
+
+
+    
+        Module: <a href="../modules/Skylink.html">Skylink</a>
+    
+
+
+
+-->
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

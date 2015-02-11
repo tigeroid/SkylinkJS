@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/Socket.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/Socket.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/Socket.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/Socket.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles the Socket connection.
+ * @class Socket
+ * @for Skylink
+ * @since 0.6.0
+ */
+function Socket(config, listener) {
+  &#x27;use strict&#x27;;
+
+  // Reference of instance
+  var com = this;
+
+  /**
+   * The signalling server.
+   * @attribute server
+   * @type String
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.server = config.server;
+
+  /**
+   * The signalling server protocol to connect with.
+   * @attribute protocol
+   * @type String
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.protocol = globals.enforceSSL ? &#x27;https:&#x27; : window.location.protocol;
+
+  /**
+   * The signalling server port to connect with.
+   * @attribute server
+   * @type String
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.port = null;
+
+  /**
+   * The timeout the Socket should wait for before throwing an error.
+   * @attribute timeout
+   * @type Integer
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.timeout = globals.socketTimeout || 0;
+
+  /**
+   * The interval to wait before sending the next message.
+   * @attribute messageInterval
+   * @type Integer
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.messageInterval = 1000;
+  
+   /**
+   * The queue of messages (throttle) before sending the next
+   * @attribute messageQueue
+   * @type Array
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.messageQueue = [];
+  
+  /**
+   * The socket readyState.
+   * @attribute readyState
+   * @type String
+   * @required
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.readyState = &#x27;new&#x27;;
+
+  /**
+   * The list of available signalling server ports.
+   * @attribute ports
+   * @param {Array} http: The list of Http ports.
+   * @param {Array} https: The list of Https ports.
+   * @type JSON
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.ports = {
+    &#x27;https:&#x27;: config.httpsPortList,
+    &#x27;http:&#x27;: config.httpPortList
+  };
+
+  /**
+   * The socket configuratin.
+   * @attribute config
+   * @type JSON
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.config = {};
+
+  /**
+   * The type of socket connection.
+   * @attribute type
+   * @type String
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.type = config.type || &#x27;WebSocket&#x27;;
+
+  /**
+   * The Socket.io object.
+   * @attribute Socket
+   * @type Object
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.Socket = null;
+
+  /**
+   * The responses attached to message events.
+   * @attribute responses
+   * @type JSON
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.responses = {};
+  
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @attribute handler
+   * @type Function
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    data.server = com.server;
+    data.port = com.port;
+    data.type = com.type;
+    data.protocol = com.protocol;
+    
+    //log.debug(&#x27;SocketHandler&#x27;, event, data); 
+  
+    listener(event, data);
+  };
+
+
+  
+  /**
+   * Function to subscribe to when socket has been connected.
+   * @method onconnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when socket has been disconnected.
+   * @method ondisconnect
+   * @for Room
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+  
+  /**
+   * Function to subscribe to when socket has connection error.
+   * @method onconnecterror
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onconnecterror = function () {};
+  
+  /**
+   * Function to subscribe to when socket attempts to reconnect.
+   * @method onreconnect
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onreconnect = function () {};
+  
+  /**
+   * Function to subscribe to when socket has an exception.
+   * @method onerror
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onerror = function () {};
+
+  
+  /**
+   * Starts the connection to the signalling server
+   * @method connect
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.connect = function () {
+    com.port = com.ports[window.location.protocol][0];
+    
+    if (com.type === &#x27;XHRPolling&#x27;) {
+      com.Socket = new com.XHRPolling();
+    } else {
+      com.Socket = new com.WebSocket();
+    }
+  };
+
+  /**
+   * Stops the connection to the Socket.
+   * @method disconnect
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.disconnect = function () {
+    com.Socket.disconnect();
+    com.Socket.responses = {};
+  };
+
+  /**
+   * Attaches a listener to a particular socket message event received.
+   * @method when
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.when = function (event, callback) {
+    com.responses[event] = com.responses[event] || [];
+    // Push callback for listening
+    com.responses[event].push(callback);
+  };
+ 
+  /**
+   * Sends a socket data.
+   * @method send
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.send = function (data) {
+    /*var interval = com.messageInterval;
+
+    if (data.type === &#x27;enter&#x27;) {
+      interval = 0;
+    }
+    setTimeout(function () {*/
+      com.Socket.send(JSON.stringify(data));
+      com.handler(&#x27;socket:send&#x27;, {
+        message: data
+      });
+    //}, interval);
+  };
+
+  /**
+   * Handles the event when socket is connected to signaling.
+   * @method bindOnConnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.bindOnConnect = function (options) {
+    com.handler(&#x27;socket:connect&#x27;, {});
+
+    com.Socket.removeAllListeners();
+
+    com.Socket.on(&#x27;disconnect&#x27;, com.bindOnDisconnect);
+
+    com.Socket.on(&#x27;message&#x27;, com.bindOnMessage);
+    
+    com.Socket.on(&#x27;error&#x27;, com.bindOnError);
+    
+    if (typeof com.onconnect === &#x27;function&#x27;) {
+      com.onconnect();
+    }
+  };
+
+  /**
+   * Handles the event when socket is disconnected to signaling.
+   * @method bindOnDisconnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.bindOnDisonnect = function () {
+    com.handler(&#x27;socket:disconnect&#x27;, {});
+    
+    if (typeof com.onerror === &#x27;function&#x27;) {
+      com.ondisconnect();
+    }
+  };
+
+  /**
+   * Handles the event when socket receives a message from signaling.
+   * @method bindOnMessage
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.bindOnMessage = function (result) {
+    var data = JSON.parse(result);
+    
+    com.handler(&#x27;socket:message&#x27;, {
+      message: data
+    });
+
+    // Check if bulk message
+    if (data.type === &#x27;group&#x27;) {
+      fn.forEach(function (message, key) {
+        com.respond(message.type, message);
+      });
+
+    } else {
+      com.respond(data.type, data);
+    }
+  };
+  
+  /**
+   * Handles the event when socket have a connection error.
+   * @method bindOnConnectError
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.bindOnConnectError = function (error) {
+    com.handler(&#x27;socket:connect_error&#x27;, {
+      error: error
+    });
+
+    var ports = com.ports[window.location.protocol];
+
+    for (var i = 0; i &lt; ports.length; i++) {
+      // Get current port
+      if (ports[i] === com.port) {
+        // Check if reach the end
+        if ((i + 1) &lt; ports.length) {
+          // Set if there is still the next port
+          com.port = ports[i + 1];
+          com.reconnect();
+
+        } else {
+          if (com.type === &#x27;WebSocket&#x27;) {
+            com.type = &#x27;XHRLongPolling&#x27;;
+            com.port = ports[0];
+            com.reconnect();
+          }
+        }
+        break;
+      }
+    }
+    
+    if (typeof com.onconnecterror === &#x27;function&#x27;) {
+      com.onconnecterror(error);
+    }
+  };
+  
+  /**
+   * Handles the event when socket catches an exception.
+   * @method bindOnError
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.bindOnError = function (error) {
+    com.handler(&#x27;socket:error&#x27;, {
+      error: error
+    });
+    
+    if (typeof com.onerror === &#x27;function&#x27;) {
+      com.onerror(error);
+    }
+  };
+
+  /**
+   * Responses to the attached socket message responses.
+   * @method respond
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.respond = function (type, data) {
+    // Parse for events tied to type.
+    com.responses[type] = com.responses[type] || [];
+    
+    fn.forEach(com.responses[type], function (response, i) {
+      response(data);
+    });
+  };
+
+  /**
+   * Restarts the connection to the Socket.
+   * @method reconnect
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.reconnect = function () {
+    com.Socket.removeAllListeners();
+
+    switch (com.type) {
+    case &#x27;WebSocket&#x27;:
+      com.Socket = com.WebSocket();
+      break;
+    //case &#x27;XHRPolling&#x27;:
+    default:
+      com.Socket = com.XHRPolling();
+    }
+    
+    if (typeof com.onreconnect === &#x27;function&#x27;) {
+      com.onreconnect(com.type);
+    }
+  };
+
+
+
+  /**
+   * Creates a WebSocket connection in socket.io.
+   * @method WebSocket
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.WebSocket = function () {
+    var options = {
+      forceNew: true,
+      reconnection: false,
+      transports: [&#x27;websocket&#x27;]
+    };
+
+    if (com.timeout !== 0) {
+      options.timeout = com.timeout;
+    }
+
+    var server = com.protocol + &#x27;//&#x27; + com.server + &#x27;:&#x27; + com.port;
+
+    var socket = io.connect(server, options);
+
+    socket.on(&#x27;connect&#x27;, com.bindOnConnect);
+    socket.on(&#x27;connect_error&#x27;, com.bindOnConnectError);
+
+    return socket;
+  };
+
+  /**
+   * Creates a XHR Long-polling connection in socket.io.
+   * @method XHRPolling
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.XHRPolling = function () {
+    var ports = com.ports[window.location.protocol];
+
+    var options = {
+      forceNew: true,
+      reconnection: com.port === ports[ports.length - 1],
+      transports: [&#x27;xhr-polling&#x27;, &#x27;jsonp-polling&#x27;, &#x27;polling&#x27;]
+    };
+
+    if (com.timeout !== 0) {
+      options.timeout = com.timeout;
+    }
+
+    var server = com.protocol + &#x27;//&#x27; + com.server + &#x27;:&#x27; + com.port;
+
+    var socket = io.connect(server, options);
+
+    socket.on(&#x27;connect&#x27;, com.bindOnConnect);
+    socket.on(&#x27;reconnect&#x27;, com.bindOnConnect);
+    socket.on(&#x27;connect_error&#x27;, com.bindOnConnectError);
+    socket.on(&#x27;reconnect_failed&#x27;, com.bindOnConnectError);
+
+    return socket;
+  };
+
+  // Throw an error if socket.io is not loaded
+  if (!window.io) {
+    throw new Error(&#x27;Required dependency socket.io not found&#x27;);
+  }
+  
+  fn.runSync(function () {
+    com.handler(&#x27;socket:start&#x27;, config);
+  });
+}
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

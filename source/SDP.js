@@ -72,22 +72,31 @@ var SDP = {
     // Find if user has audioStream
     var maLineFound = this.find(sdpLines, ['m=', 'a=']).length;
     var cLineFound = this.find(sdpLines, ['c=']).length;
-    
+
     // Find the RTPMAP with Audio Codec
     if (maLineFound && cLineFound) {
       if (bandwidth.audio) {
         var audioLine = this.find(sdpLines, ['a=audio', 'm=audio']);
-        sdpLines.splice(audioLine[0], 1, audioLine[1], 'b=AS:' + bandwidth.audio);
+        
+        if (!fn.isEmpty(audioLine)) {
+          sdpLines.splice(audioLine[0], 1, audioLine[1], 'b=AS:' + bandwidth.audio);
+        }
       }
       
       if (bandwidth.video) {
         var videoLine = this.find(sdpLines, ['a=video', 'm=video']);
-        sdpLines.splice(videoLine[0], 1, videoLine[1], 'b=AS:' + bandwidth.video);
+        
+        if (!fn.isEmpty(videoLine)) {
+          sdpLines.splice(videoLine[0], 1, videoLine[1], 'b=AS:' + bandwidth.video);
+        }
       }
       
       if (bandwidth.data && this._enableDataChannel) {
         var dataLine = this.find(sdpLines, ['a=application', 'm=application']);
-        sdpLines.splice(dataLine[0], 1, dataLine[1], 'b=AS:' + bandwidth.data);
+        
+        if (!fn.isEmpty(dataLine)) {
+          sdpLines.splice(dataLine[0], 1, dataLine[1], 'b=AS:' + bandwidth.data);
+        }
       }
     }
     return sdpLines;
@@ -135,5 +144,32 @@ var SDP = {
       sdpLines.splice(invalidLineIndex, 1);
     }
     return sdpLines;
+  },
+  
+  /**
+   * Modifies a local session description with the configuration provided
+   * @property SDP.configure
+   * @type Function
+   * @param {Array} sdpLines Sdp received.
+   * @return {String} Updated local session description.
+   * @private
+   * @for Skylink
+   * @since 0.6.0
+   */
+  configure: function (sdp, config) {
+    var sdpLines = sdp.split('\r\n');
+    
+    sdpLines = this.removeH264Support(sdpLines);
+
+    if (config.stereo) {
+      sdpLines = this.addStereo(sdpLines);
+    }
+
+    if (config.bandwidth) {
+      sdpLines = this.setBitrate(sdpLines, config.bandwidth);
+    }
+
+    return sdpLines.join('\r\n');
   }
+  
 };

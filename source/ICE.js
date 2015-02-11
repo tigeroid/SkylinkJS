@@ -1,4 +1,15 @@
 var ICE = {
+  
+  newIceConnectionStates: {
+    starting : 'starting',
+    checking : 'checking',
+    connected : 'connected',
+    completed : 'connected',
+    done : 'completed',
+    disconnected : 'disconnected',
+    failed : 'failed',
+    closed : 'closed'
+  },
 
   queueCandidate: function (peer, candidate) {
     peer.queueCandidate = peer.queueCandidate || [];
@@ -7,8 +18,27 @@ var ICE = {
   
   popCandidate: function (peer, defer) {
     peer.queueCandidate = peer.queueCandidate || [];
+
     var i;
     
+    peer.queueCandidate.forEach(function (candidate) {
+      var type = candidate.candidate.split(' ')[7];
+
+      peer.addIceCandidate(candidate, function (success) {
+        defer('candidate:success', {
+          candidate: candidate,
+          type: type
+        }); 
+      }, function (error) {
+        defer('candidate:error', {
+          candidate: candidate,
+          type: type,
+          error: error
+        }); 
+      });
+    });
+    
+
     for (i = 0; i < peer.queueCandidate.length; i += 1) {
       var candidate = peer.queueCandidate[i];
       defer(candidate);
@@ -21,24 +51,27 @@ var ICE = {
       return defer('candidate:gathered', candidate);
     }
     
-    peer.addIceCandidate(candidate, function (success) {
-      defer('candidate:add', candidate); 
-    }, function (error) {
-      defer('candidate:error', error); 
-    });
+    if (fn.isEmpty(peer.remoteDescription)) {
+      this.queueCandidate(peer, candidate, defer);
+    
+    } else {
+      var type = candidate.candidate.split(' ')[7];
+
+      peer.addIceCandidate(candidate, function (success) {
+        defer('candidate:success', {
+          candidate: candidate,
+          type: type
+        }); 
+      }, function (error) {
+        defer('candidate:error', {
+          candidate: candidate,
+          type: type,
+          error: error
+        }); 
+      });
+    }
   },
-  
-  newIceConnectionStates: {
-    starting : 'starting',
-    checking : 'checking',
-    connected : 'connected',
-    completed : 'connected',
-    done : 'completed',
-    disconnected : 'disconnected',
-    failed : 'failed',
-    closed : 'closed'
-  },
-  
+
   parseIceConnectionState: function (peer) {
     var state = peer.iceConnectionState;
     
@@ -65,5 +98,17 @@ var ICE = {
       peer.newIceConnectionState = newState;
       peer.oniceconnectionnewstatechange(peer);
     }
+  },
+  
+  parseICEServers: function (constraints) {
+    return constraints;
+  },
+  
+  parseSTUNServers: function (constraints) {
+    return constraints;
+  },
+
+  parseTURNServers: function (constraints) {
+    return constraints;
   }
 };

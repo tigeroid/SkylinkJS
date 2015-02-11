@@ -1,13 +1,223 @@
-<div class="jumbotron no-padding">
-  <div class="container">
-    <h1>
-      SkylinkJS <span>API Documentation</span>
-      <small><i class="fa fa-info-circle">&nbsp;&nbsp;&nbsp;</i>Version: {{projectVersion}}</small>
-    </h1>
-    <br>
+<h1>Skylink Javascript API Documentation <small>Version {{projectVersion}}</small></h1>
+<hr class="strike">
+
+<div class="section">
+  <h4>What is Skylink?</h4>
+  <p>
+  SkylinkJS is an open-source client-side library for your web-browser that enables any website to easily leverage the capabilities of WebRTC and its direct data streaming powers between peers for audio/video conferencing or file transfer.
+  </p>
+</div>
+
+<div class="section">
+  <h4>Setting up Skylink</h4>
+  <p>
+    To begin, you may start by including this script from our hosted cdn libraries.<br>
+    The compressed versions are production ready codes which improves page speed and load. It's recommended to use the compressed versions for simply using it and the uncompressed versions for debugging the library.<br> The complete version consists of the <a href="http://socket.io/">Socket.io client library</a> and Temasys version of <a href="https://github.com/Temasys/AdapterJS">AdapterJS</a> and the Skylink library. The standalone version consists of only the Skylink library which require reference the libraries by your own.
+    
+    <pre class="prettyprint">
+      &#60;!-- Completed version uncompressed --&#62;
+      &#60;script src="//cdn.temasys.com.sg/skylink/skylinkjs/{{projectVersion}}/skylink.complete.js"&#62;&#60;/script&#62;
+      &#60;!-- Standalone version uncompressed --&#62;
+      &#60;script src="//cdn.temasys.com.sg/skylink/skylinkjs/{{projectVersion}}/skylink.debug.js"&#62;&#60;/script&#62;
+      &#60;!-- Completed version compressed --&#62;
+      &#60;script src="//cdn.temasys.com.sg/skylink/skylinkjs/{{projectVersion}}/skylink.complete.min.js"&#62;&#60;/script&#62;
+      &#60;!-- Standalone version compressed --&#62;
+      &#60;script src="//cdn.temasys.com.sg/skylink/skylinkjs/{{projectVersion}}/skylink.debug.min.js"&#62;&#60;/script&#62;
+    </pre>
+  
+    <h5>Writing a simple script to make a video call</h5>
+    Here is an example how you can make a simple video user-to-user call. No extra features added. :) If you require additional functionalities like data transfers and multi-stream, please look through the library for these additional features.
+    <pre class="prettyprint">
+      Skylink.init();
+      
+      Skylink.on('blblbl', function () {});
+    </pre>
+  
+    To use our application, you will require to have an api key, which is created with your Developer account. If you had not signed up for one yet, do so at <a href="http://developer.temasys.com.sg">Temasys Developer Portal</a>.<br>
+  
+    To view the code live and run it, you may visit our codepen version.<br>
+    To view a example application built on top of SkylinkJS, you may visit getaroom.io.<br>
+    To view more of other examples, you may visit our github page.<br>
+  
+    <div class="btn-list">
+    <a href="http://codepen.io/serrynaimo/pen/otniL" class="btn btn-primary">Live Demo and Code Example</a> 
+  <a href="https://getaroom.io" class="btn btn-primary">Get a Room</a> <a href="https://temasys.github.io/" class="btn btn-primary">Github page</a>
+      </div>
+  </p>
+</div>
+
+<div class="section">
+  <h4>Skylink Classes Relationship model</h4>
+  <div class="tttable-responsive">
+    <img class="section-diagram" src="{{projectAssets}}/img/SkylinkClassRelationship.svg">
   </div>
+  
+  <p>In SkylinkJS, each core features are broken down into seperate classes: like <mark>Room</mark>, <mark>User</mark>, <mark>Stream</mark> etc. Skylink is no longer a standalone class anymore, but is a module where users can choose to use the core older functionalities to work the same or with the new class relationship format, where users can create a <mark>Room</mark> class object to handle the room connections.
+
+<h5>Relationship</h5>
+<ul>
+<li><mark>Room</mark> is the class that handles all room connections. 
+  <ul>
+    <li>Manages the list of <mark>User</mark> class objects that joins the room.</li>
+    <li>Manages the <mark>Self</mark> class object that is the user self.</li>
+    <li>Links to a <mark>Socket</mark> class object connection.</li>
+  </ul>
+</li>
+<li><mark>Self</mark> is the class that handles the self user.
+  <ul>
+    <li>Manages the list of local <mark>Stream</mark> sent to other users. Each time a new stream is added, it creates a <mark>Peer</mark> connection with the <mark>User</mark></li>
+  </ul>
+</li>
+<li><mark>Socket</mark> is that class that handles all signaling connections</li>
+<li><mark>User</mark> is the class that handles the other peers joining the room.
+  <ul>
+    <li>Manages the list of <mark>Peer</mark> connections to the user.</li>
+  </ul>
+</li>
+<li><mark>Peer</mark> is the class that handles and wraps around the RTCPeerConnection object.
+  <ul>
+    <li>Manages the remote <mark>Stream</mark> connection to the user.</li>
+    <li>Manages the <mark>DataChannel</mark> connections.</li>
+  </ul>
+</li>
+<li><mark>Stream</mark> is the class that handles and wraps around the MediaStream object.</li>
+<li><mark>DataChannel</mark> is the class that handles and wraps around the RTCDataChannel object.</li>
+</ul>
+</p>
 </div>
-<div class="container">
-  <h3>Select a class/module to view API documentation</h3>
-  <p>It's on the top-right hand corner</p>
+
+<div class="section">
+<h4>Formatting - old vs new</h4>
+<p>
+This is the previous format used in 0.3.0 - 0.5.9. This format is fixated where users can join only one room, peer using one stream. It's a simple format for users to achieve a simple video call.
+<pre class="prettyprint">
+  Skylink.init(apiKey);
+  
+  Skylink.joinRoom({
+    audio: true,
+    video: true
+  });
+  
+  Skylink.on('peerJoined', function () {
+  });
+  
+  Skylink.on('peerLeft', function () {
+  });
+  
+  Skylink.on('peerUpdated', function () {
+  });
+  
+  Skylink.on('streamEnded', function () {
+  });
+  
+</pre>
+This is the new format that would be implemented in 0.6.0 and above. This format is used where users can subscribe to events using the listener or attaching events format. Each time a user join the room, <mark>User</mark> object is passed. Users can decide to subscribe to all individual events to the related object alone.
+<pre class="prettyprint">
+  Skylink.config({
+    apiKey: apiKey
+  });
+  
+  var room1;
+  var stream;
+
+  function listener (event, data) {
+    if (event === 'stream:start') {
+      room1.join(stream);
+    }
+    /* 
+      // Or alternatively, you need not provide a listener. 
+      stream.onstart = function () { };
+    */
+  }
+  
+  room1 = new Room(name, listener);
+  
+  room1.onjoin = function (user) {
+    user.onupdate = function (data) { };
+  };
+  
+  room1.onleave = function () {
+  };
+  
+  stream = new Stream(null, { audio: true, video: true }, listener);
+  
+  stream.onended = function () {
+  };
+</pre>
+
+</p>
 </div>
+
+<div class="section">
+<h4>How Skylink Classes work together</h4>
+  <div class="tttable-responsive"> 
+    <img class="section-diagram" src="{{projectAssets}}/img/SkylinkRelaying.svg">
+  </div>
+<p>
+In Skylink, all classes listeners relay events to parent classes to react accordingly, and parent classes relay information to the sub classes.
+  
+So for an instance, in <mark>Room</mark> class, the listener provides events like <code>stream:start</code>, <code>peer:stream</code>, <code>user:connect</code>, <code>room:join</code>. It inherittts all the sub-classes events and relays it back to user.
+  
+<pre class="prettyprint">
+  var room = new Room('test', function (event, data) {
+    if (event === 'stream:start') {
+    }
+    
+    if (event === 'peer:connect') {
+    }
+    
+    if (event === 'user:data') {
+    }
+    
+    if (event === 'room:kick') {
+    }
+  });
+</pre>
+
+</p>
+</div>
+
+<div class="section">
+<h4>Skylink Events</h4>
+  
+<h5>Using subscription model</h5>
+To subscribe or unsubscribe to events in individual format, users may use the <code>on()</code> and <code>off()</code> functions to achieve simplicity.
+
+<pre class="prettyprint">
+  // Subscribes to an event
+  Skylink.on('eventname1', function () {});
+  // Subscribes to an event fired only once
+  Skylink.once('eventname2', function () {});
+  // Unsubscribes all subscribers on event
+  Skylink.off('eventname1');
+</pre>
+
+<h5>Using a listener</h5>
+A <code>listener</code> is a deferring function that gets trigger everytime an event has happened and
+  it listens to sub-class objects events that are tied to the parent class object. The returning parameters are an <code>eventname</code> that is a <var>String</var> and the object <code>data</code> that is a <var>JSON</var> which is returned as the resulting data based on the event.
+
+<pre class="prettyprint">
+  var object = new ExampleClass(.., .., function (event, data) {
+    if (event === 'classname:eventname:status') {
+      data.id = ExampleClassId;
+    }
+
+    if (event === 'subclassname:eventname:status') {
+      data.id = ExampleSubClassId;
+      data.parentId = ExampleClassId;
+    }
+  });
+</pre>
+
+<h5>Using event Handler</h5>
+Alternatively, if users want to use a simple event handler on every Skylink object, users may simple attach their own event functions to the class object.
+
+<pre class="prettyprint">
+  var object = new ExampleClass(.., ..);
+  object.onended = function (data) {
+  };
+</pre>
+
+</p>
+</div>
+

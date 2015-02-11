@@ -56,20 +56,19 @@ var StreamParser = {
   parseAudioConfig: function (options) {
     options = (typeof options === 'object') ? options : !!options;
 
-    console.info(options);
+    var userMedia = false;
+    var tempOptions = {};
   
     // Cleaning of unwanted keys
     if (options !== false) {
       options = (typeof options === 'boolean') ? {} : options;
-      var tempOptions = {};
       tempOptions.stereo = !!options.stereo;
       tempOptions.sourceId = options.sourceId;
-      
-      console.info(tempOptions);
+
       options = tempOptions;
     }
 
-    var userMedia = (typeof options === 'object') ?
+    userMedia = (typeof options === 'object') ?
       true : options;
 
     // Add video sourceId
@@ -103,13 +102,12 @@ var StreamParser = {
     options : !!options;
 
     var userMedia = false;
+    var tempOptions = {};
 
     // Cleaning of unwanted keys
     if (options !== false) {
       options = (typeof options === 'boolean') ?
         { resolution: {} } : options;
-      
-      var tempOptions = {};
       
       // set the resolution parsing
       options.resolution = options.resolution || {};

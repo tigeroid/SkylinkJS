@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/RoomHandler.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/RoomHandler.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/RoomHandler.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/RoomHandler.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles all the events received from sub classes.
+ * @attribute RoomEventReceivedHandler
+ * @for Room
+ * @since 0.6.0
+ */
+var RoomEventReceivedHandler = {
+
+  socket: {
+
+    connect: function (com, data, listener) {
+      com.socket.send({
+        type: &#x27;joinRoom&#x27;,
+        uid: com.self.username,
+        cid: com.key,
+        rid: com.id,
+        userCred: com.self.token,
+        timeStamp: com.self.timeStamp,
+        apiOwner: com.owner,
+        roomCred: com.token,
+        start: com.startDateTime,
+        len: com.duration
+      });
+    },
+
+    disconnect: function (com, data, listener) {
+      com.handler(&#x27;room:leave&#x27;, {});
+
+      if (typeof com.onleave === &#x27;function&#x27;) {
+        com.onleave();
+      }
+    },
+
+    error: function (com, data, listener) {
+      com.handler(&#x27;room:error&#x27;, {
+        error: data,
+        state: -2
+      });
+    }
+  },
+
+  user: {
+    start: function (com, data, listener) {
+      var user = com.users[data.mid];
+
+      // Get stream
+      var connection = com.self.streams[data.prid];
+
+      // Check if stream connection exists
+      if (!fn.isEmpty(connection)) {
+        data.stream = connection.stream;
+      }
+
+      data.iceServers = com.iceServers;
+
+      user.handler(&#x27;message:&#x27; + data.type, data);
+    }
+  },
+  
+  peer: {
+    connect: function (com, data, listener) {
+      var user = com.users[data.userId];
+      var userInfo = user.getInfo();
+  
+      // Send welcome after creating object
+      if (data.SDPType === &#x27;answer&#x27;) {
+        com.socket.send({
+          type: &#x27;welcome&#x27;,
+          mid: com.self.id,
+          rid: com.id,
+          prid: data.id,
+          agent: window.webrtcDetectedBrowser,
+          version: window.webrtcDetectedVersion,
+          webRTCType: window.webrtcDetectedType,
+          userInfo: com.self.getInfo(data.id),
+          target: data.userId,
+          weight: data.weight
+        });
+      }
+    },
+    
+    offer: {
+      success: function (com, data, listener) {
+        com.socket.send({
+          type: &#x27;offer&#x27;,
+          sdp: data.offer.sdp,
+          prid: data.id,
+          mid: com.self.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    },
+
+    answer: {
+      success: function (com, data, listener) {
+        com.socket.send({
+          type: &#x27;answer&#x27;,
+          sdp: data.answer.sdp,
+          prid: data.id,
+          mid: com.self.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    },
+
+    icecandidate: function (com, data, listener) {
+      if (data.sourceType === &#x27;local&#x27;) {
+        com.socket.send({
+          type: &#x27;candidate&#x27;,
+          label: data.candidate.sdpMLineIndex,
+          id: data.candidate.sdpMid,
+          candidate: data.candidate.candidate,
+          mid: com.self.id,
+          prid: data.id,
+          target: data.userId,
+          rid: com.id
+        });
+      }
+    }
+  }
+};
+
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute RoomEventResponseHandler
+ * @for Room
+ * @since 0.6.0
+ */
+var RoomEventResponseHandler = {
+  /**
+   * Handles the error state trigger.
+   * @property error
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  error: function (com, data, listener) {
+    com.readyState = data.state;
+
+    com.handler(&#x27;room:error&#x27;, {
+      error: data.error,
+      state: data.state
+    });
+
+    if (typeof com.onerror === &#x27;function&#x27;) {
+      com.onerror({
+        error: data.error,
+        state: data.state
+      });
+    }
+  }
+
+};
+
+/**
+ * Handles the room class events.
+ * @attribute RoomHandler
+ * @for Room
+ * @since 0.6.0
+ */
+var RoomHandler = function (com, event, data, listener) {
+  var params = event.split(&#x27;:&#x27;);
+
+  // Class events
+  if (event.indexOf(&#x27;room:&#x27;) === 0) {
+    data.name = com.name;
+
+    fn.applyHandler(RoomEventResponseHandler, params, [com, data, listener]);
+
+  } else {
+    data.roomName = com.name;
+
+    fn.applyHandler(RoomEventReceivedHandler, params, [com, data, listener]);
+  }
+
+  listener(event, data);
+  
+  log.debug(&#x27;RoomHandler&#x27;, event, data);
+};
+
+/**
+ * Stores the room messaging events.
+ * @attribute MessageHandlerEvent
+ * @for Room
+ * @since 0.6.0
+ */
+var MessageHandlerEvent = {
+  /**
+   * Self is in the room.
+   * @property inRoom
+   * @type JSON
+   * @private
+   * @since 0.6.0
+   */
+  inRoom: function (com, data, listener) {
+    com.self.id = data.sid;
+
+    com.iceServers = data.pc_config;
+
+    com.socket.send({
+      type: &#x27;enter&#x27;,
+      mid: com.self.id,
+      rid: com.id,
+      prid: &#x27;main&#x27;,
+      agent: window.webrtcDetectedBrowser,
+      version: window.webrtcDetectedVersion,
+      webRTCType: window.webrtcDetectedType,
+      userInfo: com.self.getInfo(&#x27;main&#x27;)
+    });
+
+    com.handler(&#x27;room:join&#x27;, {
+      userId: com.self.id,
+      user: com.self,
+      isSelf: true
+    });
+
+    if (typeof com.onjoin === &#x27;function&#x27;) {
+      com.onjoin(data.mid);
+    }
+  },
+
+  /**
+   * User has sent self an enter.
+   * @property enter
+   * @type JSON
+   * @private
+   * @since 0.6.0
+   */
+  enter: function (com, data, listener) {
+    var user = com.users[data.mid];
+    
+    if (fn.isEmpty(user)) {
+      user = new User(data, com.handler);
+      
+      com.users[data.mid] = user;
+    }
+  },
+
+  /**
+   * User has sent self an welcome.
+   * @property enter
+   * @type JSON
+   * @private
+   * @since 0.6.0
+   */
+  welcome: function (com, data, listener) {
+    var user = com.users[data.mid];
+    
+    if (fn.isEmpty(user)) {
+      user = new User(data, com.handler);
+      
+      com.users[data.mid] = user;
+    }
+  },
+
+  /**
+   * A user has sent an offer to self.
+   * @property offer
+   * @type JSON
+   * @private
+   * @since 0.6.0
+   */
+  offer: function (com, data, listener) {
+    var user = com.users[data.mid];
+
+    if (!fn.isEmpty(user)) {
+      user.handler(&#x27;message:offer&#x27;, data);
+    }
+  },
+
+  /**
+   * A user has sent an answer to self.
+   * @property answer
+   * @type JSON
+   * @private
+   * @since 0.6.0
+   */
+  answer: function (com, data, listener) {
+    var user = com.users[data.mid];
+
+    if (!fn.isEmpty(user)) {
+      user.handler(&#x27;message:answer&#x27;, data);
+    }
+  },
+
+  /**
+   * A user has sent an ICE candidate to self.
+   * @property candidate
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  candidate: function (com, data, listener) {
+    var user = com.users[data.mid];
+
+    if (!fn.isEmpty(user)) {
+      user.handler(&#x27;message:candidate&#x27;, data);
+    }
+  },
+
+  /**
+   * A user has updated their own custom user data.
+   * @property updateUserEvent
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  updateUserEvent: function (com, data, listener) {
+    var user = com.users[data.mid];
+
+    if (!fn.isEmpty(user)) {
+      user.handler(&#x27;message:updateUserEvent&#x27;, data.userData);
+    }
+  },
+
+  /**
+   * An audio stream muted status has been updated.
+   * @property muteAudioEvent
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  muteAudioEvent: function (com, data, listener) {
+    var user = com.users[data.mid];
+
+    if (!fn.isEmpty(user)) {
+      user.handler(&#x27;message:muteAudioEvent&#x27;, data);
+    }
+  },
+
+  /**
+   * A video stream muted status has been updated.
+   * @property muteVideoEvent
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  muteVideoEvent: function (com, data, listener) {
+    var user = com.users[data.mid];
+
+    if (!fn.isEmpty(user)) {
+      user.handler(&#x27;message:muteVideoEvent&#x27;, data);
+    }
+  },
+
+  /**
+   * The room is lock status has been updated.
+   * @property roomLockEvent
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  roomLockEvent: function (com, data, listener) {
+    com.locked = data.lock;
+
+    if (com.locked) {
+      if (typeof com.onlock === &#x27;function&#x27;) {
+        com.onlock(data.mid);
+      }
+
+    } else {
+      if (typeof com.onunlock === &#x27;function&#x27;) {
+        com.onunlock(data.mid);
+      }
+    }
+  },
+
+  /**
+   * The room is lock status has been updated.
+   * @property roomLockEvent
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  restart: function (com, data, listener) {
+    var user = com.users[data.mid];
+
+    if (!fn.isEmpty(user)) {
+      user.handler(&#x27;message:restart&#x27;, data);
+    }
+  },
+
+  /**
+   * The self is redirected or warned.
+   * @property redirect
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  redirect: function (com, data, listener) {
+    if (data.action === &#x27;reject&#x27;) {
+      if (typeof com.onkick === &#x27;function&#x27;) {
+        com.onkick({
+          message: data.info,
+          reason: data.reason
+        });
+        
+        com.leave();
+      }
+    }
+
+    if (data.action === &#x27;warning&#x27;) {
+      if (typeof com.onwarn === &#x27;function&#x27;) {
+        com.onwarn({
+          message: data.info,
+          reason: data.reason
+        });
+      }
+    }
+  },
+
+  /**
+   * The a user or self is disconnected from room.
+   * @property bye
+   * @type Function
+   * @private
+   * @since 0.6.0
+   */
+  bye: function (com, data, listener) {
+    var user = com.users[data.mid];
+
+    if (!fn.isEmpty(user)) {
+      user.disconnect();
+    }
+  }
+
+};
+
+/**
+ * Handles the room messaging events.
+ * @attribute MessageHandler
+ * @for Room
+ * @since 0.6.0
+ */
+var MessageHandler = function (com, listener) {
+  // Handles the socket events
+  fn.forEach(MessageHandlerEvent, function (response, event) {
+    com.socket.when(event, function (data) {
+      response(com, data, listener);
+    });
+  });
+};
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

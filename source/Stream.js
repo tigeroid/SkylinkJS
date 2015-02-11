@@ -39,6 +39,16 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.config = config;
+  
+  /**
+   * The stream source type.
+   * @attribute sourceType
+   * @type String
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.sourceType = 'local';
 
   /**
    * The MediaStream object.
@@ -51,6 +61,68 @@ function Stream(stream, config, listener) {
   com.MediaStream = null;
 
   /**
+   * The parent handler that redirects the stream object messages to.
+   * @attribute MediaStream
+   * @type Object
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.parentHandler = function () {};
+
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @attribute handler
+   * @type Function
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    listener(event, data);
+    
+    //log.debug('StreamHandler', event, data); 
+
+    if (typeof com.parentHandler === 'function') {
+      com.parentHandler(event, data);
+    }
+  };
+
+  
+  /**
+   * Function to subscribe to when stream has ended.
+   * @method onstreamended
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.onstreamended = function () { };
+  
+  /**
+   * Function to subscribe to when stream track has been ended.
+   * @method ontrackended
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackended = function () { };
+  
+  /**
+   * Function to subscribe to when stream track has been muted.
+   * @method ontrackmute
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackmute = function () { };
+
+  /**
+   * Function to subscribe to when stream track has been unmuted.
+   * @method ontrackunmute
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackunmute = function () { };
+  
+
+  /**
    * Starts a MediaStream object connection with getUserMedia.
    * @method start
    * @trigger StreamJoined, mediaAccessRequired
@@ -59,7 +131,11 @@ function Stream(stream, config, listener) {
    */
   com.start = function () {
     window.getUserMedia(com.constraints, com.bind, function (error) {
-      listener('stream:error', error);
+      com.handler('stream:error', {
+        id: com.id,
+        error: error,
+        sourceType: com.sourceType
+      });
     });
   };
 
@@ -78,6 +154,7 @@ function Stream(stream, config, listener) {
     // bindStream.onaddtrack = com.onAddTrack;
     // bindStream.onremovetrack = com.onRemoveTrack;
     bindStream.onended = com.bindOnStreamEnded(bindStream);
+    bindStream.newId = com.id;
 
     // Bind track events
     com.bindTracks(bindStream.getAudioTracks());
@@ -85,10 +162,11 @@ function Stream(stream, config, listener) {
 
     com.MediaStream = bindStream;
  
-    listener('stream:start', {
+    com.handler('stream:start', {
       id: com.id,
       label: bindStream.label,
-      constraints: com.constraints
+      constraints: com.constraints,
+      sourceType: com.sourceType
     });
   };
 
@@ -100,14 +178,24 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.bindTracks = function (bindTracks) {
-    for (var i = 0; i < bindTracks.length; i++) {
-      var track = bindTracks[i];
+    fn.forEach(bindTracks, function (track, i) {
       track.newId = track.id || fn.generateUID();
 
       // Bind events to MediaStreamTrack
       // bindTracks[i].onstarted = com.onStarted;
-      track.onended = function (event) {
-        com.onTrackEnded(track);
+      track.onended = function () {
+        com.handler('stream:track:stop', {
+          streamId: com.id,
+          id: track.newId,
+          kind: track.kind,
+          label: track.label,
+          enabled: track.enabled,
+          sourceType: com.sourceType
+        });
+
+        if (typeof com.ontrackended === 'function') {
+          com.ontrackended(track);
+        }
       };
 
       // Un-implemented events functions
@@ -126,16 +214,17 @@ function Stream(stream, config, listener) {
           !!!com.config.status.videoMuted : !!com.config.video;
       }
       
-      bindTracks[i].enabled = isEnabled;
+      track.enabled = isEnabled;
 
-      listener('stream:track:start', {
+      com.handler('stream:track:start', {
         streamId: com.id,
         id: track.newId,
         kind: track.kind,
         label: track.label,
-        enabled: track.enabled
+        enabled: track.enabled,
+        sourceType: com.sourceType
       });
-    }
+    });
   };
 
   /**
@@ -163,11 +252,30 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.bindOnStreamEnded = function (bindStream) {
+    var fn = function () {
+      com.handler('stream:stop', {
+        id: com.id,
+        label: stream.label,
+        constraints: com.constraints,
+        sourceType: com.sourceType
+      });
+      
+      if (typeof com.onended === 'function') {
+        com.onended(bindStream);
+      }
+    };
+    
     // Firefox browsers
     if (window.webrtcDetectedBrowser === 'firefox') {
       // LocalMediaStream
       if (bindStream.constructor === LocalMediaStream) {
         return setInterval(function () {
+          if (bindStream.hasEnded) {
+            clearInterval(bindStream.onended);
+            // trigger that it has ended
+            fn();
+          }
+  
           if (typeof bindStream.recordedTime === 'undefined') {
             bindStream.recordedTime = 0;
           }
@@ -175,7 +283,7 @@ function Stream(stream, config, listener) {
           if (bindStream.recordedTime === bindStream.currentTime) {
             clearInterval(bindStream.onended);
             // trigger that it has ended
-            com.onStreamEnded(bindStream, null);
+            fn();
 
           } else {
             bindStream.recordedTime = bindStream.currentTime;
@@ -188,10 +296,15 @@ function Stream(stream, config, listener) {
           // Use a video to attach to check if stream has ended
           var video = document.createElement('video');
           video.onstreamended = setInterval(function () {
+            if (bindStream.hasEnded) {
+              clearInterval(video.onstreamended);
+              fn();
+            }
+            
             if (!fn.isEmpty(video.mozSrcObject)) {
               if (video.mozSrcObject.ended === true) {
                 clearInterval(video.onstreamended);
-                com.onStreamEnded(bindStream, null);
+                fn();
               }
             }
           }, 1000);
@@ -204,75 +317,7 @@ function Stream(stream, config, listener) {
       }
     }
     // Non-firefox browsers
-    return com.onStreamEnded;
-  };
-
-  /**
-   * Handles the event when the stream has ended successfully.
-   * @method onStreamEnded
-   * @trigger StreamJoined, mediaAccessRequired
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.onStreamEnded = function (event) {
-    var stream = event.target || event;
-
-    listener('stream:stop', {
-      id: com.id,
-      label: stream.label,
-      constraints: com.constraints
-    });
-  };
-
-  /**
-   * Handles the event when the stream track has ended successfully.
-   * @method onTrackEnded
-   * @trigger StreamJoined, mediaAccessRequired
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.onTrackEnded = function (track) {
-    listener('stream:track:stop', {
-      streamId: com.id,
-      id: track.newId,
-      kind: track.kind,
-      label: track.label,
-      enabled: track.enabled
-    });
-  };
-
-  /**
-   * Handles the event when the stream track has been muted.
-   * @method onTrackMute
-   * @trigger StreamJoined, mediaAccessRequired
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.onTrackMute = function (track) {
-    listener('stream:track:mute', {
-      streamId: com.id,
-      id: track.newId,
-      kind: track.kind,
-      label: track.label,
-      enabled: track.enabled
-    });
-  };
-
-  /**
-   * Handles the event when the stream track has been unmuted.
-   * @method onTrackMute
-   * @trigger StreamJoined, mediaAccessRequired
-   * @for Stream
-   * @since 0.6.0
-   */
-  com.onTrackUnmute = function (track) {
-    listener('stream:track:unmute', {
-      streamId: com.id,
-      id: track.newId,
-      kind: track.kind,
-      label: track.label,
-      enabled: track.enabled
-    });
+    return fn;
   };
 
   /**
@@ -284,11 +329,23 @@ function Stream(stream, config, listener) {
    */
   com.muteAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
+    
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = false;
+      
+      com.handler('stream:track:mute', {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].enabled = false;
-      com.onTrackMute(tracks[i]);
-    }
+      if (typeof com.ontrackmute === 'function') {
+        com.ontrackmute(track);
+      }
+    });
   };
 
   /**
@@ -301,10 +358,22 @@ function Stream(stream, config, listener) {
   com.unmuteAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].enabled = true;
-      com.onTrackUnmute(tracks[i]);
-    }
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = true;
+      
+      com.handler('stream:track:unmute', {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+
+      if (typeof com.ontrackunmute === 'function') {
+        com.ontrackunmute(track);
+      }
+    });
   };
 
   /**
@@ -317,14 +386,26 @@ function Stream(stream, config, listener) {
   com.stopAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].stop();
+    fn.forEach(tracks, function (track, i) {
+      track.stop();
 
       // Workaround for firefox as it does not have stop events
       if (window.webrtcDetectedBrowser === 'firefox') {
-        tracks[i].onended(tracks[i]);
+        if (track.hasEnded !== true) {
+          track.onended(track);
+          track.hasEnded = true;
+        }
       }
-    }
+    
+    }, function () {
+      // Workaround for firefox as it does not have stop stream when all track ends
+      if (window.webrtcDetectedBrowser === 'firefox') {
+        if (com.MediaStream.videoEnded === true) {
+          com.MediaStream.hasEnded = true;
+        }
+        com.MediaStream.audioEnded = true;
+      }
+    });
   };
 
   /**
@@ -337,10 +418,22 @@ function Stream(stream, config, listener) {
   com.muteVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].enabled = false;
-      com.onTrackMute(tracks[i]);
-    }
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = false;
+      
+      com.handler('stream:track:mute', {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+
+      if (typeof com.ontrackmute === 'function') {
+        com.ontrackmute(track);
+      }
+    });
   };
 
   /**
@@ -353,10 +446,22 @@ function Stream(stream, config, listener) {
   com.unmuteVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].enabled = true;
-      com.onTrackUnmute(tracks[i]);
-    }
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = true;
+      
+      com.handler('stream:track:unmute', {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+
+      if (typeof com.ontrackunmute === 'function') {
+        com.ontrackunmute(track);
+      }
+    });
   };
 
   /**
@@ -369,14 +474,26 @@ function Stream(stream, config, listener) {
   com.stopVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
 
-    for (var i = 0; i < tracks.length; i++) {
-      tracks[i].stop();
+    fn.forEach(tracks, function (track, i) {
+      track.stop();
 
       // Workaround for firefox as it does not have stop events
       if (window.webrtcDetectedBrowser === 'firefox') {
-        tracks[i].onended(tracks[i]);
+        if (track.hasEnded !== true) {
+          track.onended(tracks[i]);
+          track.hasEnded = true;
+        }
       }
-    }
+    
+    }, function () {
+      // Workaround for firefox as it does not have stop stream when all track ends
+      if (window.webrtcDetectedBrowser === 'firefox') {
+        if (com.MediaStream.audioEnded === true) {
+          com.MediaStream.hasEnded = true;
+        }
+        com.MediaStream.videoEnded = true;
+      }
+    });
   };
 
   com.stop = function () {

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/Stream.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/Stream.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/Stream.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/Stream.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles the XMLHttpStream and API function calls.
+ * @class Stream
+ * @for Skylink
+ * @since 0.6.0
+ */
+function Stream(stream, config, listener) {
+  &#x27;use strict&#x27;;
+
+  // Reference of instance
+  var com = this;
+
+  /**
+   * The stream id.
+   * @attribute id
+   * @type String
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.id = null;
+
+  /**
+   * The getUserMedia constraints.
+   * @attribute constraints
+   * @type JSON
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.constraints = null;
+
+  /**
+   * The streaming configuration.
+   * @attribute config
+   * @type JSON
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.config = config;
+  
+  /**
+   * The stream source type.
+   * @attribute sourceType
+   * @type String
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.sourceType = &#x27;local&#x27;;
+
+  /**
+   * The MediaStream object.
+   * @attribute MediaStream
+   * @type Object
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.MediaStream = null;
+
+  /**
+   * The parent handler that redirects the stream object messages to.
+   * @attribute MediaStream
+   * @type Object
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.parentHandler = function () {};
+
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @attribute handler
+   * @type Function
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    listener(event, data);
+    
+    //log.debug(&#x27;StreamHandler&#x27;, event, data); 
+
+    if (typeof com.parentHandler === &#x27;function&#x27;) {
+      com.parentHandler(event, data);
+    }
+  };
+
+  
+  /**
+   * Function to subscribe to when stream has ended.
+   * @method onstreamended
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.onstreamended = function () { };
+  
+  /**
+   * Function to subscribe to when stream track has been ended.
+   * @method ontrackended
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackended = function () { };
+  
+  /**
+   * Function to subscribe to when stream track has been muted.
+   * @method ontrackmute
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackmute = function () { };
+
+  /**
+   * Function to subscribe to when stream track has been unmuted.
+   * @method ontrackunmute
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackunmute = function () { };
+  
+
+  /**
+   * Starts a MediaStream object connection with getUserMedia.
+   * @method start
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.start = function () {
+    window.getUserMedia(com.constraints, com.bind, function (error) {
+      com.handler(&#x27;stream:error&#x27;, {
+        id: com.id,
+        error: error,
+        sourceType: com.sourceType
+      });
+    });
+  };
+
+  /**
+   * Binds events to MediaStream object.
+   * @method bind
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.bind = function (bindStream) {
+    // Set a MediaStream id if Firefox or Chrome doesn&#x27;t
+    com.id = bindStream.id || fn.generateUID();
+
+    // Bind events to MediaStream
+    // bindStream.onaddtrack = com.onAddTrack;
+    // bindStream.onremovetrack = com.onRemoveTrack;
+    bindStream.onended = com.bindOnStreamEnded(bindStream);
+    bindStream.newId = com.id;
+
+    // Bind track events
+    com.bindTracks(bindStream.getAudioTracks());
+    com.bindTracks(bindStream.getVideoTracks());
+
+    com.MediaStream = bindStream;
+ 
+    com.handler(&#x27;stream:start&#x27;, {
+      id: com.id,
+      label: bindStream.label,
+      constraints: com.constraints,
+      sourceType: com.sourceType
+    });
+  };
+
+  /**
+   * Binds events to MediaStreamTrack object.
+   * @method bind
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.bindTracks = function (bindTracks) {
+    fn.forEach(bindTracks, function (track, i) {
+      track.newId = track.id || fn.generateUID();
+
+      // Bind events to MediaStreamTrack
+      // bindTracks[i].onstarted = com.onStarted;
+      track.onended = function () {
+        com.handler(&#x27;stream:track:stop&#x27;, {
+          streamId: com.id,
+          id: track.newId,
+          kind: track.kind,
+          label: track.label,
+          enabled: track.enabled,
+          sourceType: com.sourceType
+        });
+
+        if (typeof com.ontrackended === &#x27;function&#x27;) {
+          com.ontrackended(track);
+        }
+      };
+
+      // Un-implemented events functions
+      //track.onmute = function(event) {};
+      //track.onunmute = function(event) {};
+      // track.onoverconstrained = function(event) {};
+
+      // Set the mute status
+      var isEnabled = true;
+
+      if (track.kind === &#x27;audio&#x27;) {
+        isEnabled = (typeof com.config.audio === &#x27;object&#x27;) ?
+          !!!com.config.status.audioMuted : !!com.config.audio;
+      } else {
+        isEnabled = (typeof com.config.video === &#x27;object&#x27;) ?
+          !!!com.config.status.videoMuted : !!com.config.video;
+      }
+      
+      track.enabled = isEnabled;
+
+      com.handler(&#x27;stream:track:start&#x27;, {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+    });
+  };
+
+  /**
+   * Attaches the Stream object to a video element.
+   * @method attachElement
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.attachElement = function (element) {
+    if (window.webrtcDetectedBrowser === &#x27;firefox&#x27; &amp;&amp;
+      (com.MediaStream instanceof LocalMediaStream) === false) {
+      window.reattachMediaStream(element, com.MediaStream.checkingVideo);
+    
+    } else {
+      window.attachMediaStream(element, com.MediaStream);
+    }
+  };
+
+  /**
+   * Handles the non-implemented firefox onended event for stream.
+   * @method bindOnStreamEnded
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.bindOnStreamEnded = function (bindStream) {
+    var fn = function () {
+      com.handler(&#x27;stream:stop&#x27;, {
+        id: com.id,
+        label: stream.label,
+        constraints: com.constraints,
+        sourceType: com.sourceType
+      });
+      
+      if (typeof com.onended === &#x27;function&#x27;) {
+        com.onended(bindStream);
+      }
+    };
+    
+    // Firefox browsers
+    if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
+      // LocalMediaStream
+      if (bindStream.constructor === LocalMediaStream) {
+        return setInterval(function () {
+          if (bindStream.hasEnded) {
+            clearInterval(bindStream.onended);
+            // trigger that it has ended
+            fn();
+          }
+  
+          if (typeof bindStream.recordedTime === &#x27;undefined&#x27;) {
+            bindStream.recordedTime = 0;
+          }
+
+          if (bindStream.recordedTime === bindStream.currentTime) {
+            clearInterval(bindStream.onended);
+            // trigger that it has ended
+            fn();
+
+          } else {
+            bindStream.recordedTime = bindStream.currentTime;
+          }
+        }, 1000);
+
+        // Remote MediaStream
+      } else {
+        return (function () {
+          // Use a video to attach to check if stream has ended
+          var video = document.createElement(&#x27;video&#x27;);
+          video.onstreamended = setInterval(function () {
+            if (bindStream.hasEnded) {
+              clearInterval(video.onstreamended);
+              fn();
+            }
+            
+            if (!fn.isEmpty(video.mozSrcObject)) {
+              if (video.mozSrcObject.ended === true) {
+                clearInterval(video.onstreamended);
+                fn();
+              }
+            }
+          }, 1000);
+          
+          bindStream.checkingVideo = video;
+  
+          window.attachMediaStream(video, bindStream);
+          return video;
+        })();
+      }
+    }
+    // Non-firefox browsers
+    return fn;
+  };
+
+  /**
+   * Mutes all audio MediaStreamTracks.
+   * @method muteAudio
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.muteAudio = function () {
+    var tracks = com.MediaStream.getAudioTracks();
+    
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = false;
+      
+      com.handler(&#x27;stream:track:mute&#x27;, {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+
+      if (typeof com.ontrackmute === &#x27;function&#x27;) {
+        com.ontrackmute(track);
+      }
+    });
+  };
+
+  /**
+   * Unmutes all audio MediaStreamTracks.
+   * @method unmuteAudio
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.unmuteAudio = function () {
+    var tracks = com.MediaStream.getAudioTracks();
+
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = true;
+      
+      com.handler(&#x27;stream:track:unmute&#x27;, {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+
+      if (typeof com.ontrackunmute === &#x27;function&#x27;) {
+        com.ontrackunmute(track);
+      }
+    });
+  };
+
+  /**
+   * Stops all audio MediaStreamTracks streaming.
+   * @method stopAudio
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.stopAudio = function () {
+    var tracks = com.MediaStream.getAudioTracks();
+
+    fn.forEach(tracks, function (track, i) {
+      track.stop();
+
+      // Workaround for firefox as it does not have stop events
+      if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
+        if (track.hasEnded !== true) {
+          track.onended(track);
+          track.hasEnded = true;
+        }
+      }
+    
+    }, function () {
+      // Workaround for firefox as it does not have stop stream when all track ends
+      if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
+        if (com.MediaStream.videoEnded === true) {
+          com.MediaStream.hasEnded = true;
+        }
+        com.MediaStream.audioEnded = true;
+      }
+    });
+  };
+
+  /**
+   * Mutes all video MediaStreamTracks.
+   * @method muteVideo
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.muteVideo = function () {
+    var tracks = com.MediaStream.getVideoTracks();
+
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = false;
+      
+      com.handler(&#x27;stream:track:mute&#x27;, {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+
+      if (typeof com.ontrackmute === &#x27;function&#x27;) {
+        com.ontrackmute(track);
+      }
+    });
+  };
+
+  /**
+   * Unmutes all video MediaStreamTracks.
+   * @method unmuteVideo
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.unmuteVideo = function () {
+    var tracks = com.MediaStream.getVideoTracks();
+
+    fn.forEach(tracks, function (track, i) {
+      track.enabled = true;
+      
+      com.handler(&#x27;stream:track:unmute&#x27;, {
+        streamId: com.id,
+        id: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+
+      if (typeof com.ontrackunmute === &#x27;function&#x27;) {
+        com.ontrackunmute(track);
+      }
+    });
+  };
+
+  /**
+   * Stops all video MediaStreamTracks streaming.
+   * @method stopVideo
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.stopVideo = function () {
+    var tracks = com.MediaStream.getVideoTracks();
+
+    fn.forEach(tracks, function (track, i) {
+      track.stop();
+
+      // Workaround for firefox as it does not have stop events
+      if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
+        if (track.hasEnded !== true) {
+          track.onended(tracks[i]);
+          track.hasEnded = true;
+        }
+      }
+    
+    }, function () {
+      // Workaround for firefox as it does not have stop stream when all track ends
+      if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
+        if (com.MediaStream.audioEnded === true) {
+          com.MediaStream.hasEnded = true;
+        }
+        com.MediaStream.videoEnded = true;
+      }
+    });
+  };
+
+  com.stop = function () {
+    // Stop MediaStream tracks
+    com.stopVideo();
+    com.stopAudio();
+    // Stop MediaStream
+    com.MediaStream.stop();
+  };
+  
+  // Throw an error if adapterjs is not loaded
+  if (!window.attachMediaStream) {
+    throw new Error(&#x27;Required dependency adapterjs not found&#x27;);
+  }
+
+  // Bind or start MediaStream
+  if (fn.isEmpty(stream)) {
+    var audioSettings = StreamParser.parseAudioConfig(config.audio);
+    var videoSettings = StreamParser.parseVideoConfig(config.video);
+    var statusSettings = StreamParser.parseMutedConfig(config);
+
+    com.constraints = {
+      audio: audioSettings.userMedia,
+      video: videoSettings.userMedia
+    };
+
+    com.config = {
+      audio: audioSettings.settings,
+      video: audioSettings.settings,
+      status: statusSettings
+    };
+
+    com.start();
+
+  } else {
+    // Allow javascript to return object before code execution
+    fn.runSync(function () {
+      com.config = {
+        audio: fn.isSafe(function () { return stream.getAudioTracks().length &gt; 0; }),
+        video: fn.isSafe(function () { return stream.getVideoTracks().length &gt; 0; })
+      };
+      com.bind(stream);
+    });
+  }
+}
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

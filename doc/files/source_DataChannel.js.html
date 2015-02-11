@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/DataChannel.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/DataChannel.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/DataChannel.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/DataChannel.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles the RTCDataChannel object connection and events.
+ * @class DataChannel
+ * @constructor
+ * @param {Object} channel The RTCDataChannel object to parse and hook events on.
+ * @param {Function} listener The listener function.
+ * @for Skylink
+ * @since 0.6.0
+ */
+function DataChannel(channel, listener) {
+  &#x27;use strict&#x27;;
+
+  // Reference of instance
+  var com = this;
+
+  /**
+   * The datachannel label.
+   * @attribute id
+   * @type String
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.id = channel.label || Date.UTC();
+  
+  /**
+   * The type of datachannel
+   * @attribute type
+   * @type String
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.type = &#x27;message&#x27;;
+
+  /**
+   * The DataChannel object.
+   * @attribute RTCDataChannel
+   * @type Object
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.RTCDataChannel = null;
+
+
+  /**
+   * Function to subscribe to when datachannel has opened.
+   * @method onopen
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onopen = function () {};
+  
+  /**
+   * Function to subscribe to when datachannel has closed.
+   * @method onclose
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onclose = function () {};
+  
+  /**
+   * Function to subscribe to when datachannel has an error.
+   * @method onerror
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onerror = function () {};
+  
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @method handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    DataChannelHandler(com, event, data, listener);
+  };
+
+  /**
+   * Binds events to RTCDataChannel object.
+   * @method bind
+   * @param {Object} bindChannel The RTCDataChannel object to bind events to.
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.bind = function (bindChannel) {
+    // Prevent re-trigger
+    var onOpenFn = function () {
+      com.handler(&#x27;datachannel:connect&#x27;, {});
+  
+      if (typeof com.onopen === &#x27;function&#x27;) {
+        com.onopen();
+      }
+    };
+    
+    if (bindChannel.readyState !== &#x27;open&#x27;) {
+      bindChannel.onopen = onOpenFn;
+    
+    } else {
+      onOpenFn();
+    }
+    
+    bindChannel.onerror = function (error) {
+      com.handler(&#x27;datachannel:error&#x27;, {
+        error: error
+      });
+      
+      if (typeof com.onerror === &#x27;function&#x27;) {
+        com.onerror(error);
+      }
+    };
+
+    // NOTE: Older firefox might close the DataChannel earlier 
+    bindChannel.onclose = function () {
+      com.handler(&#x27;datachannel:disconnect&#x27;, {});
+      
+      if (typeof com.onclose === &#x27;function&#x27;) {
+        com.onclose();
+      }
+    };
+
+    bindChannel.onmessage = function (event) {
+      com.handler(&#x27;datachannel:message&#x27;, {
+        data: event.data
+      });
+    };
+    
+    com.RTCDataChannel = bindChannel;
+
+    fn.runSync(function () {
+      com.handler(&#x27;datachannel:start&#x27;, {});
+    });
+  };
+
+  /**
+   * Sends data over the datachannel.
+   * @method send
+   * @param {JSON|String} data The data to send.
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.send = function (data) {
+    var sendingData = data;
+  
+    if (typeof data === &#x27;object&#x27;) {
+      sendingData = JSON.stringify(data);
+    }
+  
+    fn.isSafe(function () {
+      com.RTCDataChannel.send(sendingData);
+    });
+  };
+
+  if (fn.isEmpty(channel)) {
+    throw new Error(&#x27;Provided parameter channel is invalid.&#x27;);
+  }
+
+  // Bind datachannel object
+  com.bind(channel);
+}
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

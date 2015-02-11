@@ -16,17 +16,17 @@ if (typeof window.console.trace !== 'function') {
   window.console.newTrace = window.console.trace;
 }
 
-var Debugger = {
-  /**
-   * The log key
-   * @property key
-   * @type String
-   * @readOnly
-   * @for Debugger
-   * @since 0.5.4
-   */
-  key: 'Skylink',
+/**
+ * The log key
+ * @attribute LogKey
+ * @type String
+ * @readOnly
+ * @for Debugger
+ * @since 0.5.4
+ */
+var LogKey = 'Skylink - ';
 
+var Debugger = {
   /**
    * The current log level of Skylink.
    * @property level
@@ -50,25 +50,25 @@ var Debugger = {
   logs: [],
   
   console: {
-    log: window.console.log.bind(window.console, this.key + '%s'),
+    log: window.console.log.bind(window.console, LogKey + '<<%s>> %s'),
     
-    error: window.console.error.bind(window.console, this.key + '%s'),
+    error: window.console.error.bind(window.console, LogKey + '<<%s>> %s'),
     
     info: window.console.info.bind(window.console, 
-      (window.webrtcDetectedBrowser === 'safari' ? 'INFO: ' : '') + this.key + '%s'),
+      (window.webrtcDetectedBrowser === 'safari' ? 'INFO: ' : '') + LogKey + '<<%s>> %s'),
     
-    warn: window.console.warn.bind(window.console, warn: this.key + '%s'),
+    warn: window.console.warn.bind(window.console, LogKey + '<<%s>> %s'),
 
     debug: window.console.newDebug.bind(window.console, 
-      (typeof window.console.debug !== 'function' ? 'DEBUG: ' : '') + this.key + '%s')
+      (typeof window.console.debug !== 'function' ? 'DEBUG: ' : '') + LogKey + '<<%s>> %s')
   },
   
   traceTemplate: {
-    log: '==LOG== ' + this.key + '%s',
-    error: '==ERROR== ' + this.key + '%s',
-    info: '==INFO== ' + this.key + '%s',
-    warn: '==WARN== ' + this.key + '%s',
-    debug: '==DEBUG== ' + this.key + '%s'
+    log: '==LOG== ' + LogKey + '%s',
+    error: '==ERROR== ' + LogKey + '%s',
+    info: '==INFO== ' + LogKey + '%s',
+    warn: '==WARN== ' + LogKey + '%s',
+    debug: '==DEBUG== ' + LogKey + '%s'
   },
 
   applyConsole: function (type) {
@@ -82,12 +82,12 @@ var Debugger = {
     if (this.trace) {
       return window.console.newTrace.bind(window.console, this.traceTemplate[type]);
     }
-    return this.console[type](;
+    return this.console[type];
   },
 
   setLevel: function (inputLevel) {
     // Debug level
-    if (inputLevel === 4) {
+    if (inputLevel > 3) {
       log.debug = this.applyConsole('debug');
     
     } else {
@@ -143,4 +143,4 @@ var Debugger = {
   }
 };
 
-Debugger.setLevel(2);
+Debugger.setLevel(4);

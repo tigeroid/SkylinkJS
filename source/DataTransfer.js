@@ -522,8 +522,3 @@ function DataTransfer(channel, peerId, listener) {
   };
 }
 
-
-
-
-
-

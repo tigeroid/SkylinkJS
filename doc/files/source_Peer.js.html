@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/Peer.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/Peer.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/Peer.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/Peer.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles the PeerConnection and Peer data.
+ * @class Peer
+ * @for Skylink
+ * @since 0.6.0
+ */
+function Peer(config, listener) {
+  &#x27;use strict&#x27;;
+
+  // Reference of instance
+  var com = this;
+
+  /**
+   * The peer id.
+   * @attribute id
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.id = config.id || fn.generateUID();
+  
+  /**
+   * The peer type.
+   * @attribute type
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.type = config.id === &#x27;main&#x27; ? &#x27;user&#x27; : &#x27;stream&#x27;;
+  
+  /**
+   * The local description type peer sends.
+   * @attribute SDPType
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.SDPType = null;
+
+  /**
+   * The PeerConnection constraints - iceServers.
+   * @attribute constraints
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.constraints = null;
+
+  /**
+   * The local description to be set.
+   * @attribute localDescription
+   * @type Object
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.localDescription = null;
+  
+  /**
+   * The remote description to be set.
+   * @attribute remoteDescription
+   * @type Object
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.remoteDescription = null;
+  
+  /**
+   * The datachannels connected to PeerConnection.
+   * @attribute datachannels
+   * @param {DataChannel} &lt;channelId&gt; The datachannel connected to peer.
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.datachannels = {};
+  
+  /**
+   * The flag that indicates if trickle ICE is enable for this PeerConnection.
+   * @attribute iceTrickle
+   * @type Boolean
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.iceTrickle = true;
+  
+  /**
+   * The timeout that would react if PeerConnection is unstable and refresh connection.
+   * @attribute healthTimer
+   * @type Function
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.healthTimer = null;
+  
+  /**
+   * The stream send from this peer.
+   * @attribute stream
+   * @type Stream
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.stream = null;
+  
+  /**
+   * Stores the streaming configuration.
+   * @attribute streamingConfig
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.streamingConfig = config.streamingConfig || {
+    bandwidth: {},
+    audio: false,
+    video: false,
+    mediaStatus: { audioMuted: true, videoMuted: true }
+  };
+
+  /**
+   * The PeerConnection session description constraints.
+   * @attribute sdpConstraints
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.sdpConstraints = {
+    mandatory: {
+      OfferToReceiveAudio: true,
+      OfferToReceiveVideo: true
+    }
+  };
+  
+  /**
+   * The PeerConnection session description configuration.
+   * @attribute sdpConfig
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.sdpConfig = null;
+
+  /**
+   * The PeerConnection configuration.
+   * @attribute config
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.config = {
+    optional: [{
+      DtlsSrtpKeyAgreement: true
+    }]
+  };
+
+  /**
+   * The PeerConnection object.
+   * @attribute RTCPeerConnection
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.RTCPeerConnection = null;
+  
+  /**
+   * The peerconnection weight during handshake.
+   * @attribute weight
+   * @type Integer
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.weight = parseInt(fn.generateUID(), 10);
+  
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @attribute handler
+   * @type Function
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    PeerHandler(com, event, data, listener);
+  };
+
+
+  /**
+   * Function to subscribe to when peer&#x27;s connection has been started.
+   * @method onconnect
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when peer&#x27;s ice connection state changes.
+   * @method oniceconnectionstatechange
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.oniceconnectionstatechange = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s ice gathering state changes.
+   * @method onicegatheringstatechange
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onicegatheringstatechange = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s remote stream is received.
+   * @method onaddstream
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onaddstream = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s signaling state has changed.
+   * @method onsignalingstatechange
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onsignalingstatechange = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s connection has been restarted.
+   * @method onreconnect
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onreconnect = function () {};
+  
+  /**
+   * Function to subscribe to when peer&#x27;s connection has been restarted.
+   * @method onreconnect
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onreconnect = function () {};
+  
+  /**
+   * Function to subscribe to when a peer connection been disconnected.
+   * @method onremoveconnection
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+  
+  
+
+  /**
+   * Starts the peer connection.
+   * @method connect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.connect = function (stream) {
+    var peer = new window.RTCPeerConnection(com.constraints, com.config);
+  
+    // Send stream
+    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {    
+      
+      // Set the data
+      com.stereo = fn.isSafe(function () { return stream.audio.stereo; });
+    
+      // Check class type
+      peer.addStream(stream.MediaStream);
+      
+      window.data = stream.MediaStream;
+
+      com.handler(&#x27;peer:stream&#x27;, {
+        sourceType: &#x27;local&#x27;,
+        stream: stream
+      });
+    }
+
+    com.bind(peer);
+  };
+  
+  /**
+   * Restarts the peer connection.
+   * @method reconnect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.reconnect = function (stream) {
+    var hasStream = !!stream;
+
+    stream = stream || fn.isSafe(function () { 
+      return com.RTCPeerConnection.getLocalStreams()[0]; });
+
+    com.RTCPeerConnection.close();
+    com.RTCPeerConnection = null;
+    
+    var peer = new window.RTCPeerConnection(com.constraints, com.config);
+
+    // Send stream
+    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {    
+      
+      // Set the data
+      com.stereo = fn.isSafe(function () { return stream.audio.stereo; });
+    
+      // Check class type
+      peer.addStream(stream.MediaStream);
+      
+      if (hasStream) {
+        com.handler(&#x27;peer:stream&#x27;, {
+          stream: stream
+        });
+      }
+      
+      com.handler(&#x27;peer:reconnect&#x27;, {});
+    }
+    com.bind(peer);
+  };
+
+  /**
+   * Stops the peer connection.
+   * @method disconnect
+   * @private
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.disconnect = function () {
+    if (com.RTCPeerConnection.newSignalingState !== &#x27;closed&#x27;) {
+      com.RTCPeerConnection.close();
+    }
+    
+    com.handler(&#x27;peer:disconnect&#x27;, {});
+  };
+
+  /**
+   * Binds events to RTCPeerConnection object.
+   * @method bind
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.bind = function (bindPeer) {
+    bindPeer.iceConnectionFiredStates = [];
+    bindPeer.queueCandidate = [];
+    bindPeer.newSignalingState = &#x27;new&#x27;;
+    bindPeer.newIceConnectionState = &#x27;new&#x27;;
+
+    bindPeer.ondatachannel = function (event) {
+      var eventChannel = event.channel || event;
+      
+      // Send the channel only when channel has started
+      var channel = new DataChannel(eventChannel, function (event, data) {
+        
+        com.handler(event, data);
+        
+        if (event === &#x27;datachannel:start&#x27;) {
+          com.handler(&#x27;peer:datachannel&#x27;, {
+            channel: channel,
+            sourceType: &#x27;remote&#x27;
+          });
+        }
+      });
+    };
+
+    bindPeer.onaddstream = function (event) {
+      var eventStream = event.stream || event;
+  
+      // Send the stream only when stream has started
+      var stream = new Stream(eventStream, config.streamingConfig, function (event, data) {
+        
+        com.handler(event, data);
+  
+        if (event === &#x27;stream:start&#x27;) {
+          com.handler(&#x27;peer:stream&#x27;, {
+            sourceType: &#x27;remote&#x27;,
+            stream: stream
+          });
+        }
+      });
+    };
+
+    bindPeer.onicecandidate = function (event) {
+      var eventCandidate = event.candidate || event;
+  
+      if (fn.isEmpty(eventCandidate.candidate)) {
+        com.handler(&#x27;candidate:gathered&#x27;, {
+          candidate: eventCandidate
+        });
+        return;
+      }
+      
+      com.handler(&#x27;peer:icecandidate&#x27;, {
+        sourceType: &#x27;local&#x27;,
+        candidate: eventCandidate
+      }); 
+    };
+
+    bindPeer.oniceconnectionstatechange = function (event) {
+      ICE.parseIceConnectionState(bindPeer);
+    };
+
+    bindPeer.oniceconnectionnewstatechange = function (event) {
+      // Connection is successful
+      if (com.RTCPeerConnection.newIceConnectionState === &#x27;connected&#x27;) {
+        // Stop timer
+        if (!fn.isEmpty(com.healthTimer)) {
+          log.debug(&#x27;Peer&#x27;, com.id, &#x27;Stopping health timer as connection is established.&#x27;);
+
+          clearInterval(com.healthTimer);
+        }
+      }
+      
+      com.handler(&#x27;peer:iceconnectionstate&#x27;, {
+        state: com.RTCPeerConnection.newIceConnectionState
+      });
+    };
+
+    bindPeer.onsignalingstatechange = function (event) {
+      com.handler(&#x27;peer:signalingstate&#x27;, {
+        state: com.RTCPeerConnection.newSignalingState
+      });
+    };
+
+    bindPeer.onicegatheringstatechange = function () {
+      com.handler(&#x27;peer:icegatheringstate&#x27;, {
+        state: com.RTCPeerConnection.iceGatheringState
+      }); 
+    };
+    
+    com.RTCPeerConnection = bindPeer;
+
+    fn.runSync(function () {
+      com.handler(&#x27;peer:connect&#x27;, {
+        weight: com.weight,
+        SDPType: com.SDPType,
+        streamingConfig: com.streamingConfig
+      });
+    });
+  };
+
+  /**
+   * Creates an offer session description.
+   * @method createOffer
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.createOffer = function () {
+    // Create datachannel
+    if (globals.dataChannel &amp;&amp; com.type === &#x27;user&#x27;) {
+      var eventChannel = com.RTCPeerConnection.createDataChannel(&#x27;main&#x27;);
+      
+      // Send the channel only when channel has started
+      var channel = new DataChannel(eventChannel, function (event, data) {
+        
+        com.handler(event, data);
+        
+        com.handler(&#x27;peer:datachannel&#x27;, {
+          sourceType: &#x27;local&#x27;,
+          channel: channel
+        });
+      });
+    }
+
+    com.RTCPeerConnection.createOffer(function (offer) {
+      offer.sdp = SDP.configure(offer.sdp, com.sdpConfig);
+
+      com.localDescription = offer;
+
+      com.handler(&#x27;peer:offer:success&#x27;, {
+        offer: offer
+      });
+
+    }, function (error) {
+      com.handler(&#x27;peer:offer:error&#x27;, {
+        error: error
+      });
+    }, com.sdpConstraints);
+  };
+
+  /**
+   * Creates an answer session description.
+   * @method createAnswer
+   * @trigger StreamJoined, mediaAccessRequired
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.createAnswer = function () {
+    com.RTCPeerConnection.createAnswer(function (answer) {
+      answer.sdp = SDP.configure(answer.sdp, com.sdpConfig);
+  
+      com.localDescription = answer;
+  
+      com.handler(&#x27;peer:answer:success&#x27;, {
+        answer: answer
+      });
+      
+      com.setLocalDescription();
+
+    }, function (error) {
+      com.handler(&#x27;peer:answer:error&#x27;, {
+        error: error
+      });
+      
+    }, com.sdpConstraints);
+  };
+
+  /**
+   * Sets local description.
+   * @method setLocalDescription
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.setLocalDescription = function () {
+    var localDescription = com.localDescription;
+  
+    com.RTCPeerConnection.setLocalDescription(localDescription, function () {
+      com.handler(&#x27;peer:localdescription:success&#x27;, {
+        localDescription: localDescription.sdp,
+        type: localDescription.type,
+      });
+
+      if (localDescription.type === &#x27;answer&#x27;) {
+        com.RTCPeerConnection.newSignalingState = &#x27;have-local-answer&#x27;;
+        
+        com.handler(&#x27;peer:signalingstate&#x27;, {
+          state: com.RTCPeerConnection.newSignalingState
+        });
+      
+      } else {
+        com.setRemoteDescription();
+      }
+
+    }, function (error) {
+      com.handler(&#x27;peer:localdescription:error&#x27;, {
+        localDescription: localDescription.sdp,
+        type: localDescription.type,
+        error: error
+      });
+    });
+  };
+
+  /**
+   * Sets remote description.
+   * @method setRemoteDescription
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.setRemoteDescription = function () {
+    var remoteDescription = com.remoteDescription;
+
+    com.RTCPeerConnection.setRemoteDescription(remoteDescription, function () {
+      com.handler(&#x27;peer:remotedescription:success&#x27;, {
+        remoteDescription: remoteDescription.sdp,
+        type: remoteDescription.type
+      });
+  
+      if (remoteDescription.type === &#x27;answer&#x27;) {
+        com.RTCPeerConnection.newSignalingState = &#x27;have-remote-answer&#x27;;
+        
+        com.handler(&#x27;peer:signalingstate&#x27;, {
+          state: com.RTCPeerConnection.newSignalingState
+        });
+      
+      } else {
+        com.createAnswer();
+      }
+      
+      // Add all ICE Candidate generated before remote description of answer and offer
+      ICE.popCandidate(com.RTCPeerConnection, com.handler);
+
+    }, function (error) {
+      com.handler(&#x27;peer:remotedescription:error&#x27;, {
+        remoteDescription: remoteDescription.sdp,
+        type: remoteDescription.type,
+        error: error
+      });
+    });
+  };
+
+  // Throw an error if adapterjs is not loaded
+  if (!window.RTCPeerConnection) {
+    throw new Error(&#x27;Required dependency adapterjs not found&#x27;);
+  }
+  
+  // Parse bandwidth
+  com.streamingConfig.bandwidth = StreamParser.parseBandwidthConfig(com.streamingConfig.bandwidth);
+
+  // Parse constraints ICE servers
+  com.constraints = ICE.parseICEServers(config.constraints);
+  
+  // Parse the sdp configuration
+  com.sdpConfig = {
+    stereo: fn.isSafe(function () { return config.streamingConfig.audio.stereo; }),
+    bandwidth: com.bandwidth
+  };
+  
+  // Start timer
+  /*com.healthTimer = setTimeout(function () {
+    if (!fn.isEmpty(com.healthTimer)) {
+      log.debug(&#x27;Peer&#x27;, com.id, &#x27;Restarting negotiation as timer has expired&#x27;);
+      
+      clearInterval(com.healthTimer);
+      
+      com.reconnect();
+    }
+    
+  }, com.iceTrickle ? 10000 : 50000);*/
+
+  fn.runSync(function () {
+    com.handler(&#x27;peer:start&#x27;, {
+      weight: com.weight,
+      SDPType: com.SDPType,
+      streamingConfig: com.streamingConfig
+    });
+  });
+}
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

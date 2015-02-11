@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="DataChannel - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1>DataChannel Class <small> <span class="badge">Version 0.6.0</span></small></h1>
+
+<small>
+    Defined in: <a href="../files/source_DataChannel.js.html#l1"><code>source&#x2F;DataChannel.js:1</code></a>
+  </small>
+
+
+<hr class="strike">
+
+<ol class="breadcrumb">
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
+  <li class="active">DataChannel</li>
+</ol>
+
+<div class="description"><p>Handles the RTCDataChannel object connection and events.</p>
+</p>
+
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <table class="table table-bordered">
+    
+      <thead>
+        <tr> <th colspan="2">Constructor</th> </tr>
+      </thead>
+      <tbody>
+        <tr> <td> <a href="#constructor"> <code>DataChannel()</code> </a> </td> <td> Instantiate a DataChannel class constructor. </td> </tr>
+      </tbody>
+    
+  
+    
+      <thead>
+        <tr> <th colspan="2">Methods</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+            <tr> <td> <a href="#method_bind"> <code>bind()</code> </a> </td> <td> <p>Binds events to RTCDataChannel object.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+ </td> </tr>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <tr> <td> <a href="#method_send"> <code>send()</code> </a> </td> <td> <p>Sends data over the datachannel.</p>
+ </td> </tr>
+          
+        
+      </tbody>
+    
+    
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Attributes</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#attr_DataChannelEventResponseHandler"> <code>DataChannelEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_DataChannelHandler"> <code>DataChannelHandler</code> </a> </td> <td> <p>Handles the datachannel class events.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The datachannel label.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_RTCDataChannel"> <code>RTCDataChannel</code> </a> </td> <td> <p>The DataChannel object.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The type of datachannel</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Events</th> </tr>
+      </thead>
+      <tbody>
+        
+          <tr> <td> <a href="#event_datachannel:connect"> <code>datachannel:connect</code> </a> </td> <td> <p>Event fired when the datachannel has opened.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_datachannel:disconnect"> <code>datachannel:disconnect</code> </a> </td> <td> <p>Event fired when the datachannel has closed.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_datachannel:error"> <code>datachannel:error</code> </a> </td> <td> <p>Event fired when the datachannel has an exception occurred.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_datachannel:message"> <code>datachannel:message</code> </a> </td> <td> <p>Event fired when the datachannel receives data.</p>
+ </td> </tr>
+        
+          <tr> <td> <a href="#event_datachannel:start"> <code>datachannel:start</code> </a> </td> <td> <p>Event fired when the datachannel object is ready to use.</p>
+ </td> </tr>
+        
+      </tbody>
+    
+    
+    
+      <thead>
+        <tr> <th colspan="2">Event Handlers</th> </tr>
+      </thead>
+      <tbody>
+        
+          
+        
+          
+        
+          
+            <tr> <td> <a href="#method_onclose"> <code>onclose</code> </a> </td> <td> <p>Function to subscribe to when datachannel has closed.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onerror"> <code>onerror</code> </a> </td> <td> <p>Function to subscribe to when datachannel has an error.</p>
+ </td> </tr>
+          
+        
+          
+            <tr> <td> <a href="#method_onopen"> <code>onopen</code> </a> </td> <td> <p>Function to subscribe to when datachannel has opened.</p>
+ </td> </tr>
+          
+        
+          
+        
+      </tbody>
+    
+  </table>
+</div>
+
+
+<div class="section code-section">
+  <h4>Constructor</h4>
+  <div id="constructor" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      DataChannel
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>channel</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>listener</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+      
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+    <p>
+      Defined in: <a href="../files/source_DataChannel.js.html#l1"><code>source&#x2F;DataChannel.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+        <p> 
+          <em class="glyphicon glyphicon-ban-circle" aria-hidden="true"></em> This <mark>DataChannel</mark> constructor cannot be instantiable, meaning you cannot create a new <mark>DataChannel</mark> class object that would require certain parent dependencies functionalities. E.g. <mark>DataChannel</mark> class relies on <mark>Peer</mark> class.
+        </p>
+      
+    </blockquote>
+    <p>To create a DataChannel class object, these are the required parameters to be provided.</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Parameters:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">channel</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCDataChannel object to parse and hook events on.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">listener</code>
+    <span class="type"> : <em>type</em> Function </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The listener function.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+
+      <div class="code-section-item">
+        <h6>Returns:</h6>
+        <ul>
+          
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor DataChannel ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+ 
+
+
+<div class="section code-section">
+  <h4>Methods</h4>
+   
+    
+      <div id="method_bind" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      bind
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>bindChannel</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_DataChannel.js.html#l87"><code>source&#x2F;DataChannel.js:87</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+          <p> 
+            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Binds events to RTCDataChannel object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">bindChannel</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCDataChannel object to bind events to.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor bind ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_handler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      handler
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_DataChannel.js.html#l74"><code>source&#x2F;DataChannel.js:74</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+          <p> 
+            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>The handler that manages all triggers or relaying events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor handler ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <div id="method_send" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      send
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_DataChannel.js.html#l144"><code>source&#x2F;DataChannel.js:144</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+        
+            <p>
+              <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+              <div class="table-responsive">
+                <table class="table table-condensed table-browsers">
+                  <thead>
+                    <tr> 
+                      <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                      <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                      <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                      <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                      <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> 35+ </td>
+                      <td> 30+ </td>
+                      <td> 21+ </td>
+                      <td> 7+ </td>
+                      <td> 11+ </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </p>
+        
+
+        
+          <p> 
+            <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+          </p>
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+    </blockquote>
+    <p><p>Sends data over the datachannel.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The data to send.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor send ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+  
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Attributes</h4>
+   <div id="attr_DataChannelEventResponseHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      DataChannelEventResponseHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l1"><code>source&#x2F;DataChannelHandler.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Handles all the events to respond to other parent classes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor DataChannelEventResponseHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_DataChannelHandler" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      DataChannelHandler
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l53"><code>source&#x2F;DataChannelHandler.js:53</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>Handles the datachannel class events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor DataChannelHandler ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_id" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      id
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannel.js.html#l16"><code>source&#x2F;DataChannel.js:16</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The datachannel label.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor id ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_RTCDataChannel" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      RTCDataChannel
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannel.js.html#l36"><code>source&#x2F;DataChannel.js:36</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The DataChannel object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor RTCDataChannel ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_type" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      type
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannel.js.html#l26"><code>source&#x2F;DataChannel.js:26</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+       
+      <p>
+        <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+      </p>
+              
+    </blockquote>
+    <p><p>The type of datachannel</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor type ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+--> 
+</div>
+
+
+
+
+
+<div class="section code-section">
+  <h4>Event Handlers</h4>
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <div id="handler_onclose" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onclose
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_DataChannel.js.html#l56"><code>source&#x2F;DataChannel.js:56</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+      
+        <p>
+          <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+          <div class="table-responsive">
+            <table class="table table-condensed table-browsers">
+              <thead>
+                <tr> 
+                  <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                  <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                  <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                  <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                  <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> 35+ </td>
+                  <td> 30+ </td>
+                  <td> 21+ </td>
+                  <td> 7+ </td>
+                  <td> 11+ </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        </p>
+      
+
+      
+    </blockquote>
+    <p><p>Function to subscribe to when datachannel has closed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onclose ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_onerror" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onerror
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_DataChannel.js.html#l65"><code>source&#x2F;DataChannel.js:65</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+      
+        <p>
+          <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+          <div class="table-responsive">
+            <table class="table table-condensed table-browsers">
+              <thead>
+                <tr> 
+                  <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                  <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                  <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                  <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                  <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> 35+ </td>
+                  <td> 30+ </td>
+                  <td> 21+ </td>
+                  <td> 7+ </td>
+                  <td> 11+ </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        </p>
+      
+
+      
+    </blockquote>
+    <p><p>Function to subscribe to when datachannel has an error.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onerror ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_onopen" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onopen
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_DataChannel.js.html#l47"><code>source&#x2F;DataChannel.js:47</code></a>
+      </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+
+      
+        <p>
+          <em class="glyphicon glyphicon-check" aria-hidden="true"></em> Supported browsers
+          <div class="table-responsive">
+            <table class="table table-condensed table-browsers">
+              <thead>
+                <tr> 
+                  <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+                  <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+                  <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+                  <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+                  <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> 35+ </td>
+                  <td> 30+ </td>
+                  <td> 21+ </td>
+                  <td> 7+ </td>
+                  <td> 11+ </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        </p>
+      
+
+      
+    </blockquote>
+    <p><p>Function to subscribe to when datachannel has opened.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onopen ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <em></em>
+    
+  
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Events</h4>
+   <div id="event_datachannel:connect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      datachannel:connect
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l18"><code>source&#x2F;DataChannelHandler.js:18</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the datachannel has opened.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor datachannel:connect ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_datachannel:connect" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>datachannel:connect</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l18"><code>source&#x2F;DataChannelHandler.js:18</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the datachannel has opened.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_datachannel:disconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      datachannel:disconnect
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l44"><code>source&#x2F;DataChannelHandler.js:44</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the datachannel has closed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor datachannel:disconnect ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_datachannel:disconnect" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>datachannel:disconnect</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l44"><code>source&#x2F;DataChannelHandler.js:44</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the datachannel has closed.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_datachannel:error" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      datachannel:error
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l26"><code>source&#x2F;DataChannelHandler.js:26</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the datachannel has an exception occurred.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCDataChannel error.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor datachannel:error ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_datachannel:error" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>datachannel:error</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l26"><code>source&#x2F;DataChannelHandler.js:26</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the datachannel has an exception occurred.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">error</code>
+            <span class="type"><b>{</b>Object<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The RTCDataChannel error.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_datachannel:message" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      datachannel:message
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l35"><code>source&#x2F;DataChannelHandler.js:35</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the datachannel receives data.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Event Payload:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The data received.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor datachannel:message ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_datachannel:message" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>datachannel:message</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l35"><code>source&#x2F;DataChannelHandler.js:35</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the datachannel receives data.</p>
+
+  </div>
+
+  
+    <div class="code-item-section">
+      <h4>Event Payload:</h4>
+
+      <ul class="params-list">
+      
+          <li class="param">
+            <code class="param-name">data</code>
+            <span class="type"><b>{</b>JSON | String<b>}</b></span>
+
+            
+            
+
+            <div class="param-description">
+                <p>The data received.</p>
+
+            </div>
+
+            
+          </li>
+      
+      </ul>
+    </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_datachannel:start" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      datachannel:start
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l10"><code>source&#x2F;DataChannelHandler.js:10</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+  
+               
+    </blockquote>
+    <p><p>Event fired when the datachannel object is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor datachannel:start ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_datachannel:start" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>datachannel:start</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l10"><code>source&#x2F;DataChannelHandler.js:10</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the datachannel object is ready to use.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>--> 
+</div>
+
+
+  <!--
+
+
+
+
+
+    
+        Module: <a href="../modules/Skylink.html">Skylink</a>
+    
+
+
+
+-->
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/Request.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  <!-- <a href="http://icons8.com">Icon pack by Icons8</a> -->
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <hr>
+    <li><a href="../" data="">Introduction</a></li>
+    
+      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li><a href="../classes/Request.html"> Request </a></li>
+    
+      <li><a href="../classes/Room.html"> Room </a></li>
+    
+      <li><a href="../classes/Self.html"> Self </a></li>
+    
+      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/Request.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/Request.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/Request.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles the XMLHttpRequest and API function calls.
+ * @attribute Request
+ * @for Skylink
+ * @since 0.6.0
+ */
+var Request = {
+  /**
+   * The api server.
+   * @property server
+   * @type String
+   * @private
+   * @since 0.6.0
+   */
+  server: globals.roomServer || &#x27;//api.temasys.this.sg&#x27;,
+
+  /**
+   * The flag to check if request should use XDomainRequest.
+   * @property isXDomainRequest
+   * @type Boolean
+   * @private
+   * @since 0.6.0
+   */
+  isXDomainRequest: window.webrtcDetectedBrowser === &#x27;IE&#x27; &amp;&amp;
+    (window.webrtcDetectedVersion === 9 || window.webrtcDetectedVersion === 8) &amp;&amp;
+    typeof window.XDomainRequest === &#x27;function&#x27;,
+
+  /**
+   * The protocol the request uses to connect to.
+   * @property protocol
+   * @type String
+   * @private
+   * @since 0.6.0
+   */
+  protocol: (globals.enforceSSL) ? &#x27;https:&#x27; : window.location.protocol,
+
+  /**
+   * Starts the connection to the room.
+   * @property load
+   * @type Function
+   * @param {Function} callback The callback triggered once request has been completed.
+   * @trigger peerJoined, mediaAccessRequired
+   * @for Request
+   * @since 0.6.0
+   */
+  load: function (path, deferSuccess, deferError) {
+    var xhr = null;
+
+    if (this.isXDomainRequest) {
+      xhr = new XDomainRequest();
+
+      xhr.setContentType = function (contentType) {
+        xhr.contentType = contentType;
+      };
+
+    } else {
+      xhr = new window.XMLHttpRequest();
+
+      xhr.setContentType = function (contentType) {
+        xhr.setRequestHeader(&#x27;Content-type&#x27;, contentType);
+      };
+    }
+
+    xhr.onload = function () {
+      var response = xhr.responseText || xhr.response;
+      var status = xhr.status || 200;
+      
+      log.info(&#x27;Request&#x27;, &#x27;Received response from API server&#x27;, response, status);
+      
+      try {
+        response = JSON.parse( response || &#x27;{}&#x27; );
+      } catch (error) {
+        throw error;
+      }
+  
+      if (status === 200) {
+        deferSuccess(status, response);
+      
+      } else {
+        deferError(status, response);
+      }
+    };
+
+    xhr.onerror = function (error) {
+      throw error;
+    };
+
+    xhr.onprogress = function () {
+      log.log(&#x27;Request&#x27;, &#x27;Request load in progress&#x27;);
+    };
+
+    xhr.open(&#x27;GET&#x27;, this.protocol + this.server + path, true);
+
+    // xhr.setContentType(&#x27;application/json;charset=UTF-8&#x27;);
+
+    xhr.send();
+  }
+};
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
