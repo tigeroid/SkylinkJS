@@ -1,11 +1,17 @@
 /**
  * Handles the room connection.
  * @class Room
+ * @constructor
+ * @param {String} name The room name to connect to.
+ * @param {Function} [listener] The listener function.
  * @for Skylink
  * @since 0.6.0
  */
 function Room(name, listener) {
   'use strict';
+
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
 
   // Reference of instance
   var com = this;
@@ -22,24 +28,24 @@ function Room(name, listener) {
 
   /**
    * The room id.
-   * @attribute name
+   * @attribute id
    * @type String
    * @private
    * @for Room
    * @since 0.6.0
    */
   com.id = null;
-  
+
   /**
    * The room token.
-   * @attribute name
+   * @attribute token
    * @type String
    * @private
    * @for Room
    * @since 0.6.0
    */
   com.token = null;
-  
+
   /**
    * The room key.
    * @attribute key
@@ -49,7 +55,7 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.key = null;
-  
+
   /**
    * The room start date timestamp (ISO format) for persistent mode.
    * @attribute startDateTime
@@ -59,7 +65,7 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.startDateTime = null;
-  
+
   /**
    * The room duration for persistent mode.
    * @attribute duration
@@ -72,7 +78,7 @@ function Room(name, listener) {
 
   /**
    * The request path to the api server.
-   * @attribute path
+   * @attribute apiPath
    * @type String
    * @private
    * @for Room
@@ -112,32 +118,11 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.self = null;
-  
-  /**
-   * The user self custom user data.
-   * @attribute self
-   * @type JSON|String
-   * @private
-   * @for Room
-   * @since 0.6.0
-   */
-  com.selfData = null;
-  
-  /**
-   * The user self existing local stream connection.
-   * @attribute stream
-   * @param {Stream} <streamId> The stream connected to room.
-   * @type JSON
-   * @private
-   * @for Room
-   * @since 0.6.0
-   */
-  com.streams = {};
 
   /**
    * The list of users connected to room.
    * @attribute users
-   * @param {User} <userId> The user connected to room.
+   * @param {User} (#userId) The user connected to room.
    * @type JSON
    * @private
    * @for Room
@@ -147,9 +132,9 @@ function Room(name, listener) {
 
   /**
    * The list of components connected to room.
-   * - E.g. MCU, Recording
-   * @attribute user
-   * @param {User} [n=*] The user connected to room.
+   * This could be <var>MCU</var> or <var>Recording</var> peers.
+   * @attribute components
+   * @param {Component} (#index) The component connected to room.
    * @type JSON
    * @private
    * @for Room
@@ -167,33 +152,38 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.socket = null;
-  
-  /**
-   * The room readyState.
-   * @attribute readyState
-   * @type Integer
-   * @required
-   * @private
-   * @for Room
-   * @since 0.6.0
-   */
-  com.readyState = 0;
-  
+
   /**
    * The room TURN/STUN servers connection.
    * @attribute iceServers
-   * @param {Array} iceServers The list of ICE servers.
-   * @param {JSON} <iceServers.n> The ICE server.
-   * @type JSON
+   * @param {JSON} (#index) The ICE server.
+   * @param {String} (#index).credential The ICE server credential (password).
+   * @param {String} (#index).url The ICE server url. The current format
+   *    for TURN servers is <code>turn:username@urlhost</code>. It may be
+   *    required to parse it differently in
+   *    <code>{ username: 'username', credential: 'xxx', url: 'turn:urlhost' }</code>
+   *    format for unsupported browsers like firefox.
+   * @type Array
    * @required
    * @private
    * @for Room
    * @since 0.6.0
    */
-  com.iceServers = {};
-  
+  com.iceServers = [];
+
   /**
-   * The room locked state.
+   * The flag that indicates if the self user has joined the room.
+   * @attribute connected
+   * @type Boolean
+   * @required
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.connected = false;
+
+  /**
+   * The flag that indicates if the room is locked.
    * @attribute locked
    * @type Boolean
    * @required
@@ -204,45 +194,45 @@ function Room(name, listener) {
   com.locked = false;
 
   /**
-   * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
-   * @private
+   * Function to subscribe to when room object has loaded and is ready to use.
+   * @method onstart
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
-  com.handler = function (event, data) {
-    RoomHandler(com, event, data, listener);
-  };
-
-  
-  /**
-   * Function to subscribe to when room ready state has changed.
-   * @method onreadystatechange
-   * @for Room
-   * @since 0.6.0
-   */
-  com.onreadystatechange = function () {};
+  com.onstart = function () {};
 
   /**
    * Function to subscribe to when self has joined the room.
    * @method onjoin
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
   com.onjoin = function () {};
-  
+
+  /**
+   * Function to subscribe to when a user has joined the room.
+   * @method onuserjoin
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onuserjoin = function () {};
+
   /**
    * Function to subscribe to when self has been kicked out of room.
-   * @method onlock
+   * @method onkick
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
   com.onkick = function () {};
-  
+
   /**
    * Function to subscribe to when self is warned by server.
-   * @method onunlock
+   * @method onwarn
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
@@ -255,18 +245,20 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.onlock = function () {};
-  
+
   /**
    * Function to subscribe to when room has been unlocked.
    * @method onunlock
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
   com.onunlock = function () {};
-  
+
   /**
    * Function to subscribe to when self has leave the room.
    * @method onleave
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
@@ -274,57 +266,85 @@ function Room(name, listener) {
 
 
   /**
+   * The handler that manages all triggers or relaying events.
+   * @method handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    RoomHandler(com, event, data, listener);
+  };
+
+  /**
    * Starts the connection to the room.
    * @method join
-   * @trigger peerJoined, mediaAccessRequired
+   * @param {Stream} stream The stream object to send. <mark>Stream</mark> object must
+   *   be ready before sending. Look at <var>stream:start</var> event.
+   *   Set as <code>null</code> for non-stream connection.
+   * @param {JSON} [config] The configuration settings.
+   * @param {JSON} [config.bandwidth] The bandwidth configuration for the connection.
+   *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @param {Integer} [config.bandwidth.audio] The audio banwidth configuration.
+   * @param {Integer} [config.bandwidth.video] The video banwidth configuration.
+   * @param {Integer} [config.bandwidth.data] The data banwidth configuration.
+   * @param {JSON|String} [config.userData] The self user's custom data.
    * @for Room
    * @since 0.6.0
    */
   com.join = function (stream, config) {
+    if (com.connected) {
+      throw new Error('You are already connected to this room [' + com.name +']');
+    }
+
     config = config || {};
 
+    // Parse self configuration first
     com.self.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
     com.self.data = config.userData;
-  
-    if (!fn.isEmpty(stream)) {
+
+    // Add stream if stream is not empty
+    if (typeof stream === 'object' ? stream instanceof Stream : false) {
       com.self.addStreamConnection(stream, 'main');
     }
 
+    // Start socket connection
     com.socket.connect();
   };
 
   /**
    * Stops the connection to the room.
    * @method leave
-   * @trigger peerJoined, mediaAccessRequired
    * @for Room
    * @since 0.6.0
    */
   com.leave = function () {
     com.socket.disconnect();
   };
-  
+
   /**
-   * Locks the Room.
+   * Locks the room.
    * @method lock
    * @for Room
    * @since 0.6.0
    */
-  com.lock = function (options) {
+  com.lock = function () {
     com.socket.send({
       type: 'roomLockEvent',
       mid: com.self.id,
       rid: com.id,
       lock: true
     });
-    
+
     com.handler('room:lock', {
       userId: com.self.id
     });
   };
 
   /**
-   * Unlocks the Room.
+   * Unlocks the room.
    * @method unlock
    * @for Room
    * @since 0.6.0
@@ -336,337 +356,39 @@ function Room(name, listener) {
       rid: com.id,
       lock: false
     });
-    
+
     com.handler('room:unlock', {
       userId: com.self.id
     });
   };
 
   /**
-   * Sends a another stream to users.
-   * @method addStreamConnection
-   * @param {Stream} stream The stream object.
+   * Sends a stream to users.
+   * @method sendStream
+   * @param {Stream} stream The stream object. <mark>Stream</mark> object must
+   *   be ready before sending. Look at <var>stream:start</var> event.
    * @for Room
    * @since 0.6.0
    */
-  com.addStreamConnection = function (stream) {
-    var connectionId = fn.generateUID();
+  com.sendStream = function (stream, targetUsers) {
+    var peerId = fn.generateUID();
+    var key;
 
-    com.self.addStreamConnection(stream, connectionId);
-    
-    stream.parentHandler = com.handler;
-    
-    fn.forEach(com.users, function (user, key) {
-      data.stream = stream;
-      user.handler('message:enter', data);
-    });
-  };
+    // Do a check of targetUsers to send
+    com.self.addStreamConnection(stream, peerId);
 
-  
-  /**
-   * Handles the self connection to the room.
-   * @class Self
-   * @for Skylink
-   * @extend Room
-   * @since 0.6.0
-   */
-  function Self (config) {
-    // Reference of instance
-    var subcom = this;
-
-    /**
-     * The self user id.
-     * @attribute name
-     * @type String
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.id = null;
-    
-    /**
-     * The self user data.
-     * @attribute data
-     * @type String | JSON
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.data = config.data;
-    
-    /**
-     * The self user username.
-     * @attribute username
-     * @type String
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.username = config.username;
-    
-    /**
-     * The self user timestamp (ISO format).
-     * @attribute timeStamp
-     * @type String
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.timeStamp = config.timeStamp;
-    
-    /**
-     * The self user credential.
-     * @attribute token
-     * @type String
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.token = config.token;
-    
-    /**
-     * The self user local stream connection.
-     * @attribute stream
-     * @param {JSON} <connectionId> The stream connection to users.
-     * @param {Array} <connectionId.targetUsers> The target users.
-     * @param {Stream} <connectionId.stream> The stream connected to room.
-     * @type JSON
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.streams = {};
-    
-    /**
-     * The self user browser agent information.
-     * @attribute agent
-     * @type JSON
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.agent = {
-      name: window.webrtcDetectedBrowser,
-      version: window.webrtcDetectedVersion,
-      webRTCType: window.webrtcDetectedType
-    };
-    
-    /**
-     * The self user bandwidth configuration.
-     * @attribute agent
-     * @type JSON
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.bandwidth = {};
-    
-    /**
-     * The handler that manages all triggers or relaying events.
-     * @attribute handler
-     * @type Function
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.handler = function (event, data) {
-      data.id = subcom.id;
-      
-      log.debug('SelfHandler:', event, data); 
-
-      RoomHandler(com, event, data, listener);
-    };
-
-    
-    /**
-     * Function to subscribe to when self user custom user data is updated.
-     * @method onupdate
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.onupdate = function () {};
-    
-    /**
-     * Function to subscribe to when self has added a stream connection.
-     * @method onaddstreamconnection
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.onaddstreamconnection = function () {};
-
-    /**
-     * Function to subscribe to when self has stopped a stream connection.
-     * @method onaddstream
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.onremovestreamconnection = function () {};
-    
-    /**
-     * Function to subscribe to when self has been disconnected from the room.
-     * @method ondisconnect
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.ondisconnect = function () {};
-    
-  
-    /**
-     * Updates the self user data.
-     * @method update
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.update = function (data) {
-      subcom.data = data;
-      
-      com.socket.send({
-        type: 'updateUserEvent',
-        mid: subcom.id,
-        rid: com.id,
-        userData: subcom.data
-      });
-      
-      subcom.handler('self:update', {
-        data: subcom.data
-      });
-    };
-
-    /**
-     * Starts a new stream connection.
-     * @method addStreamConnection
-     * @param {Stream} stream The stream object.
-     * @param {Array|String} The array or string "main".
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.addStreamConnection = function (stream, connectionId) {
-      stream.sourceType = 'local';
-
-      var connection = {
-        id: connectionId,
-        stream: stream
-      };
-      
-      subcom.streams[connectionId] = connection;
-      
-      if (typeof subcom.onaddstreamconnection === 'function') {
-        subcom.onaddstreamconnection(connection);
-      }
-      
-      subcom.handler('self:addstreamconnection', {
-        stream: stream,
-        connectionId: connectionId
-      });
-    };
-    
-    /**
-     * Stops a stream connection.
-     * @method removeStreamConnection
-     * @param {String} connectionId The streaming connection id.
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.removeStreamConnection = function (connectionId) {
-      var stream = subcom.streams[connectionId];
-      
-      stream.stop();
-      
-      // Do not remove main connection.
-      // Stream may stop, but user is still connected.
-      if (connectionId !== 'main') {
-        // Stream has targeted users
-        if (fn.isEmpty(subcom.streams[connectionId].targetUsers)) {
-          fn.forEach(com.users, function (value, key) {
-            value.removeConnection(streamId);
-          });
-
-        // Stream has targeted users
-        } else {
-          fn.forEach(subcom.streams[connectionId].targetUsers, function (value, key) {
-            if (!fn.isEmpty(com.users[key])) {
-              com.users[key].removeConnection(streamId);
-            }
-          });
-        }
-      }
-  
-      if (typeof subcom.onremovestreamconnection === 'function') {
-        subcom.onremovestreamconnection(stream, targetUsers);
-      }
-      
-      // Remove stream reference
-      delete subcom.streams[streamId];
-      // Remove connections to stream reference
-      delete subcom.streams[streamId];
-      
-      subcom.handler('self:removestreamconnection', {
-        streamId: streamId
-      });
-    };
-    
-    /**
-     * Gets the self user info.
-     * @method getInfo
-     * @param {String} connectionId The connectionId of the stream.
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.getInfo = function (connectionId) {
-      var info = {
-        userData: subcom.data,
-        agent: subcom.agent
-      };
-  
-      if (fn.isEmpty(connectionId)) {
-        var streaming = {};
-
-        fn.forEach(subcom.streams, function (connection, key) {
-          var settings = subcom.streams[connectionId] || {};
-          var stream = settings.stream || { 
-            config: { 
-              audio: false, 
-              video: false, 
-              status: { audioMuted: true, videoMuted: true }
-            } 
-          };
-
-          streaming[key] = {
-            audio: stream.config.audio,
-            video: stream.config.video,
-            bandwidth: subcom.bandwidth,
-            mediaStatus: stream.config.status
-          };
-        
-        }, function () {
-          info.settings = streaming;
-          
-          return info;
+    for (key in com.users) {
+      if (com.users.hasOwnProperty(key)) {
+        com.users[key].handler('message:enter', {
+          type: 'enter',
+          mid: com.self.id,
+          rid: com.id,
+          prid: peerId,
+          stream: com.self.getStreamingInfo('main')
         });
-      
-      } else {
-        var settings = subcom.streams[connectionId] || {};
-        var stream = settings.stream || { 
-          config: { 
-            audio: false, 
-            video: false, 
-            status: { audioMuted: true, videoMuted: true }
-          } 
-        };
-  
-        info.settings = {
-          audio: stream.config.audio,
-          video: stream.config.video,
-          bandwidth: subcom.bandwidth,
-          mediaStatus: stream.config.status
-        };
-        
-        return info;
       }
-    };
-    
-    subcom.handler('self:start', config);
-  }
+    }
+  };
 
 
   // Start loading the room information
@@ -704,7 +426,7 @@ function Room(name, listener) {
       timeStamp: content.timeStamp,
       data: globals.userData
     });
-    
+
     //com.constraints = JSON.parse(content.pc_constraints);
 
     // Signalling information
@@ -714,19 +436,15 @@ function Room(name, listener) {
       httpsPortList: content.httpsPortList
 
     }, com.handler);
-    
+
     // Bind the message events handler
     MessageHandler(com, listener);
-    
-    listener('room:start', {
-      id: com.id,
-      name: com.name
-    });
-  
+
+    listener('room:start', {});
+
   }, function (status, error) {
-    com.handler('trigger:error', {
-      error: error,
-      state: -1
+    com.handler('room:error', {
+      error: error
     });
   });
 }

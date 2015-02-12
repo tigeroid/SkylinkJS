@@ -3,6 +3,8 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "DataChannel",
         "Debugger",
+        "ICE",
+        "ICE_Test",
         "Messaging",
         "Peer",
         "Request",
@@ -14,13 +16,19 @@ YUI.add("yuidoc-meta", function(Y) {
         "User"
     ],
     "modules": [
-        "Skylink"
+        "Skylink",
+        "Test"
     ],
     "allModules": [
         {
             "displayName": "Skylink",
             "name": "Skylink",
             "description": "Handles the whole Skylink interface."
+        },
+        {
+            "displayName": "Test",
+            "name": "Test",
+            "description": "Tests the ICE module."
         }
     ]
 } };

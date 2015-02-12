@@ -43,30 +43,34 @@
     </li>
     <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
-    <li><a href="./testing.html">Running Tests</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
     <li class="header">Classes</li>
     
-      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Messaging.html"> Messaging </a></li>
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
     
-      <li><a href="../classes/Peer.html"> Peer </a></li>
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
     
-      <li><a href="../classes/Request.html"> Request </a></li>
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
     
-      <li><a href="../classes/Room.html"> Room </a></li>
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Self.html"> Self </a></li>
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Socket.html"> Socket </a></li>
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Stream.html"> Stream </a></li>
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/User.html"> User </a></li>
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -344,7 +348,7 @@ function User (config, listener) {
   com.addConnection = function (data, stream) {
     var peerConfig = {
       id: data.prid,
-      constraints: data.iceServers,
+      iceServers: data.iceServers,
       bandwidth: data.bandwidth,
       streamingConfig: data.settings
     };
@@ -412,36 +416,36 @@ function User (config, listener) {
    *   The user&#x27;s browser agent version.
    * - &lt;code&gt;agent.webRTCType&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
    *   The user&#x27;s browser webrtc implementation type.
-   * - &lt;code&gt;settings&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The list of peer connections streaming.
-   * - &lt;code&gt;settings.(#peerId)&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId)&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The peer connection streaming information.
-   * - &lt;code&gt;settings.(#peerId).audio&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).audio&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
    *   The audio streaming information. If there is no stream connection with the peer,
    *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
-   * - &lt;code&gt;settings.(#peerId).audio.stereo&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).audio.stereo&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
    *   The flag that indicates if stereo is enabled for this connection. By default,
    *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
-   * - &lt;code&gt;settings.(#peerId).audio.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).audio.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
    *   The audio MediaStreamTrack source used for this connection.
-   * - &lt;code&gt;settings.(#peerId).video&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).video&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
    *   The video streaming information. If there is no stream connection with the peer,
    *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
-   * - &lt;code&gt;settings.(#peerId).video.resolution&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).video.resolution&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The video stream resolution. 
-   * - &lt;code&gt;settings.(#peerId).video.resolution.width&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).video.resolution.width&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
    *   The video stream resolution height.
-   * - &lt;code&gt;settings.(#peerId).video.resolution.height&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).video.resolution.height&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
    *   The video stream resolution width.
-   * - &lt;code&gt;settings.(#peerId).video.frameRate&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).video.frameRate&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
    *   The video stream resolution framerate.
-   * - &lt;code&gt;settings.(#peerId).video.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).video.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
    *   The video MediaStreamTrack source used for this connection.
-   * - &lt;code&gt;settings.(#peerId).status&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).status&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The MediaStreamTracks enabled status (muted/unmuted).
-   * - &lt;code&gt;settings.(#peerId).status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
    *   The audio MediaStreamTrack enabled status (muted/unmuted).
-   * - &lt;code&gt;settings.(#peerId).status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;streams.(#peerId).status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
    *   The video MediaStreamTrack enabled status (muted/unmuted).
    * - &lt;code&gt;bandwidth&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The bandwidth configuration for the peer connections.
@@ -462,7 +466,7 @@ function User (config, listener) {
     
     data.agent = com.agent;
     
-    data.settings = {};
+    data.streams = {};
     
     var i;
     
@@ -482,7 +486,7 @@ function User (config, listener) {
       
       settings.bandwidth = peer.bandwidth || {};
       
-      data.settings[peer.id] = settings;
+      data.streams[peer.id] = settings;
     }
 
     return data;

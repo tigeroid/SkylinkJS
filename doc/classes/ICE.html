@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="ICE - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <li class="header first-item">Information</li>
+    <li><a href="../" data="">Introduction</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
+    <li class="header">Classes</li>
+    
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
+    
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
+    
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
+    
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
+    
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
+    
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    
+  <h1>ICE Class <small> <span class="badge">Version 0.6.0</span></small></h1>
+
+<small>
+    Defined in: <a href="../files/source_ICE.js.html#l1"><code>source&#x2F;ICE.js:1</code></a>
+  </small>
+
+
+<hr class="strike">
+
+<ol class="breadcrumb">
+  <li><a href="./">Introduction</a>
+  </li>
+   
+  <li><a href="../modules/Skylink.html">Skylink</a></li>
+   
+  <li class="active">ICE</li>
+</ol>
+
+<div class="description"></p>
+
+<div class="section code-section">
+  <h4>Table of Contents</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Methods</th> </tr>
+        </thead>
+        <tbody>
+          
+            
+              <tr> <td> <a href="#method_addCandidate"> <code>addCandidate()</code> </a> </td> <td> <p>Adds the ICE candidate or queues the candidate if it is received before
+  <var>setRemoteDescription</var> is called.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_parseIceConnectionState"> <code>parseIceConnectionState()</code> </a> </td> <td> <p>Parses the received ICE connection state and updates to a new version
+  to handle the differences received from cross-browsers.
+State should go from <code>checking &gt; connected &gt; completed</code>.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_parseICEServers"> <code>parseICEServers()</code> </a> </td> <td> <p>Handles the ICE servers received based on the options set by user and parses
+the differences for iceServer format for cross-browsers.
+<br>Format of an ICE server:</p>
+<ul>
+<li><code>STUN</code> is structured like <code>{ url: &#39;stun:hosturl&#39; }</code>.</li>
+<li><code>TURN</code> is structured like
+ <code>{ url: &#39;turn:username@hosturl&#39;, credential: &#39;xxx&#39; }</code> and
+ <code>{ url: &#39;turn:hosturl&#39;, username: &#39;username&#39;, credential: &#39;xxx&#39; }</code> for
+ Firefox browsers.</li>
+</ul>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_popCandidate"> <code>popCandidate()</code> </a> </td> <td> <p>Adds all ICE candidates that is received before <var>setRemoteDescription</var> is called.
+It retrieves candidates from the <var>queueCandidate</var> property array in the peer connection object.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_queueCandidate"> <code>queueCandidate()</code> </a> </td> <td> <p>Queues ICE candidates that is received before <var>setRemoteDescription</var> is called.
+It stores in the <var>queueCandidate</var> property array in the peer connection object.</p>
+ </td> </tr>
+            
+          
+        </tbody>
+      
+
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Attributes</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#attr_newIceConnectionStates"> <code>newIceConnectionStates</code> </a> </td> <td> <p>The revised versions of ICE connection states to handle
+  the differences cross-browsers of different states. This was to
+  feedback to various users the completion state of the ICE connection.</p>
+ </td> </tr>
+          
+        </tbody>
+      
+
+      
+
+      
+        <thead>
+          <tr> <th colspan="2">Event Handlers</th> </tr>
+        </thead>
+        <tbody>
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+        </tbody>
+      
+    </table>
+  </div>
+</div>
+
+ 
+
+
+<div class="section code-section">
+  <h4>Methods</h4>
+   
+    
+      <div id="method_addCandidate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      addCandidate
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>peer</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>candidate</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>defer</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_ICE.js.html#l89"><code>source&#x2F;ICE.js:89</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Adds the ICE candidate or queues the candidate if it is received before
+  <var>setRemoteDescription</var> is called.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peer</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCPeerConnection object.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">candidate</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCIceCandidate object.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">defer</code>
+    <span class="type"> : <em>type</em> Function </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The defer function that is fired when an ICE candidate is added.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor addCandidate ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_parseIceConnectionState" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      parseIceConnectionState
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>peer</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_ICE.js.html#l126"><code>source&#x2F;ICE.js:126</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Parses the received ICE connection state and updates to a new version
+  to handle the differences received from cross-browsers.
+State should go from <code>checking &gt; connected &gt; completed</code>.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peer</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCPeerConnection object.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor parseIceConnectionState ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_parseICEServers" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      parseICEServers
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>iceServers</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_ICE.js.html#l164"><code>source&#x2F;ICE.js:164</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Handles the ICE servers received based on the options set by user and parses
+the differences for iceServer format for cross-browsers.
+<br>Format of an ICE server:</p>
+<ul>
+<li><code>STUN</code> is structured like <code>{ url: &#39;stun:hosturl&#39; }</code>.</li>
+<li><code>TURN</code> is structured like
+ <code>{ url: &#39;turn:username@hosturl&#39;, credential: &#39;xxx&#39; }</code> and
+ <code>{ url: &#39;turn:hosturl&#39;, username: &#39;username&#39;, credential: &#39;xxx&#39; }</code> for
+ Firefox browsers.</li>
+</ul>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">iceServers</code>
+    <span class="type"> : <em>type</em> Array </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The list of ICE servers.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">(#index)</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE server.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">credential</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The ICE server credential (password).
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">url</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The ICE server url. For TURN server,
+  the format may vary depending on the support of the TURN url format.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          
+            <li class="code-section-item-param">
+              <div class="name">
+                <code class="param-name">result</code>
+                
+                  <span class="type"> : <em>type</em> Array </span>
+                
+              </div>
+              
+                <div class="description">
+                  <p>The updated ICE servers list.</p>
+<ul>
+<li><code>(#index)</code> <var>: <b>type</b> JSON</var><br>
+The ICE server.</li>
+<li><code>(#index).credential</code> <var>: <b>type</b> String</var><br>
+The ICE server credential (password). Only used in TURN servers.</li>
+<li><code>(#index).url</code> <var>: <b>type</b> String</var><br>
+The ICE server url. For TURN server, the format may vary depending on the support of
+the TURN url format.</li>
+<li><code>(#index).username</code> <var>: <b>type</b> String</var><br>
+The ICE server username. Only used in TURN servers and Firefox browsers.</li>
+</ul>
+
+                </div>
+              
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor parseICEServers ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_popCandidate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      popCandidate
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>peer</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>defer</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_ICE.js.html#l54"><code>source&#x2F;ICE.js:54</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Adds all ICE candidates that is received before <var>setRemoteDescription</var> is called.
+It retrieves candidates from the <var>queueCandidate</var> property array in the peer connection object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peer</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCPeerConnection object.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">defer</code>
+    <span class="type"> : <em>type</em> Function </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The defer function that is fired when an ICE candidate is added.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor popCandidate ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_queueCandidate" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      queueCandidate
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>peer</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>candidate</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_ICE.js.html#l39"><code>source&#x2F;ICE.js:39</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Queues ICE candidates that is received before <var>setRemoteDescription</var> is called.
+It stores in the <var>queueCandidate</var> property array in the peer connection object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peer</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCPeerConnection object.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">candidate</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The RTCIceCandidate object.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor queueCandidate ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+  
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Attributes</h4>
+   <div id="attr_newIceConnectionStates" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      newIceConnectionStates <span class="type"><em>type</em> JSON</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_ICE.js.html#l10"><code>source&#x2F;ICE.js:10</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The revised versions of ICE connection states to handle
+  the differences cross-browsers of different states. This was to
+  feedback to various users the completion state of the ICE connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">starting</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE connection has just started.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">checking</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE connection is in checking state.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">connected</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE connection is established.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">completed</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE connection is established.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">done</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE connection is in complete state.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">disconnected</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE connection has been disconnected.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">failed</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE connection has failed.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">closed</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE connection has closed.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor newIceConnectionStates ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+--> 
+</div>
+
+
+
+
+
+<div class="section code-section">
+  <h4>Event Handlers</h4>
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+  
+</div>
+
+
+
+
+  <!--
+
+
+
+
+
+    
+        Module: <a href="../modules/Skylink.html">Skylink</a>
+    
+
+
+
+-->
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

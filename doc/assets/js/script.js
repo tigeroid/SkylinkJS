@@ -4,9 +4,10 @@ $(document).ready(function () {
     $('#wrapper').toggleClass('toggled');
   });
   
-  $('.sidebar-nav li').each(function () {
+  $('.sidebar-nav li').each(function (index) {
     var link =  $(this).find('a');
     
+    // Set selected
     if (link.length > 0) {
       var currentUrlParts = location.pathname.split('/');
       var urlParts = link.attr('href').split('/');
@@ -26,7 +27,17 @@ $(document).ready(function () {
           $(this).addClass('active');
         }
       }
+      
+      // Remove test scripts
+      if (link.html().indexOf('_Test') > 0) {
+        $(this).remove();
+      } 
     }
     
+    if (index === $('.sidebar-nav li').length - 1) {
+      $('.sidebar-nav li.slide-item').addClass('show');
+    }
   });
+  
+  
 });

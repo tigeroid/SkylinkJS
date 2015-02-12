@@ -13,7 +13,11 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  start: function (com, data, listener) {},
+  start: function (com, data, listener) {
+    if (typeof com.onstart === 'function') {
+      com.onstart();
+    }
+  },
   
   /**
    * Event fired when the datachannel has opened.
@@ -21,7 +25,11 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  connect: function (com, data, listener) {},
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === 'function') {
+      com.onconnect();
+    }
+  },
   
   /**
    * Event fired when the datachannel has an exception occurred.
@@ -30,7 +38,11 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  error: function (com, data, listener) {},
+  error: function (com, data, listener) {
+    if (typeof com.onerror === 'function') {
+      com.onerror(error);
+    }
+  },
   
   /**
    * Event fired when the datachannel receives data.
@@ -39,7 +51,9 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  message: function (com, data, listener) {},
+  message: function (com, data, listener) {
+    
+  },
 
   /**
    * Event fired when the datachannel has closed.
@@ -47,7 +61,11 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  disconnect: function (com, data, listener) {}
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === 'function') {
+      com.ondisconnect();
+    }
+  }
 };
 
 /**

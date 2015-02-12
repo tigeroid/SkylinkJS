@@ -62,21 +62,21 @@ function DataChannel(channel, listener) {
 
   /**
    * Function to subscribe to when datachannel has opened.
-   * @method onopen
+   * @method onconnect
    * @eventhandler true
    * @for DataChannel
    * @since 0.6.0
    */
-  com.onopen = function () {};
+  com.onconnect = function () {};
   
   /**
    * Function to subscribe to when datachannel has closed.
-   * @method onclose
+   * @method ondisconnect
    * @eventhandler true
    * @for DataChannel
    * @since 0.6.0
    */
-  com.onclose = function () {};
+  com.ondisconnect = function () {};
   
   /**
    * Function to subscribe to when datachannel has an error.
@@ -112,10 +112,6 @@ function DataChannel(channel, listener) {
     // Prevent re-trigger
     var onOpenFn = function () {
       com.handler('datachannel:connect', {});
-  
-      if (typeof com.onopen === 'function') {
-        com.onopen();
-      }
     };
     
     if (bindChannel.readyState !== 'open') {
@@ -129,19 +125,11 @@ function DataChannel(channel, listener) {
       com.handler('datachannel:error', {
         error: error
       });
-      
-      if (typeof com.onerror === 'function') {
-        com.onerror(error);
-      }
     };
 
     // NOTE: Older firefox might close the DataChannel earlier 
     bindChannel.onclose = function () {
       com.handler('datachannel:disconnect', {});
-      
-      if (typeof com.onclose === 'function') {
-        com.onclose();
-      }
     };
 
     bindChannel.onmessage = function (event) {

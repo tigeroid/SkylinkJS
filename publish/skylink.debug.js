@@ -1,3 +1,5 @@
+<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
+<<<<<<< Updated upstream
 /*! skylinkjs - v0.5.7 - 2015-02-06 */
 
 var globals = {
@@ -106,6 +108,16 @@ var fn = {
         item = item[params[i]];
       }
     }
+=======
+/*! skylinkjs - v0.5.9 - 2015-02-09 */
+=======
+/*! skylinkjs - v0.5.9 - 2015-01-28 */
+>>>>>>> stash@{0}^1
+
+(function() {
+
+'use strict';
+>>>>>>> Stashed changes
 
     if (typeof item === 'function') {
       item.apply(this, args);
@@ -676,6 +688,7 @@ var DataProcess = {
 function DataTransfer(channel, config, listener) {
   'use strict';
 
+<<<<<<< Updated upstream
 }
 var _Event = {
   listeners: {
@@ -703,6 +716,51 @@ var _Event = {
       this.listeners.on = {};
       this.listeners.once = {};
       return;
+=======
+/**
+ * An ICE candidate has just been generated (ICE gathering) and will be sent to the peer.
+ * Part of connection establishment.
+ * @method _onIceCandidate
+ * @param {String} targetMid The peerId of the target peer.
+ * @param {Event} event This is provided directly by the peerconnection API.
+ * @trigger candidateGenerationState
+ * @private
+ * @since 0.1.0
+ * @component ICE
+ * @for Skylink
+ */
+Skylink.prototype._onIceCandidate = function(targetMid, event) {
+  if (event.candidate) {
+    if (this._enableIceTrickle) {
+      var messageCan = event.candidate.candidate.split(' ');
+      var candidateType = messageCan[7];
+      log.debug([targetMid, 'RTCIceCandidate', null, 'Created and sending ' +
+        candidateType + ' candidate:'], event);
+<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
+      
+      if (candidateType !== 'host') {
+        this._sendChannelMessage({
+          type: this._SIG_MESSAGE_TYPE.CANDIDATE,
+          label: event.candidate.sdpMLineIndex,
+          id: event.candidate.sdpMid,
+          candidate: event.candidate.candidate,
+          mid: this._user.sid,
+          target: targetMid,
+          rid: this._room.id
+        });
+      }
+>>>>>>> Stashed changes
+=======
+      this._sendChannelMessage({
+        type: this._SIG_MESSAGE_TYPE.CANDIDATE,
+        label: event.candidate.sdpMLineIndex,
+        id: event.candidate.sdpMid,
+        candidate: event.candidate.candidate,
+        mid: this._user.sid,
+        target: targetMid,
+        rid: this._room.id
+      });
+>>>>>>> stash@{0}^1
     }
     
     if (typeof listener === 'function') {
@@ -735,6 +793,7 @@ var _Event = {
   trigger: function (listeners, args) {
     var i;
 
+<<<<<<< Updated upstream
     for (i = 0; i < listeners.length; i += 1) {
       try {
         listeners[i].apply(this, args);
@@ -742,6 +801,33 @@ var _Event = {
       } catch(error) {
         throw error;
       }
+=======
+/**
+ * Adds all stored ICE Candidates received before handshaking.
+ * @method _addIceCandidateFromQueue
+ * @param {String} targetMid The peerId of the target peer.
+ * @private
+ * @since 0.5.2
+ * @component ICE
+ * @for Skylink
+ */
+Skylink.prototype._addIceCandidateFromQueue = function(targetMid) {
+  this._peerCandidatesQueue[targetMid] =
+    this._peerCandidatesQueue[targetMid] || [];
+  if(this._peerCandidatesQueue[targetMid].length > 0) {
+    for (var i = 0; i < this._peerCandidatesQueue[targetMid].length; i++) {
+      var candidate = this._peerCandidatesQueue[targetMid][i];
+      log.debug([targetMid, null, null, 'Added queued candidate'], candidate);
+<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
+      this._peerConnections[targetMid].addIceCandidate(candidate, function () {
+        log.debug([targetMid, null, null, 'Add Ice candidate success'], candidate);
+      }, function () {
+        log.error([targetMid, null, null, 'Add Ice candidate failure'], candidate);
+      });
+>>>>>>> Stashed changes
+=======
+      this._peerConnections[targetMid].addIceCandidate(candidate);
+>>>>>>> stash@{0}^1
     }
   },
   
@@ -3718,6 +3804,7 @@ function Socket(config, listener) {
    */
   com.readyState = 'new';
 
+<<<<<<< Updated upstream
   /**
    * The list of available signalling server ports.
    * @attribute ports
@@ -3732,6 +3819,12 @@ function Socket(config, listener) {
     'https:': config.httpsPortList,
     'http:': config.httpPortList
   };
+=======
+	// do a peer connection health check
+  	self._startPeerConnectionHealthCheck(targetMid);
+  });
+};
+>>>>>>> Stashed changes
 
   /**
    * The socket configuratin.
@@ -3792,6 +3885,15 @@ function Socket(config, listener) {
     listener(event, data);
   };
 
+<<<<<<< Updated upstream
+=======
+  // do a peer connection health check
+<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
+  //this._startPeerConnectionHealthCheck(targetMid);
+>>>>>>> Stashed changes
+=======
+  this._startPeerConnectionHealthCheck(targetMid);
+>>>>>>> stash@{0}^1
 
   
   /**
@@ -3834,6 +3936,7 @@ function Socket(config, listener) {
    */
   com.onerror = function () {};
 
+<<<<<<< Updated upstream
   
   /**
    * Starts the connection to the signalling server
@@ -3847,6 +3950,55 @@ function Socket(config, listener) {
     
     if (com.type === 'XHRPolling') {
       com.Socket = new com.XHRPolling();
+=======
+/**
+ * Handles the CANDIDATE Message event.
+ * @method _candidateHandler
+ * @param {JSON} message The Message object received.
+ *   [Rel: Skylink._SIG_MESSAGE_TYPE.CANDIDATE.message]
+ * @private
+ * @component Message
+ * @for Skylink
+ * @since 0.5.1
+ */
+Skylink.prototype._candidateHandler = function(message) {
+  var targetMid = message.mid;
+  var pc = this._peerConnections[targetMid];
+  log.log([targetMid, null, message.type, 'Received candidate from peer. Candidate config:'], {
+    sdp: message.sdp,
+    target: message.target,
+    candidate: message.candidate,
+    label: message.label
+  });
+  // create ice candidate object
+  var messageCan = message.candidate.split(' ');
+  var canType = messageCan[7];
+  log.log([targetMid, null, message.type, 'Candidate type:'], canType);
+  // if (canType !== 'relay' && canType !== 'srflx') {
+  // trace('Skipping non relay and non srflx candidates.');
+  var index = message.label;
+  var candidate = new window.RTCIceCandidate({
+    sdpMLineIndex: index,
+    candidate: message.candidate
+  });
+  if (pc) {
+    /*if (pc.iceConnectionState === this.ICE_CONNECTION_STATE.CONNECTED) {
+      log.debug([targetMid, null, null,
+        'Received but not adding Candidate as we are already connected to this peer']);
+      return;
+    }*/
+    // set queue before ice candidate cannot be added before setRemoteDescription.
+    // this will cause a black screen of media stream
+    if ((pc.setOffer === 'local' && pc.setAnswer === 'remote') ||
+      (pc.setAnswer === 'local' && pc.setOffer === 'remote')) {
+      pc.addIceCandidate(candidate);
+      // NOTE ALEX: not implemented in chrome yet, need to wait
+      // function () { trace('ICE  -  addIceCandidate Succesfull. '); },
+      // function (error) { trace('ICE  - AddIceCandidate Failed: ' + error); }
+      //);
+      log.debug([targetMid, 'RTCIceCandidate', message.type,
+        'Added candidate'], candidate);
+>>>>>>> Stashed changes
     } else {
       com.Socket = new com.WebSocket();
     }

@@ -43,30 +43,34 @@
     </li>
     <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
-    <li><a href="./testing.html">Running Tests</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
     <li class="header">Classes</li>
     
-      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Messaging.html"> Messaging </a></li>
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
     
-      <li><a href="../classes/Peer.html"> Peer </a></li>
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
     
-      <li><a href="../classes/Request.html"> Request </a></li>
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
     
-      <li><a href="../classes/Room.html"> Room </a></li>
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Self.html"> Self </a></li>
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Socket.html"> Socket </a></li>
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Stream.html"> Stream </a></li>
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/User.html"> User </a></li>
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -81,7 +85,8 @@
   <!-- Page Content -->
   <div id="main-wrapper" class="container">
     
-    <h1>Room Class <small> <span class="badge">Version 0.6.0</span></small></h1>
+    
+  <h1>Room Class <small> <span class="badge">Version 0.6.0</span></small></h1>
 
 <small>
     Defined in: <a href="../files/source_Room.js.html#l1"><code>source&#x2F;Room.js:1</code></a>
@@ -107,6 +112,13 @@
   <div class="table-responsive">
     <table class="table table-bordered">
       
+        <thead>
+          <tr> <th colspan="2">Constructor</th> </tr>
+        </thead>
+        <tbody>
+          <tr> <td> <a href="#constructor"> <code>Room()</code> </a> </td> <td> Instantiate a Room class constructor. </td> </tr>
+        </tbody>
+      
 
       
         <thead>
@@ -115,7 +127,7 @@
         <tbody>
           
             
-              <tr> <td> <a href="#method_addStreamConnection"> <code>addStreamConnection()</code> </a> </td> <td> <p>Sends a another stream to users.</p>
+              <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
  </td> </tr>
             
           
@@ -130,23 +142,20 @@
             
           
             
-              <tr> <td> <a href="#method_lock"> <code>lock()</code> </a> </td> <td> <p>Locks the Room.</p>
+              <tr> <td> <a href="#method_lock"> <code>lock()</code> </a> </td> <td> <p>Locks the room.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_onjoin"> <code>onjoin()</code> </a> </td> <td> <p>Function to subscribe to when self has joined the room.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onleave"> <code>onleave()</code> </a> </td> <td> <p>Function to subscribe to when self has leave the room.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onlock"> <code>onlock()</code> </a> </td> <td> <p>Function to subscribe to when self has been kicked out of room.</p>
- </td> </tr>
+
             
           
             
@@ -155,18 +164,19 @@
             
           
             
-              <tr> <td> <a href="#method_onreadystatechange"> <code>onreadystatechange()</code> </a> </td> <td> <p>Function to subscribe to when room ready state has changed.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onunlock"> <code>onunlock()</code> </a> </td> <td> <p>Function to subscribe to when room has been unlocked.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onunlock"> <code>onunlock()</code> </a> </td> <td> <p>Function to subscribe to when self is warned by server.</p>
- </td> </tr>
+
+            
+          
+            
+
             
           
             
@@ -175,23 +185,18 @@
             
           
             
-              <tr> <td> <a href="#method_unlock"> <code>unlock()</code> </a> </td> <td> <p>Unlocks the Room.</p>
+              <tr> <td> <a href="#method_sendStream"> <code>sendStream()</code> </a> </td> <td> <p>Sends a stream to users.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_unlock"> <code>unlock()</code> </a> </td> <td> <p>Unlocks the room.</p>
  </td> </tr>
             
           
         </tbody>
       
 
-      
-        <thead>
-          <tr> <th colspan="2">Methods</th> </tr>
-        </thead>
-        <tbody>
-          
-            <tr> <td> <a href="#property_error"> <code>error</code> </a> </td> <td> <p>Handles the error state trigger.</p>
- </td> </tr>
-          
-        </tbody>
       
 
       
@@ -200,46 +205,41 @@
         </thead>
         <tbody>
           
+            <tr> <td> <a href="#attr_apiPath"> <code>apiPath</code> </a> </td> <td> <p>The request path to the api server.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#attr_components"> <code>components</code> </a> </td> <td> <p>The list of components connected to room.
+This could be <var>MCU</var> or <var>Recording</var> peers.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#attr_connected"> <code>connected</code> </a> </td> <td> <p>The flag that indicates if the self user has joined the room.</p>
+ </td> </tr>
+          
             <tr> <td> <a href="#attr_credentials"> <code>credentials</code> </a> </td> <td> <p>The user set settings for the room.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_duration"> <code>duration</code> </a> </td> <td> <p>The room duration for persistent mode.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+            <tr> <td> <a href="#attr_iceServers"> <code>iceServers</code> </a> </td> <td> <p>The room TURN/STUN servers connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_iceServers"> <code>iceServers</code> </a> </td> <td> <p>The room TURN/STUN servers connection.</p>
+            <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The room id.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_key"> <code>key</code> </a> </td> <td> <p>The room key.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_locked"> <code>locked</code> </a> </td> <td> <p>The room locked state.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_MessageHandler"> <code>MessageHandler</code> </a> </td> <td> <p>Handles the room messaging events.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_MessageHandlerEvent"> <code>MessageHandlerEvent</code> </a> </td> <td> <p>Stores the list of messaging events</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_name"> <code>name</code> </a> </td> <td> <p>The room token.</p>
+            <tr> <td> <a href="#attr_locked"> <code>locked</code> </a> </td> <td> <p>The flag that indicates if the room is locked.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_name"> <code>name</code> </a> </td> <td> <p>The room name.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_name"> <code>name</code> </a> </td> <td> <p>The room id.</p>
- </td> </tr>
-          
             <tr> <td> <a href="#attr_owner"> <code>owner</code> </a> </td> <td> <p>The room api owner.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_path"> <code>path</code> </a> </td> <td> <p>The request path to the api server.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_readyState"> <code>readyState</code> </a> </td> <td> <p>The room readyState.</p>
+            <tr> <td> <a href="#attr_RoomEventMessageHandler"> <code>RoomEventMessageHandler</code> </a> </td> <td> <p>Handles all the message events received from socket.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_RoomEventReceivedHandler"> <code>RoomEventReceivedHandler</code> </a> </td> <td> <p>Handles all the events received from sub classes.</p>
@@ -251,22 +251,13 @@
             <tr> <td> <a href="#attr_self"> <code>self</code> </a> </td> <td> <p>The self user connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_self"> <code>self</code> </a> </td> <td> <p>The user self custom user data.</p>
- </td> </tr>
-          
             <tr> <td> <a href="#attr_startDateTime"> <code>startDateTime</code> </a> </td> <td> <p>The room duration.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_startDateTime"> <code>startDateTime</code> </a> </td> <td> <p>The room start date timestamp (ISO format) for persistent mode.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_stream"> <code>stream</code> </a> </td> <td> <p>The user self existing local stream connection.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_user"> <code>user</code> </a> </td> <td> <p>The list of components connected to room.</p>
-<ul>
-<li>E.g. MCU, Recording</li>
-</ul>
+            <tr> <td> <a href="#attr_token"> <code>token</code> </a> </td> <td> <p>The room token.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_users"> <code>users</code> </a> </td> <td> <p>The list of users connected to room.</p>
@@ -275,6 +266,25 @@
         </tbody>
       
 
+      
+        <thead>
+          <tr> <th colspan="2">Events</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#event_room:error"> <code>room:error</code> </a> </td> <td> <p>Event fired when there is room connection problems.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_room:join"> <code>room:join</code> </a> </td> <td> <p>Event fired when self user is connected to the room.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_room:leave"> <code>room:leave</code> </a> </td> <td> <p>Event fired when self user is disconnect from the room.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_room:start"> <code>room:start</code> </a> </td> <td> <p>Event fired when room object to ready to use.</p>
+ </td> </tr>
+          
+        </tbody>
       
 
       
@@ -292,15 +302,40 @@
             
           
             
+              <tr> <td> <a href="#handler_onjoin"> <code>onjoin</code> </a> </td> <td> <p>Function to subscribe to when self has joined the room.</p>
+ </td> </tr>
+            
           
+            
+              <tr> <td> <a href="#handler_onkick"> <code>onkick</code> </a> </td> <td> <p>Function to subscribe to when self has been kicked out of room.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onleave"> <code>onleave</code> </a> </td> <td> <p>Function to subscribe to when self has leave the room.</p>
+ </td> </tr>
             
           
             
           
             
-          
+              <tr> <td> <a href="#handler_onstart"> <code>onstart</code> </a> </td> <td> <p>Function to subscribe to when room object has loaded and is ready to use.</p>
+ </td> </tr>
             
           
+            
+              <tr> <td> <a href="#handler_onunlock"> <code>onunlock</code> </a> </td> <td> <p>Function to subscribe to when room has been unlocked.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onuserjoin"> <code>onuserjoin</code> </a> </td> <td> <p>Function to subscribe to when a user has joined the room.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onwarn"> <code>onwarn</code> </a> </td> <td> <p>Function to subscribe to when self is warned by server.</p>
+ </td> </tr>
             
           
             
@@ -315,6 +350,115 @@
   </div>
 </div>
 
+
+<div class="section code-section">
+  <h4>Constructor</h4>
+  <div id="constructor" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      Room
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>name</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code class="optional">[listener]</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+      
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l1"><code>source&#x2F;Room.js:1</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+      
+        <p> 
+          <em class="glyphicon glyphicon-ban-circle" aria-hidden="true"></em> This <mark>Room</mark> constructor cannot be instantiable, meaning you cannot create a new <mark>Room</mark> class object that would require certain parent dependencies functionalities. E.g. <mark>DataChannel</mark> class relies on <mark>Peer</mark> class.
+        </p>
+      
+    </blockquote>
+    <p>To create a Room class object, these are the required parameters to be provided.</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Parameters:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">name</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The room name to connect to.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">listener</code>
+    <span class="type"> : <em>type</em> Function </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The listener function.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor Room ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
  
 
 
@@ -322,16 +466,21 @@
   <h4>Methods</h4>
    
     
-      <div id="method_addStreamConnection" class="panel panel-code">
+      <div id="method_handler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      addStreamConnection
+      handler
       
         <span class="paren">(</span>
           <em class="items">
             
               
-                <item><code>stream</code></item>
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
               
               <item class="seperator">,&nbsp;&nbsp;</item>
             
@@ -352,7 +501,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l345"><code>source&#x2F;Room.js:345</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l268"><code>source&#x2F;Room.js:268</code></a>
       </p>
     
   </div>
@@ -389,6 +538,10 @@
   
    
   
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
    
   
    
@@ -407,7 +560,7 @@
   
   
 </blockquote>
-    <p><p>Sends a another stream to users.</p>
+    <p><p>The handler that manages all triggers or relaying events.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -419,8 +572,8 @@
           
             <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream</code>
-    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
   </div>
 
   <blockquote>
@@ -431,7 +584,28 @@
   </blockquote>
 
   <div class="description">
-    <p>The stream object.</p>
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
 
   </div>
 
@@ -460,7 +634,7 @@
 
   <div class="col-md-6">
     <pre class="prettyprint">
-      // Example for constructor addStreamConnection ()
+      // Example for constructor handler ()
       
     </pre>
   </div>
@@ -474,7 +648,21 @@
     <h5>
       join
       
-        <span class="paren">()</span>
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>stream</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code class="optional">[config]</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
       
 
       
@@ -490,7 +678,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l276"><code>source&#x2F;Room.js:276</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l281"><code>source&#x2F;Room.js:281</code></a>
       </p>
     
   </div>
@@ -551,6 +739,192 @@
   <div class="panel-body">
     <div class="col-md-6">
       
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The stream object to send. <mark>Stream</mark> object must
+  be ready before sending. Look at <var>stream:start</var> event.
+  Set as <code>null</code> for non-stream connection.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">config</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The configuration settings.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">bandwidth</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The bandwidth configuration for the connection.
+   This does fixes the bandwidth but doesn&#39;t prevent alterations done by browser for smoother streaming.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The audio banwidth configuration.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video banwidth configuration.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The data banwidth configuration.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">userData</code>
+    <span class="type"> : <em>type</em> JSON | String </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The self user&#39;s custom data.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+          
+          </ul>
+        </div>
+      
 
     <div class="code-section-item">
       <h6>Returns:</h6>
@@ -600,7 +974,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l296"><code>source&#x2F;Room.js:296</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l317"><code>source&#x2F;Room.js:317</code></a>
       </p>
     
   </div>
@@ -710,7 +1084,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l307"><code>source&#x2F;Room.js:307</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l327"><code>source&#x2F;Room.js:327</code></a>
       </p>
     
   </div>
@@ -765,7 +1139,7 @@
   
   
 </blockquote>
-    <p><p>Locks the Room.</p>
+    <p><p>Locks the room.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -799,223 +1173,15 @@
     
    
     
-      <div id="method_onjoin" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onjoin
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l227"><code>source&#x2F;Room.js:227</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when self has joined the room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onjoin ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_onleave" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onleave
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
+      <em></em>
     
-      
-        
-      
+   
     
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l267"><code>source&#x2F;Room.js:267</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when self has leave the room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onleave ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
@@ -1040,117 +1206,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l235"><code>source&#x2F;Room.js:235</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when self has been kicked out of room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onlock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
-      <div id="method_onlock" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onlock
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l251"><code>source&#x2F;Room.js:251</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l241"><code>source&#x2F;Room.js:241</code></a>
       </p>
     
   </div>
@@ -1239,333 +1295,19 @@
     
    
     
-      <div id="method_onreadystatechange" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onreadystatechange
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l219"><code>source&#x2F;Room.js:219</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when room ready state has changed.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onreadystatechange ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_onunlock" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onunlock
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l259"><code>source&#x2F;Room.js:259</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when room has been unlocked.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onunlock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_onunlock" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onunlock
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
+      <em></em>
     
-      
-        
-      
+   
     
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Room.js.html#l243"><code>source&#x2F;Room.js:243</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when self is warned by server.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onunlock ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
@@ -1614,7 +1356,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_RoomHandler.js.html#l158"><code>source&#x2F;RoomHandler.js:158</code></a>
+        Defined in: <a href="../files/source_RoomHandler.js.html#l657"><code>source&#x2F;RoomHandler.js:657</code></a>
       </p>
     
   </div>
@@ -1798,12 +1540,21 @@
     
    
     
-      <div id="method_unlock" class="panel panel-code">
+      <div id="method_sendStream" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      unlock
+      sendStream
       
-        <span class="paren">()</span>
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>stream</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
       
 
       
@@ -1819,7 +1570,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l326"><code>source&#x2F;Room.js:326</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l365"><code>source&#x2F;Room.js:365</code></a>
       </p>
     
   </div>
@@ -1874,7 +1625,146 @@
   
   
 </blockquote>
-    <p><p>Unlocks the Room.</p>
+    <p><p>Sends a stream to users.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The stream object. <mark>Stream</mark> object must
+  be ready before sending. Look at <var>stream:start</var> event.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor sendStream ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_unlock" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      unlock
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l346"><code>source&#x2F;Room.js:346</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Unlocks the room.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -1913,10 +1803,10 @@
 
 <div class="section code-section">
   <h4>Attributes</h4>
-   <div id="attr_credentials" class="panel panel-code">
+   <div id="attr_apiPath" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      credentials
+      apiPath <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -1924,7 +1814,233 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l93"><code>source&#x2F;Room.js:93</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l79"><code>source&#x2F;Room.js:79</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The request path to the api server.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor apiPath ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_components" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      components <span class="type"><em>type</em> JSON</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l133"><code>source&#x2F;Room.js:133</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The list of components connected to room.
+This could be <var>MCU</var> or <var>Recording</var> peers.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">(#index)</code>
+    <span class="type"> : <em>type</em> Component </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The component connected to room.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor components ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_connected" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      connected <span class="type"><em>type</em> Boolean</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l174"><code>source&#x2F;Room.js:174</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></em> This is required for other functionalities to work.
+    </p>
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The flag that indicates if the self user has joined the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor connected ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_credentials" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      credentials <span class="type"><em>type</em> JSON</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l99"><code>source&#x2F;Room.js:99</code></a>
     </p>
     
   </div>
@@ -2045,7 +2161,7 @@
 -->  <div id="attr_duration" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      duration
+      duration <span class="type"><em>type</em> Integer</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2053,7 +2169,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l63"><code>source&#x2F;Room.js:63</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l69"><code>source&#x2F;Room.js:69</code></a>
     </p>
     
   </div>
@@ -2107,75 +2223,10 @@
 <!--
 
   
--->  <div id="attr_handler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      handler
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l206"><code>source&#x2F;Room.js:206</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The handler that manages all triggers or relaying events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor handler ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
 -->  <div id="attr_iceServers" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      iceServers
+      iceServers <span class="type"><em>type</em> Array</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2183,7 +2234,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l182"><code>source&#x2F;Room.js:182</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l156"><code>source&#x2F;Room.js:156</code></a>
     </p>
     
   </div>
@@ -2231,26 +2282,7 @@
         <ul class="params-list">
            <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">iceServers</code>
-    <span class="type"> : <em>type</em> Array </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The list of ICE servers.</p>
-
-  </div>
-
-  
-</li>  <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">&lt;iceServers.n&gt;</code>
+    <code class="param-name">(#index)</code>
     <span class="type"> : <em>type</em> JSON </span>
   </div>
 
@@ -2266,6 +2298,56 @@
 
   </div>
 
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">credential</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE server credential (password).</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">url</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE server url. The current format
+   for TURN servers is <code>turn:username@urlhost</code>. It may be
+   required to parse it differently in
+   <code>{ username: &#39;username&#39;, credential: &#39;xxx&#39;, url: &#39;turn:urlhost&#39; }</code>
+   format for unsupported browsers like firefox.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
   
 </li> 
         </ul>
@@ -2286,10 +2368,10 @@
 <!--
 
   
--->  <div id="attr_key" class="panel panel-code">
+-->  <div id="attr_id" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      key
+      id <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2297,7 +2379,72 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l43"><code>source&#x2F;Room.js:43</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l29"><code>source&#x2F;Room.js:29</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The room id.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor id ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_key" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      key <span class="type"><em>type</em> String</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l49"><code>source&#x2F;Room.js:49</code></a>
     </p>
     
   </div>
@@ -2354,7 +2501,7 @@
 -->  <div id="attr_locked" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      locked
+      locked <span class="type"><em>type</em> Boolean</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2362,7 +2509,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l195"><code>source&#x2F;Room.js:195</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l185"><code>source&#x2F;Room.js:185</code></a>
     </p>
     
   </div>
@@ -2399,7 +2546,7 @@
   
   
 </blockquote>
-    <p><p>The room locked state.</p>
+    <p><p>The flag that indicates if the room is locked.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2420,185 +2567,10 @@
 <!--
 
   
--->  <div id="attr_MessageHandler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      MessageHandler
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l447"><code>source&#x2F;RoomMessageHandler.js:447</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Handles the room messaging events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-      <div class="code-section-item">
-        <h6>Object Keys:</h6>
-        <ul class="params-list">
-           <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">com</code>
-    <span class="type"> : <em>type</em> Object </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The reference to the class object.</p>
-
-  </div>
-
-  
-</li>  <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">listener</code>
-    <span class="type"> : <em>type</em> Function </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The listener function.</p>
-
-  </div>
-
-  
-</li> 
-        </ul>
-      </div>
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor MessageHandler ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_MessageHandlerEvent" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      MessageHandlerEvent
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_RoomMessageHandler.js.html#l1"><code>source&#x2F;RoomMessageHandler.js:1</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Stores the list of messaging events</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor MessageHandlerEvent ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
 -->  <div id="attr_name" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      name
+      name <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2606,72 +2578,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l33"><code>source&#x2F;Room.js:33</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The room token.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor name ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_name" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      name
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l13"><code>source&#x2F;Room.js:13</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l19"><code>source&#x2F;Room.js:19</code></a>
     </p>
     
   </div>
@@ -2725,75 +2632,10 @@
 <!--
 
   
--->  <div id="attr_name" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      name
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l23"><code>source&#x2F;Room.js:23</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The room id.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor name ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
 -->  <div id="attr_owner" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      owner
+      owner <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2801,7 +2643,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l83"><code>source&#x2F;Room.js:83</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l89"><code>source&#x2F;Room.js:89</code></a>
     </p>
     
   </div>
@@ -2855,10 +2697,10 @@
 <!--
 
   
--->  <div id="attr_path" class="panel panel-code">
+-->  <div id="attr_RoomEventMessageHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      path
+      RoomEventMessageHandler <span class="type"><em>type</em> </span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2866,7 +2708,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l73"><code>source&#x2F;Room.js:73</code></a>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l230"><code>source&#x2F;RoomHandler.js:230</code></a>
     </p>
     
   </div>
@@ -2899,7 +2741,7 @@
   
   
 </blockquote>
-    <p><p>The request path to the api server.</p>
+    <p><p>Handles all the message events received from socket.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2910,76 +2752,7 @@
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor path ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_readyState" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      readyState
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l171"><code>source&#x2F;Room.js:171</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></em> This is required for other functionalities to work.
-    </p>
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The room readyState.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor readyState ()
+      // Example for constructor RoomEventMessageHandler ()
       
     </pre>
     </div>
@@ -2992,7 +2765,7 @@
 -->  <div id="attr_RoomEventReceivedHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      RoomEventReceivedHandler
+      RoomEventReceivedHandler <span class="type"><em>type</em> </span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3057,7 +2830,7 @@
 -->  <div id="attr_RoomEventResponseHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      RoomEventResponseHandler
+      RoomEventResponseHandler <span class="type"><em>type</em> </span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3065,7 +2838,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_RoomHandler.js.html#l126"><code>source&#x2F;RoomHandler.js:126</code></a>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l158"><code>source&#x2F;RoomHandler.js:158</code></a>
     </p>
     
   </div>
@@ -3076,6 +2849,10 @@
   
    
   
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
    
   
    
@@ -3118,7 +2895,7 @@
 -->  <div id="attr_self" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      self
+      self <span class="type"><em>type</em> Self</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3126,7 +2903,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l106"><code>source&#x2F;Room.js:106</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l112"><code>source&#x2F;Room.js:112</code></a>
     </p>
     
   </div>
@@ -3180,75 +2957,10 @@
 <!--
 
   
--->  <div id="attr_self" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      self
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l116"><code>source&#x2F;Room.js:116</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The user self custom user data.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor self ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
 -->  <div id="attr_startDateTime" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      startDateTime
+      startDateTime <span class="type"><em>type</em> Socket</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3256,7 +2968,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l160"><code>source&#x2F;Room.js:160</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l145"><code>source&#x2F;Room.js:145</code></a>
     </p>
     
   </div>
@@ -3317,7 +3029,7 @@
 -->  <div id="attr_startDateTime" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      startDateTime
+      startDateTime <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3325,7 +3037,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l53"><code>source&#x2F;Room.js:53</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l59"><code>source&#x2F;Room.js:59</code></a>
     </p>
     
   </div>
@@ -3379,10 +3091,10 @@
 <!--
 
   
--->  <div id="attr_stream" class="panel panel-code">
+-->  <div id="attr_token" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      stream
+      token <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3390,7 +3102,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l126"><code>source&#x2F;Room.js:126</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l39"><code>source&#x2F;Room.js:39</code></a>
     </p>
     
   </div>
@@ -3423,146 +3135,18 @@
   
   
 </blockquote>
-    <p><p>The user self existing local stream connection.</p>
+    <p><p>The room token.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
-      
-      <div class="code-section-item">
-        <h6>Object Keys:</h6>
-        <ul class="params-list">
-           <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">&lt;streamId&gt;</code>
-    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The stream connected to room.</p>
-
-  </div>
-
-  
-</li> 
-        </ul>
-      </div>
       
     </div>
 
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor stream ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_user" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      user
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l148"><code>source&#x2F;Room.js:148</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The list of components connected to room.</p>
-<ul>
-<li>E.g. MCU, Recording</li>
-</ul>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-      <div class="code-section-item">
-        <h6>Object Keys:</h6>
-        <ul class="params-list">
-           <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">n</code>
-    <span class="type"> : <em>type</em> <a href="../classes/User.html" class="crosslink">User</a> </span>
-  </div>
-
-  <blockquote>
-    
-      <p>
-        <var> <b>value: </b> default = *</var>
-      </p>
-    
-    
-      <p> 
-        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
-      </p>
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The user connected to room.</p>
-
-  </div>
-
-  
-</li> 
-        </ul>
-      </div>
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor user ()
+      // Example for constructor token ()
       
     </pre>
     </div>
@@ -3575,7 +3159,7 @@
 -->  <div id="attr_users" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      users
+      users <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3583,7 +3167,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Room.js.html#l137"><code>source&#x2F;Room.js:137</code></a>
+      Defined in: <a href="../files/source_Room.js.html#l122"><code>source&#x2F;Room.js:122</code></a>
     </p>
     
   </div>
@@ -3627,7 +3211,7 @@
         <ul class="params-list">
            <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">&lt;userId&gt;</code>
+    <code class="param-name">(#userId)</code>
     <span class="type"> : <em>type</em> <a href="../classes/User.html" class="crosslink">User</a> </span>
   </div>
 
@@ -3668,34 +3252,86 @@
 
 
 
+
+
 <div class="section code-section">
-  <h4>Properties</h4>
-   <div id="property_error" class="panel panel-code">
+  <h4>Event Handlers</h4>
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <div id="handler_onjoin" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      error
+      onjoin
+      
+        <span class="paren">()</span>
+      
 
       
         <span class="badge">Version 0.6.0</span>
       
     </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_RoomHandler.js.html#l133"><code>source&#x2F;RoomHandler.js:133</code></a>
-    </p>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l205"><code>source&#x2F;Room.js:205</code></a>
+      </p>
     
   </div>
 
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
   <div class="panel-body">
     <blockquote>
    
   
    
   
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
    
   
    
@@ -3714,7 +3350,762 @@
   
   
 </blockquote>
-    <p><p>Handles the error state trigger.</p>
+    <p><p>Function to subscribe to when self has joined the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onjoin ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_onkick" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onkick
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l223"><code>source&#x2F;Room.js:223</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when self has been kicked out of room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onkick ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_onleave" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onleave
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l258"><code>source&#x2F;Room.js:258</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when self has leave the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onleave ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <div id="handler_onstart" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onstart
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l196"><code>source&#x2F;Room.js:196</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when room object has loaded and is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onstart ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_onunlock" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onunlock
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l249"><code>source&#x2F;Room.js:249</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when room has been unlocked.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onunlock ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_onuserjoin" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onuserjoin
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l214"><code>source&#x2F;Room.js:214</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when a user has joined the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onuserjoin ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_onwarn" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onwarn
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l232"><code>source&#x2F;Room.js:232</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when self is warned by server.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onwarn ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+  
+</div>
+
+
+
+<div class="section code-section">
+  <h4>Events</h4>
+   <div id="event_room:error" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      room:error
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l178"><code>source&#x2F;RoomHandler.js:178</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when there is room connection problems.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3725,27 +4116,25 @@
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for error
+      // Example for constructor room:error ()
       
     </pre>
     </div>
   </div>
 </div>
-<!--<div id="property_error" class="code-item property item private-property-item ">
-  <h3 class="code-item-name"><code>error</code></h3>
+
+<!--
 
   
-    <span class="paren">()</span>
-  
+-->
+<!--
+<div id="event_room:error" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>room:error</code></h3>
 
   <div class="code-item-properties">
     <div class="properties-wrapper">
       
 
-      
-
-      
-        <span class="label label-default" title="This property is private.">private</span>
       
 
       
@@ -3773,7 +4162,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l133"><code>source&#x2F;RoomHandler.js:133</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l178"><code>source&#x2F;RoomHandler.js:178</code></a>
       </small>
     
 
@@ -3783,11 +4172,360 @@
   </div>
 
   <div class="code-item-description">
-    <p>Handles the error state trigger.</p>
+    <p>Event fired when there is room connection problems.</p>
 
   </div>
 
   
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_room:join" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      room:join
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l207"><code>source&#x2F;RoomHandler.js:207</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when self user is connected to the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor room:join ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_room:join" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>room:join</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l207"><code>source&#x2F;RoomHandler.js:207</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when self user is connected to the room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_room:leave" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      room:leave
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l195"><code>source&#x2F;RoomHandler.js:195</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when self user is disconnect from the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor room:leave ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_room:leave" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>room:leave</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l195"><code>source&#x2F;RoomHandler.js:195</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when self user is disconnect from the room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_room:start" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      room:start
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l166"><code>source&#x2F;RoomHandler.js:166</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when room object to ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor room:start ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_room:start" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>room:start</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l166"><code>source&#x2F;RoomHandler.js:166</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when room object to ready to use.</p>
+
+  </div>
 
   
 
@@ -3797,67 +4535,6 @@
   <hr>
 </div>--> 
 </div>
-
-
-
-<div class="section code-section">
-  <h4>Event Handlers</h4>
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-   
-    
-      <em></em>
-    
-  
-</div>
-
-
 
 
   <!--
@@ -3873,6 +4550,7 @@
 
 
 -->
+
   </div>
   <!-- /#page-content-wrapper -->
 

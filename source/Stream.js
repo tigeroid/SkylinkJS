@@ -2,8 +2,8 @@
  * Handles the MediaStream object connection and events.
  * @class Stream
  * @constructor
- * @param {Object} channel The MediaStream object to parse and hook events on.
- * @param {Function} listener The listener function.
+ * @param {Object} stream The MediaStream object to parse and hook events on.
+ * @param {Function} [listener] The listener function.
  * @instantiable true
  * @for Skylink
  * @since 0.6.0
@@ -190,7 +190,7 @@ function Stream(stream, config, listener) {
    */
   com.bind = function (bindStream) {
     // Set a MediaStream id if Firefox or Chrome doesn't
-    com.id = bindStream.id || fn.generateUID();
+    com.id = fn.generateUID();
 
     // Bind events to MediaStream
     // bindStream.onaddtrack = com.onAddTrack;

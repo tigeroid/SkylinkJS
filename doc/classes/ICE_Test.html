@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="ICE_Test - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <li class="header first-item">Information</li>
+    <li><a href="../" data="">Introduction</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
+    <li class="header">Classes</li>
+    
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
+    
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
+    
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
+    
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
+    
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
+    
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    
+  <h1>
+  Testing the 
+  <a href="../modules/ICE.html"><mark>ICE</mark></a> 
+   module  
+  <small> <span class="badge">Version 0.6.0</span></small>
+</h1>
+
+<small>
+    Defined in: <a href="../files/tests_ICE.Test.js.html#l30"><code>tests&#x2F;ICE.Test.js:30</code></a>
+  </small>
+
+
+<hr class="strike">
+
+<ol class="breadcrumb">
+  <li><a href="../modules/Test.html">Running Tests</a>
+  <li class="active">ICE_Test</li>
+</ol>
+
+<div class="description"><p>Tests the ICE module.</p>
+</p>
+
+<div class="section code-section">
+
+
+<div class="section code-section">
+  <h4>Running the ICE test</h4>
+  <div id="constructor" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ICE_Test
+      
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+    <p>
+      Defined in: <a href="../files/tests_ICE.Test.js.html#l30"><code>tests&#x2F;ICE.Test.js:30</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <p>To run this test, simply run this command in the terminal.</p>
+  </div>
+  <div class="panel-body">
+    <pre class="prettyprint">
+    // Example for running ICE_Test
+    
+      <p>  sh test.sh test ice</p>
+
+    
+  </pre>
+  </div>
+</div>
+</div>
+ 
+
+
+<div class="section code-section">
+  <h4>Tests</h4>
+   
+    <div id="test_test1" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      : test1
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Tests the addCandidate and parseIceConnectionState function.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Test Plan:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">1</code>
+  </div>
+
+  <div class="description">
+    <p>Checks if candidates are buffered.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">2</code>
+  </div>
+
+  <div class="description">
+    <p>Checks if ice connection state is parsed correctly.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">3</code>
+  </div>
+
+  <div class="description">
+    <p>Checks if candidates are buffered correctly.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for test1 test output
+      
+        <p>  test: addCandidate(), parseIceConnectionState()
+  plan: addCandidate(): Candidates are buffererd
+  plan: parseIceConnectionState() : Parsed correctly
+  plan: addCandidate() : Candidates are buffered and received correctly</p>
+
+      
+    </pre>
+  </div>
+</div>
+</div>
+   
+    <div id="test_test2" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      : test2
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Tests the parseICEServers function.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Test Plan:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">1</code>
+  </div>
+
+  <div class="description">
+    <p>Test if TURN servers are parsed correctly for Firefox and Chrome.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">2</code>
+  </div>
+
+  <div class="description">
+    <p>Test when TURN is disabled to not return TURN servers.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">3</code>
+  </div>
+
+  <div class="description">
+    <p>Test when TURN is enabled to return TURN servers.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">4</code>
+  </div>
+
+  <div class="description">
+    <p>Test when STUN is disabled to not return STUN servers.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">5</code>
+  </div>
+
+  <div class="description">
+    <p>Test when STUN is enabled to return STUN servers.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for test2 test output
+      
+        <p>  test: parseICEServers()
+  plan: parseICEServers() : TURN is disabled
+  plan: parseICEServers() : TURN is enabled
+  plan: parseICEServers() : STUN is disabled
+  plan: parseICEServers() : STUN is enabled</p>
+
+      
+    </pre>
+  </div>
+</div>
+</div>
+  
+</div>
+
+
+<!--
+<div class="section code-section">
+  <h4>Helper Functions</h4>
+   <div id="attr_throwErrorFn" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      throwErrorFn <span class="type"><em>type</em> Function</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/tests_ICE.Test.js.html#l48"><code>tests&#x2F;ICE.Test.js:48</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function that throws an exception and ends test.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">error</code>
+    <span class="type"> : <em>type</em> Object </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The error object.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor throwErrorFn ()
+      
+        <p>   throwErrorFn(error, t);</p>
+
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+--> 
+</div>
+ 
+-->
+
+  <!--
+
+
+
+
+
+    
+        Module: <a href="../modules/Test.html">Test</a><br>
+        Parent Module: <a href="../modules/Test.html">Test</a>
+    
+
+
+
+-->
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

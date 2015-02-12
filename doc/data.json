@@ -45,6 +45,18 @@
             },
             "namespaces": {}
         },
+        "source/ICE.js": {
+            "name": "source/ICE.js",
+            "modules": {},
+            "classes": {
+                "ICE": 1
+            },
+            "fors": {
+                "Skylink": 1,
+                "ICE": 1
+            },
+            "namespaces": {}
+        },
         "source/Log.js": {
             "name": "source/Log.js",
             "modules": {},
@@ -89,27 +101,16 @@
             "name": "source/Room.js",
             "modules": {},
             "classes": {
-                "Room": 1,
-                "Self": 1
+                "Room": 1
             },
             "fors": {
                 "Skylink": 1,
-                "Room": 1,
-                "Self": 1
+                "Room": 1
             },
             "namespaces": {}
         },
         "source/RoomHandler.js": {
             "name": "source/RoomHandler.js",
-            "modules": {},
-            "classes": {},
-            "fors": {
-                "Room": 1
-            },
-            "namespaces": {}
-        },
-        "source/RoomMessageHandler.js": {
-            "name": "source/RoomMessageHandler.js",
             "modules": {},
             "classes": {},
             "fors": {
@@ -124,6 +125,27 @@
             "classes": {},
             "fors": {
                 "Skylink": 1
+            },
+            "namespaces": {}
+        },
+        "source/Self.js": {
+            "name": "source/Self.js",
+            "modules": {},
+            "classes": {
+                "Self": 1
+            },
+            "fors": {
+                "Skylink": 1,
+                "Self": 1
+            },
+            "namespaces": {}
+        },
+        "source/SelfHandler.js": {
+            "name": "source/SelfHandler.js",
+            "modules": {},
+            "classes": {},
+            "fors": {
+                "Self": 1
             },
             "namespaces": {}
         },
@@ -216,6 +238,19 @@
                 "User": 1
             },
             "namespaces": {}
+        },
+        "tests/ICE.Test.js": {
+            "name": "tests/ICE.Test.js",
+            "modules": {
+                "Test": 1
+            },
+            "classes": {
+                "ICE_Test": 1
+            },
+            "fors": {
+                "ICE_Test": 1
+            },
+            "namespaces": {}
         }
     },
     "modules": {
@@ -225,12 +260,13 @@
             "classes": {
                 "DataChannel": 1,
                 "Skylink": 1,
+                "ICE": 1,
                 "Debugger": 1,
                 "Peer": 1,
                 "Request": 1,
                 "Room": 1,
-                "Self": 1,
                 "Messaging": 1,
+                "Self": 1,
                 "Socket": 1,
                 "Stream": 1,
                 "User": 1
@@ -247,6 +283,23 @@
             "line": 1,
             "description": "Handles the whole Skylink interface.",
             "since": "0.6.0"
+        },
+        "Test": {
+            "name": "Test",
+            "submodules": {},
+            "classes": {
+                "ICE_Test": 1
+            },
+            "fors": {
+                "ICE_Test": 1
+            },
+            "namespaces": {},
+            "tag": "module",
+            "file": "tests/ICE.Test.js",
+            "line": 30,
+            "description": "Tests the ICE module.",
+            "istestdocumentation": "true",
+            "module": "Test"
         }
     },
     "classes": {
@@ -286,6 +339,23 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "Skylink"
+        },
+        "ICE": {
+            "name": "ICE",
+            "shortname": "ICE",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Skylink",
+            "file": "source/ICE.js",
+            "line": 1,
+            "ismodule": "true",
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0"
         },
         "Debugger": {
             "name": "Debugger",
@@ -333,21 +403,20 @@
             "file": "source/Room.js",
             "line": 1,
             "description": "Handles the room connection.",
-            "since": "0.6.0"
-        },
-        "Self": {
-            "name": "Self",
-            "shortname": "Self",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "Skylink",
-            "file": "source/Room.js",
-            "line": 366,
-            "description": "Handles the self connection to the room.",
-            "extends": "Room",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The room name to connect to.",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "The listener function.",
+                    "type": "Function",
+                    "optional": true
+                }
+            ],
             "since": "0.6.0"
         },
         "Messaging": {
@@ -359,6 +428,61 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "Skylink"
+        },
+        "Self": {
+            "name": "Self",
+            "shortname": "Self",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Skylink",
+            "file": "source/Self.js",
+            "line": 1,
+            "description": "Handles the self connection to the room.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "config",
+                    "description": "The user configuration.",
+                    "type": "JSON",
+                    "props": [
+                        {
+                            "name": "id",
+                            "description": "The self user id.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "username",
+                            "description": "The self user's username received from API server.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "timeStamp",
+                            "description": "The self user's timestamp (ISO format) received from API server.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "token",
+                            "description": "The self user's token received from API server.",
+                            "type": "String"
+                        },
+                        {
+                            "name": "data",
+                            "description": "The self user's custom data.",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                },
+                {
+                    "name": "listener",
+                    "description": "The listener function.",
+                    "type": "Function"
+                }
+            ],
+            "since": "0.6.0"
         },
         "Socket": {
             "name": "Socket",
@@ -440,14 +564,15 @@
             "is_constructor": 1,
             "params": [
                 {
-                    "name": "channel",
+                    "name": "stream",
                     "description": "The MediaStream object to parse and hook events on.",
                     "type": "Object"
                 },
                 {
                     "name": "listener",
                     "description": "The listener function.",
-                    "type": "Function"
+                    "type": "Function",
+                    "optional": true
                 }
             ],
             "instantiable": "true",
@@ -629,6 +754,27 @@
                 }
             ],
             "since": "0.6.0"
+        },
+        "ICE_Test": {
+            "name": "ICE_Test",
+            "shortname": "ICE_Test",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Test",
+            "namespace": "",
+            "file": "tests/ICE.Test.js",
+            "line": 30,
+            "description": "Tests the ICE module.",
+            "submodule": "Test",
+            "test": "ICE",
+            "is_constructor": 1,
+            "example": [
+                "\n  sh test.sh test ice"
+            ],
+            "since": "0.6.0"
         }
     },
     "classitems": [
@@ -685,7 +831,7 @@
             "line": 63,
             "description": "Function to subscribe to when datachannel has opened.",
             "itemtype": "method",
-            "name": "onopen",
+            "name": "onconnect",
             "eventhandler": "true",
             "since": "0.6.0",
             "class": "DataChannel"
@@ -695,7 +841,7 @@
             "line": 72,
             "description": "Function to subscribe to when datachannel has closed.",
             "itemtype": "method",
-            "name": "onclose",
+            "name": "ondisconnect",
             "eventhandler": "true",
             "since": "0.6.0",
             "class": "DataChannel"
@@ -753,7 +899,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 160,
+            "line": 148,
             "description": "Sends data over the datachannel.",
             "itemtype": "method",
             "name": "send",
@@ -792,7 +938,7 @@
         },
         {
             "file": "source/DataChannelHandler.js",
-            "line": 18,
+            "line": 22,
             "description": "Event fired when the datachannel has opened.",
             "itemtype": "event",
             "name": "datachannel:connect",
@@ -801,7 +947,7 @@
         },
         {
             "file": "source/DataChannelHandler.js",
-            "line": 26,
+            "line": 34,
             "description": "Event fired when the datachannel has an exception occurred.",
             "itemtype": "event",
             "name": "datachannel:error",
@@ -817,7 +963,7 @@
         },
         {
             "file": "source/DataChannelHandler.js",
-            "line": 35,
+            "line": 47,
             "description": "Event fired when the datachannel receives data.",
             "itemtype": "event",
             "name": "datachannel:message",
@@ -833,7 +979,7 @@
         },
         {
             "file": "source/DataChannelHandler.js",
-            "line": 44,
+            "line": 58,
             "description": "Event fired when the datachannel has closed.",
             "itemtype": "event",
             "name": "datachannel:disconnect",
@@ -842,7 +988,7 @@
         },
         {
             "file": "source/DataChannelHandler.js",
-            "line": 53,
+            "line": 71,
             "description": "Handles the datachannel class events.",
             "itemtype": "attribute",
             "name": "DataChannelHandler",
@@ -2123,6 +2269,193 @@
             "class": "Skylink"
         },
         {
+            "file": "source/ICE.js",
+            "line": 10,
+            "description": "The revised versions of ICE connection states to handle\n  the differences cross-browsers of different states. This was to\n  feedback to various users the completion state of the ICE connection.",
+            "itemtype": "attribute",
+            "name": "newIceConnectionStates",
+            "type": "JSON",
+            "params": [
+                {
+                    "name": "starting",
+                    "description": "The ICE connection has just started.",
+                    "type": "String"
+                },
+                {
+                    "name": "checking",
+                    "description": "The ICE connection is in checking state.",
+                    "type": "String"
+                },
+                {
+                    "name": "connected",
+                    "description": "The ICE connection is established.",
+                    "type": "String"
+                },
+                {
+                    "name": "completed",
+                    "description": "The ICE connection is established.",
+                    "type": "String"
+                },
+                {
+                    "name": "done",
+                    "description": "The ICE connection is in complete state.",
+                    "type": "String"
+                },
+                {
+                    "name": "disconnected",
+                    "description": "The ICE connection has been disconnected.",
+                    "type": "String"
+                },
+                {
+                    "name": "failed",
+                    "description": "The ICE connection has failed.",
+                    "type": "String"
+                },
+                {
+                    "name": "closed",
+                    "description": "The ICE connection has closed.",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "ICE"
+        },
+        {
+            "file": "source/ICE.js",
+            "line": 39,
+            "description": "Queues ICE candidates that is received before <var>setRemoteDescription</var> is called.\nIt stores in the <var>queueCandidate</var> property array in the peer connection object.",
+            "itemtype": "method",
+            "name": "queueCandidate",
+            "params": [
+                {
+                    "name": "peer",
+                    "description": "The RTCPeerConnection object.",
+                    "type": "Object"
+                },
+                {
+                    "name": "candidate",
+                    "description": "The RTCIceCandidate object.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "ICE"
+        },
+        {
+            "file": "source/ICE.js",
+            "line": 54,
+            "description": "Adds all ICE candidates that is received before <var>setRemoteDescription</var> is called.\nIt retrieves candidates from the <var>queueCandidate</var> property array in the peer connection object.",
+            "itemtype": "method",
+            "name": "popCandidate",
+            "params": [
+                {
+                    "name": "peer",
+                    "description": "The RTCPeerConnection object.",
+                    "type": "Object"
+                },
+                {
+                    "name": "defer",
+                    "description": "The defer function that is fired when an ICE candidate is added.",
+                    "type": "Function"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "ICE"
+        },
+        {
+            "file": "source/ICE.js",
+            "line": 89,
+            "description": "Adds the ICE candidate or queues the candidate if it is received before\n  <var>setRemoteDescription</var> is called.",
+            "itemtype": "method",
+            "name": "addCandidate",
+            "params": [
+                {
+                    "name": "peer",
+                    "description": "The RTCPeerConnection object.",
+                    "type": "Object"
+                },
+                {
+                    "name": "candidate",
+                    "description": "The RTCIceCandidate object.",
+                    "type": "Object"
+                },
+                {
+                    "name": "defer",
+                    "description": "The defer function that is fired when an ICE candidate is added.",
+                    "type": "Function"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "ICE"
+        },
+        {
+            "file": "source/ICE.js",
+            "line": 126,
+            "description": "Parses the received ICE connection state and updates to a new version\n  to handle the differences received from cross-browsers.\nState should go from <code>checking > connected > completed</code>.",
+            "itemtype": "method",
+            "name": "parseIceConnectionState",
+            "params": [
+                {
+                    "name": "peer",
+                    "description": "The RTCPeerConnection object.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "ICE"
+        },
+        {
+            "file": "source/ICE.js",
+            "line": 164,
+            "description": "Handles the ICE servers received based on the options set by user and parses\nthe differences for iceServer format for cross-browsers.\n<br>Format of an ICE server:\n- <code>STUN</code> is structured like <code>{ url: 'stun:hosturl' }</code>.\n- <code>TURN</code> is structured like\n   <code>{ url: 'turn:username@hosturl', credential: 'xxx' }</code> and\n   <code>{ url: 'turn:hosturl', username: 'username', credential: 'xxx' }</code> for\n   Firefox browsers.",
+            "itemtype": "method",
+            "name": "parseICEServers",
+            "params": [
+                {
+                    "name": "iceServers",
+                    "description": "The list of ICE servers.",
+                    "type": "Array",
+                    "props": [
+                        {
+                            "name": "(#index)",
+                            "description": "The ICE server.",
+                            "type": "JSON",
+                            "props": [
+                                {
+                                    "name": "credential",
+                                    "description": "The ICE server credential (password).",
+                                    "type": "String"
+                                },
+                                {
+                                    "name": "url",
+                                    "description": "The ICE server url. For TURN server,\n  the format may vary depending on the support of the TURN url format.",
+                                    "type": "String"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "The updated ICE servers list.\n- <code>(#index)</code> <var>: <b>type</b> JSON</var><br>\n  The ICE server.\n- <code>(#index).credential</code> <var>: <b>type</b> String</var><br>\n  The ICE server credential (password). Only used in TURN servers.\n- <code>(#index).url</code> <var>: <b>type</b> String</var><br>\n  The ICE server url. For TURN server, the format may vary depending on the support of\n  the TURN url format.\n- <code>(#index).username</code> <var>: <b>type</b> String</var><br>\n  The ICE server username. Only used in TURN servers and Firefox browsers.",
+                "type": "Array"
+            },
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "ICE"
+        },
+        {
             "file": "source/Log.js",
             "line": 19,
             "description": "The log key",
@@ -2318,7 +2651,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 154,
+            "line": 157,
             "description": "The PeerConnection configuration.",
             "itemtype": "attribute",
             "name": "config",
@@ -2330,7 +2663,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 168,
+            "line": 171,
             "description": "The PeerConnection object.",
             "itemtype": "attribute",
             "name": "RTCPeerConnection",
@@ -2342,7 +2675,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 178,
+            "line": 181,
             "description": "The peerconnection weight during handshake.",
             "itemtype": "attribute",
             "name": "weight",
@@ -2354,7 +2687,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 188,
+            "line": 191,
             "description": "The handler that manages all triggers or relaying events.",
             "itemtype": "attribute",
             "name": "handler",
@@ -2366,7 +2699,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 201,
+            "line": 204,
             "description": "Function to subscribe to when peer's connection has been started.",
             "itemtype": "method",
             "name": "onconnect",
@@ -2375,7 +2708,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 209,
+            "line": 212,
             "description": "Function to subscribe to when peer's ice connection state changes.",
             "itemtype": "method",
             "name": "oniceconnectionstatechange",
@@ -2384,7 +2717,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 217,
+            "line": 220,
             "description": "Function to subscribe to when peer's ice gathering state changes.",
             "itemtype": "method",
             "name": "onicegatheringstatechange",
@@ -2393,7 +2726,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 225,
+            "line": 228,
             "description": "Function to subscribe to when peer's remote stream is received.",
             "itemtype": "method",
             "name": "onaddstream",
@@ -2402,7 +2735,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 233,
+            "line": 236,
             "description": "Function to subscribe to when peer's signaling state has changed.",
             "itemtype": "method",
             "name": "onsignalingstatechange",
@@ -2411,7 +2744,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 241,
+            "line": 244,
             "description": "Function to subscribe to when peer's connection has been restarted.",
             "itemtype": "method",
             "name": "onreconnect",
@@ -2420,7 +2753,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 249,
+            "line": 252,
             "description": "Function to subscribe to when peer's connection has been restarted.",
             "itemtype": "method",
             "name": "onreconnect",
@@ -2429,7 +2762,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 257,
+            "line": 260,
             "description": "Function to subscribe to when a peer connection been disconnected.",
             "itemtype": "method",
             "name": "onremoveconnection",
@@ -2438,7 +2771,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 267,
+            "line": 270,
             "description": "Starts the peer connection.",
             "itemtype": "method",
             "name": "connect",
@@ -2449,7 +2782,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 297,
+            "line": 304,
             "description": "Restarts the peer connection.",
             "itemtype": "method",
             "name": "reconnect",
@@ -2460,7 +2793,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 335,
+            "line": 342,
             "description": "Stops the peer connection.",
             "itemtype": "method",
             "name": "disconnect",
@@ -2472,7 +2805,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 351,
+            "line": 358,
             "description": "Binds events to RTCPeerConnection object.",
             "itemtype": "method",
             "name": "bind",
@@ -2482,7 +2815,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 457,
+            "line": 464,
             "description": "Creates an offer session description.",
             "itemtype": "method",
             "name": "createOffer",
@@ -2492,7 +2825,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 497,
+            "line": 504,
             "description": "Creates an answer session description.",
             "itemtype": "method",
             "name": "createAnswer",
@@ -2502,7 +2835,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 524,
+            "line": 531,
             "description": "Sets local description.",
             "itemtype": "method",
             "name": "setLocalDescription",
@@ -2511,7 +2844,7 @@
         },
         {
             "file": "source/Peer.js",
-            "line": 559,
+            "line": 566,
             "description": "Sets remote description.",
             "itemtype": "method",
             "name": "setRemoteDescription",
@@ -2709,7 +3042,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 13,
+            "line": 19,
             "description": "The room name.",
             "itemtype": "attribute",
             "name": "name",
@@ -2721,10 +3054,10 @@
         },
         {
             "file": "source/Room.js",
-            "line": 23,
+            "line": 29,
             "description": "The room id.",
             "itemtype": "attribute",
-            "name": "name",
+            "name": "id",
             "type": "String",
             "access": "private",
             "tagname": "",
@@ -2733,10 +3066,10 @@
         },
         {
             "file": "source/Room.js",
-            "line": 33,
+            "line": 39,
             "description": "The room token.",
             "itemtype": "attribute",
-            "name": "name",
+            "name": "token",
             "type": "String",
             "access": "private",
             "tagname": "",
@@ -2745,7 +3078,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 43,
+            "line": 49,
             "description": "The room key.",
             "itemtype": "attribute",
             "name": "key",
@@ -2757,7 +3090,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 53,
+            "line": 59,
             "description": "The room start date timestamp (ISO format) for persistent mode.",
             "itemtype": "attribute",
             "name": "startDateTime",
@@ -2769,7 +3102,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 63,
+            "line": 69,
             "description": "The room duration for persistent mode.",
             "itemtype": "attribute",
             "name": "duration",
@@ -2781,10 +3114,10 @@
         },
         {
             "file": "source/Room.js",
-            "line": 73,
+            "line": 79,
             "description": "The request path to the api server.",
             "itemtype": "attribute",
-            "name": "path",
+            "name": "apiPath",
             "type": "String",
             "access": "private",
             "tagname": "",
@@ -2793,7 +3126,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 83,
+            "line": 89,
             "description": "The room api owner.",
             "itemtype": "attribute",
             "name": "owner",
@@ -2805,7 +3138,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 93,
+            "line": 99,
             "description": "The user set settings for the room.",
             "itemtype": "attribute",
             "name": "credentials",
@@ -2834,7 +3167,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 106,
+            "line": 112,
             "description": "The self user connection.",
             "itemtype": "attribute",
             "name": "self",
@@ -2846,44 +3179,13 @@
         },
         {
             "file": "source/Room.js",
-            "line": 116,
-            "description": "The user self custom user data.",
-            "itemtype": "attribute",
-            "name": "self",
-            "type": "JSON|String",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Room"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 126,
-            "description": "The user self existing local stream connection.",
-            "itemtype": "attribute",
-            "name": "stream",
-            "params": [
-                {
-                    "name": "<streamId>",
-                    "description": "The stream connected to room.",
-                    "type": "Stream"
-                }
-            ],
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Room"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 137,
+            "line": 122,
             "description": "The list of users connected to room.",
             "itemtype": "attribute",
             "name": "users",
             "params": [
                 {
-                    "name": "<userId>",
+                    "name": "(#userId)",
                     "description": "The user connected to room.",
                     "type": "User"
                 }
@@ -2896,17 +3198,15 @@
         },
         {
             "file": "source/Room.js",
-            "line": 148,
-            "description": "The list of components connected to room.\n- E.g. MCU, Recording",
+            "line": 133,
+            "description": "The list of components connected to room.\nThis could be <var>MCU</var> or <var>Recording</var> peers.",
             "itemtype": "attribute",
-            "name": "user",
+            "name": "components",
             "params": [
                 {
-                    "name": "n",
-                    "description": "The user connected to room.",
-                    "type": "User",
-                    "optional": true,
-                    "optdefault": "*"
+                    "name": "(#index)",
+                    "description": "The component connected to room.",
+                    "type": "Component"
                 }
             ],
             "type": "JSON",
@@ -2917,7 +3217,7 @@
         },
         {
             "file": "source/Room.js",
-            "line": 160,
+            "line": 145,
             "description": "The room duration.",
             "itemtype": "attribute",
             "name": "startDateTime",
@@ -2930,36 +3230,30 @@
         },
         {
             "file": "source/Room.js",
-            "line": 171,
-            "description": "The room readyState.",
-            "itemtype": "attribute",
-            "name": "readyState",
-            "type": "Integer",
-            "required": 1,
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Room"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 182,
+            "line": 156,
             "description": "The room TURN/STUN servers connection.",
             "itemtype": "attribute",
             "name": "iceServers",
             "params": [
                 {
-                    "name": "iceServers",
-                    "description": "The list of ICE servers.",
-                    "type": "Array"
-                },
-                {
-                    "name": "<iceServers.n>",
+                    "name": "(#index)",
                     "description": "The ICE server.",
-                    "type": "JSON"
+                    "type": "JSON",
+                    "props": [
+                        {
+                            "name": "credential",
+                            "description": "The ICE server credential (password).",
+                            "type": "String"
+                        },
+                        {
+                            "name": "url",
+                            "description": "The ICE server url. The current format\n   for TURN servers is <code>turn:username@urlhost</code>. It may be\n   required to parse it differently in\n   <code>{ username: 'username', credential: 'xxx', url: 'turn:urlhost' }</code>\n   format for unsupported browsers like firefox.",
+                            "type": "String"
+                        }
+                    ]
                 }
             ],
-            "type": "JSON",
+            "type": "Array",
             "required": 1,
             "access": "private",
             "tagname": "",
@@ -2968,8 +3262,21 @@
         },
         {
             "file": "source/Room.js",
-            "line": 195,
-            "description": "The room locked state.",
+            "line": 174,
+            "description": "The flag that indicates if the self user has joined the room.",
+            "itemtype": "attribute",
+            "name": "connected",
+            "type": "Boolean",
+            "required": 1,
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Room"
+        },
+        {
+            "file": "source/Room.js",
+            "line": 185,
+            "description": "The flag that indicates if the room is locked.",
             "itemtype": "attribute",
             "name": "locked",
             "type": "Boolean",
@@ -2981,55 +3288,57 @@
         },
         {
             "file": "source/Room.js",
-            "line": 206,
-            "description": "The handler that manages all triggers or relaying events.",
-            "itemtype": "attribute",
-            "name": "handler",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Room"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 219,
-            "description": "Function to subscribe to when room ready state has changed.",
+            "line": 196,
+            "description": "Function to subscribe to when room object has loaded and is ready to use.",
             "itemtype": "method",
-            "name": "onreadystatechange",
+            "name": "onstart",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/Room.js",
-            "line": 227,
+            "line": 205,
             "description": "Function to subscribe to when self has joined the room.",
             "itemtype": "method",
             "name": "onjoin",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/Room.js",
-            "line": 235,
+            "line": 214,
+            "description": "Function to subscribe to when a user has joined the room.",
+            "itemtype": "method",
+            "name": "onuserjoin",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Room"
+        },
+        {
+            "file": "source/Room.js",
+            "line": 223,
             "description": "Function to subscribe to when self has been kicked out of room.",
             "itemtype": "method",
-            "name": "onlock",
+            "name": "onkick",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/Room.js",
-            "line": 243,
+            "line": 232,
             "description": "Function to subscribe to when self is warned by server.",
             "itemtype": "method",
-            "name": "onunlock",
+            "name": "onwarn",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/Room.js",
-            "line": 251,
+            "line": 241,
             "description": "Function to subscribe to when room has been locked.",
             "itemtype": "method",
             "name": "onlock",
@@ -3038,46 +3347,116 @@
         },
         {
             "file": "source/Room.js",
-            "line": 259,
+            "line": 249,
             "description": "Function to subscribe to when room has been unlocked.",
             "itemtype": "method",
             "name": "onunlock",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/Room.js",
-            "line": 267,
+            "line": 258,
             "description": "Function to subscribe to when self has leave the room.",
             "itemtype": "method",
             "name": "onleave",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/Room.js",
-            "line": 276,
+            "line": 268,
+            "description": "The handler that manages all triggers or relaying events.",
+            "itemtype": "method",
+            "name": "handler",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The event name.",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "The response data.",
+                    "type": "JSON"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Room"
+        },
+        {
+            "file": "source/Room.js",
+            "line": 281,
             "description": "Starts the connection to the room.",
             "itemtype": "method",
             "name": "join",
-            "trigger": "peerJoined, mediaAccessRequired",
+            "params": [
+                {
+                    "name": "stream",
+                    "description": "The stream object to send. <mark>Stream</mark> object must\n  be ready before sending. Look at <var>stream:start</var> event.\n  Set as <code>null</code> for non-stream connection.",
+                    "type": "Stream"
+                },
+                {
+                    "name": "config",
+                    "description": "The configuration settings.",
+                    "type": "JSON",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "bandwidth",
+                            "description": "The bandwidth configuration for the connection.\n   This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.",
+                            "type": "JSON",
+                            "optional": true,
+                            "props": [
+                                {
+                                    "name": "audio",
+                                    "description": "The audio banwidth configuration.",
+                                    "type": "Integer",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "video",
+                                    "description": "The video banwidth configuration.",
+                                    "type": "Integer",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "data",
+                                    "description": "The data banwidth configuration.",
+                                    "type": "Integer",
+                                    "optional": true
+                                }
+                            ]
+                        },
+                        {
+                            "name": "userData",
+                            "description": "The self user's custom data.",
+                            "type": "JSON|String",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/Room.js",
-            "line": 296,
+            "line": 317,
             "description": "Stops the connection to the room.",
             "itemtype": "method",
             "name": "leave",
-            "trigger": "peerJoined, mediaAccessRequired",
             "since": "0.6.0",
             "class": "Room"
         },
         {
             "file": "source/Room.js",
-            "line": 307,
-            "description": "Locks the Room.",
+            "line": 327,
+            "description": "Locks the room.",
             "itemtype": "method",
             "name": "lock",
             "since": "0.6.0",
@@ -3085,8 +3464,8 @@
         },
         {
             "file": "source/Room.js",
-            "line": 326,
-            "description": "Unlocks the Room.",
+            "line": 346,
+            "description": "Unlocks the room.",
             "itemtype": "method",
             "name": "unlock",
             "since": "0.6.0",
@@ -3094,242 +3473,19 @@
         },
         {
             "file": "source/Room.js",
-            "line": 345,
-            "description": "Sends a another stream to users.",
+            "line": 365,
+            "description": "Sends a stream to users.",
             "itemtype": "method",
-            "name": "addStreamConnection",
+            "name": "sendStream",
             "params": [
                 {
                     "name": "stream",
-                    "description": "The stream object.",
+                    "description": "The stream object. <mark>Stream</mark> object must\n  be ready before sending. Look at <var>stream:start</var> event.",
                     "type": "Stream"
                 }
             ],
             "since": "0.6.0",
             "class": "Room"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 377,
-            "description": "The self user id.",
-            "itemtype": "attribute",
-            "name": "name",
-            "type": "String",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 387,
-            "description": "The self user data.",
-            "itemtype": "attribute",
-            "name": "data",
-            "type": "String | JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 397,
-            "description": "The self user username.",
-            "itemtype": "attribute",
-            "name": "username",
-            "type": "String",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 407,
-            "description": "The self user timestamp (ISO format).",
-            "itemtype": "attribute",
-            "name": "timeStamp",
-            "type": "String",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 417,
-            "description": "The self user credential.",
-            "itemtype": "attribute",
-            "name": "token",
-            "type": "String",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 427,
-            "description": "The self user local stream connection.",
-            "itemtype": "attribute",
-            "name": "stream",
-            "params": [
-                {
-                    "name": "<connectionId>",
-                    "description": "The stream connection to users.",
-                    "type": "JSON"
-                },
-                {
-                    "name": "<connectionId.targetUsers>",
-                    "description": "The target users.",
-                    "type": "Array"
-                },
-                {
-                    "name": "<connectionId.stream>",
-                    "description": "The stream connected to room.",
-                    "type": "Stream"
-                }
-            ],
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 440,
-            "description": "The self user browser agent information.",
-            "itemtype": "attribute",
-            "name": "agent",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 454,
-            "description": "The self user bandwidth configuration.",
-            "itemtype": "attribute",
-            "name": "agent",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 464,
-            "description": "The handler that manages all triggers or relaying events.",
-            "itemtype": "attribute",
-            "name": "handler",
-            "type": "Function",
-            "access": "private",
-            "tagname": "",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 481,
-            "description": "Function to subscribe to when self user custom user data is updated.",
-            "itemtype": "method",
-            "name": "onupdate",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 489,
-            "description": "Function to subscribe to when self has added a stream connection.",
-            "itemtype": "method",
-            "name": "onaddstreamconnection",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 497,
-            "description": "Function to subscribe to when self has stopped a stream connection.",
-            "itemtype": "method",
-            "name": "onaddstream",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 505,
-            "description": "Function to subscribe to when self has been disconnected from the room.",
-            "itemtype": "method",
-            "name": "ondisconnect",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 514,
-            "description": "Updates the self user data.",
-            "itemtype": "method",
-            "name": "update",
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 535,
-            "description": "Starts a new stream connection.",
-            "itemtype": "method",
-            "name": "addStreamConnection",
-            "params": [
-                {
-                    "name": "stream",
-                    "description": "The stream object.",
-                    "type": "Stream"
-                },
-                {
-                    "name": "The",
-                    "description": "array or string \"main\".",
-                    "type": "Array|String"
-                }
-            ],
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 563,
-            "description": "Stops a stream connection.",
-            "itemtype": "method",
-            "name": "removeStreamConnection",
-            "params": [
-                {
-                    "name": "connectionId",
-                    "description": "The streaming connection id.",
-                    "type": "String"
-                }
-            ],
-            "since": "0.6.0",
-            "class": "Self"
-        },
-        {
-            "file": "source/Room.js",
-            "line": 608,
-            "description": "Gets the self user info.",
-            "itemtype": "method",
-            "name": "getInfo",
-            "params": [
-                {
-                    "name": "connectionId",
-                    "description": "The connectionId of the stream.",
-                    "type": "String"
-                }
-            ],
-            "since": "0.6.0",
-            "class": "Self"
         },
         {
             "file": "source/RoomHandler.js",
@@ -3344,20 +3500,10 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 126,
+            "line": 158,
             "description": "Handles all the events to respond to other parent classes.",
             "itemtype": "attribute",
             "name": "RoomEventResponseHandler",
-            "since": "0.6.0",
-            "class": "Room"
-        },
-        {
-            "file": "source/RoomHandler.js",
-            "line": 133,
-            "description": "Handles the error state trigger.",
-            "itemtype": "property",
-            "name": "error",
-            "type": "Function",
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
@@ -3365,52 +3511,54 @@
         },
         {
             "file": "source/RoomHandler.js",
-            "line": 158,
-            "description": "Handles the room class events.",
-            "itemtype": "method",
-            "name": "RoomHandler",
-            "params": [
-                {
-                    "name": "com",
-                    "description": "The reference to the class object.",
-                    "type": "Object"
-                },
-                {
-                    "name": "event",
-                    "description": "The event name.",
-                    "type": "String"
-                },
-                {
-                    "name": "data",
-                    "description": "The event data response.",
-                    "type": "JSON"
-                },
-                {
-                    "name": "listener",
-                    "description": "The listener function.",
-                    "type": "Function"
-                }
-            ],
-            "access": "private",
-            "tagname": "",
+            "line": 166,
+            "description": "Event fired when room object to ready to use.",
+            "itemtype": "event",
+            "name": "room:start",
             "since": "0.6.0",
             "class": "Room"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 1,
-            "description": "Stores the list of messaging events",
+            "file": "source/RoomHandler.js",
+            "line": 178,
+            "description": "Event fired when there is room connection problems.",
+            "itemtype": "event",
+            "name": "room:error",
+            "since": "0.6.0",
+            "class": "Room"
+        },
+        {
+            "file": "source/RoomHandler.js",
+            "line": 195,
+            "description": "Event fired when self user is disconnect from the room.",
+            "itemtype": "event",
+            "name": "room:leave",
+            "since": "0.6.0",
+            "class": "Room"
+        },
+        {
+            "file": "source/RoomHandler.js",
+            "line": 207,
+            "description": "Event fired when self user is connected to the room.",
+            "itemtype": "event",
+            "name": "room:join",
+            "since": "0.6.0",
+            "class": "Room"
+        },
+        {
+            "file": "source/RoomHandler.js",
+            "line": 230,
+            "description": "Handles all the message events received from socket.",
             "itemtype": "attribute",
-            "name": "MessageHandlerEvent",
-            "type": "JSON",
+            "name": "RoomEventMessageHandler",
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
             "class": "Room"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 18,
+            "file": "source/RoomHandler.js",
+            "line": 238,
             "description": "The message that indicates that self user is in the room.",
             "itemtype": "event",
             "name": "inRoom",
@@ -3451,8 +3599,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 61,
+            "file": "source/RoomHandler.js",
+            "line": 263,
             "description": "The message that indicates that a user has joined the room.\nThis is sent when user has just started a connection to the room.",
             "itemtype": "event",
             "name": "enter",
@@ -3623,8 +3771,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 129,
+            "file": "source/RoomHandler.js",
+            "line": 335,
             "description": "The message that indicates that a user has joined the room.\nThis is sent as a response to user's \"enter\" message.",
             "itemtype": "event",
             "name": "welcome",
@@ -3805,8 +3953,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 201,
+            "file": "source/RoomHandler.js",
+            "line": 411,
             "description": "The message that starts a user's peer connection offer and answer handshake.",
             "itemtype": "event",
             "name": "offer",
@@ -3855,8 +4003,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 223,
+            "file": "source/RoomHandler.js",
+            "line": 433,
             "description": "The message that responses to a user's peer connection offer.",
             "itemtype": "event",
             "name": "answer",
@@ -3905,8 +4053,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 245,
+            "file": "source/RoomHandler.js",
+            "line": 455,
             "description": "The message that is received when candidate is generated from the user's peer connection.\nIt's recommend to add all the relevant information when instianting a new <var>RTCIceCandidate</var>\n  object.",
             "itemtype": "event",
             "name": "candidate",
@@ -3965,8 +4113,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 271,
+            "file": "source/RoomHandler.js",
+            "line": 481,
             "description": "The message that is received when user's custom data is updated.",
             "itemtype": "event",
             "name": "updateUserEvent",
@@ -4005,8 +4153,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 291,
+            "file": "source/RoomHandler.js",
+            "line": 501,
             "description": "The message that is received when user's peer connection audio stream mute status\n  have changed. This is inline with <var>MediaStreamTrack</var> API's <code>enabled = true/false</code>.",
             "itemtype": "event",
             "name": "muteAudioEvent",
@@ -4050,8 +4198,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 313,
+            "file": "source/RoomHandler.js",
+            "line": 523,
             "description": "The message that is received when user's peer connection video stream mute status\n  have changed. This is inline with <var>MediaStreamTrack</var> API's <code>enabled = true/false</code>.",
             "itemtype": "event",
             "name": "muteVideoEvent",
@@ -4095,8 +4243,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 335,
+            "file": "source/RoomHandler.js",
+            "line": 545,
             "description": "The message that is received when the current room lock status have changed.",
             "itemtype": "event",
             "name": "roomLockEvent",
@@ -4135,8 +4283,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 362,
+            "file": "source/RoomHandler.js",
+            "line": 572,
             "description": "The message that is received when user's peer connection is going through a refresh.",
             "itemtype": "event",
             "name": "restart",
@@ -4197,8 +4345,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 388,
+            "file": "source/RoomHandler.js",
+            "line": 598,
             "description": "The message that is received when user is receiving a rejection or warning from signaling server.",
             "itemtype": "event",
             "name": "redirect",
@@ -4247,8 +4395,8 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 426,
+            "file": "source/RoomHandler.js",
+            "line": 636,
             "description": "The message that is received when user has left the room.",
             "itemtype": "event",
             "name": "bye",
@@ -4282,16 +4430,26 @@
             "class": "Messaging"
         },
         {
-            "file": "source/RoomMessageHandler.js",
-            "line": 447,
-            "description": "Handles the room messaging events.",
-            "itemtype": "attribute",
-            "name": "MessageHandler",
+            "file": "source/RoomHandler.js",
+            "line": 657,
+            "description": "Handles the room class events.",
+            "itemtype": "method",
+            "name": "RoomHandler",
             "params": [
                 {
                     "name": "com",
                     "description": "The reference to the class object.",
                     "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "The event name.",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "The event data response.",
+                    "type": "JSON"
                 },
                 {
                     "name": "listener",
@@ -4446,6 +4604,444 @@
                     "type": "Array"
                 }
             ]
+        },
+        {
+            "file": "source/Self.js",
+            "line": 19,
+            "description": "The self user id.",
+            "itemtype": "attribute",
+            "name": "id",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "required": 1,
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 30,
+            "description": "The self user data.",
+            "itemtype": "attribute",
+            "name": "data",
+            "type": "String | JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 40,
+            "description": "The self user username.",
+            "itemtype": "attribute",
+            "name": "username",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "required": 1,
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 51,
+            "description": "The self user timestamp (ISO format).",
+            "itemtype": "attribute",
+            "name": "timeStamp",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "required": 1,
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 62,
+            "description": "The self user credential.",
+            "itemtype": "attribute",
+            "name": "token",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "required": 1,
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 73,
+            "description": "The self user local stream connection.",
+            "itemtype": "attribute",
+            "name": "streamConnections",
+            "params": [
+                {
+                    "name": "(#peerId)",
+                    "description": "The stream to send for this shared peer connection id.",
+                    "type": "Stream"
+                }
+            ],
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 84,
+            "description": "The self user browser agent information.",
+            "itemtype": "attribute",
+            "name": "agent",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The user's browser agent name. For other SDKs, it's indicated\n   by their type of device <code>E.g. ios, android</code>. For components, it's indicated\n   by their type <code>E.g. MCU, Recording</code>.",
+                    "type": "String"
+                },
+                {
+                    "name": "version",
+                    "description": "The user's browser agent version. For other SDKs, it's indicated\n   by their version of device OS <code>ios8 = 8. android kitkat = 4.4</code>. For components, it's indicated\n   by their version <code>E.g. 0.1.0, 0.2.0</code>.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "webRTCType",
+                    "description": "The user's browser agent webrtc implementation type. For other SDKs or\n   components, use <code>other</code>.",
+                    "type": "String"
+                }
+            ],
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 106,
+            "description": "The self user bandwidth configuration. This does fixes \n  the bandwidth but doesn't prevent alterations done by browser for smoother streaming.",
+            "itemtype": "attribute",
+            "name": "bandwidth",
+            "params": [
+                {
+                    "name": "audio",
+                    "description": "The audio bandwidth configuration.",
+                    "type": "Integer",
+                    "optional": true
+                },
+                {
+                    "name": "video",
+                    "description": "The video bandwidth configuration.",
+                    "type": "Integer",
+                    "optional": true
+                },
+                {
+                    "name": "data",
+                    "description": "The data bandwidth configuration.",
+                    "type": "Integer",
+                    "optional": true
+                }
+            ],
+            "type": "JSON",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 120,
+            "description": "The handler that manages all triggers or relaying events.",
+            "itemtype": "attribute",
+            "name": "handler",
+            "type": "Function",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 132,
+            "description": "Function to subscribe to when self user object is ready to use.",
+            "itemtype": "method",
+            "name": "onstart",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 141,
+            "description": "Function to subscribe to when self user custom user is connected to room.",
+            "itemtype": "method",
+            "name": "onconnect",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 150,
+            "description": "Function to subscribe to when self user custom user data is updated.",
+            "itemtype": "method",
+            "name": "onupdate",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 159,
+            "description": "Function to subscribe to when self has added a stream connection.",
+            "itemtype": "method",
+            "name": "onaddstreamconnection",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 168,
+            "description": "Function to subscribe to when self has stopped a stream connection.",
+            "itemtype": "method",
+            "name": "onremovestreamconnection",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 177,
+            "description": "Function to subscribe to when self has been disconnected from the room.",
+            "itemtype": "method",
+            "name": "ondisconnect",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 187,
+            "description": "Updates the self user data.",
+            "itemtype": "method",
+            "name": "update",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 201,
+            "description": "Starts a new stream connection.",
+            "itemtype": "method",
+            "name": "addStreamConnection",
+            "params": [
+                {
+                    "name": "stream",
+                    "description": "The stream object.",
+                    "type": "Stream"
+                },
+                {
+                    "name": "peerId",
+                    "description": "The shared peer connection id.",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 223,
+            "description": "Finds the shared peer connection id from the stream id provided.",
+            "itemtype": "method",
+            "name": "addStreamConnection",
+            "params": [
+                {
+                    "name": "stream",
+                    "description": "The stream object.",
+                    "type": "Stream"
+                },
+                {
+                    "name": "peerId",
+                    "description": "The shared peer connection id.",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 245,
+            "description": "Stops a stream connection.",
+            "itemtype": "method",
+            "name": "removeStreamConnection",
+            "params": [
+                {
+                    "name": "peerId",
+                    "description": "The shared peer connection id. If no\n   shared peer connection id is provided, it will destroy all streams.\n   Providing the <code>\"main\"</code> peer connection id will also result in\n   destroying all streams.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/Self.js",
+            "line": 279,
+            "description": "Gets the self user info.",
+            "itemtype": "method",
+            "name": "getInfo",
+            "params": [
+                {
+                    "name": "peerId",
+                    "description": "The shared peer connection id.\n  If no shared peer connection id is provided, it will return as\n  <code>\"stream\"</code> instead of <code>\"streams\".(#peerId)</code>.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "The self user streaming configuration and custom data.\n- <code>userData</code> <var>: <b>type</b> String | JSON</var><br>\n  The custom data.\n- <code>agent</code> <var>: <b>type</b> JSON</var><br>\n  The user's browser agent information.\n- <code>agent.name</code> <var>: <b>type</b> String</var><br>\n  The user's browser agent name.\n- <code>agent.version</code> <var>: <b>type</b> Integer</var><br>\n  The user's browser agent version.\n- <code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>\n  The user's browser webrtc implementation type.\n- <code>streams</code> <var>: <b>type</b> JSON</var><br>\n  The list of peer connections streaming.\n- <code>streams.(#peerId)</code> <var>: <b>type</b> JSON</var><br>\n  The peer connection streaming information.\n- <code>streams.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The audio streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>streams.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>\n  The flag that indicates if stereo is enabled for this connection. By default,\n  it's <code>false</code>.\n- <code>streams.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>\n  The audio MediaStreamTrack source used for this connection.\n- <code>streams.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The video streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>\n  The video stream resolution. \n- <code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution height.\n- <code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution width.\n- <code>streams.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution framerate.\n- <code>streams.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>\n  The video MediaStreamTrack source used for this connection.\n- <code>streams.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>\n  The MediaStreamTracks enabled status (muted/unmuted).\n- <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The audio MediaStreamTrack enabled status (muted/unmuted).\n- <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The video MediaStreamTrack enabled status (muted/unmuted).\n- <code>bandwidth</code> <var>: <b>type</b> JSON</var><br>\n  The bandwidth configuration for the peer connections.\n  This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.\n- <code>bandwidth.data</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for data stream.\n- <code>bandwidth.video</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for video stream.\n- <code>bandwidth.audio</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for audio stream.",
+                "type": "JSON"
+            },
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 1,
+            "description": "Handles all the events received from sub classes.",
+            "itemtype": "attribute",
+            "name": "SelfEventReceivedHandler",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 24,
+            "description": "Handles all the events to respond to other parent classes.",
+            "itemtype": "attribute",
+            "name": "SelfEventResponseHandler",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 32,
+            "description": "Event fired when self object to ready to use.\n  At this stage, the self user id is empty as user has not joined the room.",
+            "itemtype": "event",
+            "name": "self:start",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 45,
+            "description": "Event fired when self has updated data.",
+            "itemtype": "event",
+            "name": "self:update",
+            "params": [
+                {
+                    "name": "userData",
+                    "description": "The updated self custom data.",
+                    "type": "JSON|String"
+                }
+            ],
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 58,
+            "description": "Event fired when self has added a new stream for connection.",
+            "itemtype": "event",
+            "name": "self:addstreamconnection",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 70,
+            "description": "Event fired when self has removed a stream connection.",
+            "itemtype": "event",
+            "name": "self:removestreamconnection",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 84,
+            "description": "Event fired when self user is connected to room.",
+            "itemtype": "event",
+            "name": "self:connect",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 96,
+            "description": "Event fired when self user is disconnected from room.",
+            "itemtype": "event",
+            "name": "self:disconnect",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 109,
+            "description": "Handles all the message events received from socket.",
+            "itemtype": "attribute",
+            "name": "SelfEventMessageHandler",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
+        },
+        {
+            "file": "source/SelfHandler.js",
+            "line": 123,
+            "description": "Handles the self class events.",
+            "itemtype": "method",
+            "name": "SelfHandler",
+            "params": [
+                {
+                    "name": "com",
+                    "description": "The reference to the class object.",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "The event name.",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "The event data response.",
+                    "type": "JSON"
+                },
+                {
+                    "name": "listener",
+                    "description": "The listener function.",
+                    "type": "Function"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "Self"
         },
         {
             "file": "source/Socket.js",
@@ -4764,7 +5360,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 271,
+            "line": 272,
             "description": "Handles the event when socket is connected to signaling.",
             "itemtype": "method",
             "name": "bindOnConnect",
@@ -4776,7 +5372,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 333,
+            "line": 334,
             "description": "Handles the event when socket have a connection error.",
             "itemtype": "method",
             "name": "bindOnConnectError",
@@ -4795,7 +5391,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 374,
+            "line": 375,
             "description": "Restarts the connection to the signaling server when attempt to\n  establish socket connection failed.",
             "itemtype": "method",
             "name": "reconnect",
@@ -4807,7 +5403,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 397,
+            "line": 398,
             "description": "Creates a WebSocket connection in socket.io.",
             "itemtype": "method",
             "name": "WebSocket",
@@ -4819,7 +5415,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 427,
+            "line": 428,
             "description": "Creates a XHR Long-polling connection in socket.io.",
             "itemtype": "method",
             "name": "XHRPolling",
@@ -4942,7 +5538,7 @@
         },
         {
             "file": "source/SocketHandler.js",
-            "line": 88,
+            "line": 90,
             "description": "Event fired when socket connection with signaling server has been disconnected.",
             "itemtype": "event",
             "name": "socket:disconnect",
@@ -4952,7 +5548,7 @@
         },
         {
             "file": "source/SocketHandler.js",
-            "line": 101,
+            "line": 103,
             "description": "Handles the Socket class events.",
             "itemtype": "method",
             "name": "SocketHandler",
@@ -6141,7 +6737,7 @@
             "itemtype": "method",
             "name": "getInfo",
             "return": {
-                "description": "The user streaming configuration and custom data.\n- <code>userData</code> <var>: <b>type</b> String | JSON</var><br>\n  The custom data.\n- <code>agent</code> <var>: <b>type</b> JSON</var><br>\n  The user's browser agent information.\n- <code>agent.name</code> <var>: <b>type</b> String</var><br>\n  The user's browser agent name.\n- <code>agent.version</code> <var>: <b>type</b> Integer</var><br>\n  The user's browser agent version.\n- <code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>\n  The user's browser webrtc implementation type.\n- <code>settings</code> <var>: <b>type</b> JSON</var><br>\n  The list of peer connections streaming.\n- <code>settings.(#peerId)</code> <var>: <b>type</b> JSON</var><br>\n  The peer connection streaming information.\n- <code>settings.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The audio streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>settings.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>\n  The flag that indicates if stereo is enabled for this connection. By default,\n  it's <code>false</code>.\n- <code>settings.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>\n  The audio MediaStreamTrack source used for this connection.\n- <code>settings.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The video streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>settings.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>\n  The video stream resolution. \n- <code>settings.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution height.\n- <code>settings.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution width.\n- <code>settings.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution framerate.\n- <code>settings.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>\n  The video MediaStreamTrack source used for this connection.\n- <code>settings.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>\n  The MediaStreamTracks enabled status (muted/unmuted).\n- <code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The audio MediaStreamTrack enabled status (muted/unmuted).\n- <code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The video MediaStreamTrack enabled status (muted/unmuted).\n- <code>bandwidth</code> <var>: <b>type</b> JSON</var><br>\n  The bandwidth configuration for the peer connections.\n  This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.\n- <code>bandwidth.data</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for data stream.\n- <code>bandwidth.video</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for video stream.\n- <code>bandwidth.audio</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for audio stream.",
+                "description": "The user streaming configuration and custom data.\n- <code>userData</code> <var>: <b>type</b> String | JSON</var><br>\n  The custom data.\n- <code>agent</code> <var>: <b>type</b> JSON</var><br>\n  The user's browser agent information.\n- <code>agent.name</code> <var>: <b>type</b> String</var><br>\n  The user's browser agent name.\n- <code>agent.version</code> <var>: <b>type</b> Integer</var><br>\n  The user's browser agent version.\n- <code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>\n  The user's browser webrtc implementation type.\n- <code>streams</code> <var>: <b>type</b> JSON</var><br>\n  The list of peer connections streaming.\n- <code>streams.(#peerId)</code> <var>: <b>type</b> JSON</var><br>\n  The peer connection streaming information.\n- <code>streams.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The audio streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>streams.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>\n  The flag that indicates if stereo is enabled for this connection. By default,\n  it's <code>false</code>.\n- <code>streams.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>\n  The audio MediaStreamTrack source used for this connection.\n- <code>streams.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The video streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>\n  The video stream resolution. \n- <code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution height.\n- <code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution width.\n- <code>streams.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution framerate.\n- <code>streams.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>\n  The video MediaStreamTrack source used for this connection.\n- <code>streams.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>\n  The MediaStreamTracks enabled status (muted/unmuted).\n- <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The audio MediaStreamTrack enabled status (muted/unmuted).\n- <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The video MediaStreamTrack enabled status (muted/unmuted).\n- <code>bandwidth</code> <var>: <b>type</b> JSON</var><br>\n  The bandwidth configuration for the peer connections.\n  This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.\n- <code>bandwidth.data</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for data stream.\n- <code>bandwidth.video</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for video stream.\n- <code>bandwidth.audio</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for audio stream.",
                 "type": "JSON"
             },
             "since": "0.6.0",
@@ -6307,6 +6903,101 @@
             "since": "0.6.0",
             "class": "User",
             "module": "Skylink"
+        },
+        {
+            "file": "tests/ICE.Test.js",
+            "line": 48,
+            "description": "Function that throws an exception and ends test.",
+            "itemtype": "attribute",
+            "name": "throwErrorFn",
+            "type": "Function",
+            "params": [
+                {
+                    "name": "error",
+                    "description": "The error object.",
+                    "type": "Object"
+                }
+            ],
+            "example": [
+                "\n   throwErrorFn(error, t);"
+            ],
+            "since": "0.6.0",
+            "class": "ICE_Test",
+            "module": "Test",
+            "submodule": "Test"
+        },
+        {
+            "file": "tests/ICE.Test.js",
+            "line": 65,
+            "description": "Tests the addCandidate and parseIceConnectionState function.",
+            "params": [
+                {
+                    "name": "1",
+                    "description": "Checks if candidates are buffered.",
+                    "type": "Plan"
+                },
+                {
+                    "name": "2",
+                    "description": "Checks if ice connection state is parsed correctly.",
+                    "type": "Plan"
+                },
+                {
+                    "name": "3",
+                    "description": "Checks if candidates are buffered correctly.",
+                    "type": "Plan"
+                }
+            ],
+            "itemtype": "method",
+            "name": "test1",
+            "plan": "3",
+            "example": [
+                "\n  test: addCandidate(), parseIceConnectionState()\n  plan: addCandidate(): Candidates are buffererd\n  plan: parseIceConnectionState() : Parsed correctly\n  plan: addCandidate() : Candidates are buffered and received correctly"
+            ],
+            "since": "0.6.0",
+            "class": "ICE_Test",
+            "module": "Test",
+            "submodule": "Test"
+        },
+        {
+            "file": "tests/ICE.Test.js",
+            "line": 261,
+            "description": "Tests the parseICEServers function.",
+            "itemtype": "method",
+            "name": "test2",
+            "params": [
+                {
+                    "name": "1",
+                    "description": "Test if TURN servers are parsed correctly for Firefox and Chrome.",
+                    "type": "Plan"
+                },
+                {
+                    "name": "2",
+                    "description": "Test when TURN is disabled to not return TURN servers.",
+                    "type": "Plan"
+                },
+                {
+                    "name": "3",
+                    "description": "Test when TURN is enabled to return TURN servers.",
+                    "type": "Plan"
+                },
+                {
+                    "name": "4",
+                    "description": "Test when STUN is disabled to not return STUN servers.",
+                    "type": "Plan"
+                },
+                {
+                    "name": "5",
+                    "description": "Test when STUN is enabled to return STUN servers.",
+                    "type": "Plan"
+                }
+            ],
+            "example": [
+                "\n  test: parseICEServers()\n  plan: parseICEServers() : TURN is disabled\n  plan: parseICEServers() : TURN is enabled\n  plan: parseICEServers() : STUN is disabled\n  plan: parseICEServers() : STUN is enabled"
+            ],
+            "since": "0.6.0",
+            "class": "ICE_Test",
+            "module": "Test",
+            "submodule": "Test"
         }
     ],
     "warnings": [
@@ -6331,36 +7022,88 @@
             "line": " source/EventList.js:319"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Peer.js:335"
+            "message": "unknown tag: ismodule",
+            "line": " source/ICE.js:1"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " source/ICE.js:164"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Peer.js:351"
+            "line": " source/Peer.js:342"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Peer.js:457"
+            "line": " source/Peer.js:358"
         },
         {
             "message": "unknown tag: trigger",
-            "line": " source/Peer.js:497"
+            "line": " source/Peer.js:464"
+        },
+        {
+            "message": "unknown tag: trigger",
+            "line": " source/Peer.js:504"
         },
         {
             "message": "unknown tag: trigger",
             "line": " source/Request.js:37"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Room.js:276"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Room.js:196"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Room.js:296"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Room.js:205"
         },
         {
-            "message": "replacing incorrect tag: extend with extends",
-            "line": " source/Room.js:366"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Room.js:214"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Room.js:223"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Room.js:232"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Room.js:249"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Room.js:258"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Self.js:132"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Self.js:141"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Self.js:150"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Self.js:159"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Self.js:168"
+        },
+        {
+            "message": "unknown tag: eventhandler",
+            "line": " source/Self.js:177"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " source/Self.js:279"
         },
         {
             "message": "replacing incorrect tag: parma with param",
@@ -6465,6 +7208,18 @@
         {
             "message": "replacing incorrect tag: returns with return",
             "line": " source/User.js:313"
+        },
+        {
+            "message": "unknown tag: istestdocumentation",
+            "line": " tests/ICE.Test.js:26"
+        },
+        {
+            "message": "unknown tag: test",
+            "line": " tests/ICE.Test.js:30"
+        },
+        {
+            "message": "unknown tag: plan",
+            "line": " tests/ICE.Test.js:65"
         },
         {
             "message": "Missing item type\nEvent fired when an ICE connection state has changed.",

@@ -1,4 +1,12 @@
+<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
+<<<<<<< Updated upstream
 /*! skylinkjs - v0.5.7 - 2015-02-06 */
+=======
+/*! skylinkjs - v0.5.9 - 2015-02-09 */
+>>>>>>> Stashed changes
+=======
+/*! skylinkjs - v0.5.9 - 2015-01-28 */
+>>>>>>> stash@{0}^1
 
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -7508,7 +7516,8 @@ if (navigator.mozGetUserMedia) {
       }
 
       AdapterJS.WebRTCPlugin.callWhenPluginReady(function() {
-        AdapterJS.WebRTCPlugin.plugin.getUserMedia(constraints, successCallback, failureCallback);
+        AdapterJS.WebRTCPlugin.plugin.
+          getUserMedia(constraints, successCallback, failureCallback);
       });
     };
     navigator.getUserMedia = getUserMedia;
@@ -7690,7 +7699,89 @@ if (navigator.mozGetUserMedia) {
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
 
+<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
+<<<<<<< Updated upstream
 /*! skylinkjs - v0.5.7 - 2015-02-06 */
+=======
+/*! skylinkjs - v0.5.9 - 2015-02-09 */
+=======
+/*! skylinkjs - v0.5.9 - 2015-01-28 */
+>>>>>>> stash@{0}^1
+
+(function() {
+
+'use strict';
+
+/**
+ * Please refer to the {{#crossLink "Skylink/init:method"}}init(){{/crossLink}}
+ * method for a guide to initializing Skylink.<br>
+ * Please Note:
+ * - You must subscribe Skylink events before calling
+ *   {{#crossLink "Skylink/init:method"}}init(){{/crossLink}}.
+ * - You will need an API key to use Skylink, if you do not have one you can
+ *   [register for a developer account](http://
+ *   developer.temasys.com.sg) in the Skylink Developer Console.
+ * @class Skylink
+ * @constructor
+ * @example
+ *   // Getting started on how to use Skylink
+ *   var SkylinkDemo = new Skylink();
+ *   SkylinkDemo.init('apiKey');
+ *
+ *   SkylinkDemo.joinRoom('my_room', {
+ *     userData: 'My Username',
+ *     audio: true,
+ *     video: true
+ *   });
+ *
+ *   SkylinkDemo.on('incomingStream', function (peerId, stream, peerInfo, isSelf) {
+ *     if (isSelf) {
+ *       attachMediaStream(document.getElementById('selfVideo'), stream);
+ *     } else {
+ *       var peerVideo = document.createElement('video');
+ *       peerVideo.id = peerId;
+ *       peerVideo.autoplay = 'autoplay';
+ *       document.getElementById('peersVideo').appendChild(peerVideo);
+ *       attachMediaStream(peerVideo, stream);
+ *     }
+ *   });
+ *
+ *   SkylinkDemo.on('peerLeft', function (peerId, peerInfo, isSelf) {
+ *     if (isSelf) {
+ *       document.getElementById('selfVideo').src = '';
+ *     } else {
+ *       var peerVideo = document.getElementById(peerId);
+ *       document.getElementById('peersVideo').removeChild(peerVideo);
+ *     }
+ *   });
+ * @for Skylink
+ * @since 0.5.0
+ */
+function Skylink() {
+  if (!(this instanceof Skylink)) {
+    return new Skylink();
+  }
+
+  /**
+   * Version of Skylink
+   * @attribute VERSION
+   * @type String
+   * @readOnly
+   * @for Skylink
+   * @since 0.1.0
+   */
+  this.VERSION = '0.5.9';
+}
+this.Skylink = Skylink;
+
+Skylink.prototype.DATA_CHANNEL_STATE = {
+  CONNECTING: 'connecting',
+  OPEN: 'open',
+  CLOSING: 'closing',
+  CLOSED: 'closed',
+  ERROR: 'error'
+};
+>>>>>>> Stashed changes
 
 var globals = {
   apiKey: null,
@@ -8427,13 +8518,58 @@ var _Event = {
   trigger: function (listeners, args) {
     var i;
 
+<<<<<<< Updated upstream
     for (i = 0; i < listeners.length; i += 1) {
       try {
         listeners[i].apply(this, args);
         
       } catch(error) {
         throw error;
+=======
+/**
+ * An ICE candidate has just been generated (ICE gathering) and will be sent to the peer.
+ * Part of connection establishment.
+ * @method _onIceCandidate
+ * @param {String} targetMid The peerId of the target peer.
+ * @param {Event} event This is provided directly by the peerconnection API.
+ * @trigger candidateGenerationState
+ * @private
+ * @since 0.1.0
+ * @component ICE
+ * @for Skylink
+ */
+Skylink.prototype._onIceCandidate = function(targetMid, event) {
+  if (event.candidate) {
+    if (this._enableIceTrickle) {
+      var messageCan = event.candidate.candidate.split(' ');
+      var candidateType = messageCan[7];
+      log.debug([targetMid, 'RTCIceCandidate', null, 'Created and sending ' +
+        candidateType + ' candidate:'], event);
+<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
+      
+      if (candidateType !== 'host') {
+        this._sendChannelMessage({
+          type: this._SIG_MESSAGE_TYPE.CANDIDATE,
+          label: event.candidate.sdpMLineIndex,
+          id: event.candidate.sdpMid,
+          candidate: event.candidate.candidate,
+          mid: this._user.sid,
+          target: targetMid,
+          rid: this._room.id
+        });
+>>>>>>> Stashed changes
       }
+=======
+      this._sendChannelMessage({
+        type: this._SIG_MESSAGE_TYPE.CANDIDATE,
+        label: event.candidate.sdpMLineIndex,
+        id: event.candidate.sdpMid,
+        candidate: event.candidate.candidate,
+        mid: this._user.sid,
+        target: targetMid,
+        rid: this._room.id
+      });
+>>>>>>> stash@{0}^1
     }
   },
   
@@ -8467,6 +8603,7 @@ var _Event = {
   }
 };
 
+<<<<<<< Updated upstream
 Skylink.Event = _Event;
 var EventList = [
   /**
@@ -8477,6 +8614,91 @@ var EventList = [
    * @since 0.1.0
    */
   'channelOpen',
+=======
+/**
+ * Stores an ICE Candidate received before handshaking
+ * @method _addIceCandidateToQueue
+ * @param {String} targetMid The peerId of the target peer.
+ * @param {Object} candidate The ICE Candidate object.
+ * @private
+ * @since 0.5.2
+ * @component ICE
+ * @for Skylink
+ */
+Skylink.prototype._addIceCandidateToQueue = function(targetMid, candidate) {
+  log.debug([targetMid, null, null, 'Queued candidate to add after ' +
+    'setRemoteDescription'], candidate);
+  this._peerCandidatesQueue[targetMid] =
+    this._peerCandidatesQueue[targetMid] || [];
+  this._peerCandidatesQueue[targetMid].push(candidate);
+};
+
+/**
+ * Adds all stored ICE Candidates received before handshaking.
+ * @method _addIceCandidateFromQueue
+ * @param {String} targetMid The peerId of the target peer.
+ * @private
+ * @since 0.5.2
+ * @component ICE
+ * @for Skylink
+ */
+Skylink.prototype._addIceCandidateFromQueue = function(targetMid) {
+  this._peerCandidatesQueue[targetMid] =
+    this._peerCandidatesQueue[targetMid] || [];
+  if(this._peerCandidatesQueue[targetMid].length > 0) {
+    for (var i = 0; i < this._peerCandidatesQueue[targetMid].length; i++) {
+      var candidate = this._peerCandidatesQueue[targetMid][i];
+      log.debug([targetMid, null, null, 'Added queued candidate'], candidate);
+      this._peerConnections[targetMid].addIceCandidate(candidate);
+    }
+    delete this._peerCandidatesQueue[targetMid];
+  } else {
+    log.log([targetMid, null, null, 'No queued candiate to add']);
+  }
+};
+Skylink.prototype.ICE_CONNECTION_STATE = {
+  STARTING: 'starting',
+  CHECKING: 'checking',
+  CONNECTED: 'connected',
+  COMPLETED: 'completed',
+  CLOSED: 'closed',
+  FAILED: 'failed',
+  DISCONNECTED: 'disconnected'
+};
+
+/**
+ * The list of TURN server transports.
+ * @attribute TURN_TRANSPORT
+ * @type JSON
+ * @param {String} TCP Use only TCP transport option.
+ * @param {String} UDP Use only UDP transport option.
+ * @param {String} ANY Use both TCP and UDP transport option.
+ * @param {String} NONE Set no transport option in TURN servers
+ * @readOnly
+ * @since 0.5.4
+ * @component ICE
+ * @for Skylink
+ */
+Skylink.prototype.TURN_TRANSPORT = {
+  UDP: 'udp',
+  TCP: 'tcp',
+  ANY: 'any',
+  NONE: 'none'
+};
+
+/**
+ * The flag that indicates if ICE trickle is enabled.
+ * @attribute _enableIceTrickle
+ * @type Boolean
+ * @default true
+ * @private
+ * @required
+ * @since 0.3.0
+ * @component ICE
+ * @for Skylink
+ */
+Skylink.prototype._enableIceTrickle = true;
+>>>>>>> Stashed changes
 
   /**
    * Event fired when the socket connection to the signaling
@@ -11761,9 +11983,16 @@ function Socket(config, listener) {
       transports: ['websocket']
     };
 
+<<<<<<< Updated upstream
     if (com.timeout !== 0) {
       options.timeout = com.timeout;
     }
+=======
+	// do a peer connection health check
+  	self._startPeerConnectionHealthCheck(targetMid);
+  });
+};
+>>>>>>> Stashed changes
 
     var server = com.protocol + '//' + com.server + ':' + com.port;
 
@@ -11790,9 +12019,124 @@ function Socket(config, listener) {
       reconnection: com.port === ports[ports.length - 1],
       transports: ['xhr-polling', 'jsonp-polling', 'polling']
     };
+<<<<<<< Updated upstream
 
     if (com.timeout !== 0) {
       options.timeout = com.timeout;
+=======
+    // disable mcu for incoming peer sent by MCU
+    if (message.agent === 'MCU') {
+    	this._enableDataChannel = false;
+
+    	/*if (window.webrtcDetectedBrowser === 'firefox') {
+    		this._enableIceTrickle = false;
+    	}*/
+    }
+    // user is not mcu
+    if (targetMid !== 'MCU') {
+      this._trigger('peerJoined', targetMid, message.userInfo, false);
+      this._trigger('handshakeProgress', this.HANDSHAKE_PROGRESS.WELCOME, targetMid);
+    }
+  }
+
+  // do a peer connection health check
+  this._startPeerConnectionHealthCheck(targetMid);
+
+  this._addPeer(targetMid, {
+    agent: message.agent,
+    version: message.version
+  }, true, restartConn, message.receiveOnly);
+};
+
+/**
+ * Handles the OFFER Message event.
+ * @method _offerHandler
+ * @param {JSON} message The Message object received.
+ *   [Rel: Skylink._SIG_MESSAGE_TYPE.OFFER.messa]
+ * @trigger handshakeProgress
+ * @private
+ * @component Message
+ * @for Skylink
+ * @since 0.5.1
+ */
+Skylink.prototype._offerHandler = function(message) {
+  var self = this;
+  var targetMid = message.mid;
+  var pc = self._peerConnections[targetMid];
+
+  if (!pc) {
+    log.error([targetMid, null, message.type, 'Peer connection object ' +
+      'not found. Unable to setRemoteDescription for offer']);
+    return;
+  }
+  log.log([targetMid, null, message.type, 'Received offer from peer. ' +
+    'Session description:'], message.sdp);
+  self._trigger('handshakeProgress', self.HANDSHAKE_PROGRESS.OFFER, targetMid);
+  var offer = new window.RTCSessionDescription(message);
+  log.log([targetMid, 'RTCSessionDescription', message.type,
+    'Session description object created'], offer);
+
+  pc.setRemoteDescription(new window.RTCSessionDescription(offer), function() {
+    log.debug([targetMid, 'RTCSessionDescription', message.type, 'Remote description set']);
+    pc.setOffer = 'remote';
+    self._addIceCandidateFromQueue(targetMid);
+    self._doAnswer(targetMid);
+  }, function(error) {
+    self._trigger('handshakeProgress', self.HANDSHAKE_PROGRESS.ERROR, targetMid, error);
+    log.error([targetMid, null, message.type, 'Failed setting remote description:'], error);
+  });
+};
+
+/**
+ * Handles the CANDIDATE Message event.
+ * @method _candidateHandler
+ * @param {JSON} message The Message object received.
+ *   [Rel: Skylink._SIG_MESSAGE_TYPE.CANDIDATE.message]
+ * @private
+ * @component Message
+ * @for Skylink
+ * @since 0.5.1
+ */
+Skylink.prototype._candidateHandler = function(message) {
+  var targetMid = message.mid;
+  var pc = this._peerConnections[targetMid];
+  log.log([targetMid, null, message.type, 'Received candidate from peer. Candidate config:'], {
+    sdp: message.sdp,
+    target: message.target,
+    candidate: message.candidate,
+    label: message.label
+  });
+  // create ice candidate object
+  var messageCan = message.candidate.split(' ');
+  var canType = messageCan[7];
+  log.log([targetMid, null, message.type, 'Candidate type:'], canType);
+  // if (canType !== 'relay' && canType !== 'srflx') {
+  // trace('Skipping non relay and non srflx candidates.');
+  var index = message.label;
+  var candidate = new window.RTCIceCandidate({
+    sdpMLineIndex: index,
+    candidate: message.candidate
+  });
+  if (pc) {
+    /*if (pc.iceConnectionState === this.ICE_CONNECTION_STATE.CONNECTED) {
+      log.debug([targetMid, null, null,
+        'Received but not adding Candidate as we are already connected to this peer']);
+      return;
+    }*/
+    // set queue before ice candidate cannot be added before setRemoteDescription.
+    // this will cause a black screen of media stream
+    if ((pc.setOffer === 'local' && pc.setAnswer === 'remote') ||
+      (pc.setAnswer === 'local' && pc.setOffer === 'remote')) {
+      pc.addIceCandidate(candidate);
+      // NOTE ALEX: not implemented in chrome yet, need to wait
+      // function () { trace('ICE  -  addIceCandidate Succesfull. '); },
+      // function (error) { trace('ICE  - AddIceCandidate Failed: ' + error); }
+      //);
+      log.debug([targetMid, 'RTCIceCandidate', message.type,
+        'Added candidate'], candidate);
+    } else {
+      this._addIceCandidateToQueue(targetMid, candidate);
+>>>>>>> Stashed changes
     }
 
     var server = com.protocol + '//' + com.server + ':' + com.port;

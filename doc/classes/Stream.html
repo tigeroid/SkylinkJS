@@ -43,30 +43,34 @@
     </li>
     <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
-    <li><a href="./testing.html">Running Tests</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
     <li class="header">Classes</li>
     
-      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Messaging.html"> Messaging </a></li>
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
     
-      <li><a href="../classes/Peer.html"> Peer </a></li>
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
     
-      <li><a href="../classes/Request.html"> Request </a></li>
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
     
-      <li><a href="../classes/Room.html"> Room </a></li>
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Self.html"> Self </a></li>
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Socket.html"> Socket </a></li>
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Stream.html"> Stream </a></li>
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/User.html"> User </a></li>
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -81,7 +85,8 @@
   <!-- Page Content -->
   <div id="main-wrapper" class="container">
     
-    <h1>Stream Class <small> <span class="badge">Version 0.6.0</span></small></h1>
+    
+  <h1>Stream Class <small> <span class="badge">Version 0.6.0</span></small></h1>
 
 <small>
     Defined in: <a href="../files/source_Stream.js.html#l1"><code>source&#x2F;Stream.js:1</code></a>
@@ -382,12 +387,12 @@ There are two types of sources:</p>
           <em class="items">
             
               
-                <item><code>channel</code></item>
+                <item><code>stream</code></item>
               
               <item class="seperator">,&nbsp;&nbsp;</item>
             
               
-                <item><code>listener</code></item>
+                <item><code class="optional">[listener]</code></item>
               
               <item class="seperator">,&nbsp;&nbsp;</item>
             
@@ -424,7 +429,7 @@ There are two types of sources:</p>
         <ul class="params-list">
            <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">channel</code>
+    <code class="param-name">stream</code>
     <span class="type"> : <em>type</em> Object </span>
   </div>
 
@@ -449,6 +454,10 @@ There are two types of sources:</p>
 
   <blockquote>
     
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
     
 
     
@@ -2621,7 +2630,7 @@ There are two types of sources:</p>
    <div id="attr_config" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      config
+      config <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2686,7 +2695,7 @@ There are two types of sources:</p>
 -->  <div id="attr_constraints" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      constraints
+      constraints <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2751,7 +2760,7 @@ There are two types of sources:</p>
 -->  <div id="attr_id" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      id
+      id <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2816,7 +2825,7 @@ There are two types of sources:</p>
 -->  <div id="attr_MediaStream" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      MediaStream
+      MediaStream <span class="type"><em>type</em> Object</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2881,7 +2890,7 @@ There are two types of sources:</p>
 -->  <div id="attr_sourceType" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      sourceType
+      sourceType <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2955,7 +2964,7 @@ There are two types of sources:</p>
 -->  <div id="attr_StreamEventResponseHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      StreamEventResponseHandler
+      StreamEventResponseHandler <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -4752,6 +4761,7 @@ There are two types of sources:</p>
 
 
 -->
+
   </div>
   <!-- /#page-content-wrapper -->
 

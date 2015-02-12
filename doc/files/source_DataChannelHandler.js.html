@@ -43,30 +43,34 @@
     </li>
     <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
-    <li><a href="./testing.html">Running Tests</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
     <li class="header">Classes</li>
     
-      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Messaging.html"> Messaging </a></li>
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
     
-      <li><a href="../classes/Peer.html"> Peer </a></li>
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
     
-      <li><a href="../classes/Request.html"> Request </a></li>
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
     
-      <li><a href="../classes/Room.html"> Room </a></li>
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Self.html"> Self </a></li>
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Socket.html"> Socket </a></li>
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Stream.html"> Stream </a></li>
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/User.html"> User </a></li>
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -101,7 +105,11 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  start: function (com, data, listener) {},
+  start: function (com, data, listener) {
+    if (typeof com.onstart === &#x27;function&#x27;) {
+      com.onstart();
+    }
+  },
   
   /**
    * Event fired when the datachannel has opened.
@@ -109,7 +117,11 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  connect: function (com, data, listener) {},
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === &#x27;function&#x27;) {
+      com.onconnect();
+    }
+  },
   
   /**
    * Event fired when the datachannel has an exception occurred.
@@ -118,7 +130,11 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  error: function (com, data, listener) {},
+  error: function (com, data, listener) {
+    if (typeof com.onerror === &#x27;function&#x27;) {
+      com.onerror(error);
+    }
+  },
   
   /**
    * Event fired when the datachannel receives data.
@@ -127,7 +143,9 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  message: function (com, data, listener) {},
+  message: function (com, data, listener) {
+    
+  },
 
   /**
    * Event fired when the datachannel has closed.
@@ -135,7 +153,11 @@ var DataChannelEventResponseHandler = {
    * @for DataChannel
    * @since 0.6.0
    */
-  disconnect: function (com, data, listener) {}
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === &#x27;function&#x27;) {
+      com.ondisconnect();
+    }
+  }
 };
 
 /**

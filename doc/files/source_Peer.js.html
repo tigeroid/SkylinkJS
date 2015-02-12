@@ -43,30 +43,34 @@
     </li>
     <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
-    <li><a href="./testing.html">Running Tests</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
     <li class="header">Classes</li>
     
-      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Messaging.html"> Messaging </a></li>
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
     
-      <li><a href="../classes/Peer.html"> Peer </a></li>
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
     
-      <li><a href="../classes/Request.html"> Request </a></li>
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
     
-      <li><a href="../classes/Room.html"> Room </a></li>
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Self.html"> Self </a></li>
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Socket.html"> Socket </a></li>
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Stream.html"> Stream </a></li>
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/User.html"> User </a></li>
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -237,7 +241,10 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.sdpConfig = null;
+  com.sdpConfig = {
+    stereo: config.audio.stereo,
+    bandwidth: config.bandwidth
+  };
 
   /**
    * The PeerConnection configuration.
@@ -360,7 +367,11 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.connect = function (stream) {
-    var peer = new window.RTCPeerConnection(com.constraints, com.config);
+    var constraints = {
+      iceServers: config
+    };
+    
+    var peer = new window.RTCPeerConnection(, com.config);
   
     // Send stream
     if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {    
@@ -691,13 +702,7 @@ function Peer(config, listener) {
   com.streamingConfig.bandwidth = StreamParser.parseBandwidthConfig(com.streamingConfig.bandwidth);
 
   // Parse constraints ICE servers
-  com.constraints = ICE.parseICEServers(config.constraints);
-  
-  // Parse the sdp configuration
-  com.sdpConfig = {
-    stereo: fn.isSafe(function () { return config.streamingConfig.audio.stereo; }),
-    bandwidth: com.bandwidth
-  };
+  var iceServers = ICE.parseICEServers(config.constraints);
   
   // Start timer
   /*com.healthTimer = setTimeout(function () {

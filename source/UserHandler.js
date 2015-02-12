@@ -199,7 +199,7 @@ var UserEventMessageHandler = {
       stream: data.stream,
       SDPType: 'answer'
     
-    }, data.stream);
+    }, data.streamObject);
   },
 
   welcome: function (com, data, listener) {
@@ -225,7 +225,7 @@ var UserEventMessageHandler = {
         stream: data.stream,
         SDPType: 'offer'
 
-      }, data.stream);
+      }, data.streamObject);
     }
   },
 

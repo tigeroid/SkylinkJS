@@ -43,30 +43,34 @@
     </li>
     <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
-    <li><a href="./testing.html">Running Tests</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
     <li class="header">Classes</li>
     
-      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Messaging.html"> Messaging </a></li>
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
     
-      <li><a href="../classes/Peer.html"> Peer </a></li>
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
     
-      <li><a href="../classes/Request.html"> Request </a></li>
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
     
-      <li><a href="../classes/Room.html"> Room </a></li>
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Self.html"> Self </a></li>
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Socket.html"> Socket </a></li>
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Stream.html"> Stream </a></li>
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/User.html"> User </a></li>
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -81,7 +85,8 @@
   <!-- Page Content -->
   <div id="main-wrapper" class="container">
     
-    <h1>User Class <small> <span class="badge">Version 0.6.0</span></small></h1>
+    
+  <h1>User Class <small> <span class="badge">Version 0.6.0</span></small></h1>
 
 <small>
     Defined in: <a href="../files/source_User.js.html#l1"><code>source&#x2F;User.js:1</code></a>
@@ -1938,36 +1943,36 @@ The user&#39;s browser agent name.</li>
 The user&#39;s browser agent version.</li>
 <li><code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>
 The user&#39;s browser webrtc implementation type.</li>
-<li><code>settings</code> <var>: <b>type</b> JSON</var><br>
+<li><code>streams</code> <var>: <b>type</b> JSON</var><br>
 The list of peer connections streaming.</li>
-<li><code>settings.(#peerId)</code> <var>: <b>type</b> JSON</var><br>
+<li><code>streams.(#peerId)</code> <var>: <b>type</b> JSON</var><br>
 The peer connection streaming information.</li>
-<li><code>settings.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>
+<li><code>streams.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>
 The audio streaming information. If there is no stream connection with the peer,
 it&#39;s <code>false</code>.</li>
-<li><code>settings.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>
+<li><code>streams.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>
 The flag that indicates if stereo is enabled for this connection. By default,
 it&#39;s <code>false</code>.</li>
-<li><code>settings.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>
+<li><code>streams.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>
 The audio MediaStreamTrack source used for this connection.</li>
-<li><code>settings.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>
+<li><code>streams.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>
 The video streaming information. If there is no stream connection with the peer,
 it&#39;s <code>false</code>.</li>
-<li><code>settings.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
+<li><code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
 The video stream resolution. </li>
-<li><code>settings.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
+<li><code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
 The video stream resolution height.</li>
-<li><code>settings.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
+<li><code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
 The video stream resolution width.</li>
-<li><code>settings.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>
+<li><code>streams.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>
 The video stream resolution framerate.</li>
-<li><code>settings.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>
+<li><code>streams.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>
 The video MediaStreamTrack source used for this connection.</li>
-<li><code>settings.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>
+<li><code>streams.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>
 The MediaStreamTracks enabled status (muted/unmuted).</li>
-<li><code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+<li><code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
 The audio MediaStreamTrack enabled status (muted/unmuted).</li>
-<li><code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+<li><code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
 The video MediaStreamTrack enabled status (muted/unmuted).</li>
 <li><code>bandwidth</code> <var>: <b>type</b> JSON</var><br>
 The bandwidth configuration for the peer connections.
@@ -2602,7 +2607,7 @@ The bandwidth configuration for audio stream.</li>
    <div id="attr_agent" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      agent
+      agent <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2731,7 +2736,7 @@ The bandwidth configuration for audio stream.</li>
 -->  <div id="attr_bandwidth" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      bandwidth
+      bandwidth <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2860,7 +2865,7 @@ The bandwidth configuration for audio stream.</li>
 -->  <div id="attr_data" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      data
+      data <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2925,7 +2930,7 @@ The bandwidth configuration for audio stream.</li>
 -->  <div id="attr_id" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      id
+      id <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2990,7 +2995,7 @@ The bandwidth configuration for audio stream.</li>
 -->  <div id="attr_peers" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      peers
+      peers <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3055,7 +3060,7 @@ The bandwidth configuration for audio stream.</li>
 -->  <div id="attr_type" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      type
+      type <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3124,7 +3129,7 @@ The bandwidth configuration for audio stream.</li>
 -->  <div id="attr_UserEventMessageHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      UserEventMessageHandler
+      UserEventMessageHandler <span class="type"><em>type</em> </span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3189,7 +3194,7 @@ The bandwidth configuration for audio stream.</li>
 -->  <div id="attr_UserHandlerReceivedHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      UserHandlerReceivedHandler
+      UserHandlerReceivedHandler <span class="type"><em>type</em> </span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -3254,7 +3259,7 @@ The bandwidth configuration for audio stream.</li>
 -->  <div id="attr_UserHandlerResponseHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      UserHandlerResponseHandler
+      UserHandlerResponseHandler <span class="type"><em>type</em> </span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -5418,6 +5423,7 @@ Usually fired when user leaves the room.</p>
 
 
 -->
+
   </div>
   <!-- /#page-content-wrapper -->
 

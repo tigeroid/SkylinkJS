@@ -1,0 +1,83 @@
+<h1>
+  Testing the 
+  <a href="../{{#if forclass}}classes{{else}}modules{{/if}}/{{test}}.html"><mark>{{test}}</mark></a> 
+  {{#if forclass}} class {{else}} module {{/if}} 
+  <small> <span class="badge">Version {{since}}</span></small>
+</h1>
+{{#if foundAt}}
+<small>
+    Defined in: <a href="{{foundAt}}">`{{{file}}}:{{{line}}}`</a>
+  </small>
+{{/if}}
+
+<hr class="strike">
+
+<ol class="breadcrumb">
+  <li><a href="../modules/Test.html">Running Tests</a>
+  <li class="active">{{name}}</li>
+</ol>
+
+<div class="description">{{{classDescription}}}</p>
+
+<div class="section code-section">
+
+{{#is_constructor}}
+<div class="section code-section">
+  <h4>Running the {{test}} test</h4>
+  {{>test-info}}
+</div>
+{{/is_constructor}} 
+
+{{#if methods}}
+<div class="section code-section">
+  <h4>Tests</h4>
+  {{#methods}} 
+    {{>test-item}}
+  {{/methods}}
+</div>
+{{/if}}
+
+<!--{{#if attrs}}
+<div class="section code-section">
+  <h4>Helper Functions</h4>
+  {{#attrs}} {{>attrs}} {{/attrs}}
+</div>
+{{/if}} 
+-->
+
+  <!--
+{{#if uses}}
+    <ul class="inline commas">
+      {{#uses}}
+        <li><a href="{{.}}.html">{{.}}</a></li>
+      {{/uses}}
+    </ul>
+{{/if}}
+
+{{#if extends}}
+    <div class="extends">
+        Extends {{#crossLink extends}}{{/crossLink}}
+    </div>
+{{/if}}
+
+{{#if module}}
+    {{#if submodule}}
+        Module: {{#crossLinkModule submodule}}{{/crossLinkModule}}<br>
+        Parent Module: {{#crossLinkModule module}}{{/crossLinkModule}}
+    {{else}}
+        Module: {{#crossLinkModule module}}{{/crossLinkModule}}
+    {{/if}}
+{{/if}}
+
+{{#if deprecated}}
+<div class="box deprecated">
+        <p>
+        {{#if deprecationMessage}}
+            <strong>Deprecated:</strong> {{deprecationMessage}}
+        {{else}}
+            This class is deprecated.
+        {{/if}}
+        </p>
+    </div>
+{{/if}}
+-->

@@ -160,6 +160,18 @@ h5 {
   color: #ccc;
 }
 
+.slide-item {
+  visibility:hidden;
+  opacity:0;
+  /*transition:visibility 0s linear 0.15s,opacity 0.15s linear;*/
+}
+
+.slide-item.show {
+  visibility:visible;
+  opacity:1;
+  transition-delay:0s;
+}
+
 .strike {
   border-color: teal;
 }
@@ -233,6 +245,17 @@ var {
   border-bottom: solid 1px #eee;
 }
 
+.panel-code .panel-heading .type {
+  font-family: monospace, consolas;
+  margin-left: 15px;
+  color: #888;
+}
+
+.panel-code .panel-heading .type em {
+  font-weight: 600;
+  font-style: normal;
+}
+
 .code-section-item-param .type {
   font-family: monospace, consolas;
   margin-left: 5px;
@@ -254,6 +277,10 @@ var {
 
 .code-section-item-param .description ul li {
   margin: 7px 0;
+}
+
+a code {
+  text-decoration: underline;
 }
 
 blockquote {

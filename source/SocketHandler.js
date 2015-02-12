@@ -83,7 +83,9 @@ var SocketEventResponseHandler = {
    * @for Socket
    * @since 0.6.0
    */
-  message: function (com, data, listener) {},
+  message: function (com, data, listener) {
+    listener('message:' + data.event, data.message);
+  },
   
   /**
    * Event fired when socket connection with signaling server has been disconnected.

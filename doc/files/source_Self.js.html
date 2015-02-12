@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/Self.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <li class="header first-item">Information</li>
+    <li><a href="../" data="">Introduction</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
+    <li class="header">Classes</li>
+    
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
+    
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
+    
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
+    
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
+    
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
+    
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/Self.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/Self.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/Self.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Handles the self connection to the room.
+ * @class Self
+ * @constructor
+ * @param {JSON} config The user configuration.
+ * @param {String} config.id The self user id.
+ * @param {String} config.username The self user&#x27;s username received from API server.
+ * @param {String} config.timeStamp The self user&#x27;s timestamp (ISO format) received from API server.
+ * @param {String} config.token The self user&#x27;s token received from API server.
+ * @param {String} [config.data] The self user&#x27;s custom data.
+ * @param {Function} listener The listener function.
+ * @for Skylink
+ * @since 0.6.0
+ */
+function Self (config) {
+  // Reference of instance
+  var com = this;
+
+  /**
+   * The self user id.
+   * @attribute id
+   * @type String
+   * @private
+   * @required
+   * @for Self
+   * @since 0.6.0
+   */
+  com.id = null;
+
+  /**
+   * The self user data.
+   * @attribute data
+   * @type String | JSON
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.data = config.data;
+
+  /**
+   * The self user username.
+   * @attribute username
+   * @type String
+   * @private
+   * @required
+   * @for Self
+   * @since 0.6.0
+   */
+  com.username = config.username;
+
+  /**
+   * The self user timestamp (ISO format).
+   * @attribute timeStamp
+   * @type String
+   * @private
+   * @required
+   * @for Self
+   * @since 0.6.0
+   */
+  com.timeStamp = config.timeStamp;
+
+  /**
+   * The self user credential.
+   * @attribute token
+   * @type String
+   * @private
+   * @required
+   * @for Self
+   * @since 0.6.0
+   */
+  com.token = config.token;
+
+  /**
+   * The self user local stream connection.
+   * @attribute streamConnections
+   * @param {Stream} (#peerId) The stream to send for this shared peer connection id.
+   * @type JSON
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.streamConnections = {};
+
+  /**
+   * The self user browser agent information.
+   * @attribute agent
+   * @param {String} name The user&#x27;s browser agent name. For other SDKs, it&#x27;s indicated
+   *    by their type of device &lt;code&gt;E.g. ios, android&lt;/code&gt;. For components, it&#x27;s indicated
+   *    by their type &lt;code&gt;E.g. MCU, Recording&lt;/code&gt;.
+   * @param {Integer} version The user&#x27;s browser agent version. For other SDKs, it&#x27;s indicated
+   *    by their version of device OS &lt;code&gt;ios8 = 8. android kitkat = 4.4&lt;/code&gt;. For components, it&#x27;s indicated
+   *    by their version &lt;code&gt;E.g. 0.1.0, 0.2.0&lt;/code&gt;.
+   * @param {String} webRTCType The user&#x27;s browser agent webrtc implementation type. For other SDKs or
+   *    components, use &lt;code&gt;other&lt;/code&gt;.
+   * @type JSON
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.agent = {
+    name: window.webrtcDetectedBrowser,
+    version: window.webrtcDetectedVersion,
+    webRTCType: window.webrtcDetectedType
+  };
+
+  /**
+   * The self user bandwidth configuration. This does fixes 
+   *   the bandwidth but doesn&#x27;t prevent alterations done by browser for smoother streaming.
+   * @attribute bandwidth
+   * @param {Integer} [audio] The audio bandwidth configuration.
+   * @param {Integer} [video] The video bandwidth configuration.
+   * @param {Integer} [data] The data bandwidth configuration.
+   * @type JSON
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.bandwidth = {};
+
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @attribute handler
+   * @type Function
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    SelfHandler(com, event, data, listener);
+  };
+
+  /**
+   * Function to subscribe to when self user object is ready to use.
+   * @method onstart
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onstart = function () {};
+
+  /**
+   * Function to subscribe to when self user custom user is connected to room.
+   * @method onconnect
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when self user custom user data is updated.
+   * @method onupdate
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onupdate = function () {};
+
+  /**
+   * Function to subscribe to when self has added a stream connection.
+   * @method onaddstreamconnection
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onaddstreamconnection = function () {};
+
+  /**
+   * Function to subscribe to when self has stopped a stream connection.
+   * @method onremovestreamconnection
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onremovestreamconnection = function () {};
+
+  /**
+   * Function to subscribe to when self has been disconnected from the room.
+   * @method ondisconnect
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+
+
+  /**
+   * Updates the self user data.
+   * @method update
+   * @for Self
+   * @since 0.6.0
+   */
+  com.update = function (data) {
+    com.data = data;
+
+    com.handler(&#x27;self:update&#x27;, {
+      userData: com.data
+    });
+  };
+
+  /**
+   * Starts a new stream connection.
+   * @method addStreamConnection
+   * @param {Stream} stream The stream object.
+   * @param {String} peerId The shared peer connection id.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.addStreamConnection = function (stream, peerId) {
+    stream.sourceType = &#x27;local&#x27;;
+
+    stream.parentHandler = com.handler;
+
+    com.streamConnections[peerId] = stream;
+
+    com.handler(&#x27;self:addstreamconnection&#x27;, {
+      peerId: peerId,
+      stream: stream
+    });
+  };
+  
+  /**
+   * Finds the shared peer connection id from the stream id provided. 
+   * @method addStreamConnection
+   * @param {Stream} stream The stream object.
+   * @param {String} peerId The shared peer connection id.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.findStreamConnectionId = function (streamId) {
+    var key;
+    
+    for (key in com.streamConnections) {
+      if (com.streamConnections.hasOwnProperty(key)) {
+        // If matches
+        if (com.streamConnections[key].id === streamId) {
+          return key;
+        }
+      }
+    }
+  };
+
+  /**
+   * Stops a stream connection.
+   * @method removeStreamConnection
+   * @param {String} [peerId] The shared peer connection id. If no
+   *    shared peer connection id is provided, it will destroy all streams.
+   *    Providing the &lt;code&gt;&quot;main&quot;&lt;/code&gt; peer connection id will also result in
+   *    destroying all streams.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.removeStreamConnection = function (peerId) {
+    if (fn.isEmpty(peerId) || peerId === &#x27;main&#x27;) {
+      var key;
+      
+      for (key in com.streamConnections) {
+        if (com.streamConnections.hasOwnProperty(key)) {
+          com.streamConnections[key].stop();
+        }
+      }
+    
+    } else {
+      var stream = com.streamConnections[peerId];
+  
+      if (typeof stream === &#x27;object&#x27; ? stream instanceof Stream : false) {
+        stream.stop();
+        
+      } else {
+        log.error(&#x27;Unable to remove stream connection as there is not existing &#x27; +
+          &#x27;stream connection to the peer connection&#x27;, peerId);
+      }
+    }
+  };
+
+  /**
+   * Gets the self user info.
+   * @method getInfo
+   * @param {String} [peerId] The shared peer connection id.
+   *   If no shared peer connection id is provided, it will return as
+   *   &lt;code&gt;&quot;stream&quot;&lt;/code&gt; instead of &lt;code&gt;&quot;streams&quot;.(#peerId)&lt;/code&gt;.
+   * @returns {JSON} The self user streaming configuration and custom data.
+   * - &lt;code&gt;userData&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String | JSON&lt;/var&gt;&lt;br&gt;
+   *   The custom data.
+   * - &lt;code&gt;agent&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   *   The user&#x27;s browser agent information.
+   * - &lt;code&gt;agent.name&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   *   The user&#x27;s browser agent name.
+   * - &lt;code&gt;agent.version&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   *   The user&#x27;s browser agent version.
+   * - &lt;code&gt;agent.webRTCType&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   *   The user&#x27;s browser webrtc implementation type.
+   * - &lt;code&gt;streams&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   *   The list of peer connections streaming.
+   * - &lt;code&gt;streams.(#peerId)&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   *   The peer connection streaming information.
+   * - &lt;code&gt;streams.(#peerId).audio&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
+   *   The audio streaming information. If there is no stream connection with the peer,
+   *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
+   * - &lt;code&gt;streams.(#peerId).audio.stereo&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   *   The flag that indicates if stereo is enabled for this connection. By default,
+   *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
+   * - &lt;code&gt;streams.(#peerId).audio.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   *   The audio MediaStreamTrack source used for this connection.
+   * - &lt;code&gt;streams.(#peerId).video&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
+   *   The video streaming information. If there is no stream connection with the peer,
+   *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
+   * - &lt;code&gt;streams.(#peerId).video.resolution&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   *   The video stream resolution. 
+   * - &lt;code&gt;streams.(#peerId).video.resolution.width&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   *   The video stream resolution height.
+   * - &lt;code&gt;streams.(#peerId).video.resolution.height&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   *   The video stream resolution width.
+   * - &lt;code&gt;streams.(#peerId).video.frameRate&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   *   The video stream resolution framerate.
+   * - &lt;code&gt;streams.(#peerId).video.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   *   The video MediaStreamTrack source used for this connection.
+   * - &lt;code&gt;streams.(#peerId).status&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   *   The MediaStreamTracks enabled status (muted/unmuted).
+   * - &lt;code&gt;streams.(#peerId).status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   *   The audio MediaStreamTrack enabled status (muted/unmuted).
+   * - &lt;code&gt;streams.(#peerId).status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   *   The video MediaStreamTrack enabled status (muted/unmuted).
+   * - &lt;code&gt;bandwidth&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   *   The bandwidth configuration for the peer connections.
+   *   This does fixes the bandwidth but doesn&#x27;t prevent alterations done by browser for smoother streaming.
+   * - &lt;code&gt;bandwidth.data&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   *   The bandwidth configuration for data stream.
+   * - &lt;code&gt;bandwidth.video&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   *   The bandwidth configuration for video stream.
+   * - &lt;code&gt;bandwidth.audio&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   *   The bandwidth configuration for audio stream.
+   * @for Self
+   * @since 0.6.0
+   */
+  com.getInfo = function (peerId) {
+    var data = {};
+
+    data.userData = com.data;
+
+    data.agent = com.agent;
+
+    data.bandwidth = com.bandwidth;
+
+    // Get all stream connections
+    if (fn.isEmpty(peerId)) {
+      data.streams = {};
+
+      var key;
+
+      for (key in com.streamConnections) {
+        if (com.streamConnections.hasOwnProperty(key)) {
+          var stream = com.streamConnections[key];
+          data.streams[key] = stream.config;
+        }
+      }
+
+    // Get that stream connection only
+    } else {
+      data.stream = data.streams[peerId] || {
+        audio: false,
+        video: false,
+        status: {
+          audioMuted: true,
+          videoMuted: true
+        }
+      };
+    }
+
+    return data;
+  };
+
+  com.handler(&#x27;self:start&#x27;, config);
+}
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

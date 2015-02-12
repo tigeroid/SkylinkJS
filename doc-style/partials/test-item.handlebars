@@ -1,0 +1,41 @@
+<div id="test_{{name}}" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      : {{name}}
+
+      {{#if since}}
+        <span class="badge">Version {{since}}</span>
+      {{/if}}
+    </h5>
+  </div>
+
+  {{>supported}}
+  <div class="panel-body">
+    {{>settings}}
+    <p>{{{methodDescription}}}</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      {{#if params}}
+        <div class="code-section-item">
+          <h6>Test Plan:</h6>
+          <ul class="params-list">
+          {{#params}}
+            {{>test-plan}}
+          {{/params}}
+          </ul>
+        </div>
+      {{/if}}
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for {{name}} test output
+      {{#example}}
+        {{{.}}}
+      {{/example}}
+    </pre>
+  </div>
+</div>
+</div>

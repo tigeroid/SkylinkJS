@@ -263,6 +263,7 @@ function Socket(config, listener) {
       com.Socket.send(JSON.stringify(data));
       com.handler('socket:message', {
         message: data,
+        event: data.type,
         sourceType: 'local'
       });
     //}, interval);

@@ -1,0 +1,49 @@
+<h1>Skylink Javascript Testing Documentation <small>Version {{projectVersion}}</small></h1>
+<hr class="strike">
+
+<div class="section">
+  <h4>Running test scripts</h4>
+  <h5>Installing required dependencies</h5>
+  <p>You will require to install the following dependencies on the <code>npm</code>. SkylinkJS test relies on <code>tape</code> and <code>testling</code>. Install these required modules. Make sure you have forked the <a href="https://github.com/Temasys/SkylinkJS">SkylinkJS github repo</a>.</p>
+  <pre class="prettyprint">
+      npm install tape
+      npm install testling
+  </pre>
+  <p>
+    After you have installed the required dependencies, simple go to your terminal and enter the command lines available.
+  </p>
+
+  <pre class="prettyprint">
+    sh test.sh (#test)
+  </pre>
+</div>
+
+<div class="section">
+  <h4>List of available Tests</h4>
+  <p>Each test is denoted in this format for each class or module. <code>(#class)_Test</code> or <code>(#module)_Test</code>
+  </p>
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="2">Tests</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#if moduleClasses}} {{#moduleClasses}}
+        <tr>
+          <td>
+            <a href="{{../projectRoot}}classes/{{name}}.html">
+              <code>: {{displayName}}</code> 
+            </a>
+          </td>
+          <td>
+            Runs the {{name}} test
+          </td>
+        </tr>
+        {{/moduleClasses}} {{/if}}
+      </tbody>
+    </table>
+  </div>
+</div>

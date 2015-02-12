@@ -1,0 +1,18 @@
+<li class="code-section-item-param">
+  <div class="name">
+    <span class="type"> # <em>Plan</em> </span>
+    <code class="param-name">{{name}}</code>
+  </div>
+
+  <div class="description">
+    {{{description}}}
+  </div>
+
+  {{#if props}}
+    <ul class="params-list">
+      {{#props}}
+        {{>test-plan}}
+      {{/props}}
+    </ul>
+  {{/if}}
+</li>

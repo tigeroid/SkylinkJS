@@ -1,0 +1,28 @@
+<div id="constructor" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      {{name}}
+      
+      {{#if since}}
+        <span class="badge">Version {{since}}</span>
+      {{/if}}
+    </h5>
+    {{#if foundAt}}
+    <p>
+      Defined in: <a href="{{foundAt}}">`{{{file}}}:{{{line}}}`</a>
+    </p>
+    {{/if}}
+  </div>
+
+  <div class="panel-body">
+    <p>To run this test, simply run this command in the terminal.</p>
+  </div>
+  <div class="panel-body">
+    <pre class="prettyprint">
+    // Example for running {{name}}
+    {{#example}}
+      {{{.}}}
+    {{/example}}
+  </pre>
+  </div>
+</div>

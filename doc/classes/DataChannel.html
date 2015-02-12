@@ -43,30 +43,34 @@
     </li>
     <li class="header first-item">Information</li>
     <li><a href="../" data="">Introduction</a></li>
-    <li><a href="./testing.html">Running Tests</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
     <li class="header">Classes</li>
     
-      <li><a href="../classes/DataChannel.html"> DataChannel </a></li>
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
     
-      <li><a href="../classes/Debugger.html"> Debugger </a></li>
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
     
-      <li><a href="../classes/Messaging.html"> Messaging </a></li>
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
     
-      <li><a href="../classes/Peer.html"> Peer </a></li>
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
     
-      <li><a href="../classes/Request.html"> Request </a></li>
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
     
-      <li><a href="../classes/Room.html"> Room </a></li>
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
     
-      <li><a href="../classes/Self.html"> Self </a></li>
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
     
-      <li><a href="../classes/Skylink.html"> Skylink </a></li>
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
     
-      <li><a href="../classes/Socket.html"> Socket </a></li>
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
     
-      <li><a href="../classes/Stream.html"> Stream </a></li>
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
     
-      <li><a href="../classes/User.html"> User </a></li>
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
     
   </ul>
 </div>
@@ -81,7 +85,8 @@
   <!-- Page Content -->
   <div id="main-wrapper" class="container">
     
-    <h1>DataChannel Class <small> <span class="badge">Version 0.6.0</span></small></h1>
+    
+  <h1>DataChannel Class <small> <span class="badge">Version 0.6.0</span></small></h1>
 
 <small>
     Defined in: <a href="../files/source_DataChannel.js.html#l1"><code>source&#x2F;DataChannel.js:1</code></a>
@@ -220,17 +225,17 @@ There are two types of sources:</p>
             
           
             
-              <tr> <td> <a href="#handler_onclose"> <code>onclose</code> </a> </td> <td> <p>Function to subscribe to when datachannel has closed.</p>
+              <tr> <td> <a href="#handler_onconnect"> <code>onconnect</code> </a> </td> <td> <p>Function to subscribe to when datachannel has opened.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_ondisconnect"> <code>ondisconnect</code> </a> </td> <td> <p>Function to subscribe to when datachannel has closed.</p>
  </td> </tr>
             
           
             
               <tr> <td> <a href="#handler_onerror"> <code>onerror</code> </a> </td> <td> <p>Function to subscribe to when datachannel has an error.</p>
- </td> </tr>
-            
-          
-            
-              <tr> <td> <a href="#handler_onopen"> <code>onopen</code> </a> </td> <td> <p>Function to subscribe to when datachannel has opened.</p>
  </td> </tr>
             
           
@@ -724,7 +729,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_DataChannel.js.html#l160"><code>source&#x2F;DataChannel.js:160</code></a>
+        Defined in: <a href="../files/source_DataChannel.js.html#l148"><code>source&#x2F;DataChannel.js:148</code></a>
       </p>
     
   </div>
@@ -853,7 +858,7 @@ There are two types of sources:</p>
    <div id="attr_DataChannelEventResponseHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      DataChannelEventResponseHandler
+      DataChannelEventResponseHandler <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -918,7 +923,7 @@ There are two types of sources:</p>
 -->  <div id="attr_DataChannelHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      DataChannelHandler
+      DataChannelHandler <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -926,7 +931,7 @@ There are two types of sources:</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_DataChannelHandler.js.html#l53"><code>source&#x2F;DataChannelHandler.js:53</code></a>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l71"><code>source&#x2F;DataChannelHandler.js:71</code></a>
     </p>
     
   </div>
@@ -983,7 +988,7 @@ There are two types of sources:</p>
 -->  <div id="attr_id" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      id
+      id <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -1048,7 +1053,7 @@ There are two types of sources:</p>
 -->  <div id="attr_RTCDataChannel" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      RTCDataChannel
+      RTCDataChannel <span class="type"><em>type</em> Object</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -1113,7 +1118,7 @@ There are two types of sources:</p>
 -->  <div id="attr_sourceType" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      sourceType
+      sourceType <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -1183,7 +1188,7 @@ There are two types of sources:</p>
 -->  <div id="attr_type" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      type
+      type <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -1264,10 +1269,120 @@ There are two types of sources:</p>
     
    
     
-      <div id="handler_onclose" class="panel panel-code">
+      <div id="handler_onconnect" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      onclose
+      onconnect
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_DataChannel.js.html#l63"><code>source&#x2F;DataChannel.js:63</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when datachannel has opened.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onconnect ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_ondisconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ondisconnect
       
         <span class="paren">()</span>
       
@@ -1365,7 +1480,7 @@ There are two types of sources:</p>
 
   <div class="col-md-6">
     <pre class="prettyprint">
-      // Example for constructor onclose ()
+      // Example for constructor ondisconnect ()
       
     </pre>
   </div>
@@ -1484,116 +1599,6 @@ There are two types of sources:</p>
     
    
     
-      <div id="handler_onopen" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onopen
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_DataChannel.js.html#l63"><code>source&#x2F;DataChannel.js:63</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when datachannel has opened.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <!--<div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>-->
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onopen ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
       <em></em>
     
   
@@ -1614,7 +1619,7 @@ There are two types of sources:</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_DataChannelHandler.js.html#l18"><code>source&#x2F;DataChannelHandler.js:18</code></a>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l22"><code>source&#x2F;DataChannelHandler.js:22</code></a>
     </p>
     
   </div>
@@ -1700,7 +1705,7 @@ There are two types of sources:</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l18"><code>source&#x2F;DataChannelHandler.js:18</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l22"><code>source&#x2F;DataChannelHandler.js:22</code></a>
       </small>
     
 
@@ -1731,7 +1736,7 @@ There are two types of sources:</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_DataChannelHandler.js.html#l44"><code>source&#x2F;DataChannelHandler.js:44</code></a>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l58"><code>source&#x2F;DataChannelHandler.js:58</code></a>
     </p>
     
   </div>
@@ -1817,7 +1822,7 @@ There are two types of sources:</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l44"><code>source&#x2F;DataChannelHandler.js:44</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l58"><code>source&#x2F;DataChannelHandler.js:58</code></a>
       </small>
     
 
@@ -1848,7 +1853,7 @@ There are two types of sources:</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_DataChannelHandler.js.html#l26"><code>source&#x2F;DataChannelHandler.js:26</code></a>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l34"><code>source&#x2F;DataChannelHandler.js:34</code></a>
     </p>
     
   </div>
@@ -1960,7 +1965,7 @@ There are two types of sources:</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l26"><code>source&#x2F;DataChannelHandler.js:26</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l34"><code>source&#x2F;DataChannelHandler.js:34</code></a>
       </small>
     
 
@@ -2014,7 +2019,7 @@ There are two types of sources:</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_DataChannelHandler.js.html#l35"><code>source&#x2F;DataChannelHandler.js:35</code></a>
+      Defined in: <a href="../files/source_DataChannelHandler.js.html#l47"><code>source&#x2F;DataChannelHandler.js:47</code></a>
     </p>
     
   </div>
@@ -2126,7 +2131,7 @@ There are two types of sources:</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l35"><code>source&#x2F;DataChannelHandler.js:35</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_DataChannelHandler.js.html#l47"><code>source&#x2F;DataChannelHandler.js:47</code></a>
       </small>
     
 
@@ -2303,6 +2308,7 @@ There are two types of sources:</p>
 
 
 -->
+
   </div>
   <!-- /#page-content-wrapper -->
 

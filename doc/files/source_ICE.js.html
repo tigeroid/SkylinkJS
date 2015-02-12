@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="source/ICE.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <li class="header first-item">Information</li>
+    <li><a href="../" data="">Introduction</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
+    <li class="header">Classes</li>
+    
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
+    
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
+    
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
+    
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
+    
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
+    
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: source/ICE.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/source/ICE.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/source/ICE.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * @class ICE
+ * @isModule true
+ * @type JSON
+ * @private
+ * @for Skylink
+ * @since 0.6.0
+ */
+var ICE = {
+  /**
+   * The revised versions of ICE connection states to handle
+   *   the differences cross-browsers of different states. This was to
+   *   feedback to various users the completion state of the ICE connection.
+   * @attribute newIceConnectionStates
+   * @type JSON
+   * @param {String} starting The ICE connection has just started.
+   * @param {String} checking The ICE connection is in checking state.
+   * @param {String} connected The ICE connection is established.
+   * @param {String} completed The ICE connection is established.
+   * @param {String} done The ICE connection is in complete state.
+   * @param {String} disconnected The ICE connection has been disconnected.
+   * @param {String} failed The ICE connection has failed.
+   * @param {String} closed The ICE connection has closed.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
+  newIceConnectionStates: {
+    starting : &#x27;starting&#x27;,
+    checking : &#x27;checking&#x27;,
+    connected : &#x27;connected&#x27;,
+    completed : &#x27;connected&#x27;,
+    done : &#x27;completed&#x27;,
+    disconnected : &#x27;disconnected&#x27;,
+    failed : &#x27;failed&#x27;,
+    closed : &#x27;closed&#x27;
+  },
+
+  /**
+   * Queues ICE candidates that is received before &lt;var&gt;setRemoteDescription&lt;/var&gt; is called.
+   * It stores in the &lt;var&gt;queueCandidate&lt;/var&gt; property array in the peer connection object.
+   * @method queueCandidate
+   * @param {Object} peer The RTCPeerConnection object.
+   * @param {Object} candidate The RTCIceCandidate object.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
+  queueCandidate: function (peer, candidate) {
+    peer.queueCandidate = peer.queueCandidate || [];
+    peer.queueCandidate.push(candidate);
+  },
+
+  /**
+   * Adds all ICE candidates that is received before &lt;var&gt;setRemoteDescription&lt;/var&gt; is called.
+   * It retrieves candidates from the &lt;var&gt;queueCandidate&lt;/var&gt; property array in the peer connection object.
+   * @method popCandidate
+   * @param {Object} peer The RTCPeerConnection object.
+   * @param {Function} defer The defer function that is fired when an ICE candidate is added.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
+  popCandidate: function (peer, defer) {
+    peer.queueCandidate = peer.queueCandidate || [];
+
+    var i;
+
+    for (i = 0; i &lt; peer.queueCandidate.length; i += 1) {
+      var candidate = peer.queueCandidate[i];
+      var type = candidate.candidate.split(&#x27; &#x27;)[7];
+
+      peer.addIceCandidate(candidate, function (success) {
+        defer(&#x27;candidate:success&#x27;, {
+          candidate: candidate,
+          type: type
+        });
+      }, function (error) {
+        defer(&#x27;candidate:error&#x27;, {
+          candidate: candidate,
+          type: type,
+          error: error
+        });
+      });
+    }
+    peer.queueCandidate = [];
+  },
+
+  /**
+   * Adds the ICE candidate or queues the candidate if it is received before
+   *   &lt;var&gt;setRemoteDescription&lt;/var&gt; is called.
+   * @method addCandidate
+   * @param {Object} peer The RTCPeerConnection object.
+   * @param {Object} candidate The RTCIceCandidate object.
+   * @param {Function} defer The defer function that is fired when an ICE candidate is added.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
+  addCandidate: function (peer, candidate, defer) {
+    if (fn.isEmpty(candidate.candidate)) {
+      return;
+    }
+
+    if (!fn.isSafe(function () { return !!peer.remoteDescription.sdp; })) {
+      this.queueCandidate(peer, candidate, defer);
+
+    } else {
+      var type = candidate.candidate.split(&#x27; &#x27;)[7];
+
+      peer.addIceCandidate(candidate, function (success) {
+        defer(&#x27;candidate:success&#x27;, {
+          candidate: candidate,
+          type: type
+        });
+      }, function (error) {
+        defer(&#x27;candidate:error&#x27;, {
+          candidate: candidate,
+          type: type,
+          error: error
+        });
+      });
+    }
+  },
+
+  /**
+   * Parses the received ICE connection state and updates to a new version
+   *   to handle the differences received from cross-browsers.
+   * State should go from &lt;code&gt;checking &gt; connected &gt; completed&lt;/code&gt;.
+   * @method parseIceConnectionState
+   * @param {Object} peer The RTCPeerConnection object.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
+  parseIceConnectionState: function (peer) {
+    var state = peer.iceConnectionState;
+
+    var checkState = this.newIceConnectionStates[state];
+
+    if (!peer.iceConnectionFiredStates || checkState === &#x27;disconnected&#x27; ||
+        checkState === &#x27;failed&#x27; || checkState === &#x27;closed&#x27;) {
+      peer.iceConnectionFiredStates = [];
+    }
+
+    var newState = this.newIceConnectionStates[state];
+
+    if (peer.iceConnectionFiredStates.indexOf(newState) &lt; 0) {
+      peer.iceConnectionFiredStates.push(newState);
+
+      if (newState === &#x27;connected&#x27;) {
+        setTimeout(function () {
+          peer.iceConnectionFiredStates.push(&#x27;done&#x27;);
+
+          peer.newIceConnectionState = &#x27;completed&#x27;;
+          peer.oniceconnectionnewstatechange(peer);
+        }, 1000);
+      }
+      peer.newIceConnectionState = newState;
+      peer.oniceconnectionnewstatechange(peer);
+    }
+  },
+
+  /**
+   * Handles the ICE servers received based on the options set by user and parses
+   * the differences for iceServer format for cross-browsers.
+   * &lt;br&gt;Format of an ICE server:
+   * - &lt;code&gt;STUN&lt;/code&gt; is structured like &lt;code&gt;{ url: &#x27;stun:hosturl&#x27; }&lt;/code&gt;.
+   * - &lt;code&gt;TURN&lt;/code&gt; is structured like
+   *    &lt;code&gt;{ url: &#x27;turn:username@hosturl&#x27;, credential: &#x27;xxx&#x27; }&lt;/code&gt; and
+   *    &lt;code&gt;{ url: &#x27;turn:hosturl&#x27;, username: &#x27;username&#x27;, credential: &#x27;xxx&#x27; }&lt;/code&gt; for
+   *    Firefox browsers.
+   * @method parseICEServers
+   * @param {Array} iceServers The list of ICE servers.
+   * @param {JSON} iceServers.(#index) The ICE server.
+   * @param {String} iceServers.(#index).credential The ICE server credential (password).
+   * @param {String} iceServers.(#index).url The ICE server url. For TURN server,
+   *   the format may vary depending on the support of the TURN url format.
+   * @returns {Array} The updated ICE servers list.
+   * - &lt;code&gt;(#index)&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   *   The ICE server.
+   * - &lt;code&gt;(#index).credential&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   *   The ICE server credential (password). Only used in TURN servers.
+   * - &lt;code&gt;(#index).url&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   *   The ICE server url. For TURN server, the format may vary depending on the support of
+   *   the TURN url format.
+   * - &lt;code&gt;(#index).username&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   *   The ICE server username. Only used in TURN servers and Firefox browsers.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
+  parseICEServers: function (iceServers) {
+    var newIceServers = [];
+    var i;
+
+    console.info(&#x27;globals TURN&#x27;, globals.TURNServer);
+    console.info(&#x27;globals STUN&#x27;, globals.STUNServer);
+
+    for (i = 0; i &lt; iceServers.length; i += 1) {
+      var iceServer = iceServers[i];
+      var urlParts = iceServer.url.split(&#x27;:&#x27;);
+      var serverType = urlParts[0];
+
+      if (serverType === &#x27;turn&#x27;) {
+        // Add TURN if needed
+        if (globals.TURNServer === true) {
+          // Firefox doesn&#x27;t support turn:username@hosturl
+          if (window.webrtcDetectedBrowser === &#x27;firefox&#x27;) {
+            var subUrlParts = urlParts[1].split(&#x27;@&#x27;);
+            var username = subUrlParts[0];
+            var url = subUrlParts[1];
+
+            urlParts[1] = url;
+
+            iceServer.username = username;
+            iceServer.url = urlParts.join(&#x27;:&#x27;);
+          }
+          // Add it to array
+          newIceServers.push(iceServer);
+        }
+
+      } else {
+        // Add STUN if needed
+        if (globals.STUNServer === true) {
+          // Add it to array
+          newIceServers.push(iceServer);
+        }
+      }
+    }
+
+    return newIceServers;
+  }
+};
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -1,4 +1,3 @@
-grunt jshint;
 type="$1";
 param="$2";
 
@@ -11,6 +10,9 @@ function get_test () {
     test)
       echo "Running test '$param'..";
       case "$param" in
+        ice)
+          browserify tests/ICE.Test.js | testling -x "$1";
+          ;;
         events)
           browserify tests/events-test.js | testling -x "$1";
           ;;

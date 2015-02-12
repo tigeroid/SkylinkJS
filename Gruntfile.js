@@ -2,10 +2,10 @@ module.exports = function (grunt) {
   'use strict';
 
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-tape');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-replace');
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
           src: ['doc/**', 'demo/**'],
           dest: '<%= bamboo %>/doc/latest'
                 }],
-      },
+      }
     },
 
     concat: {
@@ -182,7 +182,7 @@ module.exports = function (grunt) {
         version: '<%= pkg.version %>',
         url: '<%= pkg.homepage %>',
         options: {
-          paths: 'source/',
+          paths: ['source/', 'tests/'],
           outdir: 'doc/',
           themedir: 'doc-style'
         }

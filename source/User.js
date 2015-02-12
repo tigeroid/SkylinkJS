@@ -256,7 +256,7 @@ function User (config, listener) {
   com.addConnection = function (data, stream) {
     var peerConfig = {
       id: data.prid,
-      constraints: data.iceServers,
+      iceServers: data.iceServers,
       bandwidth: data.bandwidth,
       streamingConfig: data.settings
     };
@@ -324,36 +324,36 @@ function User (config, listener) {
    *   The user's browser agent version.
    * - <code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>
    *   The user's browser webrtc implementation type.
-   * - <code>settings</code> <var>: <b>type</b> JSON</var><br>
+   * - <code>streams</code> <var>: <b>type</b> JSON</var><br>
    *   The list of peer connections streaming.
-   * - <code>settings.(#peerId)</code> <var>: <b>type</b> JSON</var><br>
+   * - <code>streams.(#peerId)</code> <var>: <b>type</b> JSON</var><br>
    *   The peer connection streaming information.
-   * - <code>settings.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   * - <code>streams.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>
    *   The audio streaming information. If there is no stream connection with the peer,
    *   it's <code>false</code>.
-   * - <code>settings.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>
+   * - <code>streams.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>
    *   The flag that indicates if stereo is enabled for this connection. By default,
    *   it's <code>false</code>.
-   * - <code>settings.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>
+   * - <code>streams.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>
    *   The audio MediaStreamTrack source used for this connection.
-   * - <code>settings.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   * - <code>streams.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>
    *   The video streaming information. If there is no stream connection with the peer,
    *   it's <code>false</code>.
-   * - <code>settings.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
+   * - <code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
    *   The video stream resolution. 
-   * - <code>settings.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
+   * - <code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
    *   The video stream resolution height.
-   * - <code>settings.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
+   * - <code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
    *   The video stream resolution width.
-   * - <code>settings.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>
+   * - <code>streams.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>
    *   The video stream resolution framerate.
-   * - <code>settings.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>
+   * - <code>streams.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>
    *   The video MediaStreamTrack source used for this connection.
-   * - <code>settings.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>
+   * - <code>streams.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>
    *   The MediaStreamTracks enabled status (muted/unmuted).
-   * - <code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+   * - <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
    *   The audio MediaStreamTrack enabled status (muted/unmuted).
-   * - <code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+   * - <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
    *   The video MediaStreamTrack enabled status (muted/unmuted).
    * - <code>bandwidth</code> <var>: <b>type</b> JSON</var><br>
    *   The bandwidth configuration for the peer connections.
@@ -374,7 +374,7 @@ function User (config, listener) {
     
     data.agent = com.agent;
     
-    data.settings = {};
+    data.streams = {};
     
     var i;
     
@@ -394,7 +394,7 @@ function User (config, listener) {
       
       settings.bandwidth = peer.bandwidth || {};
       
-      data.settings[peer.id] = settings;
+      data.streams[peer.id] = settings;
     }
 
     return data;

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="tests/ICE.Test.js - skylinkjs">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Skylink Javascript API documentation</title>
+    <!-- font and icon -->
+    <link rel="shortcut icon" type="image/ico" href="../assets/favicon.ico">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Sans+Pro" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700|Source+Code+Pro" type="text/css">
+    <!-- styling -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+  <!-- Sidebar -->
+<a href="#menu-toggle" id="menu-toggle">
+  <!-- Menu icon by Icons8 -->
+  <img src="../assets/img/icons/menu.png">
+  </span>
+</a>
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="../" data="">
+        <img src="../assets/img/logo.svg"><span>JS</span>
+        <small>Version: 0.5.7</small>
+      </a>
+    </li>
+    <li class="header first-item">Information</li>
+    <li><a href="../" data="">Introduction</a></li>
+    <li><a href="../modules/Test.html">Running Tests</a></li>
+    <li class="header">Classes</li>
+    
+      <li class="slide-item"><a href="../classes/DataChannel.html"> DataChannel </a></li>
+    
+      <li class="slide-item"><a href="../classes/Debugger.html"> Debugger </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE.html"> ICE </a></li>
+    
+      <li class="slide-item"><a href="../classes/ICE_Test.html"> ICE_Test </a></li>
+    
+      <li class="slide-item"><a href="../classes/Messaging.html"> Messaging </a></li>
+    
+      <li class="slide-item"><a href="../classes/Peer.html"> Peer </a></li>
+    
+      <li class="slide-item"><a href="../classes/Request.html"> Request </a></li>
+    
+      <li class="slide-item"><a href="../classes/Room.html"> Room </a></li>
+    
+      <li class="slide-item"><a href="../classes/Self.html"> Self </a></li>
+    
+      <li class="slide-item"><a href="../classes/Skylink.html"> Skylink </a></li>
+    
+      <li class="slide-item"><a href="../classes/Socket.html"> Socket </a></li>
+    
+      <li class="slide-item"><a href="../classes/Stream.html"> Stream </a></li>
+    
+      <li class="slide-item"><a href="../classes/User.html"> User </a></li>
+    
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+<!--<form id="api-tabview" class="navbar-form navbar-right" role="form">
+  <div id="api-tabview-filter" class="form-group">
+    <input type="search" id="api-filter" placeholder="Type to filter APIs">
+  </div>
+</form>-->
+
+  <!-- Page Content -->
+  <div id="main-wrapper" class="container">
+    
+    <h1 class="file-heading">File: tests/ICE.Test.js</h1>
+<p>You may view this code on github <a href="https://github.com/Temasys/SkylinkJS/blob/master/tests/ICE.Test.js">master branch</a> or on <a href="https://github.com/Temasys/SkylinkJS/blob/development/tests/ICE.Test.js">the current development branch</a>.</p>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+var loadScript = function (url, callback) {
+  console.log(&#x27;=== Loading ===&#x27;);
+  console.log(&#x27;Script: Loading script&#x27;, url);
+
+  // Adding the script tag to the head as suggested before
+  var head = document.getElementsByTagName(&#x27;head&#x27;)[0];
+  var script = document.createElement(&#x27;script&#x27;);
+  script.type = &#x27;text/javascript&#x27;;
+  script.src = url;
+
+  // Then bind the event to the callback function.
+  // There are several events for cross browser compatibility.
+  script.onreadystatechange = function () {
+    console.debug(&#x27;Script: Loaded script&#x27;, url);
+    callback();
+  };
+  script.onload = function () {
+    console.debug(&#x27;Script: Loaded script&#x27;, url);
+    callback();
+  };
+
+  // Fire the loading
+  head.appendChild(script);
+};
+
+/**
+ * @module Test
+ * @istestdocumentation true
+ */
+/**
+ * Tests the ICE module.
+ * @class ICE_Test
+ * @test ICE
+ * @constructor
+ * @example
+ *   sh test.sh test ice
+ * @submodule Test
+ * @since 0.6.0
+ */
+var ICE_TEST = function () {
+
+  &#x27;use strict&#x27;;
+
+  // Dependencies
+  var test = require(&#x27;tape&#x27;);
+  var adapter = require(&#x27;./../node_modules/adapterjs/publish/adapter.debug.js&#x27;);
+
+  /**
+   * Function that throws an exception and ends test.
+   * @attribute throwErrorFn
+   * @type Function
+   * @param {Object} error The error object.
+   * @example
+   *    throwErrorFn(error, t);
+   * @for ICE_Test
+   * @since 0.6.0
+   */
+  var throwErrorFn = function (error, t) {
+    t.fail(&#x27;Test failed with exception&#x27;);
+    t.end();
+    throw error;
+  };
+
+
+  /**
+   * Tests the addCandidate and parseIceConnectionState function.
+   * @param {Plan} 1 Checks if candidates are buffered.
+   * @param {Plan} 2 Checks if ice connection state is parsed correctly.
+   * @param {Plan} 3 Checks if candidates are buffered correctly.
+   * @method test1
+   * @plan 3
+   * @example
+   *   test: addCandidate(), parseIceConnectionState()
+   *   plan: addCandidate(): Candidates are buffererd
+   *   plan: parseIceConnectionState() : Parsed correctly
+   *   plan: addCandidate() : Candidates are buffered and received correctly
+   * @for ICE_Test
+   * @since 0.6.0
+   */
+  test(&#x27;addCandidate(), parseIceConnectionState()&#x27;, {
+    timeout: 10000
+
+  }, function (t) {
+    t.plan(3);
+
+    // Initialize
+    console.log(&#x27;=== Initiailize ===&#x27;);
+
+    // Buffer count
+    var buffer1 = [];
+    var receive1 = [];
+    var buffer2 = [];
+    var receive2 = [];
+
+    // Ice states
+    var states = [];
+
+    var peer1 = new window.RTCPeerConnection();
+    var peer2 = new window.RTCPeerConnection();
+
+    // Tests the ICE candidate state
+    peer1.onicecandidate = function (event) {
+      var candidate = event.candidate || event;
+
+      console.debug(&#x27;P2: Adding candidate&#x27;);
+
+      if (!fn.isEmpty(candidate.candidate)) {
+        ICE.addCandidate(peer2, candidate, function (event, data) {
+          receive1.push(candidate);
+
+          console.debug(&#x27;P2: Added candidate&#x27;, event, data);
+        });
+
+        buffer1.push(candidate);
+
+      } else {
+        console.debug(&#x27;P1: Gathered all candidates&#x27;);
+      }
+    };
+
+    peer2.onicecandidate = function (event) {
+      var candidate = event.candidate || event;
+
+      console.debug(&#x27;P1: Adding candidate&#x27;);
+
+      if (!fn.isEmpty(candidate.candidate)) {
+        ICE.addCandidate(peer1, candidate, function (event, data) {
+          receive2.push(candidate);
+
+          console.debug(&#x27;P1: Added candidate&#x27;, event, data);
+        });
+
+        buffer2.push(candidate);
+
+      } else {
+        console.debug(&#x27;P2: Gathered all candidates&#x27;);
+      }
+    };
+
+    peer1.oniceconnectionstatechange = function () {
+      ICE.parseIceConnectionState(peer1);
+    };
+
+    peer1.oniceconnectionnewstatechange = function () {
+      states.push(peer1.newIceConnectionState);
+
+      if (peer1.newIceConnectionState === &#x27;completed&#x27;) {
+        t.deepEqual(states, [
+          &#x27;checking&#x27;,
+          &#x27;connected&#x27;,
+          &#x27;completed&#x27;
+        ], &#x27;parseIceConnectionState() : Parsed correctly&#x27;);
+      }
+    };
+
+    peer2.oniceconnectionstatechange = function () {
+      ICE.parseIceConnectionState(peer2);
+    };
+
+    peer2.oniceconnectionnewstatechange = function () {
+      if (peer2.newIceConnectionState === &#x27;completed&#x27;) {
+        t.deepEqual([buffer1.length, buffer2.length], [receive1.length, receive2.length],
+          &#x27;addCandidate() : Candidates are buffered and received correctly&#x27;);
+
+        console.log(&#x27;=== Completed ===&#x27;);
+
+        t.end();
+      }
+    };
+
+
+    // Start the test
+    console.log(&#x27;=== Start ===&#x27;);
+
+    window.getUserMedia({
+      audio: true,
+      video: true
+    }, function (stream) {
+
+      // Invoke candidate generation
+      peer1.addStream(stream);
+      peer2.addStream(stream);
+
+      // Create offer
+      console.debug(&#x27;P1: Creating offer&#x27;);
+      peer1.createOffer(function (offer) {
+
+        console.debug(&#x27;P1: Setting local offer&#x27;);
+        peer1.setLocalDescription(offer, function () {
+
+          setTimeout(function () {
+            if (peer2.queueCandidate.length &gt; 0) {
+              t.pass(&#x27;addCandidate(): Candidates are buffererd&#x27;);
+
+            } else {
+              t.fail(&#x27;addCandidate(): Candidates are buffererd&#x27;);
+            }
+
+            console.debug(&#x27;P2: Setting remote offer&#x27;);
+            peer2.setRemoteDescription(offer, function () {
+              console.debug(&#x27;P2: Creating answer&#x27;);
+
+              ICE.popCandidate(peer2, function (event, data) {
+                receive1.push(data.candidate);
+
+                console.debug(&#x27;P2: Added queued candidate&#x27;, event, data);
+              });
+
+              console.debug(&#x27;P2: Creating answer&#x27;);
+              peer2.createAnswer(function (answer) {
+                console.debug(&#x27;P2: Setting local answer&#x27;);
+
+                peer2.setLocalDescription(answer, function () {
+                  console.debug(&#x27;Completed&#x27;);
+
+                }, function () {
+                  console.error(&#x27;P2: Failed setting local answer&#x27;);
+                  throwErrorFn(error, t);
+                });
+
+                console.debug(&#x27;P1: Setting remote answer&#x27;);
+                peer1.setRemoteDescription(answer, function () {
+                  ICE.popCandidate(peer1, function (event, data) {
+                    receive2.push(data.candidate);
+
+                    console.debug(&#x27;P1: Added queued candidate&#x27;, event, data);
+                  });
+
+                }, function () {
+                  console.error(&#x27;P1: Failed setting remote answer&#x27;);
+                  throwErrorFn(error, t);
+                });
+
+              }, function (error) {
+                console.error(&#x27;P2: Failed creating answer&#x27;);
+                throwErrorFn(error, t);
+              });
+
+            }, function (error) {
+              console.error(&#x27;P2: Failed setting remote offer&#x27;);
+              throwErrorFn(error, t);
+            });
+
+          }, 1000);
+
+        }, function (error) {
+          console.error(&#x27;P1: Failed setting local offer&#x27;);
+          throwErrorFn(error, t);
+        });
+
+      }, function (error) {
+        console.error(&#x27;P1: Failed creating offer&#x27;);
+        throwErrorFn(error, t);
+      });
+
+    }, function (error) {
+      throwErrorFn(error, t);
+    });
+  });
+
+  /**
+   * Tests the parseICEServers function.
+   * @method test2
+   * @param {Plan} 1 Test if TURN servers are parsed correctly for Firefox and Chrome.
+   * @param {Plan} 2 Test when TURN is disabled to not return TURN servers.
+   * @param {Plan} 3 Test when TURN is enabled to return TURN servers.
+   * @param {Plan} 4 Test when STUN is disabled to not return STUN servers.
+   * @param {Plan} 5 Test when STUN is enabled to return STUN servers.
+   * @example
+   *   test: parseICEServers()
+   *   plan: parseICEServers() : TURN is disabled
+   *   plan: parseICEServers() : TURN is enabled
+   *   plan: parseICEServers() : STUN is disabled
+   *   plan: parseICEServers() : STUN is enabled
+   * @for ICE_Test
+   * @since 0.6.0
+   */
+  test(&#x27;parseICEServers()&#x27;, {
+    timeout: 10000
+
+  }, function (t) {
+    t.plan(5);
+
+    var getIceServers = function () {
+      return [{
+        &quot;url&quot;: &quot;turn:GST1dc3dqjz7_1423743859@turn.temasys.com.sg&quot;,
+        &quot;credential&quot;: &quot;wP0ckGWVX3ZjL+kgwclC6K5DkwQ=&quot;
+      }, {
+        &quot;url&quot;: &quot;stun:stun.l.google.com:19302&quot;
+      }, {
+        &quot;url&quot;: &quot;stun:stun3.l.google.com:19302&quot;
+      }, {
+        &quot;url&quot;: &quot;stun:stun4.l.google.com:19302&quot;
+      }, {
+        &quot;url&quot;: &quot;stun:stun.schlund.de&quot;
+      }, {
+        &quot;url&quot;: &quot;stun:stun.iptel.org&quot;
+      }, {
+        &quot;url&quot;: &quot;stun:stun.ideasip.com&quot;
+      }, {
+        &quot;url&quot;: &quot;stun:stun.ekiga.net&quot;
+      }, {
+        &quot;url&quot;: &quot;turn:GST1dc3dqjz7_1423743859@turnsg.temasys.com.sg&quot;,
+        &quot;credential&quot;: &quot;wP0ckGWVX3ZjL+kgwclC6K5DkwQ=&quot;
+      }];
+    };
+
+    // Start the test
+    console.log(&#x27;=== Start ===&#x27;);
+
+    console.log(&#x27;Parsing TURN servers for Chrome&#x27;);
+    window.webrtcDetectedBrowser = &#x27;chrome&#x27;;
+
+    var newIceServers1 = ICE.parseICEServers(getIceServers());
+
+
+    var chrome = false;
+    var firefox = false;
+
+    var i;
+
+    for (i = 0; i &lt; newIceServers1.length; i += 1) {
+      var iceServer = newIceServers1[i];
+
+      if (iceServer.url.indexOf(&#x27;turn&#x27;) === 0) {
+        if (iceServer.url.indexOf(&#x27;@&#x27;) &gt; 0) {
+          console.debug(&#x27;Checked Chrome. Passed&#x27;);
+          chrome = true;
+        } else {
+          console.error(&#x27;Checked Chrome. Failed&#x27;);
+        }
+        console.log(&#x27;please break&#x27;);
+        break;
+      }
+    }
+
+    window.webrtcDetectedBrowser = &#x27;firefox&#x27;;
+
+    var newIceServers2 = ICE.parseICEServers(getIceServers());
+
+    var j;
+
+    console.log(&#x27;Checking parsed TURN servers for Firefox&#x27;);
+
+    for (j = 0; i &lt; newIceServers2.length; j += 1) {
+      var iceServer = newIceServers2[j];
+
+      if (iceServer.url.indexOf(&#x27;turn&#x27;) === 0) {
+        if (iceServer.url.indexOf(&#x27;@&#x27;) === -1 &amp;&amp;
+          !!iceServer.username) {
+          console.debug(&#x27;Checked Firefox. Passed&#x27;);
+          firefox = true;
+        } else {
+          console.error(&#x27;Checked Firefox. Failed&#x27;);
+        }
+        break;
+      }
+    }
+
+    t.deepEqual([chrome, firefox], [true, true], &#x27;parseICEServers() : Parsed correctly for both firefox and chrome&#x27;);
+
+    console.log(&#x27;Disabling TURN servers&#x27;);
+
+    globals.TURNServer = false;
+
+    var newIceServers3 = ICE.parseICEServers(getIceServers());
+
+    var hasTURN = false;
+    var k;
+
+    for (k = 0; k &lt; newIceServers3.length; k += 1) {
+      if (newIceServers3[k].url.indexOf(&#x27;turn&#x27;) === 0) {
+        hasTURN = true;
+      }
+    }
+
+    t.deepEqual(hasTURN, false, &#x27;parseICEServers() : TURN is disabled&#x27;);
+
+    console.log(&#x27;Enabling TURN servers&#x27;);
+
+    globals.TURNServer = true;
+
+    var newIceServers4 = ICE.parseICEServers(getIceServers());
+
+    hasTURN = false;
+    var l;
+
+    for (l = 0; l &lt; newIceServers4.length; l += 1) {
+      if (newIceServers4[l].url.indexOf(&#x27;turn&#x27;) === 0) {
+        hasTURN = true;
+      }
+    }
+
+    t.deepEqual(hasTURN, true, &#x27;parseICEServers() : TURN is enabled&#x27;);
+
+    console.log(&#x27;Disabling STUN servers&#x27;);
+
+    globals.STUNServer = false;
+
+    var newIceServers5 = ICE.parseICEServers(getIceServers());
+
+    var hasSTUN = false;
+    var m;
+
+    for (m = 0; m &lt; newIceServers5.length; m += 1) {
+      if (newIceServers5[m].url.indexOf(&#x27;stun&#x27;) === 0) {
+        hasSTUN = true;
+      }
+    }
+
+    t.deepEqual(hasSTUN, false, &#x27;parseICEServers() : STUN is disabled&#x27;);
+
+    console.log(&#x27;Enabling STUN servers&#x27;);
+
+    globals.STUNServer = true;
+
+    var newIceServers6 = ICE.parseICEServers(getIceServers());
+
+    hasSTUN = false;
+    var n;
+
+    for (n = 0; n &lt; newIceServers6.length; n += 1) {
+      if (newIceServers6[n].url.indexOf(&#x27;stun&#x27;) === 0) {
+        hasSTUN = true;
+      }
+    }
+
+    t.deepEqual(hasSTUN, true, &#x27;parseICEServers() : STUN is enabled&#x27;);
+
+  });
+};
+
+// Load scripts
+loadScript(&#x27;./source/Globals.js&#x27;, function () {
+  loadScript(&#x27;./source/ICE.js&#x27;, ICE_TEST);
+});
+    </pre>
+</div>
+
+  </div>
+  <!-- /#page-content-wrapper -->
+
+  <footer>
+    <a href="http://icons8.com">Icon pack by Icons8</a>
+  </footer>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

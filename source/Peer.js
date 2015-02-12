@@ -149,7 +149,10 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
-  com.sdpConfig = null;
+  com.sdpConfig = {
+    stereo: config.audio.stereo,
+    bandwidth: config.bandwidth
+  };
 
   /**
    * The PeerConnection configuration.
@@ -272,7 +275,11 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.connect = function (stream) {
-    var peer = new window.RTCPeerConnection(com.constraints, com.config);
+    var constraints = {
+      iceServers: config
+    };
+    
+    var peer = new window.RTCPeerConnection(, com.config);
   
     // Send stream
     if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {    
@@ -603,13 +610,7 @@ function Peer(config, listener) {
   com.streamingConfig.bandwidth = StreamParser.parseBandwidthConfig(com.streamingConfig.bandwidth);
 
   // Parse constraints ICE servers
-  com.constraints = ICE.parseICEServers(config.constraints);
-  
-  // Parse the sdp configuration
-  com.sdpConfig = {
-    stereo: fn.isSafe(function () { return config.streamingConfig.audio.stereo; }),
-    bandwidth: com.bandwidth
-  };
+  var iceServers = ICE.parseICEServers(config.constraints);
   
   // Start timer
   /*com.healthTimer = setTimeout(function () {
