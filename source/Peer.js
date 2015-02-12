@@ -198,6 +198,8 @@ function Peer(config, listener) {
   };
 
 
+  com.datatransfers = {};
+
   /**
    * Function to subscribe to when peer's connection has been started.
    * @method onconnect
@@ -361,7 +363,7 @@ function Peer(config, listener) {
     bindPeer.queueCandidate = [];
     bindPeer.newSignalingState = 'new';
     bindPeer.newIceConnectionState = 'new';
-    bindPeer.channels = {};
+    bindPeer.datachannels = {};
 
     bindPeer.ondatachannel = function (event) {
       var eventChannel = event.channel || event;
@@ -378,6 +380,19 @@ function Peer(config, listener) {
           });
         }
       });
+
+      com.datachannels[channel.id] = channel;
+
+      if (channel.id === 'main'){
+        /*var dt = new DataTransfer(channel, com.id, listener);
+        com.datatransfers['main'] = dt;*/
+
+        DataTransferHandler(com, 'datatransfer:start', {
+          data: data,
+          dataChannel: channel,
+        }, listener);
+
+      }
     };
 
     bindPeer.onaddstream = function (event) {
@@ -456,6 +471,36 @@ function Peer(config, listener) {
     });
   };
 
+  com.sendMessage = function(message){
+    if (com.datachannels['main']){
+      com.datachannels['main'].send(message);
+    }
+  };
+
+  com.transferData = function(data){
+    /*for (var channel in com.datachannels){
+      if (com.datachannels.hasOwnProperty(channel)){
+        var dt = new DataTransfer(com.datachannels[channel], com.id, listener);
+        dt.sendBlobData(data,{
+          name: data.name,
+          size: data.size
+        });
+        return;
+      }
+    }*/
+
+    DataTransferHandler(com, 'datatransfer:start', {
+      data: data,
+      dataChannel: com.datachannels['main'],
+    }, listener);
+
+    com.datatransfers['main'].sendBlobData(data,{
+      name: data.name,
+      size: data.size
+    });
+    return;
+  };
+
   /**
    * Creates an offer session description.
    * @method createOffer
@@ -479,6 +524,8 @@ function Peer(config, listener) {
           channel: channel
         });
       });
+
+      com.datachannels['main'] = channel;
     }
 
     com.RTCPeerConnection.createOffer(function (offer) {

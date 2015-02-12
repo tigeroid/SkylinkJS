@@ -93,7 +93,7 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.bind = function (bindChannel) {
-    // Prevent re-trigger
+    /*// Prevent re-trigger
     var onOpenFn = function () {
       com.handler('datachannel:connect', {});
   
@@ -108,13 +108,17 @@ function DataChannel(channel, listener) {
     
     } else {
       onOpenFn();
+    }*/
+
+    bindChannel.onopen = function(){
+      com.handler('datachannel:connect', {});
     }
     
     bindChannel.onerror = function (error) {
       com.handler('datachannel:error', {
         error: error
       });
-      
+
       if (typeof com.onerror === 'function') {
         com.onerror(error);
       }

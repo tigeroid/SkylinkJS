@@ -106,6 +106,8 @@ var fn = {
     return (new Date()).getTime().toString();
   },
   
+  //Loop through the params, see if callee has any handler for any param's events.
+  //If has handler --> apply with args.
   applyHandler: function (callee, params, args) {
     var item = callee;
     var i;

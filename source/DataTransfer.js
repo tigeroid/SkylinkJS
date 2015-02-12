@@ -49,23 +49,17 @@ function DataTransfer(channel, peerId, listener) {
 
   com._dataTransfersTimeout = [];
   
-  /*//Overwrite previous handler
   com.bind = function (bindChannel) {
-    bindChannel.onmessage = function (event) {
+    bindChannel.RTCDataChannel.onmessage = function (event) {
       com.onMessage(bindChannel, event.data);
     };
   }; 
 
   com.onMessage = function(bindChannel, data){
     com._dataChannelProtocolHandler(data);
-  }*/
-
-  com.channel.RTCDataChannel.onmessage = function(event){
-    console.log('binding');
-    com._dataChannelProtocolHandler(event.data);
   }
 
-  console.log(com.channel.RTCDataChannel.onmessage);
+  com.bind(com.channel);
 
   com._dataChannelProtocolHandler = function(dataString) {
     // PROTOCOL ESTABLISHMENT

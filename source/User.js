@@ -74,8 +74,7 @@ function User (config, listener) {
    */
   com.handler = function (event, data) {
     UserHandler(com, event, data, listener);
-  };
-  
+  };  
   
   /**
    * Function to subscribe to when user's custom data is updated.

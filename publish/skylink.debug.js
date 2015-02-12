@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-06 */
+/*! skylinkjs - v0.5.7 - 2015-02-12 */
 
 var globals = {
   apiKey: null,
@@ -97,6 +97,8 @@ var fn = {
     return (new Date()).getTime().toString();
   },
   
+  //Loop through the params, see if callee has any handler for any param's events.
+  //If has handler --> apply with args.
   applyHandler: function (callee, params, args) {
     var item = callee;
     var i;
@@ -490,7 +492,7 @@ function DataChannel(channel, listener) {
    * @attribute type
    * @type String
    * @private
-   * @for DataMessage
+   * @for DataChannel
    * @since 0.6.0
    */
   com.type = 'message';
@@ -504,111 +506,119 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.RTCDataChannel = null;
+
+
+  /**
+   * Function to subscribe to when datachannel has opened.
+   * @method onopen
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onopen = function () {};
   
+  /**
+   * Function to subscribe to when datachannel has closed.
+   * @method onclose
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onclose = function () {};
+  
+  /**
+   * Function to subscribe to when datachannel has an error.
+   * @method onerror
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onerror = function () {};
+  
+  /**
+   * The handler that manages all triggers or relaying events.
+   * @method handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
+    DataChannelHandler(com, event, data, listener);
+  };
+
   /**
    * Binds events to RTCDataChannel object.
    * @method bind
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {Object} bindChannel The RTCDataChannel object to bind events to.
+   * @private
    * @for DataChannel
    * @since 0.6.0
    */
   com.bind = function (bindChannel) {
-    // Prevent re-trigger
+    /*// Prevent re-trigger
+    var onOpenFn = function () {
+      com.handler('datachannel:connect', {});
+  
+      if (typeof com.onopen === 'function') {
+        com.onopen();
+      }
+    };
+    
     if (bindChannel.readyState !== 'open') {
-      bindChannel.onopen = function () {
-        com.onOpen(bindChannel);
-      };
+
+      bindChannel.onopen = onOpenFn;
     
     } else {
-      com.onOpen(bindChannel);
+      onOpenFn();
+    }*/
+
+    bindChannel.onopen = function(){
+      com.handler('datachannel:connect', {});
     }
     
     bindChannel.onerror = function (error) {
-      com.onError(bindChannel, error);
+      com.handler('datachannel:error', {
+        error: error
+      });
+
+      if (typeof com.onerror === 'function') {
+        com.onerror(error);
+      }
     };
 
     // NOTE: Older firefox might close the DataChannel earlier 
     bindChannel.onclose = function () {
-      com.onClose(bindChannel);
+      com.handler('datachannel:disconnect', {});
+      
+      if (typeof com.onclose === 'function') {
+        com.onclose();
+      }
     };
 
     bindChannel.onmessage = function (event) {
-      com.onMessage(bindChannel, event.data);
+
+      com.handler('datachannel:message', {
+        data: event.data
+      });
+
     };
     
     com.RTCDataChannel = bindChannel;
 
+    console.log(com.RTCDataChannel.onmessage);
+
     fn.runSync(function () {
-      listener('datachannel:start', {
-        id: com.id,
-        peerId: com.peerId
-      });
+      com.handler('datachannel:start', {});
     });
   };
-  
-  /**
-   * Handles the event when DataChannel is opened.
-   * @method onOpen
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onOpen = function (bindChannel) {
-    listener('datachannel:connect', {
-      id: com.id,
-      peerId: com.peerId
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel is closed.
-   * @method onClose
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onClose = function (bindChannel) {
-    listener('datachannel:disconnect', {
-      id: com.id,
-      peerId: com.peerId
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel has an exception.
-   * @method onClose
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onError = function (bindChannel, error) {
-    listener('datachannel:error', {
-      id: com.id,
-      peerId: com.peerId,
-      error: error
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel has a message received.
-   * @method onMessage
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onMessage = function (bindChannel, data) {
-    listener('datachannel:message', {
-      id: com.id,
-      peerId: com.peerId,
-      data: data
-    });
-  };
-  
+
   /**
    * Sends data over the datachannel.
    * @method send
    * @param {JSON|String} data The data to send.
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for DataChannel
    * @since 0.6.0
    */
@@ -628,15 +638,80 @@ function DataChannel(channel, listener) {
     throw new Error('Provided parameter channel is invalid.');
   }
 
+  // Bind datachannel object
   com.bind(channel);
 }
+var DataChannelEventResponseHandler = {
+    /**
+     * Event fired when the datachannel object is ready to use.
+     * @event datachannel:start
+     * @for DataChannel
+     * @since 0.6.0
+     */
+    start: function (com, data, listener) {},
+    
+    /**
+     * Event fired when the datachannel has opened.
+     * @event datachannel:connect
+     * @for DataChannel
+     * @since 0.6.0
+     */
+    connect: function (com, data, listener) {},
+    
+    /**
+     * Event fired when the datachannel has an exception occurred.
+     * @event datachannel:error
+     * @param {Object} error The RTCDataChannel error.
+     * @for DataChannel
+     * @since 0.6.0
+     */
+    error: function (com, data, listener) {},
+    
+    /**
+     * Event fired when the datachannel receives data.
+     * @event datachannel:message
+     * @param {JSON|String} data The data received.
+     * @for DataChannel
+     * @since 0.6.0
+     */
+    message: function (com, data, listener) {
+      console.log('->messagehandler');
+    },
+
+    /**
+     * Event fired when the datachannel has closed.
+     * @event datachannel:disconnect
+     * @for DataChannel
+     * @since 0.6.0
+     */
+    disconnect: function (com, data, listener) {}
+};
+
+/**
+ * Handles the datachannel class events.
+ * @attribute DataChannelHandler
+ * @type JSON
+ * @private
+ * @for DataChannel
+ * @since 0.6.0
+ */
+var DataChannelHandler = function (com, event, data, listener) {
+  var params = event.split(':');
+
+  // Class events
+  data.id = com.id;
+
+  fn.applyHandler(DataChannelEventResponseHandler, params, [com, data, listener]);
+
+  listener(event, data);
+};
 var DataProcess = {
   
   chunkSize: 49152,
   
   mozChunkSize: 16384,
   
-  chunk: function (blob) {
+  chunk: function (blob, blobByteSize) {
     var chunksArray = [],
     startCount = 0,
     endCount = 0;
@@ -659,7 +734,7 @@ var DataProcess = {
     return chunksArray;
   },
 
-  unchunk: function (data) {
+  unchunk: function (dataURL) {
     var byteString = atob(dataURL.replace(/\s\r\n/g, ''));
     // write the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
@@ -673,10 +748,542 @@ var DataProcess = {
     return new Blob([ab]);
   }
 };
-function DataTransfer(channel, config, listener) {
+function DataTransfer(channel, peerId, listener) {
   'use strict';
 
+  var com = this;
+  
+  com.peerId = peerId;
+
+  com.channel = channel;
+
+  com._DC_PROTOCOL_TYPE = {
+    WRQ: 'WRQ',
+    ACK: 'ACK',
+    ERROR: 'ERROR',
+    CANCEL: 'CANCEL',
+    MESSAGE: 'MESSAGE'
+  };
+
+  com.DATA_TRANSFER_TYPE = {
+    UPLOAD: 'upload',
+    DOWNLOAD: 'download'
+  };
+
+  com.DATA_TRANSFER_STATE = {
+    UPLOAD_REQUEST: 'request',
+    UPLOAD_STARTED: 'uploadStarted',
+    DOWNLOAD_STARTED: 'downloadStarted',
+    REJECTED: 'rejected',
+    CANCEL: 'cancel',
+    ERROR: 'error',
+    UPLOADING: 'uploading',
+    DOWNLOADING: 'downloading',
+    UPLOAD_COMPLETED: 'uploadCompleted',
+    DOWNLOAD_COMPLETED: 'downloadCompleted'
+  };
+
+  com.DATA_TRANSFER_DATA_TYPE = {
+    BINARY_STRING: 'binaryString',
+    ARRAY_BUFFER: 'arrayBuffer',
+    BLOB: 'blob'
+  };
+
+  com._uploadDataTransfers = [];
+
+  com._uploadDataSessions = [];
+
+  com._downloadDataTransfers = [];
+
+  com._downloadDataSessions = [];
+
+  com._dataTransfersTimeout = [];
+  
+  com.bind = function (bindChannel) {
+    bindChannel.RTCDataChannel.onmessage = function (event) {
+      com.onMessage(bindChannel, event.data);
+    };
+  }; 
+
+  com.onMessage = function(bindChannel, data){
+    com._dataChannelProtocolHandler(data);
+  }
+
+  com.bind(com.channel);
+
+  com._dataChannelProtocolHandler = function(dataString) {
+    // PROTOCOL ESTABLISHMENT
+    if (typeof dataString === 'string') {
+      var data = {};
+      try {
+        data = JSON.parse(dataString);
+      } catch (error) {
+        com._DATAProtocolHandler(dataString,
+          com.DATA_TRANSFER_DATA_TYPE.BINARY_STRING);
+        return;
+      }
+      switch (data.type) {
+      case com._DC_PROTOCOL_TYPE.WRQ:
+        com.WRQProtocolHandler(data);
+        break;
+      case com._DC_PROTOCOL_TYPE.ACK:
+        com.ACKProtocolHandler(data);
+        break;
+      case com._DC_PROTOCOL_TYPE.ERROR:
+        com.ERRORProtocolHandler(data);
+        break;
+      case com._DC_PROTOCOL_TYPE.CANCEL:
+        com.CANCELProtocolHandler(data);
+        break;
+      case com._DC_PROTOCOL_TYPE.MESSAGE: // Not considered a protocol actually?
+        com.MESSAGEProtocolHandler(data);
+        break;
+      default:
+        console.error('Unsupported type: '+data.type);
+      }
+    }
+  };
+
+  com._setDataChannelTimeout = function(timeout, isSender) {
+    if (!com._dataTransfersTimeout[com.peerId]) {
+      com._dataTransfersTimeout[com.peerId] = [];
+    }
+    var type = (isSender) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+      com.DATA_TRANSFER_TYPE.DOWNLOAD;
+    com._dataTransfersTimeout[com.peerId][type] = setTimeout(function() {
+      var name;
+      if (com._dataTransfersTimeout[com.peerId][type]) {
+        if (isSender) {
+          name = com._uploadDataSessions[com.peerId].name;
+          delete com._uploadDataTransfers[com.peerId];
+          delete com._uploadDataSessions[com.peerId];
+        } else {
+          name = com._downloadDataSessions[com.peerId].name;
+          delete com._downloadDataTransfers[com.peerId];
+          delete com._downloadDataSessions[com.peerId];
+        }
+
+        com.channel.send({
+          type: com._DC_PROTOCOL_TYPE.ERROR,
+          //sender: self._user.sid,
+          name: name,
+          content: 'Connection Timeout. Longer than ' + timeout +
+            ' seconds. Connection is abolished.',
+          isUploadError: isSender
+        });
+        
+        com._clearDataChannelTimeout(isSender);
+      }
+    }, 1000 * timeout);
+  };
+
+  com._clearDataChannelTimeout = function(isSender) {
+    if (com._dataTransfersTimeout[com.peerId]) {
+      var type = (isSender) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+        com.DATA_TRANSFER_TYPE.DOWNLOAD;
+      clearTimeout(com._dataTransfersTimeout[com.peerId][type]);
+      delete com._dataTransfersTimeout[com.peerId][type];
+    }
+  };
+
+  com.WRQProtocolHandler = function(data){
+    var transferId = com.peerId + com.DATA_TRANSFER_TYPE.DOWNLOAD +
+      (((new Date()).toISOString().replace(/-/g, '').replace(/:/g, ''))).replace('.', '');
+    var name = data.name;
+    var binarySize = data.size;
+    var expectedSize = data.chunkSize;
+    var timeout = data.timeout;
+    com._downloadDataSessions[com.peerId] = {
+      transferId: transferId,
+      name: name,
+      size: binarySize,
+      ackN: 0,
+      receivedSize: 0,
+      chunkSize: expectedSize,
+      timeout: timeout
+    };
+    console.log('wrq here');
+    listener('datatransfer:uploadrequest',{
+      peerId: com.peerId,
+      transferId: transferId,
+      name: name,
+      size: binarySize,
+      expectedSize: expectedSize,
+      timeout: timeout,
+      dataTransfer: com
+    });
+  };
+
+  com.ACKProtocolHandler = function(data){
+    var ackN = data.ackN;
+    com.peerId = (com.peerId === 'MCU') ? data.sender : com.peerId;
+
+    var chunksLength = com._uploadDataTransfers[com.peerId].length;
+    var uploadedDetails = com._uploadDataSessions[com.peerId];
+    var transferId = uploadedDetails.transferId;
+    var timeout = uploadedDetails.timeout;
+
+    com._clearDataChannelTimeout(true);
+
+    if (ackN > -1) {
+      // Still uploading
+      if (ackN < chunksLength) {
+        var fileReader = new FileReader();
+        fileReader.onload = function() {
+          // Load Blob as dataurl base64 string
+          var base64BinaryString = fileReader.result.split(',')[1];
+          com.channel.send(base64BinaryString);
+          com._setDataChannelTimeout(timeout, true);
+
+          listener('datatransfer:uploading',{
+            peerId: com.peerId,
+            transferId: transferId,
+            percentage: (((ackN + 1) / chunksLength) * 100).toFixed()
+          });
+        };
+        fileReader.readAsDataURL(com._uploadDataTransfers[com.peerId][ackN]);
+      } else if (ackN === chunksLength) {
+        
+        listener('datatransfer:uploadcompleted',{
+          peerId: com.peerId,
+          transferId: transferId,
+          name: uploadedDetails.name
+        });
+        delete com._uploadDataTransfers[com.peerId];
+        delete com._uploadDataSessions[com.peerId];
+      }
+    } else {
+      listener('datatransfer:rejected',{
+        peerId: com.peerId,
+        transferId: transferId,
+        name: com._uploadDataSessions[com.peerId].name,
+        size: com._uploadDataSessions[com.peerId].size
+      });
+      delete com._uploadDataTransfers[com.peerId];
+      delete com._uploadDataSessions[com.peerId];
+    }
+  };
+
+  com.MESSAGEProtocolHandler = function(data){
+    listener('datatransfer:message',{
+      peerId: com.peerId,
+      data: data
+    });
+  };
+
+  com.ERRORProtocolHandler = function(data){
+    var isUploader = data.isUploadError;
+    console.log(com.peerId);
+    console.log(com._uploadDataSessions);
+    var transferId = (isUploader) ? com._uploadDataSessions[com.peerId].transferId :
+      com._downloadDataSessions[com.peerId].transferId;
+    listener('datatransfer:error',{
+      peerId: com.peerId,
+      data: data,
+      transferType: ((isUploader) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+        com.DATA_TRANSFER_TYPE.DOWNLOAD)
+    });
+  };
+
+  com._CANCELProtocolHandler = function(data) {
+    var isUpload = !!com._uploadDataSessions[com.peerId];
+    var isDownload = !!com._downloadDataSessions[com.peerId];
+
+    var transferId = (isUpload) ? com._uploadDataSessions[com.peerId].transferId :
+      com._downloadDataSessions[com.peerId].transferId;
+
+    com._clearDataChannelTimeout(isUploader);
+
+    listener('datatransfer:cancel',{
+      peerId: com.peerId,
+      transferId: transferId,
+      name: data.name,
+      content: data.content,
+      senderPeerId: data.sender,
+      transferType: ((isUpload) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+        com.DATA_TRANSFER_TYPE.DOWNLOAD)
+    });
+
+    try {
+      if (isUpload) {
+        delete com._uploadDataSessions[com.peerId];
+        delete com._uploadDataTransfers[com.peerId];
+      } else {
+        delete com._downloadDataSessions[peerId];
+        delete com._downloadDataTransfers[peerId];
+      }
+
+      listener('datatransfer:cancel',{
+        peerId: com.peerId,
+        transferId: transferId,
+        name: data.name,
+        content: data.content,
+        senderPeerId: data.sender,
+        transferType: ((isUpload) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+          com.DATA_TRANSFER_TYPE.DOWNLOAD)
+      });
+
+    } catch (error) {
+      listener('datatransfer:error',{
+        message: 'Failed cancelling data request from peer',
+        transferType: ((isUpload) ? com.DATA_TRANSFER_TYPE.UPLOAD :
+          com.DATA_TRANSFER_TYPE.DOWNLOAD)
+      });
+    }
+  };
+
+  com._DATAProtocolHandler = function(dataString, dataType) {
+    var chunk, error = '';
+    var transferStatus = com._downloadDataSessions[com.peerId];
+
+    var transferId = transferStatus.transferId;
+
+    com._clearDataChannelTimeout(false);
+
+    if (dataType === com.DATA_TRANSFER_DATA_TYPE.BINARY_STRING) {
+      chunk = DataProcess.unchunk(dataString);
+    } else if (dataType === com.DATA_TRANSFER_DATA_TYPE.ARRAY_BUFFER) {
+      chunk = new Blob(dataString);
+    } else if (dataType === com.DATA_TRANSFER_DATA_TYPE.BLOB) {
+      chunk = dataString;
+    } else {
+      error = 'Unhandled data exception: ' + dataType;
+
+      listener('datatransfer:error',{
+        peerId: com.peerId,
+        transferId: transferId,
+        message: error,
+        transferType: com.DATA_TRANSFER_TYPE.DOWNLOAD
+      });
+
+      return;
+    }
+    var receivedSize = (chunk.size * (4 / 3));
+
+    if (transferStatus.chunkSize >= receivedSize) {
+      com._downloadDataTransfers[com.peerId].push(chunk);
+      transferStatus.ackN += 1;
+      transferStatus.receivedSize += receivedSize;
+      var totalReceivedSize = transferStatus.receivedSize;
+      var percentage = ((totalReceivedSize / transferStatus.size) * 100).toFixed();
+
+      com.channel.send({
+        type: com._DC_PROTOCOL_TYPE.ACK,
+        sender: null,
+        ackN: transferStatus.ackN
+      });
+
+      if (transferStatus.chunkSize === receivedSize) {
+
+        listener('datatransfer:downloading',{
+          peerId: com.peerId,
+          transferId: transferId,
+          percentage: percentage
+        }); 
+
+        com._setDataChannelTimeout(transferStatus.timeout, false);
+        com._downloadDataTransfers[com.peerId].info = transferStatus;
+      } else {
+        var blob = new Blob(com._downloadDataTransfers[com.peerId]);
+
+        listener('datatransfer:downloadcompleted',{
+          peerId: com.peerId,
+          transferId: transferId,
+          data: blob
+        });
+
+        delete com._downloadDataTransfers[com.peerId];
+        delete com._downloadDataSessions[com.peerId];
+      }
+    } else {
+      error = 'Packet not match - [Received]' + receivedSize +
+        ' / [Expected]' + transferStatus.chunkSize;
+      listener('datatransfer:error',{
+        peerId: com.peerId,
+        transferId: transferId,
+        message: error,
+        transferType: com.DATA_TRANSFER_TYPE.DOWNLOAD
+      });
+    }
+  };
+
+  com.sendBlobData = function(data, dataInfo) {
+    dataInfo.timeout = dataInfo.timeout || 60;
+    dataInfo.transferId = com.DATA_TRANSFER_TYPE.UPLOAD +
+      (((new Date()).toISOString().replace(/-/g, '').replace(/:/g, ''))).replace('.', '');
+    console.log('Sending blob data');
+    com.sendBlobDataToPeer(data, dataInfo, true);
+
+    listener('datatransfer:uploadstarted',{
+      peerId: com.peerId,
+      transferId: dataInfo.transferId,
+      name: dataInfo.name,
+      size: dataInfo.size,
+      timeout: dataInfo.timeout || 60,
+      data: data
+    });
+
+  };
+
+  com.sendBlobDataToPeer = function(data, dataInfo, isPrivate) {
+
+    var ongoingTransfer = null;
+    var binarySize = parseInt((dataInfo.size * (4 / 3)).toFixed(), 10);
+    var chunkSize = parseInt((DataProcess.chunkSize * (4 / 3)).toFixed(), 10);
+
+    if (window.webrtcDetectedBrowser === 'firefox' &&
+      window.webrtcDetectedVersion < 30) {
+      chunkSize = DataProcess.mozChunkSize;
+    }
+    console.log('Chunk size of data: '+chunkSize);
+
+    if (com._uploadDataSessions[com.peerId]) {
+      ongoingTransfer = com.DATA_TRANSFER_TYPE.UPLOAD;
+    } else if (com._downloadDataSessions[com.peerId]) {
+      ongoingTransfer = com.DATA_TRANSFER_TYPE.DOWNLOAD;
+    }
+
+    if (ongoingTransfer) {
+      console.error('User have ongoing ' + ongoingTransfer + ' ' +
+        'transfer session with peer. Unable to send data '+ dataInfo);
+      listener('datatransfer:error',{
+        peerId: peerId,
+        transferId: dataInfo.transferId,
+        name: dataInfo.name,
+        message: dataInfo.content,
+        transferType: ongoingTransfer
+      });
+      return;
+    }
+    com._uploadDataTransfers[com.peerId] = DataProcess.chunk(data, dataInfo.size);
+    com._uploadDataSessions[com.peerId] = {
+      name: dataInfo.name,
+      size: binarySize,
+      transferId: dataInfo.transferId,
+      timeout: dataInfo.timeout
+    };
+    console.log(com.channel);
+    com.channel.send({
+      type: com._DC_PROTOCOL_TYPE.WRQ,
+      //sender: this._user.sid,
+      agent: window.webrtcDetectedBrowser,
+      name: dataInfo.name,
+      size: binarySize,
+      chunkSize: chunkSize,
+      timeout: dataInfo.timeout,
+      target: com.peerId,
+      isPrivate: !!isPrivate
+    });
+    com._setDataChannelTimeout(dataInfo.timeout, true);
+  };
+
+  com.respondBlobRequest = function (accept) {
+    if (accept) {
+      console.log('User accepted peer request');
+      com._downloadDataTransfers[com.peerId] = [];
+      var data = com._downloadDataSessions[com.peerId];
+      com.channel.send({
+        type: com._DC_PROTOCOL_TYPE.ACK,
+        //sender: this._user.sid,
+        ackN: 0,
+        agent: window.webrtcDetectedBrowser
+      });
+
+      listener('datatransfer:downloadstarted',{
+        peerId: com.peerId,
+        name: data.name,
+        size: data.size,
+        transferId: data.transferId
+      });
+
+    } else {
+      console.log('User rejected peer request');
+      com.channel.send({
+        type: this._DC_PROTOCOL_TYPE.ACK,
+        //sender: this._user.sid,
+        ackN: -1
+      });
+      delete com._downloadDataSessions[com.peerId];
+    }
+  };
+
+  com.cancelBlobTransfer = function (transferType) {
+    var data;
+
+    // cancel upload
+    if (transferType === com.DATA_TRANSFER_TYPE.UPLOAD && !transferType) {
+      data = com._uploadDataSessions[com.peerId];
+
+      if (data) {
+        delete com._uploadDataSessions[com.peerId];
+        delete com._uploadDataTransfers[com.peerId];
+
+        com.channel.send({
+          type: com._DC_PROTOCOL_TYPE.CANCEL,
+          //sender: this._user.sid,
+          name: data.name,
+          content: 'Peer cancelled upload transfer'
+        });
+      } else {
+        listener('datatransfer:error',{
+          peerId: com.peerId,
+          transferId: dataInfo.transferId,
+          name: dataInfo.name,
+          message: 'Unable to cancel upload transfer. There is ' +
+            'not ongoing upload sessions with the peer',
+          transferType: com.DATA_TRANSFER_TYPE.UPLOAD
+        });
+
+        if (!!transferType) {
+          return;
+        }
+      }
+    }
+    if (transferType === com.DATA_TRANSFER_TYPE.DOWNLOAD) {
+      data = com._downloadDataSessions[peerId];
+
+      if (data) {
+        delete com._downloadDataSessions[com.peerId];
+        delete com._downloadDataTransfers[com.peerId];
+
+        com.channel.send({
+          type: com._DC_PROTOCOL_TYPE.CANCEL,
+          //sender: this._user.sid,
+          name: data.name,
+          content: 'Peer cancelled download transfer'
+        });
+      } else {
+        listener('datatransfer:error',{
+          peerId: com.peerId,
+          transferId: dataInfo.transferId,
+          name: dataInfo.name,
+          message: 'Unable to cancel download transfer. There is ' +
+            'not ongoing download sessions with the peer',
+          transferType: com.DATA_TRANSFER_TYPE.DOWNLOAD
+        });
+      }
+    }
+  };
 }
+
+
+DataTransferEventResponseHandler = {
+	start: function(com, data, listener){
+		var dt = new DataTransfer(com.datachannels['main'], com.id, listener);
+		com.datatransfers['main'] = dt;
+	}
+}
+
+var DataTransferHandler = function (com, event, data, listener) {
+  var params = event.split(':');
+
+  // Class events
+  data.id = com.id;
+
+  fn.applyHandler(DataTransferEventResponseHandler, params, [com, data, listener]);
+
+  listener(event, data);
+};
 var _Event = {
   listeners: {
     on: {},
@@ -1559,6 +2166,8 @@ function Peer(config, listener) {
   };
 
 
+  com.datatransfers = {};
+
   /**
    * Function to subscribe to when peer's connection has been started.
    * @method onconnect
@@ -1573,6 +2182,7 @@ function Peer(config, listener) {
    * @for Peer
    * @since 0.6.0
    */
+
   com.oniceconnectionstatechange = function () {};
   
   /**
@@ -1721,6 +2331,7 @@ function Peer(config, listener) {
     bindPeer.queueCandidate = [];
     bindPeer.newSignalingState = 'new';
     bindPeer.newIceConnectionState = 'new';
+    bindPeer.datachannels = {};
 
     bindPeer.ondatachannel = function (event) {
       var eventChannel = event.channel || event;
@@ -1737,6 +2348,19 @@ function Peer(config, listener) {
           });
         }
       });
+
+      com.datachannels[channel.id] = channel;
+
+      if (channel.id === 'main'){
+        /*var dt = new DataTransfer(channel, com.id, listener);
+        com.datatransfers['main'] = dt;*/
+
+        DataTransferHandler(com, 'datatransfer:start', {
+          data: data,
+          dataChannel: channel,
+        }, listener);
+
+      }
     };
 
     bindPeer.onaddstream = function (event) {
@@ -1815,6 +2439,36 @@ function Peer(config, listener) {
     });
   };
 
+  com.sendMessage = function(message){
+    if (com.datachannels['main']){
+      com.datachannels['main'].send(message);
+    }
+  };
+
+  com.transferData = function(data){
+    /*for (var channel in com.datachannels){
+      if (com.datachannels.hasOwnProperty(channel)){
+        var dt = new DataTransfer(com.datachannels[channel], com.id, listener);
+        dt.sendBlobData(data,{
+          name: data.name,
+          size: data.size
+        });
+        return;
+      }
+    }*/
+
+    DataTransferHandler(com, 'datatransfer:start', {
+      data: data,
+      dataChannel: com.datachannels['main'],
+    }, listener);
+
+    com.datatransfers['main'].sendBlobData(data,{
+      name: data.name,
+      size: data.size
+    });
+    return;
+  };
+
   /**
    * Creates an offer session description.
    * @method createOffer
@@ -1825,6 +2479,7 @@ function Peer(config, listener) {
   com.createOffer = function () {
     // Create datachannel
     if (globals.dataChannel && com.type === 'user') {
+
       var eventChannel = com.RTCPeerConnection.createDataChannel('main');
       
       // Send the channel only when channel has started
@@ -1837,6 +2492,8 @@ function Peer(config, listener) {
           channel: channel
         });
       });
+
+      com.datachannels['main'] = channel;
     }
 
     com.RTCPeerConnection.createOffer(function (offer) {
@@ -2589,6 +3246,7 @@ function Room(name, listener) {
     }
 
     com.socket.connect();
+    console.log('->joined');
   };
 
   /**
@@ -5018,8 +5676,7 @@ function User (config, listener) {
    */
   com.handler = function (event, data) {
     UserHandler(com, event, data, listener);
-  };
-  
+  };  
   
   /**
    * Function to subscribe to when user's custom data is updated.
