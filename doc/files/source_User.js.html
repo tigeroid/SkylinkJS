@@ -124,8 +124,8 @@
  * @param {Integer} [config.bandwidth.audio] The bandwidth configuration for the audio stream.
  * @param {Boolean} [config.bandwidth.video] The bandwidth configuration for the video stream.
  * @param {Boolean} [config.bandwidth.data] The bandwidth configuration for the data stream.
- * @param {Stream} streamObject The stream object passed for the &quot;main&quot; peer connection.
- * @param {String} SDPType The session description type that the peer connection would send.
+ * @param {Stream} [config.streamObject] The stream object passed for the &quot;main&quot; peer connection.
+ * @param {String} config.SDPType The session description type that the &quot;main&quot; peer connection would send.
  * @param {Function} listener The listener function.
  * @for Skylink
  * @since 0.6.0
@@ -153,6 +153,7 @@ function User (config, listener) {
    * The user type.
    * @attribute type
    * @type String
+   * @default &quot;user&quot;
    * @readOnly
    * @for User
    * @since 0.6.0
@@ -413,34 +414,34 @@ function User (config, listener) {
    *   The user&#x27;s browser webrtc implementation type.
    * - &lt;code&gt;settings&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The list of peer connections streaming.
-   * - &lt;code&gt;settings.[peerId]&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId)&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The peer connection streaming information.
-   * - &lt;code&gt;settings.[peerId].audio&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).audio&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
    *   The audio streaming information. If there is no stream connection with the peer,
    *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
-   * - &lt;code&gt;settings.[peerId].audio.stereo&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).audio.stereo&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
    *   The flag that indicates if stereo is enabled for this connection. By default,
    *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
-   * - &lt;code&gt;settings.[peerId].audio.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).audio.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
    *   The audio MediaStreamTrack source used for this connection.
-   * - &lt;code&gt;settings.[peerId].video&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).video&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON|Boolean&lt;/var&gt;&lt;br&gt;
    *   The video streaming information. If there is no stream connection with the peer,
    *   it&#x27;s &lt;code&gt;false&lt;/code&gt;.
-   * - &lt;code&gt;settings.[peerId].video.resolution&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).video.resolution&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The video stream resolution. 
-   * - &lt;code&gt;settings.[peerId].video.resolution.width&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).video.resolution.width&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
    *   The video stream resolution height.
-   * - &lt;code&gt;settings.[peerId].video.resolution.height&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).video.resolution.height&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
    *   The video stream resolution width.
-   * - &lt;code&gt;settings.[peerId].video.frameRate&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).video.frameRate&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Integer&lt;/var&gt;&lt;br&gt;
    *   The video stream resolution framerate.
-   * - &lt;code&gt;settings.[peerId].video.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).video.sourceId&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; String&lt;/var&gt;&lt;br&gt;
    *   The video MediaStreamTrack source used for this connection.
-   * - &lt;code&gt;settings.[peerId].status&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).status&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The MediaStreamTracks enabled status (muted/unmuted).
-   * - &lt;code&gt;settings.[peerId].status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
    *   The audio MediaStreamTrack enabled status (muted/unmuted).
-   * - &lt;code&gt;settings.[peerId].status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
+   * - &lt;code&gt;settings.(#peerId).status.audioMuted&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; Boolean&lt;/var&gt;&lt;br&gt;
    *   The video MediaStreamTrack enabled status (muted/unmuted).
    * - &lt;code&gt;bandwidth&lt;/code&gt; &lt;var&gt;: &lt;b&gt;type&lt;/b&gt; JSON&lt;/var&gt;&lt;br&gt;
    *   The bandwidth configuration for the peer connections.

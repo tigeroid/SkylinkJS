@@ -388,12 +388,26 @@
                         {
                             "name": "httpsPortList",
                             "description": "The list of HTTPS ports that the socket connection\n   would use. It uses the first port and fallbacks to the next alternative port when connection fails.",
-                            "type": "Array"
+                            "type": "Array",
+                            "props": [
+                                {
+                                    "name": "(#index)",
+                                    "description": "The port number.",
+                                    "type": "Integer"
+                                }
+                            ]
                         },
                         {
                             "name": "httpPortList",
                             "description": "The list of HTTP ports that the socket connection\n   would use. It uses the first port and fallbacks to the next alternative port when connection fails.",
-                            "type": "Array"
+                            "type": "Array",
+                            "props": [
+                                {
+                                    "name": "(#index)",
+                                    "description": "The port number.",
+                                    "type": "Integer"
+                                }
+                            ]
                         },
                         {
                             "name": "type",
@@ -594,18 +608,19 @@
                                     "optional": true
                                 }
                             ]
+                        },
+                        {
+                            "name": "streamObject",
+                            "description": "The stream object passed for the \"main\" peer connection.",
+                            "type": "Stream",
+                            "optional": true
+                        },
+                        {
+                            "name": "SDPType",
+                            "description": "The session description type that the \"main\" peer connection would send.",
+                            "type": "String"
                         }
                     ]
-                },
-                {
-                    "name": "streamObject",
-                    "description": "The stream object passed for the \"main\" peer connection.",
-                    "type": "Stream"
-                },
-                {
-                    "name": "SDPType",
-                    "description": "The session description type that the peer connection would send.",
-                    "type": "String"
                 },
                 {
                     "name": "listener",
@@ -632,7 +647,7 @@
         {
             "file": "source/DataChannel.js",
             "line": 29,
-            "description": "The type of datachannel",
+            "description": "The type of datachannel.",
             "itemtype": "attribute",
             "name": "type",
             "type": "String",
@@ -644,7 +659,19 @@
         {
             "file": "source/DataChannel.js",
             "line": 39,
-            "description": "The DataChannel object.",
+            "description": "The datachannel source origin.\nThere are two types of sources:\n- <code>\"local\"</code> indicates that datachannel came from self user.\n- <code>\"remote</code> indicates that datachannel came from other users.",
+            "itemtype": "attribute",
+            "name": "sourceType",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "since": "0.6.0",
+            "class": "DataChannel"
+        },
+        {
+            "file": "source/DataChannel.js",
+            "line": 52,
+            "description": "The RTCDataChannel object.",
             "itemtype": "attribute",
             "name": "RTCDataChannel",
             "type": "Object",
@@ -655,7 +682,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 50,
+            "line": 63,
             "description": "Function to subscribe to when datachannel has opened.",
             "itemtype": "method",
             "name": "onopen",
@@ -665,7 +692,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 59,
+            "line": 72,
             "description": "Function to subscribe to when datachannel has closed.",
             "itemtype": "method",
             "name": "onclose",
@@ -675,7 +702,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 68,
+            "line": 81,
             "description": "Function to subscribe to when datachannel has an error.",
             "itemtype": "method",
             "name": "onerror",
@@ -685,7 +712,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 77,
+            "line": 90,
             "description": "The handler that manages all triggers or relaying events.",
             "itemtype": "method",
             "name": "handler",
@@ -708,7 +735,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 90,
+            "line": 103,
             "description": "Binds events to RTCDataChannel object.",
             "itemtype": "method",
             "name": "bind",
@@ -726,7 +753,7 @@
         },
         {
             "file": "source/DataChannel.js",
-            "line": 147,
+            "line": 160,
             "description": "Sends data over the datachannel.",
             "itemtype": "method",
             "name": "send",
@@ -4422,7 +4449,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 27,
+            "line": 29,
             "description": "The signalling server.",
             "itemtype": "attribute",
             "name": "server",
@@ -4435,7 +4462,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 37,
+            "line": 39,
             "description": "The signalling server protocol to connect with.",
             "itemtype": "attribute",
             "name": "protocol",
@@ -4448,11 +4475,11 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 47,
-            "description": "The signalling server port to connect with.",
+            "line": 49,
+            "description": "The signalling server port that is connecting with.",
             "itemtype": "attribute",
             "name": "server",
-            "type": "String",
+            "type": "Integer",
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
@@ -4461,7 +4488,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 57,
+            "line": 59,
             "description": "The timeout the Socket should wait for before throwing an error.",
             "itemtype": "attribute",
             "name": "timeout",
@@ -4474,7 +4501,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 67,
+            "line": 69,
             "description": "The interval to wait before sending the next message.",
             "itemtype": "attribute",
             "name": "messageInterval",
@@ -4487,7 +4514,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 77,
+            "line": 79,
             "description": "The queue of messages (throttle) before sending the next",
             "itemtype": "attribute",
             "name": "messageQueue",
@@ -4500,7 +4527,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 87,
+            "line": 89,
             "description": "The list of available signalling server ports.",
             "itemtype": "attribute",
             "name": "ports",
@@ -4508,12 +4535,26 @@
                 {
                     "name": "http:",
                     "description": "The list of HTTP ports.",
-                    "type": "Array"
+                    "type": "Array",
+                    "props": [
+                        {
+                            "name": "(#index)",
+                            "description": "The port number.",
+                            "type": "Integer"
+                        }
+                    ]
                 },
                 {
                     "name": "https:",
                     "description": "The list of HTTPS ports.",
-                    "type": "Array"
+                    "type": "Array",
+                    "props": [
+                        {
+                            "name": "(#index)",
+                            "description": "The port number.",
+                            "type": "Integer"
+                        }
+                    ]
                 }
             ],
             "type": "JSON",
@@ -4525,10 +4566,35 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 102,
+            "line": 106,
             "description": "The socket configuration passed into the <code>io.socket</code>.",
             "itemtype": "attribute",
             "name": "config",
+            "params": [
+                {
+                    "name": "forceNew",
+                    "description": "The flag to indicate if socket.io should \n  force a new connection everytime.",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "reconnection",
+                    "description": "The flag to indicate if socket.io\n  should reconnect if connection attempt fails. Reconnection is set to\n  <code>true</code> only when it's reconnecting the last port of the fallback\n  XHRPolling connection.",
+                    "type": "Boolean",
+                    "optional": true,
+                    "optdefault": "false"
+                },
+                {
+                    "name": "transports",
+                    "description": "The transports that are used for the socket.io connection.\n- <code>['websocket']</code> is used for WebSocket connection.\n- <code>['xhr-polling', 'jsonp-polling', 'polling']</code> is used for XHRPoling connection.",
+                    "type": "Array"
+                },
+                {
+                    "name": "timeout",
+                    "description": "The socket.io timeout to wait for an established connection before\n  throwing an exception.",
+                    "type": "Integer",
+                    "optional": true
+                }
+            ],
             "type": "JSON",
             "access": "private",
             "tagname": "",
@@ -4538,7 +4604,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 112,
+            "line": 127,
             "description": "The type of socket connection. There are two types:\n- <code>\"WebSocket\"</code> indicates a WebSocket connection.\n- <code>\"XHRPolling\"</code> indicates a LongPolling connection.",
             "itemtype": "attribute",
             "name": "type",
@@ -4552,7 +4618,7 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 125,
+            "line": 140,
             "description": "The socket.io object.",
             "itemtype": "attribute",
             "name": "Socket",
@@ -4565,53 +4631,33 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 135,
-            "description": "The responses attached to message events.",
-            "itemtype": "attribute",
-            "name": "responses",
-            "type": "JSON",
-            "access": "private",
-            "tagname": "",
+            "line": 151,
+            "description": "Function to subscribe to when socket object is ready to use.",
+            "itemtype": "method",
+            "name": "onstart",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 146,
+            "line": 160,
             "description": "Function to subscribe to when socket has been connected.",
             "itemtype": "method",
             "name": "onconnect",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 154,
+            "line": 169,
             "description": "Function to subscribe to when socket has been disconnected.",
             "itemtype": "method",
             "name": "ondisconnect",
-            "since": "0.6.0",
-            "class": "Socket",
-            "module": "Skylink"
-        },
-        {
-            "file": "source/Socket.js",
-            "line": 162,
-            "description": "Function to subscribe to when socket has connection error.",
-            "itemtype": "method",
-            "name": "onconnecterror",
-            "since": "0.6.0",
-            "class": "Socket",
-            "module": "Skylink"
-        },
-        {
-            "file": "source/Socket.js",
-            "line": 170,
-            "description": "Function to subscribe to when socket attempts to reconnect.",
-            "itemtype": "method",
-            "name": "onreconnect",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
@@ -4619,9 +4665,10 @@
         {
             "file": "source/Socket.js",
             "line": 178,
-            "description": "Function to subscribe to when socket has an exception.",
+            "description": "Function to subscribe to when socket has connection error.",
             "itemtype": "method",
-            "name": "onerror",
+            "name": "onconnecterror",
+            "eventhandler": "true",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
@@ -4629,6 +4676,28 @@
         {
             "file": "source/Socket.js",
             "line": 187,
+            "description": "Function to subscribe to when socket attempts to reconnect.",
+            "itemtype": "method",
+            "name": "onreconnect",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Socket",
+            "module": "Skylink"
+        },
+        {
+            "file": "source/Socket.js",
+            "line": 196,
+            "description": "Function to subscribe to when socket has an exception.",
+            "itemtype": "method",
+            "name": "onerror",
+            "eventhandler": "true",
+            "since": "0.6.0",
+            "class": "Socket",
+            "module": "Skylink"
+        },
+        {
+            "file": "source/Socket.js",
+            "line": 206,
             "description": "The handler that manages all triggers or relaying events.",
             "itemtype": "method",
             "name": "handler",
@@ -4652,139 +4721,110 @@
         },
         {
             "file": "source/Socket.js",
-            "line": 200,
-            "description": "Starts the connection to the signalling server",
+            "line": 219,
+            "description": "Starts the connection to the signalling server.",
             "itemtype": "method",
             "name": "connect",
-            "trigger": "peerJoined, mediaAccessRequired",
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 217,
-            "description": "Stops the connection to the Socket.",
+            "line": 236,
+            "description": "Stops the connection to the signalling server.",
             "itemtype": "method",
             "name": "disconnect",
-            "trigger": "peerJoined, mediaAccessRequired",
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 229,
-            "description": "Attaches a listener to a particular socket message event received.",
-            "itemtype": "method",
-            "name": "when",
-            "trigger": "peerJoined, mediaAccessRequired",
-            "since": "0.6.0",
-            "class": "Socket",
-            "module": "Skylink"
-        },
-        {
-            "file": "source/Socket.js",
-            "line": 242,
-            "description": "Sends a socket data.",
+            "line": 247,
+            "description": "Sends data to the signaling server for relaying.\nNOTE to Thanh: Please implement the throttle for messaging here.",
             "itemtype": "method",
             "name": "send",
-            "trigger": "peerJoined, mediaAccessRequired",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The data to send.",
+                    "type": "JSON"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 263,
+            "line": 271,
             "description": "Handles the event when socket is connected to signaling.",
             "itemtype": "method",
             "name": "bindOnConnect",
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 285,
-            "description": "Handles the event when socket is disconnected to signaling.",
-            "itemtype": "method",
-            "name": "bindOnDisconnect",
-            "since": "0.6.0",
-            "class": "Socket",
-            "module": "Skylink"
-        },
-        {
-            "file": "source/Socket.js",
-            "line": 299,
-            "description": "Handles the event when socket receives a message from signaling.",
-            "itemtype": "method",
-            "name": "bindOnMessage",
-            "trigger": "peerJoined, mediaAccessRequired",
-            "since": "0.6.0",
-            "class": "Socket",
-            "module": "Skylink"
-        },
-        {
-            "file": "source/Socket.js",
-            "line": 324,
+            "line": 333,
             "description": "Handles the event when socket have a connection error.",
             "itemtype": "method",
             "name": "bindOnConnectError",
+            "params": [
+                {
+                    "name": "error",
+                    "description": "The socket.io connection error.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 362,
-            "description": "Handles the event when socket catches an exception.",
-            "itemtype": "method",
-            "name": "bindOnError",
-            "since": "0.6.0",
-            "class": "Socket",
-            "module": "Skylink"
-        },
-        {
-            "file": "source/Socket.js",
-            "line": 378,
-            "description": "Responses to the attached socket message responses.",
-            "itemtype": "method",
-            "name": "respond",
-            "trigger": "peerJoined, mediaAccessRequired",
-            "since": "0.6.0",
-            "class": "Socket",
-            "module": "Skylink"
-        },
-        {
-            "file": "source/Socket.js",
-            "line": 394,
-            "description": "Restarts the connection to the Socket.",
+            "line": 374,
+            "description": "Restarts the connection to the signaling server when attempt to\n  establish socket connection failed.",
             "itemtype": "method",
             "name": "reconnect",
-            "trigger": "peerJoined, mediaAccessRequired",
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 420,
+            "line": 397,
             "description": "Creates a WebSocket connection in socket.io.",
             "itemtype": "method",
             "name": "WebSocket",
-            "trigger": "peerJoined, mediaAccessRequired",
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/Socket.js",
-            "line": 448,
+            "line": 427,
             "description": "Creates a XHR Long-polling connection in socket.io.",
             "itemtype": "method",
             "name": "XHRPolling",
-            "trigger": "peerJoined, mediaAccessRequired",
+            "access": "private",
+            "tagname": "",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
@@ -4805,9 +4845,9 @@
         {
             "file": "source/SocketHandler.js",
             "line": 10,
-            "description": "Event fired when the MediaSocket has started and that the Socket object is ready to use.",
+            "description": "Event fired when the socket object is ready to use.",
             "itemtype": "event",
-            "name": "Socket:start",
+            "name": "socket:start",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
@@ -4815,9 +4855,9 @@
         {
             "file": "source/SocketHandler.js",
             "line": 22,
-            "description": "Event fired when usually getUserMedia fails or an exception has occurred during the\n  MediaSocket object handling.",
+            "description": "Event fired when socket occurs an exception during connection.",
             "itemtype": "event",
-            "name": "Socket:error",
+            "name": "socket:error",
             "params": [
                 {
                     "name": "error",
@@ -4831,30 +4871,44 @@
         },
         {
             "file": "source/SocketHandler.js",
-            "line": 37,
-            "description": "Event fired when the MediaSocketTrack of the MediaSocket object has started and\n  that the track is ready to use.",
+            "line": 35,
+            "description": "Event fired when socket connection has been established to the signaling server.",
             "itemtype": "event",
-            "name": "Socket:track:start",
+            "name": "socket:connect",
+            "params": [
+                {
+                    "name": "error",
+                    "description": "The getUserMedia or event error.",
+                    "type": "Object"
+                }
+            ],
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/SocketHandler.js",
-            "line": 50,
-            "description": "Event fired when the MediaSocketTrack of the MediaSocket object has stopped.",
+            "line": 48,
+            "description": "Event fired when socket connection fails to connect to the signaling server.",
             "itemtype": "event",
-            "name": "Socket:track:stop",
+            "name": "socket:connecterror",
+            "params": [
+                {
+                    "name": "error",
+                    "description": "The getUserMedia or event error.",
+                    "type": "Object"
+                }
+            ],
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/SocketHandler.js",
-            "line": 62,
-            "description": "Event fired when the MediaSocketTrack of the MediaSocket object has been disabled (muted).",
+            "line": 61,
+            "description": "Event fired when socket attempts to reconnect with signaling server when attempt\n to establish connection fails.",
             "itemtype": "event",
-            "name": "Socket:track:mute",
+            "name": "socket:reconnect",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
@@ -4862,26 +4916,43 @@
         {
             "file": "source/SocketHandler.js",
             "line": 74,
-            "description": "Event fired when the MediaSocketTrack of the MediaSocket object has been enabled (unmuted).",
+            "description": "Event fired when socket receives a message from the signaling server.",
             "itemtype": "event",
-            "name": "Socket:track:unmute",
+            "name": "socket:message",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The message event type.",
+                    "type": "String"
+                },
+                {
+                    "name": "data",
+                    "description": "The data received from server.",
+                    "type": "JSON"
+                },
+                {
+                    "name": "sourceType",
+                    "description": "The source type of the message received.\nThere are two types of sources:\n- <code>\"local\"</code> indicates that message was sent by socket.\n- <code>\"remote</code> indicates that message was received by socket.",
+                    "type": "String"
+                }
+            ],
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/SocketHandler.js",
-            "line": 87,
-            "description": "Event fired when the MediaSocket object has stopped.",
+            "line": 88,
+            "description": "Event fired when socket connection with signaling server has been disconnected.",
             "itemtype": "event",
-            "name": "Socket:stop",
+            "name": "socket:disconnect",
             "since": "0.6.0",
             "class": "Socket",
             "module": "Skylink"
         },
         {
             "file": "source/SocketHandler.js",
-            "line": 100,
+            "line": 101,
             "description": "Handles the Socket class events.",
             "itemtype": "method",
             "name": "SocketHandler",
@@ -4955,10 +5026,11 @@
         {
             "file": "source/Stream.js",
             "line": 50,
-            "description": "The stream source type.",
+            "description": "The stream source origin.\nThere are two types of sources:\n- <code>\"local\"</code> indicates that the stream came from self user.\n- <code>\"remote</code> indicates that the stream came from other users.",
             "itemtype": "attribute",
             "name": "sourceType",
             "type": "String",
+            "default": "\"local\"",
             "access": "private",
             "tagname": "",
             "since": "0.6.0",
@@ -4967,7 +5039,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 60,
+            "line": 64,
             "description": "The MediaStream object.",
             "itemtype": "attribute",
             "name": "MediaStream",
@@ -4980,7 +5052,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 71,
+            "line": 75,
             "description": "Function to subscribe to when stream object is ready to use.",
             "itemtype": "method",
             "name": "onstart",
@@ -4991,7 +5063,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 80,
+            "line": 84,
             "description": "Function to subscribe to when getUserMedia throws an exception or event has error.",
             "itemtype": "method",
             "name": "onerror",
@@ -5002,7 +5074,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 89,
+            "line": 93,
             "description": "Function to subscribe to when MediaStreamTrack of the MediaStream object has started.",
             "itemtype": "method",
             "name": "ontrackstart",
@@ -5013,7 +5085,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 98,
+            "line": 102,
             "description": "Function to subscribe to when MediaStreamTrack of the MediaStream object has stopped.",
             "itemtype": "method",
             "name": "ontrackstop",
@@ -5024,7 +5096,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 107,
+            "line": 111,
             "description": "Function to subscribe to when MediaStreamTrack of the MediaStream object has been disabled (muted).",
             "itemtype": "method",
             "name": "ontrackmute",
@@ -5035,7 +5107,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 116,
+            "line": 120,
             "description": "Function to subscribe to when MediaStreamTrack of the MediaStream object has been enabled (unmuted).",
             "itemtype": "method",
             "name": "ontrackunmute",
@@ -5046,7 +5118,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 125,
+            "line": 129,
             "description": "Function to subscribe to when MediaStream object has ended.",
             "itemtype": "method",
             "name": "onstop",
@@ -5057,7 +5129,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 135,
+            "line": 139,
             "description": "The handler that the parent classes utilises to listen to events.",
             "itemtype": "method",
             "name": "parentHandler",
@@ -5081,7 +5153,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 146,
+            "line": 150,
             "description": "The handler that manages all triggers or relaying events.",
             "itemtype": "method",
             "name": "handler",
@@ -5105,7 +5177,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 163,
+            "line": 167,
             "description": "Starts a MediaStream connection with getUserMedia.",
             "itemtype": "method",
             "name": "start",
@@ -5117,7 +5189,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 179,
+            "line": 183,
             "description": "Binds events to MediaStream object.",
             "itemtype": "method",
             "name": "bind",
@@ -5136,7 +5208,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 210,
+            "line": 214,
             "description": "Binds events to MediaStreamTrack object.",
             "itemtype": "method",
             "name": "bindTracks",
@@ -5162,7 +5234,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 267,
+            "line": 275,
             "description": "Attaches the MediaStream object to a video element.",
             "itemtype": "method",
             "name": "attachElement",
@@ -5179,7 +5251,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 284,
+            "line": 292,
             "description": "Handles the differences for non-implemented onended event for MediaStream.",
             "itemtype": "method",
             "name": "bindOnStreamEnded",
@@ -5202,7 +5274,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 362,
+            "line": 370,
             "description": "Mutes all audio MediaStreamTracks of the MediaStream object.",
             "itemtype": "method",
             "name": "muteAudio",
@@ -5212,7 +5284,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 388,
+            "line": 399,
             "description": "Unmutes all audio MediaStreamTracks of the MediaStream object.",
             "itemtype": "method",
             "name": "unmuteAudio",
@@ -5222,7 +5294,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 414,
+            "line": 428,
             "description": "Stops all audio MediaStreamTracks streaming in the MediaStream object.",
             "itemtype": "method",
             "name": "stopAudio",
@@ -5232,7 +5304,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 445,
+            "line": 461,
             "description": "Mutes all video MediaStreamTracks of the MediaStream object.",
             "itemtype": "method",
             "name": "muteVideo",
@@ -5242,7 +5314,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 471,
+            "line": 490,
             "description": "Unmutes all video MediaStreamTracks of the MediaStream object.",
             "itemtype": "method",
             "name": "unmuteVideo",
@@ -5252,7 +5324,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 497,
+            "line": 519,
             "description": "Stops all video MediaStreamTracks streaming of the MediaStream object.",
             "itemtype": "method",
             "name": "stopVideo",
@@ -5262,7 +5334,7 @@
         },
         {
             "file": "source/Stream.js",
-            "line": 528,
+            "line": 552,
             "description": "Stops MediaStream object streaming.",
             "itemtype": "method",
             "name": "stop",
@@ -5671,6 +5743,7 @@
             "itemtype": "attribute",
             "name": "type",
             "type": "String",
+            "default": "\"user\"",
             "readonly": "",
             "since": "0.6.0",
             "class": "User",
@@ -5678,7 +5751,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 74,
+            "line": 75,
             "description": "Stores the user data.",
             "itemtype": "attribute",
             "name": "data",
@@ -5691,7 +5764,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 84,
+            "line": 85,
             "description": "Stores the browser agent information.",
             "itemtype": "attribute",
             "name": "agent",
@@ -5721,7 +5794,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 97,
+            "line": 98,
             "description": "Stores the user's bandwidth configuration.",
             "itemtype": "attribute",
             "name": "bandwidth",
@@ -5751,7 +5824,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 110,
+            "line": 111,
             "description": "Stores the list of peer connections to user.",
             "itemtype": "attribute",
             "name": "peers",
@@ -5764,7 +5837,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 121,
+            "line": 122,
             "description": "Function to subscribe to when the user object is ready to use.",
             "itemtype": "method",
             "name": "onstart",
@@ -5775,7 +5848,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 130,
+            "line": 131,
             "description": "Function to subscribe to when user's custom data is updated.",
             "itemtype": "method",
             "name": "onupdate",
@@ -5786,7 +5859,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 139,
+            "line": 140,
             "description": "Function to subscribe to when user has an established \"main\" peer connection.",
             "itemtype": "method",
             "name": "onconnect",
@@ -5797,7 +5870,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 148,
+            "line": 149,
             "description": "Function to subscribe to when user is disconnected from the room.",
             "itemtype": "method",
             "name": "ondisconnect",
@@ -5808,7 +5881,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 157,
+            "line": 158,
             "description": "Function to subscribe to when a new peer connection is established to user.",
             "itemtype": "method",
             "name": "onaddconnection",
@@ -5819,7 +5892,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 166,
+            "line": 167,
             "description": "Function to subscribe to when a peer connection to user has added.",
             "itemtype": "method",
             "name": "onremoveconnection",
@@ -5830,7 +5903,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 175,
+            "line": 176,
             "description": "Function to subscribe to when a new data transfer request is initialized from user.",
             "itemtype": "method",
             "name": "ondatarequest",
@@ -5841,7 +5914,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 184,
+            "line": 185,
             "description": "Function to subscribe to when a new data is received after transfer is completed from user.",
             "itemtype": "method",
             "name": "ondata",
@@ -5852,7 +5925,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 193,
+            "line": 194,
             "description": "Function to subscribe to when a new message is received from user.",
             "itemtype": "method",
             "name": "onmessage",
@@ -5863,7 +5936,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 203,
+            "line": 204,
             "description": "The handler that manages all triggers or relaying events.",
             "itemtype": "method",
             "name": "handler",
@@ -5887,7 +5960,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 216,
+            "line": 217,
             "description": "Starts a new peer connection to user.",
             "itemtype": "method",
             "name": "addConnection",
@@ -6034,7 +6107,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 280,
+            "line": 281,
             "description": "Stops a peer connection to user.",
             "itemtype": "method",
             "name": "removeConnection",
@@ -6053,7 +6126,7 @@
         },
         {
             "file": "source/User.js",
-            "line": 300,
+            "line": 301,
             "description": "Disconnects this user connection.",
             "itemtype": "method",
             "name": "disconnect",
@@ -6063,12 +6136,12 @@
         },
         {
             "file": "source/User.js",
-            "line": 312,
+            "line": 313,
             "description": "Gets this user information.",
             "itemtype": "method",
             "name": "getInfo",
             "return": {
-                "description": "The user streaming configuration and custom data.\n- <code>userData</code> <var>: <b>type</b> String | JSON</var><br>\n  The custom data.\n- <code>agent</code> <var>: <b>type</b> JSON</var><br>\n  The user's browser agent information.\n- <code>agent.name</code> <var>: <b>type</b> String</var><br>\n  The user's browser agent name.\n- <code>agent.version</code> <var>: <b>type</b> Integer</var><br>\n  The user's browser agent version.\n- <code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>\n  The user's browser webrtc implementation type.\n- <code>settings</code> <var>: <b>type</b> JSON</var><br>\n  The list of peer connections streaming.\n- <code>settings.[peerId]</code> <var>: <b>type</b> JSON</var><br>\n  The peer connection streaming information.\n- <code>settings.[peerId].audio</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The audio streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>settings.[peerId].audio.stereo</code> <var>: <b>type</b> Boolean</var><br>\n  The flag that indicates if stereo is enabled for this connection. By default,\n  it's <code>false</code>.\n- <code>settings.[peerId].audio.sourceId</code> <var>: <b>type</b> String</var><br>\n  The audio MediaStreamTrack source used for this connection.\n- <code>settings.[peerId].video</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The video streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>settings.[peerId].video.resolution</code> <var>: <b>type</b> JSON</var><br>\n  The video stream resolution. \n- <code>settings.[peerId].video.resolution.width</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution height.\n- <code>settings.[peerId].video.resolution.height</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution width.\n- <code>settings.[peerId].video.frameRate</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution framerate.\n- <code>settings.[peerId].video.sourceId</code> <var>: <b>type</b> String</var><br>\n  The video MediaStreamTrack source used for this connection.\n- <code>settings.[peerId].status</code> <var>: <b>type</b> JSON</var><br>\n  The MediaStreamTracks enabled status (muted/unmuted).\n- <code>settings.[peerId].status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The audio MediaStreamTrack enabled status (muted/unmuted).\n- <code>settings.[peerId].status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The video MediaStreamTrack enabled status (muted/unmuted).\n- <code>bandwidth</code> <var>: <b>type</b> JSON</var><br>\n  The bandwidth configuration for the peer connections.\n  This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.\n- <code>bandwidth.data</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for data stream.\n- <code>bandwidth.video</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for video stream.\n- <code>bandwidth.audio</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for audio stream.",
+                "description": "The user streaming configuration and custom data.\n- <code>userData</code> <var>: <b>type</b> String | JSON</var><br>\n  The custom data.\n- <code>agent</code> <var>: <b>type</b> JSON</var><br>\n  The user's browser agent information.\n- <code>agent.name</code> <var>: <b>type</b> String</var><br>\n  The user's browser agent name.\n- <code>agent.version</code> <var>: <b>type</b> Integer</var><br>\n  The user's browser agent version.\n- <code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>\n  The user's browser webrtc implementation type.\n- <code>settings</code> <var>: <b>type</b> JSON</var><br>\n  The list of peer connections streaming.\n- <code>settings.(#peerId)</code> <var>: <b>type</b> JSON</var><br>\n  The peer connection streaming information.\n- <code>settings.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The audio streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>settings.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>\n  The flag that indicates if stereo is enabled for this connection. By default,\n  it's <code>false</code>.\n- <code>settings.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>\n  The audio MediaStreamTrack source used for this connection.\n- <code>settings.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>\n  The video streaming information. If there is no stream connection with the peer,\n  it's <code>false</code>.\n- <code>settings.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>\n  The video stream resolution. \n- <code>settings.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution height.\n- <code>settings.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution width.\n- <code>settings.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>\n  The video stream resolution framerate.\n- <code>settings.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>\n  The video MediaStreamTrack source used for this connection.\n- <code>settings.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>\n  The MediaStreamTracks enabled status (muted/unmuted).\n- <code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The audio MediaStreamTrack enabled status (muted/unmuted).\n- <code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>\n  The video MediaStreamTrack enabled status (muted/unmuted).\n- <code>bandwidth</code> <var>: <b>type</b> JSON</var><br>\n  The bandwidth configuration for the peer connections.\n  This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.\n- <code>bandwidth.data</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for data stream.\n- <code>bandwidth.video</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for video stream.\n- <code>bandwidth.audio</code> <var>: <b>type</b> Integer</var><br>\n  The bandwidth configuration for audio stream.",
                 "type": "JSON"
             },
             "since": "0.6.0",
@@ -6239,15 +6312,15 @@
     "warnings": [
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/DataChannel.js:50"
+            "line": " source/DataChannel.js:63"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/DataChannel.js:59"
+            "line": " source/DataChannel.js:72"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/DataChannel.js:68"
+            "line": " source/DataChannel.js:81"
         },
         {
             "message": "unknown tag: iceconnectionstate",
@@ -6294,40 +6367,28 @@
             "line": " source/Socket.js:1"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:200"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Socket.js:151"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:217"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Socket.js:160"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:229"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Socket.js:169"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:242"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Socket.js:178"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:299"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Socket.js:187"
         },
         {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:378"
-        },
-        {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:394"
-        },
-        {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:420"
-        },
-        {
-            "message": "unknown tag: trigger",
-            "line": " source/Socket.js:448"
+            "message": "unknown tag: eventhandler",
+            "line": " source/Socket.js:196"
         },
         {
             "message": "unknown tag: instantiable",
@@ -6335,31 +6396,31 @@
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/Stream.js:71"
+            "line": " source/Stream.js:75"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/Stream.js:80"
+            "line": " source/Stream.js:84"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/Stream.js:89"
+            "line": " source/Stream.js:93"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/Stream.js:98"
+            "line": " source/Stream.js:102"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/Stream.js:107"
+            "line": " source/Stream.js:111"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/Stream.js:116"
+            "line": " source/Stream.js:120"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/Stream.js:125"
+            "line": " source/Stream.js:129"
         },
         {
             "message": "replacing incorrect tag: returns with return",
@@ -6367,43 +6428,43 @@
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:121"
+            "line": " source/User.js:122"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:130"
+            "line": " source/User.js:131"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:139"
+            "line": " source/User.js:140"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:148"
+            "line": " source/User.js:149"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:157"
+            "line": " source/User.js:158"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:166"
+            "line": " source/User.js:167"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:175"
+            "line": " source/User.js:176"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:184"
+            "line": " source/User.js:185"
         },
         {
             "message": "unknown tag: eventhandler",
-            "line": " source/User.js:193"
+            "line": " source/User.js:194"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " source/User.js:312"
+            "line": " source/User.js:313"
         },
         {
             "message": "Missing item type\nEvent fired when an ICE connection state has changed.",

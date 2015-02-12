@@ -351,16 +351,6 @@ Usually fired when user leaves the room.</p>
               <item class="seperator">,&nbsp;&nbsp;</item>
             
               
-                <item><code>streamObject</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>SDPType</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
                 <item><code>listener</code></item>
               
               <item class="seperator">,&nbsp;&nbsp;</item>
@@ -968,9 +958,7 @@ Usually fired when user leaves the room.</p>
   
 </li>
       
-    </ul>
-  
-</li>  <li class="code-section-item-param">
+        <li class="code-section-item-param">
   <div class="name">
     <code class="param-name">streamObject</code>
     <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
@@ -978,6 +966,10 @@ Usually fired when user leaves the room.</p>
 
   <blockquote>
     
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
     
 
     
@@ -989,7 +981,9 @@ Usually fired when user leaves the room.</p>
   </div>
 
   
-</li>  <li class="code-section-item-param">
+</li>
+      
+        <li class="code-section-item-param">
   <div class="name">
     <code class="param-name">SDPType</code>
     <span class="type"> : <em>type</em> String </span>
@@ -1003,10 +997,14 @@ Usually fired when user leaves the room.</p>
   </blockquote>
 
   <div class="description">
-    <p>The session description type that the peer connection would send.</p>
+    <p>The session description type that the &quot;main&quot; peer connection would send.</p>
 
   </div>
 
+  
+</li>
+      
+    </ul>
   
 </li>  <li class="code-section-item-param">
   <div class="name">
@@ -1084,7 +1082,7 @@ Usually fired when user leaves the room.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l216"><code>source&#x2F;User.js:216</code></a>
+        Defined in: <a href="../files/source_User.js.html#l217"><code>source&#x2F;User.js:217</code></a>
       </p>
     
   </div>
@@ -1742,7 +1740,7 @@ Usually fired when user leaves the room.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l300"><code>source&#x2F;User.js:300</code></a>
+        Defined in: <a href="../files/source_User.js.html#l301"><code>source&#x2F;User.js:301</code></a>
       </p>
     
   </div>
@@ -1852,7 +1850,7 @@ Usually fired when user leaves the room.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l312"><code>source&#x2F;User.js:312</code></a>
+        Defined in: <a href="../files/source_User.js.html#l313"><code>source&#x2F;User.js:313</code></a>
       </p>
     
   </div>
@@ -1942,34 +1940,34 @@ The user&#39;s browser agent version.</li>
 The user&#39;s browser webrtc implementation type.</li>
 <li><code>settings</code> <var>: <b>type</b> JSON</var><br>
 The list of peer connections streaming.</li>
-<li><code>settings.[peerId]</code> <var>: <b>type</b> JSON</var><br>
+<li><code>settings.(#peerId)</code> <var>: <b>type</b> JSON</var><br>
 The peer connection streaming information.</li>
-<li><code>settings.[peerId].audio</code> <var>: <b>type</b> JSON|Boolean</var><br>
+<li><code>settings.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>
 The audio streaming information. If there is no stream connection with the peer,
 it&#39;s <code>false</code>.</li>
-<li><code>settings.[peerId].audio.stereo</code> <var>: <b>type</b> Boolean</var><br>
+<li><code>settings.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>
 The flag that indicates if stereo is enabled for this connection. By default,
 it&#39;s <code>false</code>.</li>
-<li><code>settings.[peerId].audio.sourceId</code> <var>: <b>type</b> String</var><br>
+<li><code>settings.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>
 The audio MediaStreamTrack source used for this connection.</li>
-<li><code>settings.[peerId].video</code> <var>: <b>type</b> JSON|Boolean</var><br>
+<li><code>settings.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>
 The video streaming information. If there is no stream connection with the peer,
 it&#39;s <code>false</code>.</li>
-<li><code>settings.[peerId].video.resolution</code> <var>: <b>type</b> JSON</var><br>
+<li><code>settings.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
 The video stream resolution. </li>
-<li><code>settings.[peerId].video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
+<li><code>settings.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
 The video stream resolution height.</li>
-<li><code>settings.[peerId].video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
+<li><code>settings.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
 The video stream resolution width.</li>
-<li><code>settings.[peerId].video.frameRate</code> <var>: <b>type</b> Integer</var><br>
+<li><code>settings.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>
 The video stream resolution framerate.</li>
-<li><code>settings.[peerId].video.sourceId</code> <var>: <b>type</b> String</var><br>
+<li><code>settings.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>
 The video MediaStreamTrack source used for this connection.</li>
-<li><code>settings.[peerId].status</code> <var>: <b>type</b> JSON</var><br>
+<li><code>settings.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>
 The MediaStreamTracks enabled status (muted/unmuted).</li>
-<li><code>settings.[peerId].status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+<li><code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
 The audio MediaStreamTrack enabled status (muted/unmuted).</li>
-<li><code>settings.[peerId].status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+<li><code>settings.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
 The video MediaStreamTrack enabled status (muted/unmuted).</li>
 <li><code>bandwidth</code> <var>: <b>type</b> JSON</var><br>
 The bandwidth configuration for the peer connections.
@@ -2038,7 +2036,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l203"><code>source&#x2F;User.js:203</code></a>
+        Defined in: <a href="../files/source_User.js.html#l204"><code>source&#x2F;User.js:204</code></a>
       </p>
     
   </div>
@@ -2246,7 +2244,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l280"><code>source&#x2F;User.js:280</code></a>
+        Defined in: <a href="../files/source_User.js.html#l281"><code>source&#x2F;User.js:281</code></a>
       </p>
     
   </div>
@@ -2612,7 +2610,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l84"><code>source&#x2F;User.js:84</code></a>
+      Defined in: <a href="../files/source_User.js.html#l85"><code>source&#x2F;User.js:85</code></a>
     </p>
     
   </div>
@@ -2741,7 +2739,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l97"><code>source&#x2F;User.js:97</code></a>
+      Defined in: <a href="../files/source_User.js.html#l98"><code>source&#x2F;User.js:98</code></a>
     </p>
     
   </div>
@@ -2870,7 +2868,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l74"><code>source&#x2F;User.js:74</code></a>
+      Defined in: <a href="../files/source_User.js.html#l75"><code>source&#x2F;User.js:75</code></a>
     </p>
     
   </div>
@@ -3000,7 +2998,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l110"><code>source&#x2F;User.js:110</code></a>
+      Defined in: <a href="../files/source_User.js.html#l111"><code>source&#x2F;User.js:111</code></a>
     </p>
     
   </div>
@@ -3072,6 +3070,10 @@ The bandwidth configuration for audio stream.</li>
 
   <div class="panel-body">
     <blockquote>
+  
+    <p>
+      <var> <b>value: </b> default = &quot;user&quot;</var>
+    </p>
    
   
    
@@ -3362,7 +3364,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l157"><code>source&#x2F;User.js:157</code></a>
+        Defined in: <a href="../files/source_User.js.html#l158"><code>source&#x2F;User.js:158</code></a>
       </p>
     
   </div>
@@ -3472,7 +3474,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l139"><code>source&#x2F;User.js:139</code></a>
+        Defined in: <a href="../files/source_User.js.html#l140"><code>source&#x2F;User.js:140</code></a>
       </p>
     
   </div>
@@ -3582,7 +3584,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l184"><code>source&#x2F;User.js:184</code></a>
+        Defined in: <a href="../files/source_User.js.html#l185"><code>source&#x2F;User.js:185</code></a>
       </p>
     
   </div>
@@ -3692,7 +3694,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l175"><code>source&#x2F;User.js:175</code></a>
+        Defined in: <a href="../files/source_User.js.html#l176"><code>source&#x2F;User.js:176</code></a>
       </p>
     
   </div>
@@ -3802,7 +3804,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l148"><code>source&#x2F;User.js:148</code></a>
+        Defined in: <a href="../files/source_User.js.html#l149"><code>source&#x2F;User.js:149</code></a>
       </p>
     
   </div>
@@ -3912,7 +3914,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l193"><code>source&#x2F;User.js:193</code></a>
+        Defined in: <a href="../files/source_User.js.html#l194"><code>source&#x2F;User.js:194</code></a>
       </p>
     
   </div>
@@ -4022,7 +4024,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l166"><code>source&#x2F;User.js:166</code></a>
+        Defined in: <a href="../files/source_User.js.html#l167"><code>source&#x2F;User.js:167</code></a>
       </p>
     
   </div>
@@ -4132,7 +4134,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l121"><code>source&#x2F;User.js:121</code></a>
+        Defined in: <a href="../files/source_User.js.html#l122"><code>source&#x2F;User.js:122</code></a>
       </p>
     
   </div>
@@ -4242,7 +4244,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l130"><code>source&#x2F;User.js:130</code></a>
+        Defined in: <a href="../files/source_User.js.html#l131"><code>source&#x2F;User.js:131</code></a>
       </p>
     
   </div>

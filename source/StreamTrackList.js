@@ -23,7 +23,9 @@ var StreamTrackList = {
     } else {
       // Retrieve list
       MediaStreamTrack.getSources(function (trackList) {
-        fn.forEach(trackList, function (track, i) {
+        var i;
+        
+        for (i = 0; i < trackList.length; i += 1) {
           var data = {};
 
           // MediaStreamTrack label - FaceHD Camera
@@ -40,15 +42,13 @@ var StreamTrackList = {
           } else {
             StreamTrackList.video.push(data);
           }
-
-        }, function () {
-          defer({
-            audio: StreamTrackList.audio,
-            video: StreamTrackList.video
-          });
+        }
+        
+        defer({
+          audio: StreamTrackList.audio,
+          video: StreamTrackList.video
         });
       });
     }
-  },
-  
+  } 
 };

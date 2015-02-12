@@ -24,10 +24,10 @@ function DataChannel(channel, listener) {
    * @for DataChannel
    * @since 0.6.0
    */
-  com.id = channel.label || Date.UTC();
+  com.id = channel.label || fn.generateUID();
   
   /**
-   * The type of datachannel
+   * The type of datachannel.
    * @attribute type
    * @type String
    * @private
@@ -35,9 +35,22 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.type = 'message';
+  
+  /**
+   * The datachannel source origin.
+   * There are two types of sources:
+   * - <code>"local"</code> indicates that datachannel came from self user.
+   * - <code>"remote</code> indicates that datachannel came from other users.
+   * @attribute sourceType
+   * @type String
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.sourceType = 'local';
 
   /**
-   * The DataChannel object.
+   * The RTCDataChannel object.
    * @attribute RTCDataChannel
    * @type Object
    * @private

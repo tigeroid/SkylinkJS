@@ -6,8 +6,10 @@
  * @param {String} config.server The socket signaling server.
  * @param {Array} config.httpsPortList The list of HTTPS ports that the socket connection
  *    would use. It uses the first port and fallbacks to the next alternative port when connection fails.
+ * @param {Integer} config.httpsPortList.(#index) The port number.
  * @param {Array} config.httpPortList The list of HTTP ports that the socket connection
  *    would use. It uses the first port and fallbacks to the next alternative port when connection fails.
+ * @param {Integer} config.httpPortList.(#index) The port number.
  * @parma {String} config.type The type of socket connection. There are two types:
  * - <code>"WebSocket"</code> indicates a WebSocket connection.
  * - <code>"XHRPolling"</code> indicates a LongPolling connection.
@@ -45,9 +47,9 @@ function Socket(config, listener) {
   com.protocol = globals.enforceSSL ? 'https:' : window.location.protocol;
 
   /**
-   * The signalling server port to connect with.
+   * The signalling server port that is connecting with.
    * @attribute server
-   * @type String
+   * @type Integer
    * @private
    * @for Socket
    * @since 0.6.0
@@ -88,7 +90,9 @@ function Socket(config, listener) {
    * The list of available signalling server ports.
    * @attribute ports
    * @param {Array} http: The list of HTTP ports.
+   * @param {Integer} http:.(#index) The port number.
    * @param {Array} https: The list of HTTPS ports.
+   * @param {Integer} https:.(#index) The port number.
    * @type JSON
    * @private
    * @for Socket
@@ -102,6 +106,17 @@ function Socket(config, listener) {
   /**
    * The socket configuration passed into the <code>io.socket</code>.
    * @attribute config
+   * @param {Boolean} forceNew The flag to indicate if socket.io should 
+   *   force a new connection everytime.
+   * @param {Boolean} [reconnection=false] The flag to indicate if socket.io
+   *   should reconnect if connection attempt fails. Reconnection is set to
+   *   <code>true</code> only when it's reconnecting the last port of the fallback
+   *   XHRPolling connection.
+   * @param {Array} transports The transports that are used for the socket.io connection.
+   * - <code>['websocket']</code> is used for WebSocket connection.
+   * - <code>['xhr-polling', 'jsonp-polling', 'polling']</code> is used for XHRPoling connection.
+   * @param {Integer} [timeout] The socket.io timeout to wait for an established connection before
+   *   throwing an exception.
    * @type JSON
    * @private
    * @for Socket
@@ -132,20 +147,20 @@ function Socket(config, listener) {
    */
   com.Socket = null;
 
+  
   /**
-   * The responses attached to message events.
-   * @attribute responses
-   * @type JSON
-   * @private
+   * Function to subscribe to when socket object is ready to use.
+   * @method onstart
+   * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
-  com.responses = {};
+  com.onstart = function () {};
 
-  
   /**
    * Function to subscribe to when socket has been connected.
    * @method onconnect
+   * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
@@ -154,6 +169,7 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket has been disconnected.
    * @method ondisconnect
+   * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
@@ -162,6 +178,7 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket has connection error.
    * @method onconnecterror
+   * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
@@ -170,6 +187,7 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket attempts to reconnect.
    * @method onreconnect
+   * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
@@ -178,6 +196,7 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket has an exception.
    * @method onerror
+   * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
@@ -198,9 +217,9 @@ function Socket(config, listener) {
   };
 
   /**
-   * Starts the connection to the signalling server
+   * Starts the connection to the signalling server.
    * @method connect
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -215,34 +234,22 @@ function Socket(config, listener) {
   };
 
   /**
-   * Stops the connection to the Socket.
+   * Stops the connection to the signalling server.
    * @method disconnect
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
   com.disconnect = function () {
     com.Socket.disconnect();
-    com.Socket.responses = {};
-  };
-
-  /**
-   * Attaches a listener to a particular socket message event received.
-   * @method when
-   * @trigger peerJoined, mediaAccessRequired
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.when = function (event, callback) {
-    com.responses[event] = com.responses[event] || [];
-    // Push callback for listening
-    com.responses[event].push(callback);
   };
  
   /**
-   * Sends a socket data.
+   * Sends data to the signaling server for relaying.
+   * NOTE to Thanh: Please implement the throttle for messaging here.
    * @method send
-   * @trigger peerJoined, mediaAccessRequired
+   * @param {JSON} data The data to send.
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -254,8 +261,9 @@ function Socket(config, listener) {
     }
     setTimeout(function () {*/
       com.Socket.send(JSON.stringify(data));
-      com.handler('socket:send', {
-        message: data
+      com.handler('socket:message', {
+        message: data,
+        sourceType: 'local'
       });
     //}, interval);
   };
@@ -263,19 +271,59 @@ function Socket(config, listener) {
   /**
    * Handles the event when socket is connected to signaling.
    * @method bindOnConnect
+   * @private
    * @for Socket
    * @since 0.6.0
    */
-  com.bindOnConnect = function (options) {
+  com.bindOnConnect = function () {
     com.handler('socket:connect', {});
 
     com.Socket.removeAllListeners();
 
-    com.Socket.on('disconnect', com.bindOnDisconnect);
+    com.Socket.on('disconnect', function () {
+      com.handler('socket:disconnect', {});
 
-    com.Socket.on('message', com.bindOnMessage);
+      if (typeof com.onerror === 'function') {
+        com.ondisconnect();
+      }
+    });
+
+    com.Socket.on('message', function (result) {
+      var data = JSON.parse(result);
+
+      // Check if bulk message
+      if (data.type === 'group') {
+        log.info('Received a group message. Breaking down messages into individual messages', data);
+
+        var i;
+
+        for (i = 0; i < data.list.length; i++) {
+          var message = data.list[i];
+          com.handler('socket:message', {
+            data: message,
+            event: data.type,
+            sourceType: 'remote'
+          });
+        }
+
+      } else {
+        com.handler('socket:message', {
+          data: data,
+          event: data.type,
+          sourceType: 'remote'
+        });
+      }
+    });
     
-    com.Socket.on('error', com.bindOnError);
+    com.Socket.on('error', function (error) {
+      com.handler('socket:error', {
+        error: error
+      });
+
+      if (typeof com.onerror === 'function') {
+        com.onerror(error);
+      }
+    });
     
     if (typeof com.onconnect === 'function') {
       com.onconnect();
@@ -283,58 +331,22 @@ function Socket(config, listener) {
   };
 
   /**
-   * Handles the event when socket is disconnected to signaling.
-   * @method bindOnDisconnect
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.bindOnDisonnect = function () {
-    com.handler('socket:disconnect', {});
-    
-    if (typeof com.onerror === 'function') {
-      com.ondisconnect();
-    }
-  };
-
-  /**
-   * Handles the event when socket receives a message from signaling.
-   * @method bindOnMessage
-   * @trigger peerJoined, mediaAccessRequired
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.bindOnMessage = function (result) {
-    var data = JSON.parse(result);
-    
-    com.handler('socket:message', {
-      message: data
-    });
-
-    // Check if bulk message
-    if (data.type === 'group') {
-      fn.forEach(function (message, key) {
-        com.respond(message.type, message);
-      });
-
-    } else {
-      com.respond(data.type, data);
-    }
-  };
-  
-  /**
    * Handles the event when socket have a connection error.
    * @method bindOnConnectError
+   * @param {Object} error The socket.io connection error.
+   * @private
    * @for Socket
    * @since 0.6.0
    */
   com.bindOnConnectError = function (error) {
-    com.handler('socket:connect_error', {
+    com.handler('socket:connecterror', {
       error: error
     });
 
     var ports = com.ports[window.location.protocol];
+    var i;
 
-    for (var i = 0; i < ports.length; i++) {
+    for (i = 0; i < ports.length; i += 1) {
       // Get current port
       if (ports[i] === com.port) {
         // Check if reach the end
@@ -358,43 +370,12 @@ function Socket(config, listener) {
       com.onconnecterror(error);
     }
   };
-  
-  /**
-   * Handles the event when socket catches an exception.
-   * @method bindOnError
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.bindOnError = function (error) {
-    com.handler('socket:error', {
-      error: error
-    });
-    
-    if (typeof com.onerror === 'function') {
-      com.onerror(error);
-    }
-  };
 
   /**
-   * Responses to the attached socket message responses.
-   * @method respond
-   * @trigger peerJoined, mediaAccessRequired
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.respond = function (type, data) {
-    // Parse for events tied to type.
-    com.responses[type] = com.responses[type] || [];
-    
-    fn.forEach(com.responses[type], function (response, i) {
-      response(data);
-    });
-  };
-
-  /**
-   * Restarts the connection to the Socket.
+   * Restarts the connection to the signaling server when attempt to
+   *   establish socket connection failed.
    * @method reconnect
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -410,17 +391,13 @@ function Socket(config, listener) {
       com.Socket = com.XHRPolling();
     }
     
-    if (typeof com.onreconnect === 'function') {
-      com.onreconnect(com.type);
-    }
+    com.handler('socket:reconnect', {});
   };
-
-
 
   /**
    * Creates a WebSocket connection in socket.io.
    * @method WebSocket
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -438,6 +415,8 @@ function Socket(config, listener) {
     var server = com.protocol + '//' + com.server + ':' + com.port;
 
     var socket = io.connect(server, options);
+    
+    com.config = options;
 
     socket.on('connect', com.bindOnConnect);
     socket.on('connect_error', com.bindOnConnectError);
@@ -448,7 +427,7 @@ function Socket(config, listener) {
   /**
    * Creates a XHR Long-polling connection in socket.io.
    * @method XHRPolling
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -468,6 +447,8 @@ function Socket(config, listener) {
     var server = com.protocol + '//' + com.server + ':' + com.port;
 
     var socket = io.connect(server, options);
+    
+    com.config = options;
 
     socket.on('connect', com.bindOnConnect);
     socket.on('reconnect', com.bindOnConnect);

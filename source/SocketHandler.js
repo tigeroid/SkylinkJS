@@ -8,21 +8,20 @@
  */
 var SocketEventResponseHandler = {
   /**
-   * Event fired when the MediaSocket has started and that the Socket object is ready to use.
-   * @event Socket:start
+   * Event fired when the socket object is ready to use.
+   * @event socket:start
    * @for Socket
    * @since 0.6.0
    */
   start: function (com, data, listener) {
     if (typeof com.onstart === 'function') {
-      com.onstart(data.MediaSocket);
+      com.onstart(data);
     }
   },
   
   /**
-   * Event fired when usually getUserMedia fails or an exception has occurred during the
-   *   MediaSocket object handling.
-   * @event Socket:error
+   * Event fired when socket occurs an exception during connection.
+   * @event socket:error
    * @param {Object} error The getUserMedia or event error.
    * @for Socket
    * @since 0.6.0
@@ -33,66 +32,68 @@ var SocketEventResponseHandler = {
     }
   },
 
-  track: {
-    /**
-     * Event fired when the MediaSocketTrack of the MediaSocket object has started and
-     *   that the track is ready to use.
-     * @event Socket:track:start
-     * @for Socket
-     * @since 0.6.0
-     */
-    start: function (com, data, listener) {
-      if (typeof com.ontrackstart === 'function') {
-        com.ontrackstart(data);
-      }
-    },
-    
-    /**
-     * Event fired when the MediaSocketTrack of the MediaSocket object has stopped.
-     * @event Socket:track:stop
-     * @for Socket
-     * @since 0.6.0
-     */
-    stop: function (com, data, listener) {
-      if (typeof com.ontrackstop === 'function') {
-        com.ontrackstop(data);
-      }
-    },
-    
-    /**
-     * Event fired when the MediaSocketTrack of the MediaSocket object has been disabled (muted).
-     * @event Socket:track:mute
-     * @for Socket
-     * @since 0.6.0
-     */
-    mute: function (com, data, listener) {
-      if (typeof com.ontrackmute === 'function') {
-        com.ontrackmute(data);
-      }
-    },
-    
-    /**
-     * Event fired when the MediaSocketTrack of the MediaSocket object has been enabled (unmuted).
-     * @event Socket:track:unmute
-     * @for Socket
-     * @since 0.6.0
-     */
-    unmute: function (com, data, listener) {
-      if (typeof com.ontrackunmute === 'function') {
-        com.ontrackunmute(data);
-      }
-    },
-  },
-  
   /**
-   * Event fired when the MediaSocket object has stopped.
-   * @event Socket:stop
+   * Event fired when socket connection has been established to the signaling server.
+   * @event socket:connect
+   * @param {Object} error The getUserMedia or event error.
    * @for Socket
    * @since 0.6.0
    */
-  stop: function (com, data, listener) {
-    if (typeof com.onstop === 'function') {
-      com.onstop(data);
+  connect: function (com, data, listener) {
+    if (typeof com.onerror === 'function') {
+      com.onerror(data);
+    }
+  },
+  
+  /**
+   * Event fired when socket connection fails to connect to the signaling server.
+   * @event socket:connecterror
+   * @param {Object} error The getUserMedia or event error.
+   * @for Socket
+   * @since 0.6.0
+   */
+  connecterror: function (com, data, listener) {
+    if (typeof com.onconnecterror === 'function') {
+      com.onconnecterror(data);
+    }
+  },
+  
+  /**
+   * Event fired when socket attempts to reconnect with signaling server when attempt
+   *  to establish connection fails.
+   * @event socket:reconnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  reconnect: function (com, data, listener) {
+    if (typeof com.onreconnect === 'function') {
+      com.onreconnect(data);
+    }
+  },
+  
+  /**
+   * Event fired when socket receives a message from the signaling server.
+   * @event socket:message
+   * @param {String} event The message event type.
+   * @param {JSON} data The data received from server.
+   * @param {String} sourceType The source type of the message received.
+   * There are two types of sources:
+   * - <code>"local"</code> indicates that message was sent by socket.
+   * - <code>"remote</code> indicates that message was received by socket.
+   * @for Socket
+   * @since 0.6.0
+   */
+  message: function (com, data, listener) {},
+  
+  /**
+   * Event fired when socket connection with signaling server has been disconnected.
+   * @event socket:disconnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === 'function') {
+      com.ondisconnect(data);
     }
   }
 };
