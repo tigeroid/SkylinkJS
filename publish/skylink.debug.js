@@ -1270,7 +1270,7 @@ function DataTransfer(channel, peerId, listener) {
 DataTransferEventResponseHandler = {
 	start: function(com, data, listener){
 		var dt = new DataTransfer(data.dataChannel, com.id, listener);
-		com.datatransfers.main = dt;
+		com.datatransfers[data.dataChannel.id] = dt;
 	}
 };
 
@@ -2357,10 +2357,15 @@ function Peer(config, listener) {
 
       if (channel.id === 'main'){
 
-        DataTransferHandler(com, 'datatransfer:start', {
+        /*DataTransferHandler(com, 'datatransfer:start', {
           data: data,
           dataChannel: channel,
-        }, listener);
+        }, listener);*/
+
+        com.handler('datatransfer:start',{
+          data: data,
+          dataChannel: channel
+        });
 
       }
     };

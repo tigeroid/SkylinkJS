@@ -389,10 +389,10 @@ function Peer(config, listener) {
 
       if (channel.id === 'main'){
 
-        DataTransferHandler(com, 'datatransfer:start', {
+        com.handler('datatransfer:start',{
           data: data,
-          dataChannel: channel,
-        }, listener);
+          dataChannel: channel
+        });
 
       }
     };

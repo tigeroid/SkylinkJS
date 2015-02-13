@@ -1,7 +1,7 @@
 DataTransferEventResponseHandler = {
 	start: function(com, data, listener){
 		var dt = new DataTransfer(data.dataChannel, com.id, listener);
-		com.datatransfers.main = dt;
+		com.datatransfers[data.dataChannel.id] = dt;
 	}
 };
 
