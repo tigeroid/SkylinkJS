@@ -1,50 +1,48 @@
-<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
-<<<<<<< Updated upstream
-/*! skylinkjs - v0.5.7 - 2015-02-06 */
+/*! skylinkjs - v0.5.7 - 2015-02-13 */
 
 var globals = {
   apiKey: null,
 
   region: 'us2',
-  
+
   defaultRoom: null,
 
   roomServer: '//api.temasys.com.sg',
 
   enforceSSL: false,
-  
+
   socketTimeout: 0,
-  
+
   TURNServer: true,
-  
+
   STUNServer: true,
-  
+
   ICETrickle: true,
-  
+
   TURNTransport: 'any',
-  
+
   dataChannel: true,
-  
+
   audioFallback: false,
-  
+
   credentials: null
 };
 
 var fn = {
   isEmpty: function (data) {
     var isUnDefined = typeof data === 'undefined' || data === null;
-    
+
     if (typeof data === 'object' && !isUnDefined) {
       if (data.constructor === Array) {
         return data.length === 0;
-      
+
       } else {
         return Object.keys(data).length === 0;
       }
     }
     return isUnDefined;
   },
-  
+
   isSafe: function (unsafeFn) {
     try {
       return unsafeFn();
@@ -53,39 +51,25 @@ var fn = {
       return false;
     }
   },
-  
+
   runSync: function () {
     var args = Array.prototype.slice.call(arguments);
     var i;
-    
+
     var run = function (fn) {
       setTimeout(fn, 1);
-      
+
       args.splice(0, 1);
-  
+
       if (args.length === 0) {
         return;
       }
       run(args[0]);
     };
-    
+
     run(args[0]);
   },
-  
-  clone: function (obj) {
-    if (this.isEmpty(obj) || typeof obj !== 'object') {
-      return obj;
-    }
-    var copy = obj.constructor();
-    
-    for (var attr in obj) {
-      if (obj.hasOwnProperty(attr)) {
-        copy[attr] = obj[attr];
-      }
-    }
-    return copy;
-  },
-  
+
   constant: function (main, property, value) {
     var obj = {};
     obj[property] = {
@@ -94,64 +78,28 @@ var fn = {
     };
     Object.defineProperties(main, obj);
   },
-  
+
   generateUID: function() {
     return (new Date()).getTime().toString();
   },
-  
+
   applyHandler: function (callee, params, args) {
     var item = callee;
     var i;
-    
+
     for (i = 0; i < params.length; i += 1) {
       if (!fn.isEmpty(item[params[i]])) {
         item = item[params[i]];
       }
     }
-=======
-/*! skylinkjs - v0.5.9 - 2015-02-09 */
-=======
-/*! skylinkjs - v0.5.9 - 2015-01-28 */
->>>>>>> stash@{0}^1
-
-(function() {
-
-'use strict';
->>>>>>> Stashed changes
 
     if (typeof item === 'function') {
       item.apply(this, args);
     }
-  },
-  
-  forEach: function (main, deferItem, deferFin) {
-    if (typeof main === 'object' && !fn.isEmpty(main)) {
-      // Array objects
-      if (main.constructor === Array) {
-        var i;
-        
-        for (i = 0; i < main.length; i += 1) {
-          deferItem(main[i], i);
-        }
-      
-      // JSON objects
-      } else {
-        var key;
-        
-        for (key in main) {
-          if (main.hasOwnProperty(key)) {
-            deferItem(main[key], key);
-          }
-        }
-      }
-      // Finished loop
-      if (typeof deferFin === 'function') {
-        deferFin();
-      }
-    }
   }
-  
+
 };
+
 var log = {};
 
 // Parse if debug is not defined
@@ -189,9 +137,9 @@ var Debugger = {
    * @since 0.5.4
    */
   level: 2,
-  
+
   trace: false,
-  
+
   /**
    * The flag that indicates if Skylink should store the debug logs.
    * @property store
@@ -199,24 +147,24 @@ var Debugger = {
    * @for Debugger
    * @since 0.5.4
    */
-  store: false, 
-  
-  logs: [],
-  
-  console: {
-    log: window.console.log.bind(window.console, LogKey + '<<%s>> %s'),
-    
-    error: window.console.error.bind(window.console, LogKey + '<<%s>> %s'),
-    
-    info: window.console.info.bind(window.console, 
-      (window.webrtcDetectedBrowser === 'safari' ? 'INFO: ' : '') + LogKey + '<<%s>> %s'),
-    
-    warn: window.console.warn.bind(window.console, LogKey + '<<%s>> %s'),
+  store: false,
 
-    debug: window.console.newDebug.bind(window.console, 
-      (typeof window.console.debug !== 'function' ? 'DEBUG: ' : '') + LogKey + '<<%s>> %s')
+  logs: [],
+
+  console: {
+    log: window.console.log.bind(window.console, LogKey + '%s> %s'),
+
+    error: window.console.error.bind(window.console, LogKey + '%s> %s'),
+
+    info: window.console.info.bind(window.console,
+      (window.webrtcDetectedBrowser === 'safari' ? 'INFO: ' : '') + LogKey + '%s> %s'),
+
+    warn: window.console.warn.bind(window.console, LogKey + '%s> %s'),
+
+    debug: window.console.newDebug.bind(window.console,
+      (typeof window.console.debug !== 'function' ? 'DEBUG: ' : '') + LogKey + '%s> %s')
   },
-  
+
   traceTemplate: {
     log: '==LOG== ' + LogKey + '%s',
     error: '==ERROR== ' + LogKey + '%s',
@@ -230,9 +178,9 @@ var Debugger = {
     args.shift();
 
     if (this.store) {
-      logs.push(type, args, (new Date()));   
+      logs.push(type, args, (new Date()));
     }
-    
+
     if (this.trace) {
       return window.console.newTrace.bind(window.console, this.traceTemplate[type]);
     }
@@ -243,46 +191,46 @@ var Debugger = {
     // Debug level
     if (inputLevel > 3) {
       log.debug = this.applyConsole('debug');
-    
+
     } else {
       log.debug = function () { };
     }
-    
+
     // Log level
     if (inputLevel > 2) {
       log.log = this.applyConsole('log');
-    
+
     } else {
       log.log = function () { };
     }
-    
+
     // Info level
     if (inputLevel > 1) {
       log.info = this.applyConsole('info');
-    
+
     } else {
       log.info = function () { };
     }
-    
+
     // Warn level
     if (inputLevel > 0) {
       log.warn = this.applyConsole('warn');
-  
+
     } else {
       log.warn = function () { };
     }
-    
+
     // Error level
     if (inputLevel > -1) {
       log.error = this.applyConsole('error');
-      
+
     } else {
       log.error = function () { };
     }
 
     this.level = inputLevel;
   },
-  
+
   configure: function (options) {
     options = options || {};
 
@@ -293,7 +241,7 @@ var Debugger = {
     Debugger.trace = !!options.trace;
 
     // Set log level
-    Debugger.setLevel( typeof options.level === 'number' ? options.level : 2 );    
+    Debugger.setLevel( typeof options.level === 'number' ? options.level : 2 );
   }
 };
 
@@ -484,6 +432,9 @@ Skylink.VIDEO_RESOLUTION = {
 function DataChannel(channel, listener) {
   'use strict';
 
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
+
   // Reference of instance
   var com = this;
 
@@ -495,20 +446,33 @@ function DataChannel(channel, listener) {
    * @for DataChannel
    * @since 0.6.0
    */
-  com.id = channel.label || Date.UTC();
-  
+  com.id = channel.label || fn.generateUID();
+
   /**
-   * The type of datachannel
+   * The type of datachannel.
    * @attribute type
    * @type String
    * @private
-   * @for DataMessage
+   * @for DataChannel
    * @since 0.6.0
    */
   com.type = 'message';
 
   /**
-   * The DataChannel object.
+   * The datachannel source origin.
+   * There are two types of sources:
+   * - <code>"local"</code> indicates that datachannel came from self user.
+   * - <code>"remote</code> indicates that datachannel came from other users.
+   * @attribute sourceType
+   * @type String
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.sourceType = 'local';
+
+  /**
+   * The RTCDataChannel object.
    * @attribute RTCDataChannel
    * @type Object
    * @private
@@ -516,121 +480,139 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.RTCDataChannel = null;
-  
+
+
+  /**
+   * Function to subscribe to when datachannel has opened.
+   * @method onconnect
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when datachannel has closed.
+   * @method ondisconnect
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+
+  /**
+   * Function to subscribe to when datachannel has an error.
+   * @method onerror
+   * @eventhandler true
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.onerror = function () {};
+
+  /**
+   * The handler handles received events.
+   * @method routeEvent
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.peerId = com.id;
+
+    fn.applyHandler(DataChannelReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('DataChannel: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.id = com.name;
+
+    fn.applyHandler(DataChannelResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('DataChannel: Responding with event = ', event, data);
+  };
+
   /**
    * Binds events to RTCDataChannel object.
    * @method bind
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {Object} bindChannel The RTCDataChannel object to bind events to.
+   * @private
    * @for DataChannel
    * @since 0.6.0
    */
   com.bind = function (bindChannel) {
     // Prevent re-trigger
-    if (bindChannel.readyState !== 'open') {
-      bindChannel.onopen = function () {
-        com.onOpen(bindChannel);
-      };
-    
-    } else {
-      com.onOpen(bindChannel);
-    }
-    
-    bindChannel.onerror = function (error) {
-      com.onError(bindChannel, error);
+    var onOpenFn = function () {
+      com.handler('datachannel:connect', {});
     };
 
-    // NOTE: Older firefox might close the DataChannel earlier 
+    if (bindChannel.readyState !== 'open') {
+      bindChannel.onopen = onOpenFn;
+
+    } else {
+      onOpenFn();
+    }
+
+    bindChannel.onerror = function (error) {
+      com.handler('datachannel:error', {
+        error: error
+      });
+    };
+
+    // NOTE: Older firefox might close the DataChannel earlier
     bindChannel.onclose = function () {
-      com.onClose(bindChannel);
+      com.handler('datachannel:disconnect', {});
     };
 
     bindChannel.onmessage = function (event) {
-      com.onMessage(bindChannel, event.data);
+      com.handler('datachannel:message', {
+        data: event.data
+      });
     };
-    
+
     com.RTCDataChannel = bindChannel;
 
     fn.runSync(function () {
-      listener('datachannel:start', {
-        id: com.id,
-        peerId: com.peerId
-      });
+      com.handler('datachannel:start', {});
     });
   };
-  
-  /**
-   * Handles the event when DataChannel is opened.
-   * @method onOpen
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onOpen = function (bindChannel) {
-    listener('datachannel:connect', {
-      id: com.id,
-      peerId: com.peerId
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel is closed.
-   * @method onClose
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onClose = function (bindChannel) {
-    listener('datachannel:disconnect', {
-      id: com.id,
-      peerId: com.peerId
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel has an exception.
-   * @method onClose
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onError = function (bindChannel, error) {
-    listener('datachannel:error', {
-      id: com.id,
-      peerId: com.peerId,
-      error: error
-    });
-  };
-  
-  /**
-   * Handles the event when DataChannel has a message received.
-   * @method onMessage
-   * @trigger peerJoined, mediaAccessRequired
-   * @for DataChannel
-   * @since 0.6.0
-   */
-  com.onMessage = function (bindChannel, data) {
-    listener('datachannel:message', {
-      id: com.id,
-      peerId: com.peerId,
-      data: data
-    });
-  };
-  
+
   /**
    * Sends data over the datachannel.
    * @method send
    * @param {JSON|String} data The data to send.
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for DataChannel
    * @since 0.6.0
    */
   com.send = function (data) {
     var sendingData = data;
-  
+
     if (typeof data === 'object') {
       sendingData = JSON.stringify(data);
     }
-  
+
     fn.isSafe(function () {
       com.RTCDataChannel.send(sendingData);
     });
@@ -640,8 +622,90 @@ function DataChannel(channel, listener) {
     throw new Error('Provided parameter channel is invalid.');
   }
 
+  // Bind datachannel object
   com.bind(channel);
 }
+
+var DataChannelEventResponseHandler = {
+  /**
+   * Event fired when the datachannel object is ready to use.
+   * @event datachannel:start
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  start: function (com, data, listener) {
+    if (typeof com.onstart === 'function') {
+      com.onstart();
+    }
+  },
+  
+  /**
+   * Event fired when the datachannel has opened.
+   * @event datachannel:connect
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === 'function') {
+      com.onconnect();
+    }
+  },
+  
+  /**
+   * Event fired when the datachannel has an exception occurred.
+   * @event datachannel:error
+   * @param {Object} error The RTCDataChannel error.
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  error: function (com, data, listener) {
+    if (typeof com.onerror === 'function') {
+      com.onerror(error);
+    }
+  },
+  
+  /**
+   * Event fired when the datachannel receives data.
+   * @event datachannel:message
+   * @param {JSON|String} data The data received.
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  message: function (com, data, listener) {
+    
+  },
+
+  /**
+   * Event fired when the datachannel has closed.
+   * @event datachannel:disconnect
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === 'function') {
+      com.ondisconnect();
+    }
+  }
+};
+
+/**
+ * Handles the datachannel class events.
+ * @attribute DataChannelHandler
+ * @type JSON
+ * @private
+ * @for DataChannel
+ * @since 0.6.0
+ */
+var DataChannelHandler = function (com, event, data, listener) {
+  var params = event.split(':');
+
+  // Class events
+  data.id = com.id;
+
+  fn.applyHandler(DataChannelEventResponseHandler, params, [com, data, listener]);
+
+  listener(event, data);
+};
 var DataProcess = {
   
   chunkSize: 49152,
@@ -688,7 +752,6 @@ var DataProcess = {
 function DataTransfer(channel, config, listener) {
   'use strict';
 
-<<<<<<< Updated upstream
 }
 var _Event = {
   listeners: {
@@ -716,51 +779,6 @@ var _Event = {
       this.listeners.on = {};
       this.listeners.once = {};
       return;
-=======
-/**
- * An ICE candidate has just been generated (ICE gathering) and will be sent to the peer.
- * Part of connection establishment.
- * @method _onIceCandidate
- * @param {String} targetMid The peerId of the target peer.
- * @param {Event} event This is provided directly by the peerconnection API.
- * @trigger candidateGenerationState
- * @private
- * @since 0.1.0
- * @component ICE
- * @for Skylink
- */
-Skylink.prototype._onIceCandidate = function(targetMid, event) {
-  if (event.candidate) {
-    if (this._enableIceTrickle) {
-      var messageCan = event.candidate.candidate.split(' ');
-      var candidateType = messageCan[7];
-      log.debug([targetMid, 'RTCIceCandidate', null, 'Created and sending ' +
-        candidateType + ' candidate:'], event);
-<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
-      
-      if (candidateType !== 'host') {
-        this._sendChannelMessage({
-          type: this._SIG_MESSAGE_TYPE.CANDIDATE,
-          label: event.candidate.sdpMLineIndex,
-          id: event.candidate.sdpMid,
-          candidate: event.candidate.candidate,
-          mid: this._user.sid,
-          target: targetMid,
-          rid: this._room.id
-        });
-      }
->>>>>>> Stashed changes
-=======
-      this._sendChannelMessage({
-        type: this._SIG_MESSAGE_TYPE.CANDIDATE,
-        label: event.candidate.sdpMLineIndex,
-        id: event.candidate.sdpMid,
-        candidate: event.candidate.candidate,
-        mid: this._user.sid,
-        target: targetMid,
-        rid: this._room.id
-      });
->>>>>>> stash@{0}^1
     }
     
     if (typeof listener === 'function') {
@@ -793,7 +811,6 @@ Skylink.prototype._onIceCandidate = function(targetMid, event) {
   trigger: function (listeners, args) {
     var i;
 
-<<<<<<< Updated upstream
     for (i = 0; i < listeners.length; i += 1) {
       try {
         listeners[i].apply(this, args);
@@ -801,33 +818,6 @@ Skylink.prototype._onIceCandidate = function(targetMid, event) {
       } catch(error) {
         throw error;
       }
-=======
-/**
- * Adds all stored ICE Candidates received before handshaking.
- * @method _addIceCandidateFromQueue
- * @param {String} targetMid The peerId of the target peer.
- * @private
- * @since 0.5.2
- * @component ICE
- * @for Skylink
- */
-Skylink.prototype._addIceCandidateFromQueue = function(targetMid) {
-  this._peerCandidatesQueue[targetMid] =
-    this._peerCandidatesQueue[targetMid] || [];
-  if(this._peerCandidatesQueue[targetMid].length > 0) {
-    for (var i = 0; i < this._peerCandidatesQueue[targetMid].length; i++) {
-      var candidate = this._peerCandidatesQueue[targetMid][i];
-      log.debug([targetMid, null, null, 'Added queued candidate'], candidate);
-<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
-      this._peerConnections[targetMid].addIceCandidate(candidate, function () {
-        log.debug([targetMid, null, null, 'Add Ice candidate success'], candidate);
-      }, function () {
-        log.error([targetMid, null, null, 'Add Ice candidate failure'], candidate);
-      });
->>>>>>> Stashed changes
-=======
-      this._peerConnections[targetMid].addIceCandidate(candidate);
->>>>>>> stash@{0}^1
     }
   },
   
@@ -1338,7 +1328,24 @@ var EventList = [
   'systemAction'
 ];
 var ICE = {
-  
+  /**
+   * The revised versions of ICE connection states to handle
+   *   the differences cross-browsers of different states. This was to
+   *   feedback to various users the completion state of the ICE connection.
+   * @attribute newIceConnectionStates
+   * @type JSON
+   * @param {String} starting The ICE connection has just started.
+   * @param {String} checking The ICE connection is in checking state.
+   * @param {String} connected The ICE connection is established.
+   * @param {String} completed The ICE connection is established.
+   * @param {String} done The ICE connection is in complete state.
+   * @param {String} disconnected The ICE connection has been disconnected.
+   * @param {String} failed The ICE connection has failed.
+   * @param {String} closed The ICE connection has closed.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
   newIceConnectionStates: {
     starting : 'starting',
     checking : 'checking',
@@ -1350,49 +1357,80 @@ var ICE = {
     closed : 'closed'
   },
 
+  /**
+   * Queues ICE candidates that is received before <var>setRemoteDescription</var> is called.
+   * It stores in the <var>queueCandidate</var> property array in the peer connection object.
+   * @method queueCandidate
+   * @param {Object} peer The RTCPeerConnection object.
+   * @param {Object} candidate The RTCIceCandidate object.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
   queueCandidate: function (peer, candidate) {
     peer.queueCandidate = peer.queueCandidate || [];
     peer.queueCandidate.push(candidate);
   },
-  
+
+  /**
+   * Adds all ICE candidates that is received before <var>setRemoteDescription</var> is called.
+   * It retrieves candidates from the <var>queueCandidate</var> property array in the peer connection object.
+   * @method popCandidate
+   * @param {Object} peer The RTCPeerConnection object.
+   * @param {Function} defer The defer function that is fired when an ICE candidate is added.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
   popCandidate: function (peer, defer) {
     peer.queueCandidate = peer.queueCandidate || [];
 
-    var i;
-    
-    peer.queueCandidate.forEach(function (candidate) {
-      var type = candidate.candidate.split(' ')[7];
-
-      peer.addIceCandidate(candidate, function (success) {
+    // To pass jshint errors
+    var addCandidateFn = function (candidate, type) {
+      peer.addIceCandidate(candidate, function () {
         defer('candidate:success', {
           candidate: candidate,
           type: type
-        }); 
+        });
       }, function (error) {
         defer('candidate:error', {
           candidate: candidate,
           type: type,
           error: error
-        }); 
+        });
       });
-    });
+    };
     
-
+    var i;
+  
     for (i = 0; i < peer.queueCandidate.length; i += 1) {
       var candidate = peer.queueCandidate[i];
-      defer(candidate);
+      var type = candidate.candidate.split(' ')[7];
+
+      addCandidateFn(candidate, type);
     }
     peer.queueCandidate = [];
   },
-  
+
+  /**
+   * Adds the ICE candidate or queues the candidate if it is received before
+   *   <var>setRemoteDescription</var> is called.
+   * @method addCandidate
+   * @param {Object} peer The RTCPeerConnection object.
+   * @param {Object} candidate The RTCIceCandidate object.
+   * @param {Function} defer The defer function that is fired when an ICE candidate is added.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
   addCandidate: function (peer, candidate, defer) {
     if (fn.isEmpty(candidate.candidate)) {
-      return defer('candidate:gathered', candidate);
+      return;
     }
-    
-    if (fn.isEmpty(peer.remoteDescription)) {
+
+    if (!fn.isSafe(function () { return !!peer.remoteDescription.sdp; })) {
       this.queueCandidate(peer, candidate, defer);
-    
+
     } else {
       var type = candidate.candidate.split(' ')[7];
 
@@ -1400,32 +1438,42 @@ var ICE = {
         defer('candidate:success', {
           candidate: candidate,
           type: type
-        }); 
+        });
       }, function (error) {
         defer('candidate:error', {
           candidate: candidate,
           type: type,
           error: error
-        }); 
+        });
       });
     }
   },
 
+  /**
+   * Parses the received ICE connection state and updates to a new version
+   *   to handle the differences received from cross-browsers.
+   * State should go from <code>checking > connected > completed</code>.
+   * @method parseIceConnectionState
+   * @param {Object} peer The RTCPeerConnection object.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
   parseIceConnectionState: function (peer) {
     var state = peer.iceConnectionState;
-    
+
     var checkState = this.newIceConnectionStates[state];
-    
-    if (!peer.iceConnectionFiredStates || checkState === 'disconnected' || 
+
+    if (!peer.iceConnectionFiredStates || checkState === 'disconnected' ||
         checkState === 'failed' || checkState === 'closed') {
       peer.iceConnectionFiredStates = [];
     }
-    
+
     var newState = this.newIceConnectionStates[state];
-    
+
     if (peer.iceConnectionFiredStates.indexOf(newState) < 0) {
       peer.iceConnectionFiredStates.push(newState);
-      
+
       if (newState === 'connected') {
         setTimeout(function () {
           peer.iceConnectionFiredStates.push('done');
@@ -1438,27 +1486,89 @@ var ICE = {
       peer.oniceconnectionnewstatechange(peer);
     }
   },
-  
-  parseICEServers: function (constraints) {
-    return constraints;
-  },
-  
-  parseSTUNServers: function (constraints) {
-    return constraints;
-  },
 
-  parseTURNServers: function (constraints) {
-    return constraints;
+  /**
+   * Handles the ICE servers received based on the options set by user and parses
+   * the differences for iceServer format for cross-browsers.
+   * <br>Format of an ICE server:
+   * - <code>STUN</code> is structured like <code>{ url: 'stun:hosturl' }</code>.
+   * - <code>TURN</code> is structured like
+   *    <code>{ url: 'turn:username@hosturl', credential: 'xxx' }</code> and
+   *    <code>{ url: 'turn:hosturl', username: 'username', credential: 'xxx' }</code> for
+   *    Firefox browsers.
+   * @method parseICEServers
+   * @param {Array} iceServers The list of ICE servers.
+   * @param {JSON} iceServers.(#index) The ICE server.
+   * @param {String} iceServers.(#index).credential The ICE server credential (password).
+   * @param {String} iceServers.(#index).url The ICE server url. For TURN server,
+   *   the format may vary depending on the support of the TURN url format.
+   * @returns {Array} The updated ICE servers list.
+   * - <code>(#index)</code> <var>: <b>type</b> JSON</var><br>
+   *   The ICE server.
+   * - <code>(#index).credential</code> <var>: <b>type</b> String</var><br>
+   *   The ICE server credential (password). Only used in TURN servers.
+   * - <code>(#index).url</code> <var>: <b>type</b> String</var><br>
+   *   The ICE server url. For TURN server, the format may vary depending on the support of
+   *   the TURN url format.
+   * - <code>(#index).username</code> <var>: <b>type</b> String</var><br>
+   *   The ICE server username. Only used in TURN servers for Firefox browsers.
+   * @private
+   * @for ICE
+   * @since 0.6.0
+   */
+  parseICEServers: function (iceServers) {
+    var newIceServers = [];
+    var i;
+
+    console.info('globals TURN', globals.TURNServer);
+    console.info('globals STUN', globals.STUNServer);
+
+    for (i = 0; i < iceServers.length; i += 1) {
+      var iceServer = iceServers[i];
+      var urlParts = iceServer.url.split(':');
+      var serverType = urlParts[0];
+
+      if (serverType === 'turn') {
+        // Add TURN if needed
+        if (globals.TURNServer === true) {
+          // Firefox doesn't support turn:username@hosturl
+          if (window.webrtcDetectedBrowser === 'firefox') {
+            var subUrlParts = urlParts[1].split('@');
+            var username = subUrlParts[0];
+            var url = subUrlParts[1];
+
+            urlParts[1] = url;
+
+            iceServer.username = username;
+            iceServer.url = urlParts.join(':');
+          }
+          // Add it to array
+          newIceServers.push(iceServer);
+        }
+
+      } else {
+        // Add STUN if needed
+        if (globals.STUNServer === true) {
+          // Add it to array
+          newIceServers.push(iceServer);
+        }
+      }
+    }
+
+    return newIceServers;
   }
 };
 function Peer(config, listener) {
   'use strict';
 
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
+
   // Reference of instance
   var com = this;
 
   /**
-   * The peer id.
+   * The shared peer connection id.
    * @attribute id
    * @type String
    * @private
@@ -1466,9 +1576,9 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.id = config.id || fn.generateUID();
-  
+
   /**
-   * The peer type.
+   * The peer connection type.
    * @attribute type
    * @type String
    * @private
@@ -1476,29 +1586,57 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.type = config.id === 'main' ? 'user' : 'stream';
-  
+
   /**
-   * The local description type peer sends.
+   * The RTCSessionDescription type that the peer connection would send.
+   * Types are <code>"offer"</code> or <code>"answer"</code>.
    * @attribute SDPType
    * @type String
    * @private
    * @for Peer
    * @since 0.6.0
    */
-  com.SDPType = null;
+  com.SDPType = config.SDPType;
 
   /**
-   * The PeerConnection constraints - iceServers.
-   * @attribute constraints
+   * The RTCPeerConnection ICE servers configuration.
+   * @attribute ICEConfig
+   * @param {Array} iceServers The list of ICE servers this peer connection
+   *    would use.
+   * @param {JSON} iceServers.(#index) The ICE server.
+   * @param {String} iceServers.(#index).credential The ICE server credential (password).
+   *    Only used in TURN servers.
+   * @param {String} iceServers.(#index).url The ICE server url. For TURN server,
+   *   the format may vary depending on the support of the TURN url format.
+   * @param {String} iceServers.(#index).username The ICE server username.
+   *    Only used in TURN servers for Firefox browsers.
    * @type String
    * @private
    * @for Peer
    * @since 0.6.0
    */
-  com.constraints = null;
+  com.ICEConfig = null;
 
   /**
-   * The local description to be set.
+   * The RTCPeerConnection optional configuration.
+   * @attribute optionalConfig
+   * @param {Array} optional The optional configuration.
+   * @param {JSON} optional.(#index) The optional setting.
+   * @param {Boolean} optional.(#index).DtlsSrtpKeyAgreement Required flag
+   *    for Chrome and Firefox to interop.
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.optionalConfig = {
+    optional: [{
+      DtlsSrtpKeyAgreement: true
+    }]
+  };
+
+  /**
+   * The local RTCSessionDescription set for this peer connection.
    * @attribute localDescription
    * @type Object
    * @private
@@ -1506,9 +1644,9 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.localDescription = null;
-  
+
   /**
-   * The remote description to be set.
+   * The remote RTCSessionDescription set for this peer connection.
    * @attribute remoteDescription
    * @type Object
    * @private
@@ -1516,20 +1654,20 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.remoteDescription = null;
-  
+
   /**
-   * The datachannels connected to PeerConnection.
+   * The datachannels connected to peer connection.
    * @attribute datachannels
-   * @param {DataChannel} <channelId> The datachannel connected to peer.
+   * @param {DataChannel} (#channelId) The datachannel connected to peer.
    * @type JSON
    * @private
    * @for Peer
    * @since 0.6.0
    */
   com.datachannels = {};
-  
+
   /**
-   * The flag that indicates if trickle ICE is enable for this PeerConnection.
+   * The flag that indicates if trickle ICE is enable for this peer connection.
    * @attribute iceTrickle
    * @type Boolean
    * @private
@@ -1537,9 +1675,10 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.iceTrickle = true;
-  
+
   /**
-   * The timeout that would react if PeerConnection is unstable and refresh connection.
+   * The timeout that would be invoked when peer connection has expired without
+   *   an established connection.
    * @attribute healthTimer
    * @type Function
    * @private
@@ -1547,9 +1686,9 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.healthTimer = null;
-  
+
   /**
-   * The stream send from this peer.
+   * The remote stream received from this peer.
    * @attribute stream
    * @type Stream
    * @private
@@ -1557,25 +1696,60 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.stream = null;
-  
+
   /**
-   * Stores the streaming configuration.
+   * Stores the streaming configuration for the peer connection.
    * @attribute streamingConfig
+   * @param {JSON|Boolean} [audio=false] The audio stream configuration.
+   *    If parsed as a boolean, other configuration settings under the audio
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [audio.stereo=false] The flag that indiciates
+   *    if stereo is enabled for this connection.
+   * @param {String} [audio.sourceId] The source id of the audio MediaStreamTrack
+     *    used for this connection.
+   * @param {String|Boolean} [video=false] The video stream configuration.
+   *    If parsed as a boolean, other configuration settings under the video
+   *    configuration would be set as the default setting in the connection.
+   * @param {JSON} [video.resolution] The video streaming resolution.
+   * @param {Integer} video.resolution.width The video resolution width.
+   * @param {Integer} video.resolution.height The video resolution height.
+   * @param {Integer} video.frameRate The video stream framerate.
+   * @param {String} [video.sourceId] The source id of the video MediaStreamTrack
+   *    used for this connection.
+   * @param {JSON} status The stream MediaStreamTrack status.
+   * @param {Boolean} [status.audioMuted=false] The flag that indicates if audio is muted.
+   *    If audio is set to false, this would be set as true.
+   * @param {Boolean} [status.videoMuted=false] The flag that indicates if video is muted.
+   *    If video is set to false, this would be set as true.
    * @type JSON
    * @private
    * @for Peer
    * @since 0.6.0
    */
   com.streamingConfig = config.streamingConfig || {
-    bandwidth: {},
     audio: false,
     video: false,
-    mediaStatus: { audioMuted: true, videoMuted: true }
+    status: {
+      audioMuted: true,
+      videoMuted: true
+    }
   };
 
   /**
-   * The PeerConnection session description constraints.
+   * The RTCPeerConnection createOffer and createAnswer.
    * @attribute sdpConstraints
+   * @param {JSON} mandatory The mandatory constraints. This format is only
+   *    for Chrome browsers.
+   * @param {Boolean} mandatory.OfferToReceiveAudio The flag that indicates if
+   *    this RTCPeerConnection should receive audio.
+   * @param {Boolean} mandatory.OfferToReceiveVideo The flag that indicates if
+   *    this RTCPeerConnection should receive video.
+   * @param {Boolean} OfferToReceiveAudio The flag that indicates if
+   *    this RTCPeerConnection should receive audio. This format is only
+   *    for Firefox browsers (30+).
+   * @param {Boolean} OfferToReceiveVideo The flag that indicates if
+   *    this RTCPeerConnection should receive video. This format is only
+   *    for Firefox browsers (30+).
    * @type JSON
    * @private
    * @for Peer
@@ -1587,33 +1761,29 @@ function Peer(config, listener) {
       OfferToReceiveVideo: true
     }
   };
-  
+
   /**
-   * The PeerConnection session description configuration.
+   * The RTCSessionDescription session description modification configuration.
+   * This uses the user's sent streaming configuration.
    * @attribute sdpConfig
+   * @param {Boolean} stereo The flag that indicates if stereo is enabled for this connection.
+   * @param {JSON} bandwidth The bandwidth configuration the peer connections.
+   *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @param {Integer} [bandwidth.audio] The bandwidth configuration for the audio stream.
+   * @param {Boolean} [bandwidth.video] The bandwidth configuration for the video stream.
+   * @param {Boolean} [bandwidth.data] The bandwidth configuration for the data stream.
    * @type JSON
    * @private
    * @for Peer
    * @since 0.6.0
    */
-  com.sdpConfig = null;
-
-  /**
-   * The PeerConnection configuration.
-   * @attribute config
-   * @type String
-   * @private
-   * @for Peer
-   * @since 0.6.0
-   */
-  com.config = {
-    optional: [{
-      DtlsSrtpKeyAgreement: true
-    }]
+  com.sdpConfig = {
+    stereo: false,
+    bandwidth: config.bandwidth
   };
 
   /**
-   * The PeerConnection object.
+   * The RTCPeerConnection object.
    * @attribute RTCPeerConnection
    * @type JSON
    * @private
@@ -1621,9 +1791,9 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.RTCPeerConnection = null;
-  
+
   /**
-   * The peerconnection weight during handshake.
+   * The generated weight for the "welcome" handshake priority.
    * @attribute weight
    * @type Integer
    * @private
@@ -1631,108 +1801,167 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.weight = parseInt(fn.generateUID(), 10);
-  
-  /**
-   * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
-   * @private
-   * @for Peer
-   * @since 0.6.0
-   */
-  com.handler = function (event, data) {
-    PeerHandler(com, event, data, listener);
-  };
 
 
   /**
-   * Function to subscribe to when peer's connection has been started.
+   * Function to subscribe to when peer connection has been started.
    * @method onconnect
+   * @eventhandler true
    * @for Peer
    * @since 0.6.0
    */
   com.onconnect = function () {};
 
   /**
-   * Function to subscribe to when peer's ice connection state changes.
+   * Function to subscribe to when peer connection is established.
+   * @method onconnected
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onconnected = function () {};
+
+  /**
+   * Function to subscribe to when ICE connection state changes.
    * @method oniceconnectionstatechange
+   * @eventhandler true
    * @for Peer
    * @since 0.6.0
    */
   com.oniceconnectionstatechange = function () {};
-  
+
   /**
-   * Function to subscribe to when peer's ice gathering state changes.
+   * Function to subscribe to when ICE gathering state changes.
    * @method onicegatheringstatechange
+   * @eventhandler true
    * @for Peer
    * @since 0.6.0
    */
   com.onicegatheringstatechange = function () {};
-  
+
   /**
-   * Function to subscribe to when peer's remote stream is received.
+   * Function to subscribe to when there is an incoming stream received.
    * @method onaddstream
+   * @param {Stream} stream The stream object.
+   * @eventhandler true
    * @for Peer
    * @since 0.6.0
    */
   com.onaddstream = function () {};
-  
+
   /**
-   * Function to subscribe to when peer's signaling state has changed.
+   * Function to subscribe to when signaling state has changed.
    * @method onsignalingstatechange
+   * @eventhandler true
    * @for Peer
    * @since 0.6.0
    */
   com.onsignalingstatechange = function () {};
-  
+
   /**
-   * Function to subscribe to when peer's connection has been restarted.
+   * Function to subscribe to when peer connection has been restarted.
    * @method onreconnect
+   * @eventhandler true
    * @for Peer
    * @since 0.6.0
    */
   com.onreconnect = function () {};
-  
+
   /**
-   * Function to subscribe to when peer's connection has been restarted.
-   * @method onreconnect
-   * @for Peer
-   * @since 0.6.0
-   */
-  com.onreconnect = function () {};
-  
-  /**
-   * Function to subscribe to when a peer connection been disconnected.
+   * Function to subscribe to when peer connection been disconnected.
    * @method onremoveconnection
+   * @eventhandler true
    * @for Peer
    * @since 0.6.0
    */
   com.ondisconnect = function () {};
-  
-  
+
+
 
   /**
-   * Starts the peer connection.
+   * The handler handles received events.
+   * @method routeEvent
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.peerId = com.id;
+
+    fn.applyHandler(PeerEventReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Peer: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles received socket message events.
+   * @method routeMessage
+   * @param {JSON} message The message data.
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.routeMessage = function (message) {
+    // Messaging events
+    var fn = PeerEventMessageHandler[message.type];
+
+    if (typeof fn === 'function') {
+      fn(com, message, listener);
+    }
+
+    log.debug('Peer: Received message = ', message.type, message);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.id = com.name;
+
+    fn.applyHandler(PeerEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Peer: Responding with event = ', event, data);
+  };
+
+  /**
+   * Starts the connection and initializes the RTCPeerConnection object.
    * @method connect
+   * @param {Stream} stream The stream object.
    * @private
    * @for Peer
    * @since 0.6.0
    */
   com.connect = function (stream) {
-    var peer = new window.RTCPeerConnection(com.constraints, com.config);
-  
+    var peer = new window.RTCPeerConnection(com.ICEConfig, com.optionalConfig);
+
     // Send stream
-    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {    
-      
+    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
+
       // Set the data
       com.stereo = fn.isSafe(function () { return stream.audio.stereo; });
-    
+
       // Check class type
       peer.addStream(stream.MediaStream);
-      
-      window.data = stream.MediaStream;
 
-      com.handler('peer:stream', {
+      com.respond('peer:stream', {
         sourceType: 'local',
         stream: stream
       });
@@ -1740,10 +1969,12 @@ function Peer(config, listener) {
 
     com.bind(peer);
   };
-  
+
   /**
-   * Restarts the peer connection.
+   * Restarts the connection and re-initialize the RTCPeerConnection object
+   *   to restart the ICE connection.
    * @method reconnect
+   * @param {Stream} stream The updated stream object.
    * @private
    * @for Peer
    * @since 0.6.0
@@ -1751,39 +1982,35 @@ function Peer(config, listener) {
   com.reconnect = function (stream) {
     var hasStream = !!stream;
 
-    stream = stream || fn.isSafe(function () { 
+    stream = stream || fn.isSafe(function () {
       return com.RTCPeerConnection.getLocalStreams()[0]; });
 
     com.RTCPeerConnection.close();
     com.RTCPeerConnection = null;
-    
-    var peer = new window.RTCPeerConnection(com.constraints, com.config);
+
+    var peer = new window.RTCPeerConnection(com.ICEConfig, com.config);
 
     // Send stream
-    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {    
-      
-      // Set the data
-      com.stereo = fn.isSafe(function () { return stream.audio.stereo; });
-    
-      // Check class type
+    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
+
+      // Adds the RTCMediaStream object to RTCPeerConnection
       peer.addStream(stream.MediaStream);
-      
+
       if (hasStream) {
-        com.handler('peer:stream', {
+        com.respond('peer:stream', {
           stream: stream
         });
       }
-      
-      com.handler('peer:reconnect', {});
+
+      com.respond('peer:reconnect', {});
     }
     com.bind(peer);
   };
 
   /**
-   * Stops the peer connection.
+   * Stops and closes the RTCPeerConnection connection.
    * @method disconnect
    * @private
-   * @trigger peerJoined, mediaAccessRequired
    * @for Peer
    * @since 0.6.0
    */
@@ -1791,14 +2018,14 @@ function Peer(config, listener) {
     if (com.RTCPeerConnection.newSignalingState !== 'closed') {
       com.RTCPeerConnection.close();
     }
-    
-    com.handler('peer:disconnect', {});
+
+    com.respond('peer:disconnect', {});
   };
 
   /**
    * Binds events to RTCPeerConnection object.
    * @method bind
-   * @trigger StreamJoined, mediaAccessRequired
+   * @private
    * @for Peer
    * @since 0.6.0
    */
@@ -1810,14 +2037,14 @@ function Peer(config, listener) {
 
     bindPeer.ondatachannel = function (event) {
       var eventChannel = event.channel || event;
-      
+
       // Send the channel only when channel has started
       var channel = new DataChannel(eventChannel, function (event, data) {
-        
-        com.handler(event, data);
-        
+
+        com.respond(event, data);
+
         if (event === 'datachannel:start') {
-          com.handler('peer:datachannel', {
+          com.respond('peer:datachannel', {
             channel: channel,
             sourceType: 'remote'
           });
@@ -1827,14 +2054,14 @@ function Peer(config, listener) {
 
     bindPeer.onaddstream = function (event) {
       var eventStream = event.stream || event;
-  
+
       // Send the stream only when stream has started
       var stream = new Stream(eventStream, config.streamingConfig, function (event, data) {
-        
-        com.handler(event, data);
-  
+
+        com.routeEvent(event, data);
+
         if (event === 'stream:start') {
-          com.handler('peer:stream', {
+          com.respond('peer:stream', {
             sourceType: 'remote',
             stream: stream
           });
@@ -1844,18 +2071,20 @@ function Peer(config, listener) {
 
     bindPeer.onicecandidate = function (event) {
       var eventCandidate = event.candidate || event;
-  
+
       if (fn.isEmpty(eventCandidate.candidate)) {
-        com.handler('candidate:gathered', {
+        com.respond('candidate:gathered', {
           candidate: eventCandidate
         });
         return;
       }
-      
-      com.handler('peer:icecandidate', {
+
+      // Implement ice trickle disabling here
+
+      com.respond('peer:icecandidate', {
         sourceType: 'local',
         candidate: eventCandidate
-      }); 
+      });
     };
 
     bindPeer.oniceconnectionstatechange = function (event) {
@@ -1872,28 +2101,28 @@ function Peer(config, listener) {
           clearInterval(com.healthTimer);
         }
       }
-      
-      com.handler('peer:iceconnectionstate', {
+
+      com.respond('peer:iceconnectionstate', {
         state: com.RTCPeerConnection.newIceConnectionState
       });
     };
 
     bindPeer.onsignalingstatechange = function (event) {
-      com.handler('peer:signalingstate', {
+      com.respond('peer:signalingstate', {
         state: com.RTCPeerConnection.newSignalingState
       });
     };
 
     bindPeer.onicegatheringstatechange = function () {
-      com.handler('peer:icegatheringstate', {
+      com.respond('peer:icegatheringstate', {
         state: com.RTCPeerConnection.iceGatheringState
-      }); 
+      });
     };
-    
+
     com.RTCPeerConnection = bindPeer;
 
     fn.runSync(function () {
-      com.handler('peer:connect', {
+      com.respond('peer:connect', {
         weight: com.weight,
         SDPType: com.SDPType,
         streamingConfig: com.streamingConfig
@@ -1902,9 +2131,9 @@ function Peer(config, listener) {
   };
 
   /**
-   * Creates an offer session description.
+   * Creates a local offer RTCSessionDescription.
    * @method createOffer
-   * @trigger StreamJoined, mediaAccessRequired
+   * @private
    * @for Peer
    * @since 0.6.0
    */
@@ -1912,13 +2141,13 @@ function Peer(config, listener) {
     // Create datachannel
     if (globals.dataChannel && com.type === 'user') {
       var eventChannel = com.RTCPeerConnection.createDataChannel('main');
-      
+
       // Send the channel only when channel has started
       var channel = new DataChannel(eventChannel, function (event, data) {
-        
-        com.handler(event, data);
-        
-        com.handler('peer:datachannel', {
+
+        com.respond(event, data);
+
+        com.respond('peer:datachannel', {
           sourceType: 'local',
           channel: channel
         });
@@ -1930,82 +2159,77 @@ function Peer(config, listener) {
 
       com.localDescription = offer;
 
-      com.handler('peer:offer:success', {
+      com.respond('peer:offer', {
         offer: offer
       });
 
     }, function (error) {
-      com.handler('peer:offer:error', {
-        error: error
-      });
+      throw error;
+
     }, com.sdpConstraints);
   };
 
   /**
-   * Creates an answer session description.
+   * Creates a local answer RTCSessionDescription.
    * @method createAnswer
-   * @trigger StreamJoined, mediaAccessRequired
+   * @private
    * @for Peer
    * @since 0.6.0
    */
   com.createAnswer = function () {
     com.RTCPeerConnection.createAnswer(function (answer) {
       answer.sdp = SDP.configure(answer.sdp, com.sdpConfig);
-  
+
       com.localDescription = answer;
-  
-      com.handler('peer:answer:success', {
+
+      com.respond('peer:answer', {
         answer: answer
       });
-      
+
       com.setLocalDescription();
 
     }, function (error) {
-      com.handler('peer:answer:error', {
-        error: error
-      });
-      
+      throw error;
+
     }, com.sdpConstraints);
   };
 
   /**
-   * Sets local description.
+   * Sets local RTCSessionDescription to the RTCPeerConnection.
    * @method setLocalDescription
+   * @private
    * @for Peer
    * @since 0.6.0
    */
   com.setLocalDescription = function () {
     var localDescription = com.localDescription;
-  
+
     com.RTCPeerConnection.setLocalDescription(localDescription, function () {
-      com.handler('peer:localdescription:success', {
+      com.respond('peer:localdescription', {
         localDescription: localDescription.sdp,
         type: localDescription.type,
       });
 
       if (localDescription.type === 'answer') {
         com.RTCPeerConnection.newSignalingState = 'have-local-answer';
-        
-        com.handler('peer:signalingstate', {
+
+        com.respond('peer:signalingstate', {
           state: com.RTCPeerConnection.newSignalingState
         });
-      
+
       } else {
         com.setRemoteDescription();
       }
 
     }, function (error) {
-      com.handler('peer:localdescription:error', {
-        localDescription: localDescription.sdp,
-        type: localDescription.type,
-        error: error
-      });
+      throw error;
     });
   };
 
   /**
-   * Sets remote description.
+   * Sets remote RTCSessionDescription to the RTCPeerConnection.
    * @method setRemoteDescription
+   * @private
    * @for Peer
    * @since 0.6.0
    */
@@ -2013,31 +2237,27 @@ function Peer(config, listener) {
     var remoteDescription = com.remoteDescription;
 
     com.RTCPeerConnection.setRemoteDescription(remoteDescription, function () {
-      com.handler('peer:remotedescription:success', {
+      com.respond('peer:remotedescription', {
         remoteDescription: remoteDescription.sdp,
         type: remoteDescription.type
       });
-  
+
       if (remoteDescription.type === 'answer') {
         com.RTCPeerConnection.newSignalingState = 'have-remote-answer';
-        
-        com.handler('peer:signalingstate', {
+
+        com.respond('peer:signalingstate', {
           state: com.RTCPeerConnection.newSignalingState
         });
-      
+
       } else {
         com.createAnswer();
       }
-      
+
       // Add all ICE Candidate generated before remote description of answer and offer
       ICE.popCandidate(com.RTCPeerConnection, com.handler);
 
     }, function (error) {
-      com.handler('peer:remotedescription:error', {
-        remoteDescription: remoteDescription.sdp,
-        type: remoteDescription.type,
-        error: error
-      });
+      throw error;
     });
   };
 
@@ -2045,44 +2265,47 @@ function Peer(config, listener) {
   if (!window.RTCPeerConnection) {
     throw new Error('Required dependency adapterjs not found');
   }
-  
+
   // Parse bandwidth
   com.streamingConfig.bandwidth = StreamParser.parseBandwidthConfig(com.streamingConfig.bandwidth);
 
   // Parse constraints ICE servers
-  com.constraints = ICE.parseICEServers(config.constraints);
-  
-  // Parse the sdp configuration
-  com.sdpConfig = {
-    stereo: fn.isSafe(function () { return config.streamingConfig.audio.stereo; }),
-    bandwidth: com.bandwidth
+  var iceServers = ICE.parseICEServers(config.iceServers);
+
+  com.ICEConfig = {
+    iceServers: iceServers
   };
-  
+
   // Start timer
   /*com.healthTimer = setTimeout(function () {
     if (!fn.isEmpty(com.healthTimer)) {
       log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
-      
+
       clearInterval(com.healthTimer);
-      
+
       com.reconnect();
     }
-    
+
   }, com.iceTrickle ? 10000 : 50000);*/
 
   fn.runSync(function () {
-    com.handler('peer:start', {
+    // When peer connection is ready to use, the connection connect() can start
+    com.respond('peer:start', {
       weight: com.weight,
       SDPType: com.SDPType,
       streamingConfig: com.streamingConfig
     });
   });
 }
+
 var PeerEventReceivedHandler = {
   
+  // Handles the stream events */
   stream: {
-    
+    // Handles the stream stop event */
     stop: function (com, data, listener) {
+      // When receiving stream stops and it is not the main peer connection, it means
+      // that connection has stopped
       // If stream is not the main, disconnect the peer connection.
       if (com.id !== 'main') {
         com.disconnect();
@@ -2095,29 +2318,82 @@ var PeerEventReceivedHandler = {
 /**
  * Handles all the events to respond to other parent classes.
  * @attribute PeerEventResponseHandler
+ * @private
  * @for Peer
  * @since 0.6.0
  */
 var PeerEventResponseHandler = {
   
+  /**
+   * Event fired when peer connection has started.
+   * This happens when RTCPeerConnection object has just
+   *   been initialized and local MediaStream has been added.
+   * @event peer:connect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   connect: function (com, data, listener) {
     if (typeof com.onconnect === 'function') {
       com.onconnect(com.id);
     }
   },
   
+  /**
+   * Event fired when peer connection is reconnecting.
+   * This happens when RTCPeerConnection object is
+   *   re-initialized and the ICE connection restarts again.
+   * It adds the re-updated local MediaStream.
+   * @event peer:reconnect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   reconnect: function (com, data, listener) {
     if (typeof com.onreconnect === 'function') {
       com.onreconnect();
     }
   },
   
+  /**
+   * Event fired when peer connection is established and connected.
+   * This happens when RTCPeerConnection ICE connection state is
+   *  connected and completed.
+   * @event peer:connected
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  connected: function (com, data, listener) {
+    if (typeof com.onconnect === 'function') {
+      com.onconnect(com.id);
+    }
+  },
+  
+  /**
+   * Event fired when peer connection has been disconnected.
+   * This happens when RTCPeerConnection close is invoked and 
+   *  connection stops.
+   * @event peer:disconnect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   disconnect: function (com, data, listener) {
     if (typeof com.ondisconnect === 'function') {
       com.ondisconnect();
     }
   },
   
+  /**
+   * Event fired when peer connection adds or receives a stream object.
+   * This happens when user sends a local MediaStream to peer or receives
+   *   a remote MediaStream from onaddstream event.
+   * @event peer:disconnect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   stream: function (com, data, listener) {
     data.stream.sourceType = data.sourceType;
 
@@ -2131,7 +2407,7 @@ var PeerEventResponseHandler = {
   },
 
   /**
-   * Handles the ice connection state trigger.
+   * Event fired when peer connection ICE connection state has changed.
    * @property iceconnectionstate
    * @type Function
    * @private
@@ -2144,7 +2420,7 @@ var PeerEventResponseHandler = {
   },
 
   /**
-   * Handles the ice gathering state trigger.
+   * Event fired when peer connection ICE gathering state has changed.
    * @property icegatheringstate
    * @type Function
    * @private
@@ -2157,7 +2433,7 @@ var PeerEventResponseHandler = {
   },
 
   /**
-   * Handles the ice candidate trigger.
+   * Event fired when peer connection ICE candidate is received.
    * @property icecandidate
    * @type Function
    * @private
@@ -2166,7 +2442,8 @@ var PeerEventResponseHandler = {
   icecandidate: function (com, data, listener) {},
 
   /**
-   * Handles the signaling state trigger.
+   * Event fired when peer connection signaling state changes.
+   * This happens when RTCPeerConnection receives local or remote offer.
    * @property signalingstate
    * @type Function
    * @private
@@ -2179,7 +2456,8 @@ var PeerEventResponseHandler = {
   },
 
   /**
-   * Handles the datachannel state trigger.
+   * Event fired when peer connection datachannel is received.
+   * This happens when RTCPeerConnection receives a local or remote RTCDataChannel.
    * @property datachannel
    * @type Function
    * @private
@@ -2199,6 +2477,7 @@ var PeerEventResponseHandler = {
 /**
  * Handles all the message events received from socket.
  * @attribute PeerEventMessageHandler
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -2266,7 +2545,12 @@ var PeerEventMessageHandler = {
 
 /**
  * Handles the peer class events.
- * @attribute PeerHandler
+ * @method PeerHandler
+ * @param {Object} com The reference to the class object.
+ * @param {String} event The event name.
+ * @param {JSON} data The event data response.
+ * @param {Function} listener The listener function.
+ * @private
  * @for Peer
  * @since 0.6.0
  */
@@ -2335,7 +2619,7 @@ var Request = {
    * @for Request
    * @since 0.6.0
    */
-  load: function (path, deferSuccess, deferError) {
+  load: function (path, deferSuccess, deferError, deferLoad) {
     var xhr = null;
 
     if (this.isXDomainRequest) {
@@ -2379,6 +2663,8 @@ var Request = {
 
     xhr.onprogress = function () {
       log.log('Request', 'Request load in progress');
+      
+      deferLoad();
     };
 
     xhr.open('GET', this.protocol + this.server + path, true);
@@ -2390,6 +2676,9 @@ var Request = {
 };
 function Room(name, listener) {
   'use strict';
+
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
 
   // Reference of instance
   var com = this;
@@ -2406,24 +2695,24 @@ function Room(name, listener) {
 
   /**
    * The room id.
-   * @attribute name
+   * @attribute id
    * @type String
    * @private
    * @for Room
    * @since 0.6.0
    */
   com.id = null;
-  
+
   /**
    * The room token.
-   * @attribute name
+   * @attribute token
    * @type String
    * @private
    * @for Room
    * @since 0.6.0
    */
   com.token = null;
-  
+
   /**
    * The room key.
    * @attribute key
@@ -2433,7 +2722,7 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.key = null;
-  
+
   /**
    * The room start date timestamp (ISO format) for persistent mode.
    * @attribute startDateTime
@@ -2443,7 +2732,7 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.startDateTime = null;
-  
+
   /**
    * The room duration for persistent mode.
    * @attribute duration
@@ -2456,7 +2745,7 @@ function Room(name, listener) {
 
   /**
    * The request path to the api server.
-   * @attribute path
+   * @attribute apiPath
    * @type String
    * @private
    * @for Room
@@ -2496,32 +2785,11 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.self = null;
-  
-  /**
-   * The user self custom user data.
-   * @attribute self
-   * @type JSON|String
-   * @private
-   * @for Room
-   * @since 0.6.0
-   */
-  com.selfData = null;
-  
-  /**
-   * The user self existing local stream connection.
-   * @attribute stream
-   * @param {Stream} <streamId> The stream connected to room.
-   * @type JSON
-   * @private
-   * @for Room
-   * @since 0.6.0
-   */
-  com.streams = {};
 
   /**
    * The list of users connected to room.
    * @attribute users
-   * @param {User} <userId> The user connected to room.
+   * @param {User} (#userId) The user connected to room.
    * @type JSON
    * @private
    * @for Room
@@ -2531,9 +2799,9 @@ function Room(name, listener) {
 
   /**
    * The list of components connected to room.
-   * - E.g. MCU, Recording
-   * @attribute user
-   * @param {User} [n=*] The user connected to room.
+   * This could be <var>MCU</var> or <var>Recording</var> peers.
+   * @attribute components
+   * @param {Component} (#index) The component connected to room.
    * @type JSON
    * @private
    * @for Room
@@ -2551,33 +2819,38 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.socket = null;
-  
-  /**
-   * The room readyState.
-   * @attribute readyState
-   * @type Integer
-   * @required
-   * @private
-   * @for Room
-   * @since 0.6.0
-   */
-  com.readyState = 0;
-  
+
   /**
    * The room TURN/STUN servers connection.
    * @attribute iceServers
-   * @param {Array} iceServers The list of ICE servers.
-   * @param {JSON} <iceServers.n> The ICE server.
-   * @type JSON
+   * @param {JSON} (#index) The ICE server.
+   * @param {String} (#index).credential The ICE server credential (password).
+   * @param {String} (#index).url The ICE server url. The current format
+   *    for TURN servers is <code>turn:username@urlhost</code>. It may be
+   *    required to parse it differently in
+   *    <code>{ username: 'username', credential: 'xxx', url: 'turn:urlhost' }</code>
+   *    format for unsupported browsers like firefox.
+   * @type Array
    * @required
    * @private
    * @for Room
    * @since 0.6.0
    */
-  com.iceServers = {};
-  
+  com.iceServers = [];
+
   /**
-   * The room locked state.
+   * The flag that indicates if the self user has joined the room.
+   * @attribute connected
+   * @type Boolean
+   * @required
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.connected = false;
+
+  /**
+   * The flag that indicates if the room is locked.
    * @attribute locked
    * @type Boolean
    * @required
@@ -2587,46 +2860,56 @@ function Room(name, listener) {
    */
   com.locked = false;
 
-  /**
-   * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
-   * @private
-   * @for Room
-   * @since 0.6.0
-   */
-  com.handler = function (event, data) {
-    RoomHandler(com, event, data, listener);
-  };
 
-  
   /**
-   * Function to subscribe to when room ready state has changed.
-   * @method onreadystatechange
+   * Function to subscribe to when room is initializating the configuration.
+   * @method oninit
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
-  com.onreadystatechange = function () {};
+  com.oninit = function () {};
+
+  /**
+   * Function to subscribe to when room object has loaded and is ready to use.
+   * @method onready
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onready = function () {};
 
   /**
    * Function to subscribe to when self has joined the room.
    * @method onjoin
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
   com.onjoin = function () {};
-  
+
+  /**
+   * Function to subscribe to when a user has joined the room.
+   * @method onuserjoin
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onuserjoin = function () {};
+
   /**
    * Function to subscribe to when self has been kicked out of room.
-   * @method onlock
+   * @method onkick
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
   com.onkick = function () {};
-  
+
   /**
-   * Function to subscribe to when self is warned by server.
-   * @method onunlock
+   * Function to subscribe to when self is warned by server before kicking self user.
+   * @method onwarn
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
@@ -2639,18 +2922,20 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.onlock = function () {};
-  
+
   /**
    * Function to subscribe to when room has been unlocked.
    * @method onunlock
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
   com.onunlock = function () {};
-  
+
   /**
    * Function to subscribe to when self has leave the room.
    * @method onleave
+   * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
@@ -2658,468 +2943,267 @@ function Room(name, listener) {
 
 
   /**
+   * The handler handles received events.
+   * @method routeEvent
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.roomName = com.name;
+
+    fn.applyHandler(RoomEventReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Room: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles received socket message events.
+   * @method routeMessage
+   * @param {JSON} message The message data.
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.routeMessage = function (message) {
+    // Messaging events
+    var fn = RoomEventMessageHandler[message.type];
+
+    if (typeof fn === 'function') {
+      fn(com, message, listener);
+    }
+
+    log.debug('Room: Received message = ', message.type, message);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.name = com.name;
+
+    fn.applyHandler(RoomEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Room: Responding with event = ', event, data);
+  };
+
+  /**
+   * Loads the connection information of the room.
+   * @method init
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.init = function () {
+    // Start loading the room information
+    var path = '/api/' + globals.apiKey + '/' + com.name;
+
+    // Set credentials if there is
+    if (com.credentials !== null) {
+      path += com.credentials.startDateTime + '/' +
+        com.credentials.duration + '?&cred=' + com.credentials.hash;
+    }
+
+    // Check if there is a other query parameters or not
+    if (globals.region) {
+      path += (path.indexOf('?&') > -1 ? '&' : '?&') + 'rg=' + globals.region;
+    }
+
+    // Start connection
+    Request.load(path, function (status, content) {
+      // Store the path information
+      com.apiPath = path;
+
+      // Room configuration settings from server
+      com.key = content.cid;
+      com.id = content.room_key;
+      com.token = content.roomCred;
+      com.startDateTime = content.start;
+      com.duration = content.len;
+      com.owner = content.apiOwner;
+
+      // User configuration settings from server
+      var userConfig = {
+        id: null,
+        username: content.username,
+        token: content.userCred,
+        timeStamp: content.timeStamp,
+        data: null
+      };
+
+      com.self = new Self(userConfig, com.routeEvent);
+
+      //com.constraints = JSON.parse(content.pc_constraints);
+
+      // Signalling information
+      var socketConfig = {
+        server: content.ipSigserver,
+        httpPortList: content.httpPortList,
+        httpsPortList: content.httpsPortList
+      };
+      com.socket = new Socket(socketConfig, com.routeEvent);
+
+      com.respond('room:ready');
+
+    }, function (status, error) {
+      com.respond('room:error', {
+        error: error
+      });
+
+    }, function () {
+      com.respond('room:init');
+    });
+  };
+
+  /**
    * Starts the connection to the room.
    * @method join
-   * @trigger peerJoined, mediaAccessRequired
+   * @param {Stream} stream The stream object to send. <mark>Stream</mark> object must
+   *   be ready before sending. Look at <var>stream:start</var> event.
+   *   Set as <code>null</code> for non-stream connection.
+   * @param {JSON} [config] The configuration settings.
+   * @param {JSON} [config.bandwidth] The bandwidth configuration for the connection.
+   *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @param {Integer} [config.bandwidth.audio] The audio banwidth configuration.
+   * @param {Integer} [config.bandwidth.video] The video banwidth configuration.
+   * @param {Integer} [config.bandwidth.data] The data banwidth configuration.
+   * @param {JSON|String} [config.userData] The self user's custom data.
    * @for Room
    * @since 0.6.0
    */
   com.join = function (stream, config) {
+    if (com.connected) {
+      throw new Error('You are already connected to this "' + com.name +'" room');
+    }
+
     config = config || {};
 
+    // Parse self configuration first
     com.self.bandwidth = StreamParser.parseBandwidthConfig(config.bandwidth);
     com.self.data = config.userData;
-  
-    if (!fn.isEmpty(stream)) {
+
+    // Add stream if stream is not empty
+    if (typeof stream === 'object' ? stream instanceof Stream : false) {
       com.self.addStreamConnection(stream, 'main');
     }
 
+    // Start socket connection
     com.socket.connect();
   };
 
   /**
    * Stops the connection to the room.
    * @method leave
-   * @trigger peerJoined, mediaAccessRequired
    * @for Room
    * @since 0.6.0
    */
   com.leave = function () {
+    // Disconnect socket connection
     com.socket.disconnect();
   };
-  
+
   /**
-   * Locks the Room.
+   * Locks the room.
    * @method lock
    * @for Room
    * @since 0.6.0
    */
-  com.lock = function (options) {
-    com.socket.send({
+  com.lock = function () {
+    var message = {
       type: 'roomLockEvent',
       mid: com.self.id,
       rid: com.id,
       lock: true
-    });
-    
-    com.handler('room:lock', {
-      userId: com.self.id
+    };
+
+    com.socket.send(message);
+
+    com.respond('room:lock', {
+      selfId: com.self.id
     });
   };
 
   /**
-   * Unlocks the Room.
+   * Unlocks the room.
    * @method unlock
    * @for Room
    * @since 0.6.0
    */
   com.unlock = function () {
-    com.socket.send({
+    var message = {
       type: 'roomLockEvent',
       mid: com.self.id,
       rid: com.id,
       lock: false
-    });
-    
-    com.handler('room:unlock', {
+    };
+
+    com.socket.send(message);
+
+    com.respond('room:unlock', {
       userId: com.self.id
     });
   };
 
   /**
-   * Sends a another stream to users.
-   * @method addStreamConnection
-   * @param {Stream} stream The stream object.
+   * Sends a stream to users.
+   * @method sendStream
+   * @param {Stream} stream The stream object. <mark>Stream</mark> object must
+   *   be ready before sending. Look at <var>stream:start</var> event.
    * @for Room
    * @since 0.6.0
    */
-  com.addStreamConnection = function (stream) {
-    var connectionId = fn.generateUID();
+  com.sendStream = function (stream, targetUsers) {
+    var peerId = fn.generateUID();
+    var key;
 
-    com.self.addStreamConnection(stream, connectionId);
-    
-    stream.parentHandler = com.handler;
-    
-    fn.forEach(com.users, function (user, key) {
-      data.stream = stream;
-      user.handler('message:enter', data);
-    });
+    // Do a check of targetUsers to send
+    com.self.addStreamConnection(stream, peerId);
+
+    for (key in com.users) {
+      if (com.users.hasOwnProperty(key)) {
+        var message = {
+          type: 'enter',
+          mid: com.self.id,
+          rid: com.id,
+          prid: peerId,
+          stream: com.self.getStreamingInfo('main')
+        };
+
+        com.users[key].routeMessage('message:enter', message);
+      }
+    }
   };
 
-  
-  /**
-   * Handles the self connection to the room.
-   * @class Self
-   * @for Skylink
-   * @extend Room
-   * @since 0.6.0
-   */
-  function Self (config) {
-    // Reference of instance
-    var subcom = this;
-
-    /**
-     * The self user id.
-     * @attribute name
-     * @type String
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.id = null;
-    
-    /**
-     * The self user data.
-     * @attribute data
-     * @type String | JSON
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.data = config.data;
-    
-    /**
-     * The self user username.
-     * @attribute username
-     * @type String
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.username = config.username;
-    
-    /**
-     * The self user timestamp (ISO format).
-     * @attribute timeStamp
-     * @type String
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.timeStamp = config.timeStamp;
-    
-    /**
-     * The self user credential.
-     * @attribute token
-     * @type String
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.token = config.token;
-    
-    /**
-     * The self user local stream connection.
-     * @attribute stream
-     * @param {JSON} <connectionId> The stream connection to users.
-     * @param {Array} <connectionId.targetUsers> The target users.
-     * @param {Stream} <connectionId.stream> The stream connected to room.
-     * @type JSON
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.streams = {};
-    
-    /**
-     * The self user browser agent information.
-     * @attribute agent
-     * @type JSON
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.agent = {
-      name: window.webrtcDetectedBrowser,
-      version: window.webrtcDetectedVersion,
-      webRTCType: window.webrtcDetectedType
-    };
-    
-    /**
-     * The self user bandwidth configuration.
-     * @attribute agent
-     * @type JSON
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.bandwidth = {};
-    
-    /**
-     * The handler that manages all triggers or relaying events.
-     * @attribute handler
-     * @type Function
-     * @private
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.handler = function (event, data) {
-      data.id = subcom.id;
-      
-      log.debug('SelfHandler:', event, data); 
-
-      RoomHandler(com, event, data, listener);
-    };
-
-    
-    /**
-     * Function to subscribe to when self user custom user data is updated.
-     * @method onupdate
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.onupdate = function () {};
-    
-    /**
-     * Function to subscribe to when self has added a stream connection.
-     * @method onaddstreamconnection
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.onaddstreamconnection = function () {};
-
-    /**
-     * Function to subscribe to when self has stopped a stream connection.
-     * @method onaddstream
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.onremovestreamconnection = function () {};
-    
-    /**
-     * Function to subscribe to when self has been disconnected from the room.
-     * @method ondisconnect
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.ondisconnect = function () {};
-    
-  
-    /**
-     * Updates the self user data.
-     * @method update
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.update = function (data) {
-      subcom.data = data;
-      
-      com.socket.send({
-        type: 'updateUserEvent',
-        mid: subcom.id,
-        rid: com.id,
-        userData: subcom.data
-      });
-      
-      subcom.handler('self:update', {
-        data: subcom.data
-      });
-    };
-
-    /**
-     * Starts a new stream connection.
-     * @method addStreamConnection
-     * @param {Stream} stream The stream object.
-     * @param {Array|String} The array or string "main".
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.addStreamConnection = function (stream, connectionId) {
-      stream.sourceType = 'local';
-
-      var connection = {
-        id: connectionId,
-        stream: stream
-      };
-      
-      subcom.streams[connectionId] = connection;
-      
-      if (typeof subcom.onaddstreamconnection === 'function') {
-        subcom.onaddstreamconnection(connection);
-      }
-      
-      subcom.handler('self:addstreamconnection', {
-        stream: stream,
-        connectionId: connectionId
-      });
-    };
-    
-    /**
-     * Stops a stream connection.
-     * @method removeStreamConnection
-     * @param {String} connectionId The streaming connection id.
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.removeStreamConnection = function (connectionId) {
-      var stream = subcom.streams[connectionId];
-      
-      stream.stop();
-      
-      // Do not remove main connection.
-      // Stream may stop, but user is still connected.
-      if (connectionId !== 'main') {
-        // Stream has targeted users
-        if (fn.isEmpty(subcom.streams[connectionId].targetUsers)) {
-          fn.forEach(com.users, function (value, key) {
-            value.removeConnection(streamId);
-          });
-
-        // Stream has targeted users
-        } else {
-          fn.forEach(subcom.streams[connectionId].targetUsers, function (value, key) {
-            if (!fn.isEmpty(com.users[key])) {
-              com.users[key].removeConnection(streamId);
-            }
-          });
-        }
-      }
-  
-      if (typeof subcom.onremovestreamconnection === 'function') {
-        subcom.onremovestreamconnection(stream, targetUsers);
-      }
-      
-      // Remove stream reference
-      delete subcom.streams[streamId];
-      // Remove connections to stream reference
-      delete subcom.streams[streamId];
-      
-      subcom.handler('self:removestreamconnection', {
-        streamId: streamId
-      });
-    };
-    
-    /**
-     * Gets the self user info.
-     * @method getInfo
-     * @param {String} connectionId The connectionId of the stream.
-     * @for Self
-     * @since 0.6.0
-     */
-    subcom.getInfo = function (connectionId) {
-      var info = {
-        userData: subcom.data,
-        agent: subcom.agent
-      };
-  
-      if (fn.isEmpty(connectionId)) {
-        var streaming = {};
-
-        fn.forEach(subcom.streams, function (connection, key) {
-          var settings = subcom.streams[connectionId] || {};
-          var stream = settings.stream || { 
-            config: { 
-              audio: false, 
-              video: false, 
-              status: { audioMuted: true, videoMuted: true }
-            } 
-          };
-
-          streaming[key] = {
-            audio: stream.config.audio,
-            video: stream.config.video,
-            bandwidth: subcom.bandwidth,
-            mediaStatus: stream.config.status
-          };
-        
-        }, function () {
-          info.settings = streaming;
-          
-          return info;
-        });
-      
-      } else {
-        var settings = subcom.streams[connectionId] || {};
-        var stream = settings.stream || { 
-          config: { 
-            audio: false, 
-            video: false, 
-            status: { audioMuted: true, videoMuted: true }
-          } 
-        };
-  
-        info.settings = {
-          audio: stream.config.audio,
-          video: stream.config.video,
-          bandwidth: subcom.bandwidth,
-          mediaStatus: stream.config.status
-        };
-        
-        return info;
-      }
-    };
-    
-    subcom.handler('self:start', config);
-  }
-
-
-  // Start loading the room information
-  var path = '/api/' + globals.apiKey + '/' + com.name;
-
-  // Set credentials if there is
-  if (com.credentials !== null) {
-    path += com.credentials.startDateTime + '/' +
-      com.credentials.duration + '?&cred=' + com.credentials.hash;
-  }
-
-  // Check if there is a other query parameters or not
-  if (globals.region) {
-    path += (path.indexOf('?&') > -1 ? '&' : '?&') + 'rg=' + globals.region;
-  }
-
-  // Start connection
-  Request.load(path, function (status, content) {
-    // Store the path information
-    com.apiPath = path;
-
-    // Room configuration settings from server
-    com.key = content.cid;
-    com.id = content.room_key;
-    com.token = content.roomCred;
-    com.startDateTime = content.start;
-    com.duration = content.len;
-    com.owner = content.apiOwner;
-
-    // User configuration settings from server
-    com.self = new Self({
-      id: null,
-      username: content.username,
-      token: content.userCred,
-      timeStamp: content.timeStamp,
-      data: globals.userData
-    });
-    
-    //com.constraints = JSON.parse(content.pc_constraints);
-
-    // Signalling information
-    com.socket = new Socket({
-      server: content.ipSigserver,
-      httpPortList: content.httpPortList,
-      httpsPortList: content.httpsPortList
-
-    }, com.handler);
-    
-    // Bind the message events handler
-    MessageHandler(com, listener);
-    
-    listener('room:start', {
-      id: com.id,
-      name: com.name
-    });
-  
-  }, function (status, error) {
-    com.handler('trigger:error', {
-      error: error,
-      state: -1
-    });
-  });
+  // Start the room connection information
+  com.init();
 }
+
 var RoomEventReceivedHandler = {
 
+  // Handles the stream events */
   socket: {
 
+    // When socket is connected, join the room
     connect: function (com, data, listener) {
-      com.socket.send({
+      var message = {
         type: 'joinRoom',
         uid: com.self.username,
         cid: com.key,
@@ -3130,94 +3214,163 @@ var RoomEventReceivedHandler = {
         roomCred: com.token,
         start: com.startDateTime,
         len: com.duration
-      });
+      };
+
+      log.log('Room', 'Socket is connected, now sending joinRoom message');
+
+      com.socket.send(message);
     },
 
+    // When socket is disconnected, trigger that leave
     disconnect: function (com, data, listener) {
-      com.handler('room:leave', {});
+      log.log('Room', 'Socket is disconnected, now triggering leave');
 
-      if (typeof com.onleave === 'function') {
-        com.onleave();
+      com.respond('room:leave', {});
+    },
+
+    // When socket sends or receives a message
+    message: function (com, data, listener) {
+      if (data.sourceType === 'remote') {
+        console.log('respond', data.message);
+        com.routeMessage(data.message);
       }
     },
 
+    // When socket has exception, room has exception
     error: function (com, data, listener) {
-      com.handler('room:error', {
+      com.respond('room:error', {
         error: data,
         state: -2
       });
     }
+
   },
 
+  // Handles the user events */
   user: {
-    start: function (com, data, listener) {
-      var user = com.users[data.mid];
 
-      // Get stream
-      var connection = com.self.streams[data.prid];
+    // When user object is initialized, start the "main" peer connection
+    ready: function (com, data, listener) {
+      // Get user object
+      var user = com.users[data.id];
 
-      // Check if stream connection exists
-      if (!fn.isEmpty(connection)) {
-        data.stream = connection.stream;
+      // Get self local MediaStream
+      var stream = com.self.streamConnections.main;
+
+      // If stream exists, append it as streamObject
+      if (!fn.isEmpty(stream)) {
+        data.streamObject = stream;
       }
 
+      // Set the ICE servers
       data.iceServers = com.iceServers;
 
-      user.handler('message:' + data.type, data);
+      // Relay it to the userhandler
+      user.routeMessage(data);
     }
+
   },
-  
-  peer: {
+
+  // Handles the self user events */
+  self: {
+
+    // When self user custom data is updated, send to socket to update other users
+    update: function (com, data, listener) {
+      var message = {
+        type: 'updateUserEvent',
+        mid: data.id,
+        rid: com.id,
+        userData: data.userData
+      };
+
+      com.socket.send(message);
+    },
+
+    // When self user is connected to the room (after setting the self user id and
+    // relevant information) start to send the enter
     connect: function (com, data, listener) {
+      // Send and start the "main" peer connection
+      var message = com.self.getInfo('main');
+
+      message.type = 'enter';
+      message.mid = com.self.id;
+      message.rid = com.id;
+      message.prid = 'main';
+
+      com.socket.send(message);
+    }
+
+  },
+
+  // Handles the peer events */
+  peer: {
+
+    // When peer connection object is initialized, we can start sending the welcome
+    // to start the O/A handshake
+    connect: function (com, data, listener) {
+      // Retrieve the user
       var user = com.users[data.userId];
-      var userInfo = user.getInfo();
-  
-      // Send welcome after creating object
-      if (data.SDPType === 'answer') {
-        com.socket.send({
-          type: 'welcome',
-          mid: com.self.id,
-          rid: com.id,
-          prid: data.id,
-          agent: window.webrtcDetectedBrowser,
-          version: window.webrtcDetectedVersion,
-          webRTCType: window.webrtcDetectedType,
-          userInfo: com.self.getInfo(data.id),
-          target: data.userId,
-          weight: data.weight
-        });
-      }
-    },
-    
-    offer: {
-      success: function (com, data, listener) {
-        com.socket.send({
-          type: 'offer',
-          sdp: data.offer.sdp,
-          prid: data.id,
-          mid: com.self.id,
-          target: data.userId,
-          rid: com.id
-        });
+
+      // Check if user exists
+      if (!fn.isEmpty(user)) {
+        // Retrieve the user for this peer only
+        var userInfo = user.getInfo(data.id);
+
+        // Send welcome after creating object for answerer
+        if (data.SDPType === 'answer') {
+          var message = {
+            type: 'welcome',
+            mid: com.self.id,
+            rid: com.id,
+            prid: data.id,
+            agent: window.webrtcDetectedBrowser,
+            version: window.webrtcDetectedVersion,
+            webRTCType: window.webrtcDetectedType,
+            userInfo: com.self.getInfo(data.id),
+            target: data.userId,
+            weight: data.weight
+          };
+          com.socket.send(message);
+        }
+
+      } else {
+        throw new Error('User "' + data.userId + '" does not exists');
       }
     },
 
-    answer: {
-      success: function (com, data, listener) {
-        com.socket.send({
-          type: 'answer',
-          sdp: data.answer.sdp,
-          prid: data.id,
-          mid: com.self.id,
-          target: data.userId,
-          rid: com.id
-        });
-      }
+    // When peer connection starts creating an offer, send to the user
+    offer: function (com, data, listener) {
+      var message = {
+        type: 'offer',
+        sdp: data.offer.sdp,
+        prid: data.id,
+        mid: com.self.id,
+        target: data.userId,
+        rid: com.id
+      };
+
+      com.socket.send(message);
     },
 
+    // When peer connection starts creating an answer to offer, send to the user
+    answer: function (com, data, listener) {
+      var message = {
+        type: 'answer',
+        sdp: data.answer.sdp,
+        prid: data.id,
+        mid: com.self.id,
+        target: data.userId,
+        rid: com.id
+      };
+
+      com.socket.send(message);
+    },
+
+    // When peer connection generates an ice candidate send to user
     icecandidate: function (com, data, listener) {
+      // For generated candidate not received candidate
       if (data.sourceType === 'local') {
-        com.socket.send({
+        var message = {
           type: 'candidate',
           label: data.candidate.sdpMLineIndex,
           id: data.candidate.sdpMid,
@@ -3226,240 +3379,470 @@ var RoomEventReceivedHandler = {
           prid: data.id,
           target: data.userId,
           rid: com.id
-        });
+        };
+
+        com.socket.send(message);
       }
     }
+
   }
+
 };
 
 /**
  * Handles all the events to respond to other parent classes.
  * @attribute RoomEventResponseHandler
+ * @private
  * @for Room
  * @since 0.6.0
  */
 var RoomEventResponseHandler = {
+
   /**
-   * Handles the error state trigger.
-   * @property error
-   * @type Function
-   * @private
+   * Event fired when room is initializing configuration information
+   * from API server.
+   * @event room:init
+   * @for Room
+   * @since 0.6.0
+   */
+  init: function (com, data, listener) {
+    if (typeof com.oninit === 'function') {
+      com.oninit();
+    }
+  },
+
+  /**
+   * Event fired when room object to ready to use.
+   * @event room:ready
+   * @for Room
+   * @since 0.6.0
+   */
+  ready: function (com, data, listener) {
+    if (typeof com.onready === 'function') {
+      com.onready();
+    }
+  },
+
+  /**
+   * Event fired when there is room connection problems.
+   * @event room:error
+   * @for Room
    * @since 0.6.0
    */
   error: function (com, data, listener) {
-    com.readyState = data.state;
-
-    com.handler('room:error', {
+    com.respond('room:error', {
       error: data.error,
       state: data.state
     });
 
     if (typeof com.onerror === 'function') {
-      com.onerror({
-        error: data.error,
-        state: data.state
+      com.onerror(data);
+    }
+  },
+
+  /**
+   * Event fired when room object to ready to use.
+   * @event room:join
+   * @for Room
+   * @since 0.6.0
+   */
+  join: function (com, data, listener) {
+    if (typeof com.onjoin === 'function') {
+      com.onjoin(com.self);
+    }
+  },
+
+  /**
+   * Event fired when self user is disconnect from the room.
+   * @event room:leave
+   * @for Room
+   * @since 0.6.0
+   */
+  leave: function (com, data, listener) {
+    if (typeof com.onleave === 'function') {
+      com.onleave();
+    }
+  },
+
+  /**
+   * Event fired when self user is kicked out from the room.
+   * @event room:kick
+   * @for Room
+   * @since 0.6.0
+   */
+  kick: function (com, data, listener) {
+    if (typeof com.onkick === 'function') {
+      com.onkick({
+        message: data.info,
+        reason: data.reason
+      });
+
+      com.leave();
+    }
+  },
+
+  /**
+   * Event fired when self user is warned regarding an action.
+   * @event room:warn
+   * @for Room
+   * @since 0.6.0
+   */
+  warn: function (com, data, listener) {
+    if (typeof com.onwarn === 'function') {
+      com.onwarn({
+        message: data.info,
+        reason: data.reason
       });
     }
   }
-
 };
 
+
+/*
+ * Handles all the Skylink SDK messaging protocols.
+ * @class Messaging
+ * @private
+ * @isDocument true
+ * @for Skylink
+ * @since 0.6.0
+ */
 /**
- * Handles the room class events.
- * @attribute RoomHandler
+ * Handles all the message events received from socket.
+ * @attribute RoomEventMessageHandler
+ * @private
  * @for Room
  * @since 0.6.0
  */
-var RoomHandler = function (com, event, data, listener) {
-  var params = event.split(':');
+var RoomEventMessageHandler = {
 
-  // Class events
-  if (event.indexOf('room:') === 0) {
-    data.name = com.name;
-
-    fn.applyHandler(RoomEventResponseHandler, params, [com, data, listener]);
-
-  } else {
-    data.roomName = com.name;
-
-    fn.applyHandler(RoomEventReceivedHandler, params, [com, data, listener]);
-  }
-
-  listener(event, data);
-  
-  log.debug('RoomHandler', event, data);
-};
-
-/**
- * Stores the room messaging events.
- * @attribute MessageHandlerEvent
- * @for Room
- * @since 0.6.0
- */
-var MessageHandlerEvent = {
   /**
-   * Self is in the room.
-   * @property inRoom
-   * @type JSON
+   * The message that indicates that self user is in the room.
+   * @event inRoom
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.sid The self user id.
+   * @param {JSON} message.pc_config The RTCPeerConnection configuration.
+   * @param {Array} message.pc_config.iceServers The list of ICE servers.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   inRoom: function (com, data, listener) {
-    com.self.id = data.sid;
+    // Respond to self user that self user is in the room
+    // and set the relevant data to self user.
+    com.self.routeMessage(data);
 
-    com.iceServers = data.pc_config;
+    // The ICE servers received when "inRoom"
+    com.iceServers = fn.isSafe(function () {
+      return data.pc_config.iceServers;
+    }) || [];
 
-    com.socket.send({
-      type: 'enter',
-      mid: com.self.id,
-      rid: com.id,
-      prid: 'main',
-      agent: window.webrtcDetectedBrowser,
-      version: window.webrtcDetectedVersion,
-      webRTCType: window.webrtcDetectedType,
-      userInfo: com.self.getInfo('main')
+    // Notify to trigger onjoin event
+    com.respond('room:join', {
+      user: com.self
     });
-
-    com.handler('room:join', {
-      userId: com.self.id,
-      user: com.self,
-      isSelf: true
-    });
-
-    if (typeof com.onjoin === 'function') {
-      com.onjoin(data.mid);
-    }
   },
 
   /**
-   * User has sent self an enter.
-   * @property enter
-   * @type JSON
+   * The message that indicates that a user has joined the room.
+   * This is sent when user has just started a connection to the room.
+   * @event enter
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.mid The user id.
+   * @param {String} message.prid The shared peer connection id.
+   * @param {JSON} message.stream The peer connection streaming configuration.
+   * @param {JSON|Boolean} [message.stream.audio=false] The audio stream configuration.
+   *    If parsed as a boolean, other configuration settings under the audio
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [message.stream.audio.stereo=false] The flag that indiciates
+   *    if stereo is enabled for this connection.
+   * @param {String} [message.stream.audio.sourceId] The source id of the audio MediaStreamTrack
+   *    used for this connection.
+   * @param {String|Boolean} [message.stream.video=false] The video stream configuration.
+   *    If parsed as a boolean, other configuration settings under the video
+   *    configuration would be set as the default setting in the connection.
+   * @param {JSON} [message.stream.video.resolution] The video streaming resolution.
+   * @param {Integer} message.stream.video.resolution.width The video resolution width.
+   * @param {Integer} message.stream.video.resolution.height The video resolution height.
+   * @param {Integer} message.stream.video.frameRate The video stream framerate.
+   * @param {String} [message.stream.video.sourceId] The source id of the video MediaStreamTrack
+   *    used for this connection.
+   * @param {JSON} message.stream.status The stream MediaStreamTrack status.
+   * @param {Boolean} [message.stream.status.audioMuted=false] The flag that indicates if audio is muted.
+   *    If audio is set to false, this would be set as true.
+   * @param {Boolean} [message.stream.status.videoMuted=false] The flag that indicates if video is muted.
+   *    If video is set to false, this would be set as true.
+   * @param {Integer} message.userData The user custom data. Only given for "main" peer connections.
+   * @param {JSON} message.agent The user's browser agent information. Only given for "main" peer connections.
+   * @param {String} message.agent.name The user's browser agent name. For other SDKs, it's indicated
+   *    by their type of device <code>E.g. ios, android</code>. For components, it's indicated
+   *    by their type <code>E.g. MCU, Recording</code>.
+   * @param {Integer} message.agent.version The user's browser agent version. For other SDKs, it's indicated
+   *    by their version of device OS <code>ios8 = 8. android kitkat = 4.4</code>. For components, it's indicated
+   *    by their version <code>E.g. 0.1.0, 0.2.0</code>.
+   * @param {String} message.agent.webRTCType The user's browser agent webrtc implementation type. For other SDKs or
+   *    components, use <code>other</code>.
+   * @param {JSON} message.bandwidth The peer connection bandwidth configuration.
+   *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @param {Integer} [message.bandwidth.audio] The bandwidth configuration for the audio stream.
+   * @param {Boolean} [message.bandwidth.video] The bandwidth configuration for the video stream.
+   * @param {Boolean} [message.bandwidth.data] The bandwidth configuration for the data stream.
+   * @param {String} message.rid The room id.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   enter: function (com, data, listener) {
+    // A user has just joined the room
     var user = com.users[data.mid];
-    
+
+    // If the user is empty (which is supposed to be that case),
+    // create a user which will create a peer connection when
+    // the user object is ready
     if (fn.isEmpty(user)) {
-      user = new User(data, com.handler);
-      
+      var config = {
+        id: data.mid,
+        stream: data.stream,
+        agent: data.agent,
+        bandwidth: data.bandwidth,
+        data: data.userData,
+        SDPType: 'answer'
+      };
+
+      user = new User(config, com.routeEvent);
+
       com.users[data.mid] = user;
+
+      // Invoke function that user has joined
+      if (typeof com.onuserjoin === 'function') {
+        com.onuserjoin(user);
+      }
     }
   },
 
   /**
-   * User has sent self an welcome.
-   * @property enter
-   * @type JSON
+   * The message that indicates that a user has joined the room.
+   * This is sent as a response to user's "enter" message.
+   * @event welcome
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.mid The user id.
+   * @param {String} message.prid The shared peer connection id.
+   * @param {JSON} message.stream The peer connection streaming configuration.
+   * @param {JSON|Boolean} [message.stream.audio=false] The audio stream configuration.
+   *    If parsed as a boolean, other configuration settings under the audio
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [message.stream.audio.stereo=false] The flag that indiciates
+   *    if stereo is enabled for this connection.
+   * @param {String} [message.stream.audio.sourceId] The source id of the audio MediaStreamTrack
+   *    used for this connection.
+   * @param {String|Boolean} [message.stream.video=false] The video stream configuration.
+   *    If parsed as a boolean, other configuration settings under the video
+   *    configuration would be set as the default setting in the connection.
+   * @param {JSON} [message.stream.video.resolution] The video streaming resolution.
+   * @param {Integer} message.stream.video.resolution.width The video resolution width.
+   * @param {Integer} message.stream.video.resolution.height The video resolution height.
+   * @param {Integer} message.stream.video.frameRate The video stream framerate.
+   * @param {String} [message.stream.video.sourceId] The source id of the video MediaStreamTrack
+   *    used for this connection.
+   * @param {JSON} message.stream.status The stream MediaStreamTrack status.
+   * @param {Boolean} [message.stream.status.audioMuted=false] The flag that indicates if audio is muted.
+   *    If audio is set to false, this would be set as true.
+   * @param {Boolean} [message.stream.status.videoMuted=false] The flag that indicates if video is muted.
+   *    If video is set to false, this would be set as true.
+   * @param {Integer} message.userData The user custom data. Only given for "main" peer connections.
+   * @param {JSON} message.agent The user's browser agent information. Only given for "main" peer connections.
+   * @param {String} message.agent.name The user's browser agent name. For other SDKs, it's indicated
+   *    by their type of device <code>E.g. ios, android</code>. For components, it's indicated
+   *    by their type <code>E.g. MCU, Recording</code>.
+   * @param {Integer} message.agent.version The user's browser agent version. For other SDKs, it's indicated
+   *    by their version of device OS <code>ios8 = 8. android kitkat = 4.4</code>. For components, it's indicated
+   *    by their version <code>E.g. 0.1.0, 0.2.0</code>.
+   * @param {String} message.agent.webRTCType The user's browser agent webrtc implementation type. For other SDKs or
+   *    components, use <code>other</code>.
+   * @param {Integer} message.weight The priority weight of the message. In use-cases where both users receives each
+   *    others "enter" message during the first handshake, the priority would indicate which user gets to do
+   *    the offer.
+   * @param {JSON} message.bandwidth The peer connection bandwidth configuration.
+   *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @param {Integer} [message.bandwidth.audio] The bandwidth configuration for the audio stream.
+   * @param {Boolean} [message.bandwidth.video] The bandwidth configuration for the video stream.
+   * @param {Boolean} [message.bandwidth.data] The bandwidth configuration for the data stream.
+   * @param {String} message.rid The room id.
+   * @param {String} message.target The targeted user id to receive welcome.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   welcome: function (com, data, listener) {
     var user = com.users[data.mid];
-    
+
     if (fn.isEmpty(user)) {
-      user = new User(data, com.handler);
-      
+      var config = {
+        id: data.mid,
+        stream: data.stream,
+        agent: data.agent,
+        bandwidth: data.bandwidth,
+        data: data.userData,
+        SDPType: 'offer'
+      };
+
+      user = new User(config, com.routeEvent);
+
       com.users[data.mid] = user;
+
+      // Invoke function when user has joined
+      if (typeof com.onuserjoin === 'function') {
+        com.onuserjoin(user);
+      }
     }
   },
 
   /**
-   * A user has sent an offer to self.
-   * @property offer
-   * @type JSON
+   * The message that starts a user's peer connection offer and answer handshake.
+   * @event offer
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.sdp The offer session description.
+   * @param {String} message.prid The peer connection id.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
+   * @param {String} message.target The targeted user id to receive offer.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   offer: function (com, data, listener) {
     var user = com.users[data.mid];
 
     if (!fn.isEmpty(user)) {
-      user.handler('message:offer', data);
+      user.routeMessage(data);
     }
   },
 
   /**
-   * A user has sent an answer to self.
-   * @property answer
-   * @type JSON
+   * The message that responses to a user's peer connection offer.
+   * @event answer
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.sdp The answer session description.
+   * @param {String} message.prid The peer connection id.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
+   * @param {String} message.target The targeted user id to receive answer.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   answer: function (com, data, listener) {
     var user = com.users[data.mid];
 
     if (!fn.isEmpty(user)) {
-      user.handler('message:answer', data);
+      user.routeMessage(data);
     }
   },
 
   /**
-   * A user has sent an ICE candidate to self.
-   * @property candidate
-   * @type Function
+   * The message that is received when candidate is generated from the user's peer connection.
+   * It's recommend to add all the relevant information when instianting a new <var>RTCIceCandidate</var>
+   *   object.
+   * @event candidate
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.candidate The candidate's candidate session description.
+   * @param {String} message.id The candidate's sdpMid.
+   * @param {Integer} message.label The candidate's sdpMLineIndex.
+   * @param {String} message.prid The peer connection id.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
+   * @param {String} message.target The targeted user id to receive generated candidate.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   candidate: function (com, data, listener) {
     var user = com.users[data.mid];
 
     if (!fn.isEmpty(user)) {
-      user.handler('message:candidate', data);
+      user.routeMessage(data);
     }
   },
 
   /**
-   * A user has updated their own custom user data.
-   * @property updateUserEvent
-   * @type Function
+   * The message that is received when user's custom data is updated.
+   * @event updateUserEvent
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {JSON|String} message.userData The updated custom user data.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   updateUserEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
     if (!fn.isEmpty(user)) {
-      user.handler('message:updateUserEvent', data.userData);
+      user.routeMessage(data.userData);
     }
   },
 
   /**
-   * An audio stream muted status has been updated.
-   * @property muteAudioEvent
-   * @type Function
+   * The message that is received when user's peer connection audio stream mute status
+   *   have changed. This is inline with <var>MediaStreamTrack</var> API's <code>enabled = true/false</code>.
+   * @event muteAudioEvent
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {Boolean} message.muted The updated audio stream mute status.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
+   * @param {String} message.prid The shared peer connection id.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   muteAudioEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
     if (!fn.isEmpty(user)) {
-      user.handler('message:muteAudioEvent', data);
+      user.routeMessage(data);
     }
   },
 
   /**
-   * A video stream muted status has been updated.
-   * @property muteVideoEvent
-   * @type Function
+   * The message that is received when user's peer connection video stream mute status
+   *   have changed. This is inline with <var>MediaStreamTrack</var> API's <code>enabled = true/false</code>.
+   * @event muteVideoEvent
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {Boolean} message.muted The updated video stream mute status.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
+   * @param {String} message.prid The shared peer connection id.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   muteVideoEvent: function (com, data, listener) {
     var user = com.users[data.mid];
 
     if (!fn.isEmpty(user)) {
-      user.handler('message:muteVideoEvent', data);
+      user.routeMessage(data);
     }
   },
 
   /**
-   * The room is lock status has been updated.
-   * @property roomLockEvent
-   * @type Function
+   * The message that is received when the current room lock status have changed.
+   * @event roomLockEvent
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {Boolean} message.locked The updated room lock status.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   roomLockEvent: function (com, data, listener) {
@@ -3478,80 +3861,87 @@ var MessageHandlerEvent = {
   },
 
   /**
-   * The room is lock status has been updated.
-   * @property roomLockEvent
-   * @type Function
+   * The message that is received when user's peer connection is going through a refresh.
+   * @event restart
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
+   * @param {String} message.prid The shared peer connection id.
+   * @param {String} message.SDPType The handshake SDP type. <code>"offer"</code> is for the peer
+   *   connection that initiated the restart. <code>"answer"</code> is for the peer
+   *   connection that is responding to the restart.
+   * @param {JSON} message.sdp The session description message for restart.
+   * @param {String} message.sdp.type The <var>RTCSessionDescription</var> type.
+   * @param {String} message.sdp.sdp The <var>RTCSessionDescription</var> session description.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   restart: function (com, data, listener) {
     var user = com.users[data.mid];
 
     if (!fn.isEmpty(user)) {
-      user.handler('message:restart', data);
+      user.respondMessage(data);
+
+    } else {
+      throw new Error('User "' + data.mid + '" does not exists');
     }
   },
 
   /**
-   * The self is redirected or warned.
-   * @property redirect
-   * @type Function
+   * The message that is received when user is receiving a rejection or warning from signaling server.
+   * @event redirect
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
+   * @param {String} message.action The action received that indicates if user is warned or rejected.
+   *    <code>"warning"</code> is when signaling is warning user of the action and comply accordingly.
+   *    <code>"reject"</code> is when signaling has kicked user out of the room.
+   * @param {JSON} message.info The signaling message for the redirect message.
+   * @param {String} message.reason The reason for the action taken by signaling.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   redirect: function (com, data, listener) {
     if (data.action === 'reject') {
-      if (typeof com.onkick === 'function') {
-        com.onkick({
-          message: data.info,
-          reason: data.reason
-        });
-        
-        com.leave();
-      }
+      // User is kicked out of the room
+      com.respond('room:kick', {});
     }
 
     if (data.action === 'warning') {
-      if (typeof com.onwarn === 'function') {
-        com.onwarn({
-          message: data.info,
-          reason: data.reason
-        });
-      }
+      // User is warned
+      com.respond('room:warn', {});
     }
   },
 
   /**
-   * The a user or self is disconnected from room.
-   * @property bye
-   * @type Function
+   * The message that is received when user has left the room.
+   * @event bye
+   * @param {JSON} message The message received.
+   * @param {String} message.type The type of message.
+   * @param {String} message.mid The user id.
+   * @param {String} message.rid The room id.
    * @private
+   * @for Messaging
    * @since 0.6.0
    */
   bye: function (com, data, listener) {
     var user = com.users[data.mid];
 
+    // Disconnect user
     if (!fn.isEmpty(user)) {
       user.disconnect();
+
+    } else {
+      throw new Error('User "' + data.mid + '" does not exists');
     }
   }
 
 };
 
-/**
- * Handles the room messaging events.
- * @attribute MessageHandler
- * @for Room
- * @since 0.6.0
- */
-var MessageHandler = function (com, listener) {
-  // Handles the socket events
-  fn.forEach(MessageHandlerEvent, function (response, event) {
-    com.socket.when(event, function (data) {
-      response(com, data, listener);
-    });
-  });
-};
 var SDP = {
   /**
    * Finds a line in the sdp based on the condition provided
@@ -3727,8 +4117,584 @@ var SDP = {
   }
   
 };
+function Self (config, listener) {
+  // Reference of instance
+  var com = this;
+
+  /**
+   * The self user id.
+   * @attribute id
+   * @type String
+   * @private
+   * @required
+   * @for Self
+   * @since 0.6.0
+   */
+  com.id = null;
+
+  /**
+   * The self user data.
+   * @attribute data
+   * @type String | JSON
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.data = config.data;
+
+  /**
+   * The self user username.
+   * @attribute username
+   * @type String
+   * @private
+   * @required
+   * @for Self
+   * @since 0.6.0
+   */
+  com.username = config.username;
+
+  /**
+   * The self user timestamp (ISO format).
+   * @attribute timeStamp
+   * @type String
+   * @private
+   * @required
+   * @for Self
+   * @since 0.6.0
+   */
+  com.timeStamp = config.timeStamp;
+
+  /**
+   * The self user credential.
+   * @attribute token
+   * @type String
+   * @private
+   * @required
+   * @for Self
+   * @since 0.6.0
+   */
+  com.token = config.token;
+
+  /**
+   * The self user local stream connection.
+   * @attribute streamConnections
+   * @param {Stream} (#peerId) The stream to send for this shared peer connection id.
+   * @type JSON
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.streamConnections = {};
+
+  /**
+   * The self user browser agent information.
+   * @attribute agent
+   * @param {String} name The user's browser agent name. For other SDKs, it's indicated
+   *    by their type of device <code>E.g. ios, android</code>. For components, it's indicated
+   *    by their type <code>E.g. MCU, Recording</code>.
+   * @param {Integer} version The user's browser agent version. For other SDKs, it's indicated
+   *    by their version of device OS <code>ios8 = 8. android kitkat = 4.4</code>. For components, it's indicated
+   *    by their version <code>E.g. 0.1.0, 0.2.0</code>.
+   * @param {String} webRTCType The user's browser agent webrtc implementation type. For other SDKs or
+   *    components, use <code>other</code>.
+   * @type JSON
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.agent = {
+    name: window.webrtcDetectedBrowser,
+    version: window.webrtcDetectedVersion,
+    webRTCType: window.webrtcDetectedType
+  };
+
+  /**
+   * The self user bandwidth configuration. This does fixes
+   *   the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @attribute bandwidth
+   * @param {Integer} [audio] The audio bandwidth configuration.
+   * @param {Integer} [video] The video bandwidth configuration.
+   * @param {Integer} [data] The data bandwidth configuration.
+   * @type JSON
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.bandwidth = {};
+
+  /**
+   * The handler handles received events.
+   * @method routeEvent
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.roomName = com.name;
+
+    fn.applyHandler(SelfEventReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Self: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles received socket message events.
+   * @method routeMessage
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.routeMessage = function (message) {
+    // Messaging events
+    var fn = SelfEventMessageHandler[message.type];
+
+    if (typeof fn === 'function') {
+      fn(com, message, listener);
+    }
+
+    log.debug('Self: Received message = ', event, message);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.name = com.name;
+
+    fn.applyHandler(SelfEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Self: Responding with event = ', event, data);
+  };
+
+  /**
+   * Function to subscribe to when self user object is ready to use.
+   * @method onready
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onready = function () {};
+
+  /**
+   * Function to subscribe to when self user custom user is connected to room.
+   * @method onconnect
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when self user custom user data is updated.
+   * @method onupdate
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onupdate = function () {};
+
+  /**
+   * Function to subscribe to when self has added a stream connection.
+   * @method onaddstreamconnection
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onaddstreamconnection = function () {};
+
+  /**
+   * Function to subscribe to when self has stopped a stream connection.
+   * @method onremovestreamconnection
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.onremovestreamconnection = function () {};
+
+  /**
+   * Function to subscribe to when self has been disconnected from the room.
+   * @method ondisconnect
+   * @eventhandler true
+   * @for Self
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+
+
+  /**
+   * Updates the self user data.
+   * @method update
+   * @for Self
+   * @since 0.6.0
+   */
+  com.update = function (data) {
+    com.data = data;
+
+    com.respond('self:update', {
+      userData: com.data
+    });
+  };
+
+  /**
+   * Starts a new stream connection.
+   * @method addStreamConnection
+   * @param {Stream} stream The stream object.
+   * @param {String} peerId The shared peer connection id.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.addStreamConnection = function (stream, peerId) {
+    stream.sourceType = 'local';
+
+    stream.routeEventToParent = com.routeEvent;
+
+    com.streamConnections[peerId] = stream;
+
+    com.respond('self:addstreamconnection', {
+      peerId: peerId,
+      stream: stream
+    });
+  };
+
+  /**
+   * Finds the shared peer connection id from the stream id provided.
+   * @method addStreamConnection
+   * @param {Stream} stream The stream object.
+   * @param {String} peerId The shared peer connection id.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.findStreamConnectionId = function (streamId) {
+    var key;
+
+    for (key in com.streamConnections) {
+      if (com.streamConnections.hasOwnProperty(key)) {
+        // If matches
+        if (com.streamConnections[key].id === streamId) {
+          return key;
+        }
+      }
+    }
+  };
+
+  /**
+   * Stops a stream connection.
+   * @method removeStreamConnection
+   * @param {String} [peerId] The shared peer connection id. If no
+   *    shared peer connection id is provided, it will destroy all streams.
+   *    Providing the <code>"main"</code> peer connection id will also result in
+   *    destroying all streams.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.removeStreamConnection = function (peerId) {
+    if (fn.isEmpty(peerId) || peerId === 'main') {
+      var key;
+
+      for (key in com.streamConnections) {
+        if (com.streamConnections.hasOwnProperty(key)) {
+          com.streamConnections[key].stop();
+        }
+      }
+
+    } else {
+      var stream = com.streamConnections[peerId];
+
+      if (typeof stream === 'object' ? stream instanceof Stream : false) {
+        stream.stop();
+
+      } else {
+        log.error('Unable to remove stream connection as there is not existing ' +
+          'stream connection to the peer connection', peerId);
+      }
+    }
+  };
+
+  /**
+   * Gets the self user info.
+   * @method getInfo
+   * @param {String} [peerId] The shared peer connection id.
+   *   If no shared peer connection id is provided, it will return as
+   *   <code>"stream"</code> instead of <code>"streams".(#peerId)</code>.
+   * @returns {JSON} The self user streaming configuration and custom data.
+   * - <code>userData</code> <var>: <b>type</b> String | JSON</var><br>
+   *   The custom data.
+   * - <code>agent</code> <var>: <b>type</b> JSON</var><br>
+   *   The user's browser agent information.
+   * - <code>agent.name</code> <var>: <b>type</b> String</var><br>
+   *   The user's browser agent name.
+   * - <code>agent.version</code> <var>: <b>type</b> Integer</var><br>
+   *   The user's browser agent version.
+   * - <code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>
+   *   The user's browser webrtc implementation type.
+   * - <code>streams</code> <var>: <b>type</b> JSON</var><br>
+   *   The list of peer connections streaming.
+   * - <code>streams.(#peerId)</code> <var>: <b>type</b> JSON</var><br>
+   *   The peer connection streaming information.
+   * - <code>streams.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   *   The audio streaming information. If there is no stream connection with the peer,
+   *   it's <code>false</code>.
+   * - <code>streams.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>
+   *   The flag that indicates if stereo is enabled for this connection. By default,
+   *   it's <code>false</code>.
+   * - <code>streams.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>
+   *   The audio MediaStreamTrack source used for this connection.
+   * - <code>streams.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   *   The video streaming information. If there is no stream connection with the peer,
+   *   it's <code>false</code>.
+   * - <code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
+   *   The video stream resolution.
+   * - <code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution height.
+   * - <code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution width.
+   * - <code>streams.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution framerate.
+   * - <code>streams.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>
+   *   The video MediaStreamTrack source used for this connection.
+   * - <code>streams.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>
+   *   The MediaStreamTracks enabled status (muted/unmuted).
+   * - <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+   *   The audio MediaStreamTrack enabled status (muted/unmuted).
+   * - <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+   *   The video MediaStreamTrack enabled status (muted/unmuted).
+   * - <code>bandwidth</code> <var>: <b>type</b> JSON</var><br>
+   *   The bandwidth configuration for the peer connections.
+   *   This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * - <code>bandwidth.data</code> <var>: <b>type</b> Integer</var><br>
+   *   The bandwidth configuration for data stream.
+   * - <code>bandwidth.video</code> <var>: <b>type</b> Integer</var><br>
+   *   The bandwidth configuration for video stream.
+   * - <code>bandwidth.audio</code> <var>: <b>type</b> Integer</var><br>
+   *   The bandwidth configuration for audio stream.
+   * @for Self
+   * @since 0.6.0
+   */
+  com.getInfo = function (peerId) {
+    var data = {};
+
+    // Pass jshint error
+    var getStreamSettingsFn = function (stream) {
+      stream = stream || {};
+
+      return stream.config || {
+        audio: false,
+        video: false,
+        status: {
+          audioMuted: true,
+          videoMuted: true
+        }
+      };
+    };
+
+    data.userData = com.data;
+    data.agent = com.agent;
+    data.bandwidth = com.bandwidth;
+
+    // Get all stream connections
+    if (!fn.isEmpty(peerId)) {
+      data.stream = getStreamSettingsFn(com.streamConnections[peerId]);
+
+    // Get that stream connection only
+    } else {
+      data.streams = {};
+
+      var key;
+
+      for (key in com.streamConnections) {
+        if (com.streamConnections.hasOwnProperty(key)) {
+          data.streams[key] = getStreamSettingsFn(com.streamConnections[key]);
+        }
+      }
+    }
+
+    return data;
+  };
+
+  com.respond('self:ready', config);
+}
+
+var SelfEventReceivedHandler = {
+
+  stream: {
+    stop: function (com, data, listener) {
+      // Trigger the event
+      var peerId = com.findStreamConnectionId(data.id);
+
+      com.respond('self:removestreamconnection', {
+        streamId: data.id,
+        peerId: key
+      });
+    }
+  }
+};
+
+
+/**
+ * Handles all the events to respond to other parent classes.
+ * @attribute SelfEventResponseHandler
+ * @private
+ * @for Self
+ * @since 0.6.0
+ */
+var SelfEventResponseHandler = {
+  /**
+   * Event fired when self object to ready to use.
+   *   At this stage, the self user id is empty as user has not joined the room.
+   * @event self:ready
+   * @for Self
+   * @since 0.6.0
+   */
+  ready: function (com, data, listener) {
+    if (typeof com.onready === 'function') {
+      com.onready();
+    }
+  },
+
+  /**
+   * Event fired when self has updated data.
+   * @event self:update
+   * @param {JSON|String} userData The updated self custom data.
+   * @for Self
+   * @since 0.6.0
+   */
+  update: function (com, data, listener) {
+    if (typeof com.onupdate === 'function') {
+      com.onupdate(data);
+    }
+  },
+
+  /**
+   * Event fired when self has added a new stream for connection.
+   * @event self:addstreamconnection
+   * @for Self
+   * @since 0.6.0
+   */
+  addstreamconnection: function (com, data, listener) {
+    if (typeof com.onaddstreamconnection === 'function') {
+      com.onaddstreamconnection(data);
+    }
+  },
+
+  /**
+   * Event fired when self has removed a stream connection.
+   * @event self:removestreamconnection
+   * @for Self
+   * @since 0.6.0
+   */
+  removestreamconnection: function (com, data, listener) {
+    delete com.streamConnections[data.peerId];
+
+    if (typeof com.onremovestreamconnection === 'function') {
+      com.onremovestreamconnection(data);
+    }
+  },
+
+  /**
+   * Event fired when self user is connected to room.
+   * @event self:connect
+   * @for Self
+   * @since 0.6.0
+   */
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === 'function') {
+      com.onconnect();
+    }
+  },
+
+  /**
+   * Event fired when self user is disconnected from room.
+   * @event self:disconnect
+   * @for Self
+   * @since 0.6.0
+   */
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === 'function') {
+      com.ondisconnect(data);
+    }
+  }
+};
+
+/**
+ * Handles all the message events received from socket.
+ * @attribute SelfEventMessageHandler
+ * @private
+ * @for Self
+ * @since 0.6.0
+ */
+var SelfEventMessageHandler = {
+
+  inRoom: function (com, data, listener) {
+    com.id = data.sid;
+    com.respond('self:connect');
+  }
+};
+
+/**
+ * Handles the self class events.
+ * @method SelfHandler
+ * @param {Object} com The reference to the class object.
+ * @param {String} event The event name.
+ * @param {JSON} data The event data response.
+ * @param {Function} listener The listener function.
+ * @private
+ * @for Self
+ * @since 0.6.0
+ */
+var SelfHandler = function (com, event, data, listener) {
+  var params = event.split(':');
+  data = data || {};
+
+  // Messaging events
+  if (event.indexOf('message:') === 0) {
+
+    fn.applyHandler(SelfEventMessageHandler, params, [com, data, listener]);
+
+  } else {
+    // Class events
+    if (event.indexOf('self:') === 0) {
+      data.id = com.id;
+
+      fn.applyHandler(SelfEventResponseHandler, params, [com, data, listener]);
+
+    } else {
+      data.selfId = com.selfId;
+
+      fn.applyHandler(SelfEventReceivedHandler, params, [com, data, listener]);
+    }
+
+    listener(event, data);
+  }
+};
+
 function Socket(config, listener) {
   'use strict';
+
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
 
   // Reference of instance
   var com = this;
@@ -3754,9 +4720,9 @@ function Socket(config, listener) {
   com.protocol = globals.enforceSSL ? 'https:' : window.location.protocol;
 
   /**
-   * The signalling server port to connect with.
+   * The signalling server port that is connecting with.
    * @attribute server
-   * @type String
+   * @type Integer
    * @private
    * @for Socket
    * @since 0.6.0
@@ -3782,7 +4748,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.messageInterval = 1000;
-  
+
    /**
    * The queue of messages (throttle) before sending the next
    * @attribute messageQueue
@@ -3792,24 +4758,14 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.messageQueue = [];
-  
-  /**
-   * The socket readyState.
-   * @attribute readyState
-   * @type String
-   * @required
-   * @private
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.readyState = 'new';
 
-<<<<<<< Updated upstream
   /**
    * The list of available signalling server ports.
    * @attribute ports
-   * @param {Array} http: The list of Http ports.
-   * @param {Array} https: The list of Https ports.
+   * @param {Array} http: The list of HTTP ports.
+   * @param {Integer} http:.(#index) The port number.
+   * @param {Array} https: The list of HTTPS ports.
+   * @param {Integer} https:.(#index) The port number.
    * @type JSON
    * @private
    * @for Socket
@@ -3819,16 +4775,21 @@ function Socket(config, listener) {
     'https:': config.httpsPortList,
     'http:': config.httpPortList
   };
-=======
-	// do a peer connection health check
-  	self._startPeerConnectionHealthCheck(targetMid);
-  });
-};
->>>>>>> Stashed changes
 
   /**
-   * The socket configuratin.
+   * The socket configuration passed into the <code>io.socket</code>.
    * @attribute config
+   * @param {Boolean} forceNew The flag to indicate if socket.io should
+   *   force a new connection everytime.
+   * @param {Boolean} [reconnection=false] The flag to indicate if socket.io
+   *   should reconnect if connection attempt fails. Reconnection is set to
+   *   <code>true</code> only when it's reconnecting the last port of the fallback
+   *   XHRPolling connection.
+   * @param {Array} transports The transports that are used for the socket.io connection.
+   * - <code>['websocket']</code> is used for WebSocket connection.
+   * - <code>['xhr-polling', 'jsonp-polling', 'polling']</code> is used for XHRPoling connection.
+   * @param {Integer} [timeout] The socket.io timeout to wait for an established connection before
+   *   throwing an exception.
    * @type JSON
    * @private
    * @for Socket
@@ -3837,9 +4798,12 @@ function Socket(config, listener) {
   com.config = {};
 
   /**
-   * The type of socket connection.
+   * The type of socket connection. There are two types:
+   * - <code>"WebSocket"</code> indicates a WebSocket connection.
+   * - <code>"XHRPolling"</code> indicates a LongPolling connection.
    * @attribute type
    * @type String
+   * @default "WebSocket"
    * @private
    * @for Socket
    * @since 0.6.0
@@ -3847,7 +4811,7 @@ function Socket(config, listener) {
   com.type = config.type || 'WebSocket';
 
   /**
-   * The Socket.io object.
+   * The socket.io object.
    * @attribute Socket
    * @type Object
    * @private
@@ -3856,49 +4820,20 @@ function Socket(config, listener) {
    */
   com.Socket = null;
 
+
   /**
-   * The responses attached to message events.
-   * @attribute responses
-   * @type JSON
-   * @private
+   * Function to subscribe to when socket object is ready to use.
+   * @method onready
+   * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
-  com.responses = {};
-  
-  /**
-   * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
-   * @private
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.handler = function (event, data) {
-    data.server = com.server;
-    data.port = com.port;
-    data.type = com.type;
-    data.protocol = com.protocol;
-    
-    //log.debug('SocketHandler', event, data); 
-  
-    listener(event, data);
-  };
+  com.onready = function () {};
 
-<<<<<<< Updated upstream
-=======
-  // do a peer connection health check
-<<<<<<< e4c90b7c9101d4b4b9430465fae93d5b30ec358a
-  //this._startPeerConnectionHealthCheck(targetMid);
->>>>>>> Stashed changes
-=======
-  this._startPeerConnectionHealthCheck(targetMid);
->>>>>>> stash@{0}^1
-
-  
   /**
    * Function to subscribe to when socket has been connected.
    * @method onconnect
+   * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
@@ -3907,132 +4842,100 @@ function Socket(config, listener) {
   /**
    * Function to subscribe to when socket has been disconnected.
    * @method ondisconnect
-   * @for Room
+   * @eventhandler true
+   * @for Socket
    * @since 0.6.0
    */
   com.ondisconnect = function () {};
-  
+
   /**
    * Function to subscribe to when socket has connection error.
    * @method onconnecterror
-   * @for Room
+   * @eventhandler true
+   * @for Socket
    * @since 0.6.0
    */
   com.onconnecterror = function () {};
-  
+
   /**
    * Function to subscribe to when socket attempts to reconnect.
    * @method onreconnect
-   * @for Room
+   * @eventhandler true
+   * @for Socket
    * @since 0.6.0
    */
   com.onreconnect = function () {};
-  
+
   /**
    * Function to subscribe to when socket has an exception.
    * @method onerror
-   * @for Room
+   * @eventhandler true
+   * @for Socket
    * @since 0.6.0
    */
   com.onerror = function () {};
 
-<<<<<<< Updated upstream
-  
+
   /**
-   * Starts the connection to the signalling server
+   * The handler that manages all triggers or relaying events.
+   * @method handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Socket
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+    data = data || {};
+
+    // Class events
+    data.server = com.server;
+    data.port = com.port;
+    data.type = com.type;
+    data.protocol = com.protocol;
+
+    fn.applyHandler(SocketEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Socket: Responding with event = ', event, data);
+  };
+
+  /**
+   * Starts the connection to the signalling server.
    * @method connect
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
   com.connect = function () {
     com.port = com.ports[window.location.protocol][0];
-    
+
     if (com.type === 'XHRPolling') {
       com.Socket = new com.XHRPolling();
-=======
-/**
- * Handles the CANDIDATE Message event.
- * @method _candidateHandler
- * @param {JSON} message The Message object received.
- *   [Rel: Skylink._SIG_MESSAGE_TYPE.CANDIDATE.message]
- * @private
- * @component Message
- * @for Skylink
- * @since 0.5.1
- */
-Skylink.prototype._candidateHandler = function(message) {
-  var targetMid = message.mid;
-  var pc = this._peerConnections[targetMid];
-  log.log([targetMid, null, message.type, 'Received candidate from peer. Candidate config:'], {
-    sdp: message.sdp,
-    target: message.target,
-    candidate: message.candidate,
-    label: message.label
-  });
-  // create ice candidate object
-  var messageCan = message.candidate.split(' ');
-  var canType = messageCan[7];
-  log.log([targetMid, null, message.type, 'Candidate type:'], canType);
-  // if (canType !== 'relay' && canType !== 'srflx') {
-  // trace('Skipping non relay and non srflx candidates.');
-  var index = message.label;
-  var candidate = new window.RTCIceCandidate({
-    sdpMLineIndex: index,
-    candidate: message.candidate
-  });
-  if (pc) {
-    /*if (pc.iceConnectionState === this.ICE_CONNECTION_STATE.CONNECTED) {
-      log.debug([targetMid, null, null,
-        'Received but not adding Candidate as we are already connected to this peer']);
-      return;
-    }*/
-    // set queue before ice candidate cannot be added before setRemoteDescription.
-    // this will cause a black screen of media stream
-    if ((pc.setOffer === 'local' && pc.setAnswer === 'remote') ||
-      (pc.setAnswer === 'local' && pc.setOffer === 'remote')) {
-      pc.addIceCandidate(candidate);
-      // NOTE ALEX: not implemented in chrome yet, need to wait
-      // function () { trace('ICE  -  addIceCandidate Succesfull. '); },
-      // function (error) { trace('ICE  - AddIceCandidate Failed: ' + error); }
-      //);
-      log.debug([targetMid, 'RTCIceCandidate', message.type,
-        'Added candidate'], candidate);
->>>>>>> Stashed changes
     } else {
       com.Socket = new com.WebSocket();
     }
   };
 
   /**
-   * Stops the connection to the Socket.
+   * Stops the connection to the signalling server.
    * @method disconnect
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
   com.disconnect = function () {
     com.Socket.disconnect();
-    com.Socket.responses = {};
   };
 
   /**
-   * Attaches a listener to a particular socket message event received.
-   * @method when
-   * @trigger peerJoined, mediaAccessRequired
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.when = function (event, callback) {
-    com.responses[event] = com.responses[event] || [];
-    // Push callback for listening
-    com.responses[event].push(callback);
-  };
- 
-  /**
-   * Sends a socket data.
+   * Sends data to the signaling server for relaying.
+   * NOTE to Thanh: Please implement the throttle for messaging here.
    * @method send
-   * @trigger peerJoined, mediaAccessRequired
+   * @param {JSON} data The data to send.
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -4044,8 +4947,9 @@ Skylink.prototype._candidateHandler = function(message) {
     }
     setTimeout(function () {*/
       com.Socket.send(JSON.stringify(data));
-      com.handler('socket:send', {
-        message: data
+      com.respond('socket:message', {
+        message: data,
+        sourceType: 'local'
       });
     //}, interval);
   };
@@ -4053,78 +4957,80 @@ Skylink.prototype._candidateHandler = function(message) {
   /**
    * Handles the event when socket is connected to signaling.
    * @method bindOnConnect
+   * @private
    * @for Socket
    * @since 0.6.0
    */
-  com.bindOnConnect = function (options) {
-    com.handler('socket:connect', {});
+  com.bindOnConnect = function () {
+    com.respond('socket:connect');
 
     com.Socket.removeAllListeners();
 
-    com.Socket.on('disconnect', com.bindOnDisconnect);
+    com.Socket.on('disconnect', function () {
+      com.respond('socket:disconnect');
 
-    com.Socket.on('message', com.bindOnMessage);
-    
-    com.Socket.on('error', com.bindOnError);
-    
+      if (typeof com.onerror === 'function') {
+        com.ondisconnect();
+      }
+    });
+
+    com.Socket.on('message', function (result) {
+      var data = JSON.parse(result);
+
+      // Check if bulk message
+      if (data.type === 'group') {
+        log.info('Received a group message. Breaking down messages into individual messages', data);
+
+        var i;
+
+        for (i = 0; i < data.list.length; i++) {
+          var message = data.list[i];
+          com.respond('socket:message', {
+            message: message,
+            sourceType: 'remote'
+          });
+        }
+
+      } else {
+        com.respond('socket:message', {
+          message: data,
+          sourceType: 'remote'
+        });
+      }
+    });
+
+    com.Socket.on('error', function (error) {
+      com.respond('socket:error', {
+        error: error
+      });
+
+      if (typeof com.onerror === 'function') {
+        com.onerror(error);
+      }
+    });
+
     if (typeof com.onconnect === 'function') {
       com.onconnect();
     }
   };
 
   /**
-   * Handles the event when socket is disconnected to signaling.
-   * @method bindOnDisconnect
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.bindOnDisonnect = function () {
-    com.handler('socket:disconnect', {});
-    
-    if (typeof com.onerror === 'function') {
-      com.ondisconnect();
-    }
-  };
-
-  /**
-   * Handles the event when socket receives a message from signaling.
-   * @method bindOnMessage
-   * @trigger peerJoined, mediaAccessRequired
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.bindOnMessage = function (result) {
-    var data = JSON.parse(result);
-    
-    com.handler('socket:message', {
-      message: data
-    });
-
-    // Check if bulk message
-    if (data.type === 'group') {
-      fn.forEach(function (message, key) {
-        com.respond(message.type, message);
-      });
-
-    } else {
-      com.respond(data.type, data);
-    }
-  };
-  
-  /**
    * Handles the event when socket have a connection error.
    * @method bindOnConnectError
+   * @param {Object} error The socket.io connection error.
+   * @private
    * @for Socket
    * @since 0.6.0
    */
   com.bindOnConnectError = function (error) {
-    com.handler('socket:connect_error', {
+    com.respond('socket:connecterror', {
       error: error
     });
 
     var ports = com.ports[window.location.protocol];
+    var i;
 
-    for (var i = 0; i < ports.length; i++) {
+    for (i = 0; i < ports.length; i += 1) {
       // Get current port
       if (ports[i] === com.port) {
         // Check if reach the end
@@ -4143,48 +5049,17 @@ Skylink.prototype._candidateHandler = function(message) {
         break;
       }
     }
-    
+
     if (typeof com.onconnecterror === 'function') {
       com.onconnecterror(error);
     }
   };
-  
-  /**
-   * Handles the event when socket catches an exception.
-   * @method bindOnError
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.bindOnError = function (error) {
-    com.handler('socket:error', {
-      error: error
-    });
-    
-    if (typeof com.onerror === 'function') {
-      com.onerror(error);
-    }
-  };
 
   /**
-   * Responses to the attached socket message responses.
-   * @method respond
-   * @trigger peerJoined, mediaAccessRequired
-   * @for Socket
-   * @since 0.6.0
-   */
-  com.respond = function (type, data) {
-    // Parse for events tied to type.
-    com.responses[type] = com.responses[type] || [];
-    
-    fn.forEach(com.responses[type], function (response, i) {
-      response(data);
-    });
-  };
-
-  /**
-   * Restarts the connection to the Socket.
+   * Restarts the connection to the signaling server when attempt to
+   *   establish socket connection failed.
    * @method reconnect
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -4199,18 +5074,14 @@ Skylink.prototype._candidateHandler = function(message) {
     default:
       com.Socket = com.XHRPolling();
     }
-    
-    if (typeof com.onreconnect === 'function') {
-      com.onreconnect(com.type);
-    }
+
+    com.respond('socket:reconnect');
   };
-
-
 
   /**
    * Creates a WebSocket connection in socket.io.
    * @method WebSocket
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -4229,6 +5100,8 @@ Skylink.prototype._candidateHandler = function(message) {
 
     var socket = io.connect(server, options);
 
+    com.config = options;
+
     socket.on('connect', com.bindOnConnect);
     socket.on('connect_error', com.bindOnConnectError);
 
@@ -4238,7 +5111,7 @@ Skylink.prototype._candidateHandler = function(message) {
   /**
    * Creates a XHR Long-polling connection in socket.io.
    * @method XHRPolling
-   * @trigger peerJoined, mediaAccessRequired
+   * @private
    * @for Socket
    * @since 0.6.0
    */
@@ -4259,6 +5132,8 @@ Skylink.prototype._candidateHandler = function(message) {
 
     var socket = io.connect(server, options);
 
+    com.config = options;
+
     socket.on('connect', com.bindOnConnect);
     socket.on('reconnect', com.bindOnConnect);
     socket.on('connect_error', com.bindOnConnectError);
@@ -4271,13 +5146,107 @@ Skylink.prototype._candidateHandler = function(message) {
   if (!window.io) {
     throw new Error('Required dependency socket.io not found');
   }
-  
+
   fn.runSync(function () {
-    com.handler('socket:start', config);
+    com.respond('socket:ready', config);
   });
 }
+
+var SocketEventResponseHandler = {
+
+  /**
+   * Event fired when the socket object is ready to use.
+   * @event socket:ready
+   * @for Socket
+   * @since 0.6.0
+   */
+  ready: function (com, data, listener) {
+    if (typeof com.onstart === 'function') {
+      com.onstart(data);
+    }
+  },
+
+  /**
+   * Event fired when socket occurs an exception during connection.
+   * @event socket:error
+   * @param {Object} error The getUserMedia or event error.
+   * @for Socket
+   * @since 0.6.0
+   */
+  error: function (com, data, listener) {
+    if (typeof com.onerror === 'function') {
+      com.onerror(data);
+    }
+  },
+
+  /**
+   * Event fired when socket connection has been established to the signaling server.
+   * @event socket:connect
+   * @param {Object} error The getUserMedia or event error.
+   * @for Socket
+   * @since 0.6.0
+   */
+  connect: function (com, data, listener) {
+    if (typeof com.onconnect === 'function') {
+      com.onconnect(data);
+    }
+  },
+
+  /**
+   * Event fired when socket connection fails to connect to the signaling server.
+   * @event socket:connecterror
+   * @param {Object} error The getUserMedia or event error.
+   * @for Socket
+   * @since 0.6.0
+   */
+  connecterror: function (com, data, listener) {
+    if (typeof com.onconnecterror === 'function') {
+      com.onconnecterror(data);
+    }
+  },
+
+  /**
+   * Event fired when socket attempts to reconnect with signaling server when attempt
+   *  to establish connection fails.
+   * @event socket:reconnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  reconnect: function (com, data, listener) {
+    if (typeof com.onreconnect === 'function') {
+      com.onreconnect(data);
+    }
+  },
+
+  /**
+   * Event fired when socket sends a message to the signaling server.
+   * @event socket:message
+   * @param {String} event The message event type.
+   * @param {JSON} data The data received from server.
+   * @param {String} sourceType The source type of the message received.
+   * @for Socket
+   * @since 0.6.0
+   */
+  message: function (com, data, listener) {},
+
+  /**
+   * Event fired when socket connection with signaling server has been disconnected.
+   * @event socket:disconnect
+   * @for Socket
+   * @since 0.6.0
+   */
+  disconnect: function (com, data, listener) {
+    if (typeof com.ondisconnect === 'function') {
+      com.ondisconnect(data);
+    }
+  }
+};
+
 function Stream(stream, config, listener) {
   'use strict';
+
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
 
   // Reference of instance
   var com = this;
@@ -4311,11 +5280,15 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.config = config;
-  
+
   /**
-   * The stream source type.
+   * The stream source origin.
+   * There are two types of sources:
+   * - <code>"local"</code> indicates that the stream came from self user.
+   * - <code>"remote</code> indicates that the stream came from other users.
    * @attribute sourceType
    * @type String
+   * @default "local"
    * @private
    * @for Stream
    * @since 0.6.0
@@ -4332,79 +5305,118 @@ function Stream(stream, config, listener) {
    */
   com.MediaStream = null;
 
+
   /**
-   * The parent handler that redirects the stream object messages to.
-   * @attribute MediaStream
-   * @type Object
-   * @private
+   * Function to subscribe to when stream object is ready to use.
+   * @method onstart
+   * @eventhandler true
    * @for Stream
    * @since 0.6.0
    */
-  com.parentHandler = function () {};
+  com.onstart = function () { };
 
   /**
-   * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.handler = function (event, data) {
-    listener(event, data);
-    
-    //log.debug('StreamHandler', event, data); 
-
-    if (typeof com.parentHandler === 'function') {
-      com.parentHandler(event, data);
-    }
-  };
-
-  
-  /**
-   * Function to subscribe to when stream has ended.
-   * @method onstreamended
+   * Function to subscribe to when getUserMedia throws an exception or event has error.
+   * @method onerror
+   * @eventhandler true
    * @for Stream
    * @since 0.6.0
    */
-  com.onstreamended = function () { };
-  
+  com.onerror = function () { };
+
   /**
-   * Function to subscribe to when stream track has been ended.
-   * @method ontrackended
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has started.
+   * @method ontrackstart
+   * @eventhandler true
    * @for Stream
    * @since 0.6.0
    */
-  com.ontrackended = function () { };
-  
+  com.ontrackstart = function () { };
+
   /**
-   * Function to subscribe to when stream track has been muted.
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has stopped.
+   * @method ontrackstop
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.ontrackstop = function () { };
+
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has been disabled (muted).
    * @method ontrackmute
+   * @eventhandler true
    * @for Stream
    * @since 0.6.0
    */
   com.ontrackmute = function () { };
 
   /**
-   * Function to subscribe to when stream track has been unmuted.
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has been enabled (unmuted).
    * @method ontrackunmute
+   * @eventhandler true
    * @for Stream
    * @since 0.6.0
    */
   com.ontrackunmute = function () { };
-  
 
   /**
-   * Starts a MediaStream object connection with getUserMedia.
+   * Function to subscribe to when MediaStream object has ended.
+   * @method onstop
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.onstop = function () { };
+
+
+  /**
+   * The handler that the parent classes utilises to listen to events.
+   * @method routeEventToParent
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.routeEventToParent = function () {};
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.id = com.id;
+
+    fn.applyHandler(StreamEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    if (typeof com.routeEventToParent === 'function') {
+      com.routeEventToParent(event, data);
+    }
+
+    log.debug('Stream: Responding with event = ', event, data);
+  };
+
+  /**
+   * Starts a MediaStream connection with getUserMedia.
    * @method start
-   * @trigger StreamJoined, mediaAccessRequired
+   * @private
    * @for Stream
    * @since 0.6.0
    */
   com.start = function () {
     window.getUserMedia(com.constraints, com.bind, function (error) {
-      com.handler('stream:error', {
-        id: com.id,
+      com.respond('stream:error', {
         error: error,
         sourceType: com.sourceType
       });
@@ -4414,13 +5426,14 @@ function Stream(stream, config, listener) {
   /**
    * Binds events to MediaStream object.
    * @method bind
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {Object} bindStream The MediaStream object to bind events to.
+   * @private
    * @for Stream
    * @since 0.6.0
    */
   com.bind = function (bindStream) {
     // Set a MediaStream id if Firefox or Chrome doesn't
-    com.id = bindStream.id || fn.generateUID();
+    com.id = fn.generateUID();
 
     // Bind events to MediaStream
     // bindStream.onaddtrack = com.onAddTrack;
@@ -4433,9 +5446,8 @@ function Stream(stream, config, listener) {
     com.bindTracks(bindStream.getVideoTracks());
 
     com.MediaStream = bindStream;
- 
-    com.handler('stream:start', {
-      id: com.id,
+
+    com.respond('stream:start', {
       label: bindStream.label,
       constraints: com.constraints,
       sourceType: com.sourceType
@@ -4444,35 +5456,61 @@ function Stream(stream, config, listener) {
 
   /**
    * Binds events to MediaStreamTrack object.
-   * @method bind
-   * @trigger StreamJoined, mediaAccessRequired
+   * @method bindTracks
+   * @param {Array} bindTracks The MediaStreamTracks from the MediaStream object.
+   * @param {Object} bindTracks.n The MediaStreamTrack object to bind events to.
+   * @private
    * @for Stream
    * @since 0.6.0
    */
   com.bindTracks = function (bindTracks) {
-    fn.forEach(bindTracks, function (track, i) {
+    var i;
+
+    // Pass jshint error
+    var bindOnEnded = function () {
+      com.respond('stream:track:stop', {
+        trackId: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+    };
+
+    // Pass jshint error
+    var bindOnMute = function () {
+      com.respond('stream:track:mute', {
+        trackId: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+    };
+
+    // Pass jshint error
+    var bindOnUnmute = function () {
+      com.respond('stream:track:unmute', {
+        trackId: track.newId,
+        kind: track.kind,
+        label: track.label,
+        enabled: track.enabled,
+        sourceType: com.sourceType
+      });
+    };
+
+    for (i = 0; i < bindTracks.length; i += 1) {
+      var track = bindTracks[i];
+
       track.newId = track.id || fn.generateUID();
 
       // Bind events to MediaStreamTrack
       // bindTracks[i].onstarted = com.onStarted;
-      track.onended = function () {
-        com.handler('stream:track:stop', {
-          streamId: com.id,
-          id: track.newId,
-          kind: track.kind,
-          label: track.label,
-          enabled: track.enabled,
-          sourceType: com.sourceType
-        });
-
-        if (typeof com.ontrackended === 'function') {
-          com.ontrackended(track);
-        }
-      };
+      track.onended = bindOnEnded;
 
       // Un-implemented events functions
-      //track.onmute = function(event) {};
-      //track.onunmute = function(event) {};
+      track.onmute = bindOnMute;
+      track.onunmute = bindOnUnmute;
       // track.onoverconstrained = function(event) {};
 
       // Set the mute status
@@ -4485,24 +5523,23 @@ function Stream(stream, config, listener) {
         isEnabled = (typeof com.config.video === 'object') ?
           !!!com.config.status.videoMuted : !!com.config.video;
       }
-      
+
       track.enabled = isEnabled;
 
-      com.handler('stream:track:start', {
-        streamId: com.id,
-        id: track.newId,
+      com.respond('stream:track:start', {
+        trackId: track.newId,
         kind: track.kind,
         label: track.label,
         enabled: track.enabled,
         sourceType: com.sourceType
       });
-    });
+    }
   };
 
   /**
-   * Attaches the Stream object to a video element.
+   * Attaches the MediaStream object to a video element.
    * @method attachElement
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {DOM} element The video DOM element to bind the MediaStream to.
    * @for Stream
    * @since 0.6.0
    */
@@ -4510,33 +5547,35 @@ function Stream(stream, config, listener) {
     if (window.webrtcDetectedBrowser === 'firefox' &&
       (com.MediaStream instanceof LocalMediaStream) === false) {
       window.reattachMediaStream(element, com.MediaStream.checkingVideo);
-    
+
     } else {
       window.attachMediaStream(element, com.MediaStream);
     }
   };
 
   /**
-   * Handles the non-implemented firefox onended event for stream.
+   * Handles the differences for non-implemented onended event for MediaStream.
    * @method bindOnStreamEnded
-   * @trigger StreamJoined, mediaAccessRequired
+   * @param {Object} bindStream The MediaStream object to bind the event to.
+   * @return {Function|Object} The interval object workaround for Firefox or the
+   *   event handler function for supported browsers.
+   * @private
    * @for Stream
    * @since 0.6.0
    */
   com.bindOnStreamEnded = function (bindStream) {
     var fn = function () {
-      com.handler('stream:stop', {
-        id: com.id,
+      com.respond('stream:stop', {
         label: stream.label,
         constraints: com.constraints,
         sourceType: com.sourceType
       });
-      
+
       if (typeof com.onended === 'function') {
         com.onended(bindStream);
       }
     };
-    
+
     // Firefox browsers
     if (window.webrtcDetectedBrowser === 'firefox') {
       // LocalMediaStream
@@ -4547,7 +5586,7 @@ function Stream(stream, config, listener) {
             // trigger that it has ended
             fn();
           }
-  
+
           if (typeof bindStream.recordedTime === 'undefined') {
             bindStream.recordedTime = 0;
           }
@@ -4572,7 +5611,7 @@ function Stream(stream, config, listener) {
               clearInterval(video.onstreamended);
               fn();
             }
-            
+
             if (!fn.isEmpty(video.mozSrcObject)) {
               if (video.mozSrcObject.ended === true) {
                 clearInterval(video.onstreamended);
@@ -4580,9 +5619,9 @@ function Stream(stream, config, listener) {
               }
             }
           }, 1000);
-          
+
           bindStream.checkingVideo = video;
-  
+
           window.attachMediaStream(video, bindStream);
           return video;
         })();
@@ -4593,72 +5632,56 @@ function Stream(stream, config, listener) {
   };
 
   /**
-   * Mutes all audio MediaStreamTracks.
+   * Mutes all audio MediaStreamTracks of the MediaStream object.
    * @method muteAudio
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
   com.muteAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
-    
-    fn.forEach(tracks, function (track, i) {
-      track.enabled = false;
-      
-      com.handler('stream:track:mute', {
-        streamId: com.id,
-        id: track.newId,
-        kind: track.kind,
-        label: track.label,
-        enabled: track.enabled,
-        sourceType: com.sourceType
-      });
+    var i;
 
-      if (typeof com.ontrackmute === 'function') {
-        com.ontrackmute(track);
-      }
-    });
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+
+      track.enabled = false;
+
+      track.onmute();
+    }
   };
 
   /**
-   * Unmutes all audio MediaStreamTracks.
+   * Unmutes all audio MediaStreamTracks of the MediaStream object.
    * @method unmuteAudio
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
   com.unmuteAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
+    var i;
 
-    fn.forEach(tracks, function (track, i) {
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+
       track.enabled = true;
-      
-      com.handler('stream:track:unmute', {
-        streamId: com.id,
-        id: track.newId,
-        kind: track.kind,
-        label: track.label,
-        enabled: track.enabled,
-        sourceType: com.sourceType
-      });
 
-      if (typeof com.ontrackunmute === 'function') {
-        com.ontrackunmute(track);
-      }
-    });
+      track.onunmute();
+    }
   };
 
   /**
-   * Stops all audio MediaStreamTracks streaming.
+   * Stops all audio MediaStreamTracks streaming in the MediaStream object.
    * @method stopAudio
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
   com.stopAudio = function () {
     var tracks = com.MediaStream.getAudioTracks();
+    var i;
 
-    fn.forEach(tracks, function (track, i) {
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+
       track.stop();
 
       // Workaround for firefox as it does not have stop events
@@ -4668,85 +5691,68 @@ function Stream(stream, config, listener) {
           track.hasEnded = true;
         }
       }
-    
-    }, function () {
-      // Workaround for firefox as it does not have stop stream when all track ends
-      if (window.webrtcDetectedBrowser === 'firefox') {
-        if (com.MediaStream.videoEnded === true) {
-          com.MediaStream.hasEnded = true;
-        }
-        com.MediaStream.audioEnded = true;
+    }
+
+    // Workaround for firefox as it does not have stop stream when all track ends
+    if (window.webrtcDetectedBrowser === 'firefox') {
+      if (com.MediaStream.videoEnded === true) {
+        com.MediaStream.hasEnded = true;
       }
-    });
+      com.MediaStream.audioEnded = true;
+    }
   };
 
   /**
-   * Mutes all video MediaStreamTracks.
+   * Mutes all video MediaStreamTracks of the MediaStream object.
    * @method muteVideo
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
   com.muteVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
+    var i;
 
-    fn.forEach(tracks, function (track, i) {
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+
       track.enabled = false;
-      
-      com.handler('stream:track:mute', {
-        streamId: com.id,
-        id: track.newId,
-        kind: track.kind,
-        label: track.label,
-        enabled: track.enabled,
-        sourceType: com.sourceType
-      });
 
-      if (typeof com.ontrackmute === 'function') {
-        com.ontrackmute(track);
-      }
-    });
+      track.onmute();
+    }
   };
 
   /**
-   * Unmutes all video MediaStreamTracks.
+   * Unmutes all video MediaStreamTracks of the MediaStream object.
    * @method unmuteVideo
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
   com.unmuteVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
+    var i;
 
-    fn.forEach(tracks, function (track, i) {
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+
       track.enabled = true;
-      
-      com.handler('stream:track:unmute', {
-        streamId: com.id,
-        id: track.newId,
-        kind: track.kind,
-        label: track.label,
-        enabled: track.enabled,
-        sourceType: com.sourceType
-      });
 
-      if (typeof com.ontrackunmute === 'function') {
-        com.ontrackunmute(track);
-      }
-    });
+      track.onunmute();
+    }
   };
 
   /**
-   * Stops all video MediaStreamTracks streaming.
+   * Stops all video MediaStreamTracks streaming of the MediaStream object.
    * @method stopVideo
-   * @trigger StreamJoined, mediaAccessRequired
    * @for Stream
    * @since 0.6.0
    */
   com.stopVideo = function () {
     var tracks = com.MediaStream.getVideoTracks();
+    var i;
 
-    fn.forEach(tracks, function (track, i) {
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+
       track.stop();
 
       // Workaround for firefox as it does not have stop events
@@ -4756,18 +5762,23 @@ function Stream(stream, config, listener) {
           track.hasEnded = true;
         }
       }
-    
-    }, function () {
-      // Workaround for firefox as it does not have stop stream when all track ends
-      if (window.webrtcDetectedBrowser === 'firefox') {
-        if (com.MediaStream.audioEnded === true) {
-          com.MediaStream.hasEnded = true;
-        }
-        com.MediaStream.videoEnded = true;
+    }
+
+    // Workaround for firefox as it does not have stop stream when all track ends
+    if (window.webrtcDetectedBrowser === 'firefox') {
+      if (com.MediaStream.audioEnded === true) {
+        com.MediaStream.hasEnded = true;
       }
-    });
+      com.MediaStream.videoEnded = true;
+    }
   };
 
+  /**
+   * Stops MediaStream object streaming.
+   * @method stop
+   * @for Stream
+   * @since 0.6.0
+   */
   com.stop = function () {
     // Stop MediaStream tracks
     com.stopVideo();
@@ -4775,7 +5786,8 @@ function Stream(stream, config, listener) {
     // Stop MediaStream
     com.MediaStream.stop();
   };
-  
+
+
   // Throw an error if adapterjs is not loaded
   if (!window.attachMediaStream) {
     throw new Error('Required dependency adapterjs not found');
@@ -4811,6 +5823,119 @@ function Stream(stream, config, listener) {
     });
   }
 }
+
+var StreamEventResponseHandler = {
+  /**
+   * Event fired when the MediaStream has started and that the stream object is ready to use.
+   * @event stream:start
+   * @for Stream
+   * @since 0.6.0
+   */
+  start: function (com, data, listener) {
+    if (typeof com.onstart === 'function') {
+      com.onstart(data.MediaStream);
+    }
+  },
+  
+  /**
+   * Event fired when usually getUserMedia fails or an exception has occurred during the
+   *   MediaStream object handling.
+   * @event stream:error
+   * @param {Object} error The getUserMedia or event error.
+   * @for Stream
+   * @since 0.6.0
+   */
+  error: function (com, data, listener) {
+    if (typeof com.onerror === 'function') {
+      com.onerror(data);
+    }
+  },
+
+  track: {
+    /**
+     * Event fired when the MediaStreamTrack of the MediaStream object has started and
+     *   that the track is ready to use.
+     * @event stream:track:start
+     * @for Stream
+     * @since 0.6.0
+     */
+    start: function (com, data, listener) {
+      if (typeof com.ontrackstart === 'function') {
+        com.ontrackstart(data);
+      }
+    },
+    
+    /**
+     * Event fired when the MediaStreamTrack of the MediaStream object has stopped.
+     * @event stream:track:stop
+     * @for Stream
+     * @since 0.6.0
+     */
+    stop: function (com, data, listener) {
+      if (typeof com.ontrackstop === 'function') {
+        com.ontrackstop(data);
+      }
+    },
+    
+    /**
+     * Event fired when the MediaStreamTrack of the MediaStream object has been disabled (muted).
+     * @event stream:track:mute
+     * @for Stream
+     * @since 0.6.0
+     */
+    mute: function (com, data, listener) {
+      if (typeof com.ontrackmute === 'function') {
+        com.ontrackmute(data);
+      }
+    },
+    
+    /**
+     * Event fired when the MediaStreamTrack of the MediaStream object has been enabled (unmuted).
+     * @event stream:track:unmute
+     * @for Stream
+     * @since 0.6.0
+     */
+    unmute: function (com, data, listener) {
+      if (typeof com.ontrackunmute === 'function') {
+        com.ontrackunmute(data);
+      }
+    },
+  },
+  
+  /**
+   * Event fired when the MediaStream object has stopped.
+   * @event stream:stop
+   * @for Stream
+   * @since 0.6.0
+   */
+  stop: function (com, data, listener) {
+    if (typeof com.onstop === 'function') {
+      com.onstop(data);
+    }
+  }
+};
+
+/**
+ * Handles the stream class events.
+ * @method StreamHandler
+ * @param {Object} com The reference to the class object.
+ * @param {String} event The event name.
+ * @param {JSON} data The event data response.
+ * @param {Function} listener The listener function.
+ * @private
+ * @for Stream
+ * @since 0.6.0
+ */
+var StreamHandler = function (com, event, data, listener) {
+  var params = event.split(':');
+
+  // Class events
+  data.id = com.id;
+
+  fn.applyHandler(StreamEventResponseHandler, params, [com, data, listener]);
+
+  listener(event, data);
+};
 var StreamParser = {
   /**
    * Stores the default Stream / Bandwidth settings.
@@ -5065,7 +6190,10 @@ var StreamTrackList = {
     } else {
       // Retrieve list
       MediaStreamTrack.getSources(function (trackList) {
-        fn.forEach(trackList, function (track, i) {
+        var i;
+        
+        for (i = 0; i < trackList.length; i += 1) {
+          var track = trackList[i];
           var data = {};
 
           // MediaStreamTrack label - FaceHD Camera
@@ -5082,20 +6210,21 @@ var StreamTrackList = {
           } else {
             StreamTrackList.video.push(data);
           }
-
-        }, function () {
-          defer({
-            audio: StreamTrackList.audio,
-            video: StreamTrackList.video
-          });
+        }
+        
+        defer({
+          audio: StreamTrackList.audio,
+          video: StreamTrackList.video
         });
       });
     }
-  },
-  
+  } 
 };
 function User (config, listener) {
   'use strict';
+
+  // Prevent undefined listener error
+  listener = listener || function (event, data) {};
 
   // Reference of instance
   var com = this;
@@ -5108,12 +6237,13 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.id = config.mid;
-  
+  com.id = config.id;
+
   /**
    * The user type.
    * @attribute type
    * @type String
+   * @default "user"
    * @readOnly
    * @for User
    * @since 0.6.0
@@ -5128,18 +6258,34 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.data = config.userInfo.userData || {};
+  com.data = config.data || {};
 
   /**
    * Stores the browser agent information.
    * @attribute agent
+   * @param {String} name The browser agent name.
+   * @param {Integer} version The browser agent version.
+   * @param {String} webRTCType The browser agent WebRTC type of implementation.
    * @type JSON
    * @private
    * @for User
    * @since 0.6.0
    */
   com.agent = config.agent || {};
-  
+
+  /**
+   * Stores the user's bandwidth configuration.
+   * @attribute bandwidth
+   * @param {Integer} audio The bandwidth audio configuration.
+   * @param {Integer} data The bandwidth data configuration.
+   * @param {Integer} video The bandwidth video configuration.
+   * @type JSON
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.bandwidth = config.bandwidth || {};
+
   /**
    * Stores the list of peer connections to user.
    * @attribute peers
@@ -5149,65 +6295,66 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.peers = {};
-  
+
+
   /**
-   * Stores the list of peer streaming configuration.
-   * @attribute streamingConfigs
-   * @type JSON
-   * @private
+   * Function to subscribe to when the user object is ready to use.
+   * @method onready
+   * @eventhandler true
    * @for User
    * @since 0.6.0
    */
-  com.streamingConfigs = {};
-  
-  /**
-   * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.handler = function (event, data) {
-    UserHandler(com, event, data, listener);
-  };
-  
-  
+  com.onready = function () {};
+
   /**
    * Function to subscribe to when user's custom data is updated.
    * @method onupdate
+   * @eventhandler true
    * @for User
    * @since 0.6.0
    */
   com.onupdate = function () {};
-  
+
+  /**
+   * Function to subscribe to when user has an established "main" peer connection.
+   * @method onconnect
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
   /**
    * Function to subscribe to when user is disconnected from the room.
    * @method ondisconnect
+   * @eventhandler true
    * @for User
    * @since 0.6.0
    */
   com.ondisconnect = function () {};
-  
+
   /**
    * Function to subscribe to when a new peer connection is established to user.
    * @method onaddconnection
+   * @eventhandler true
    * @for User
    * @since 0.6.0
    */
   com.onaddconnection = function () {};
-  
+
   /**
    * Function to subscribe to when a peer connection to user has added.
    * @method onremoveconnection
+   * @eventhandler true
    * @for User
    * @since 0.6.0
    */
   com.onremoveconnection = function () {};
-  
+
   /**
    * Function to subscribe to when a new data transfer request is initialized from user.
    * @method ondatarequest
+   * @eventhandler true
    * @for User
    * @since 0.6.0
    */
@@ -5216,14 +6363,16 @@ function User (config, listener) {
   /**
    * Function to subscribe to when a new data is received after transfer is completed from user.
    * @method ondata
+   * @eventhandler true
    * @for User
    * @since 0.6.0
    */
   com.ondata = function () {};
-  
+
   /**
    * Function to subscribe to when a new message is received from user.
-   * @method ondatatransfer
+   * @method onmessage
+   * @eventhandler true
    * @for User
    * @since 0.6.0
    */
@@ -5231,40 +6380,155 @@ function User (config, listener) {
 
 
   /**
+   * The handler handles received events.
+   * @method routeEvent
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.userId = com.id;
+
+    fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('User: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles received socket message events.
+   * @method routeMessage
+   * @param {JSON} message The message received.
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.routeMessage = function (message) {
+    // Messaging events
+    var fn = UserEventMessageHandler[message.type];
+
+    if (typeof fn === 'function') {
+      fn(com, message, listener);
+    }
+
+    log.debug('User: Received message = ', event, message);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.id = com.id;
+
+    fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('User: Responding with even = ', event, data);
+  };
+
+  /**
    * Starts a new peer connection to user.
    * @method addConnection
+   * @param {JSON} data The shared peer connection streaming configuration.
+   * @param {JSON} data.prid The shared peer connection id.
+   * @param {Array} data.iceServers The ICE servers the connection should use.
+   * @param {JSON} data.stream The streamming configuration for the shared peer connection.
+   * @param {JSON|Boolean} [data.stream.audio=false] The audio stream configuration.
+   *    If parsed as a boolean, other configuration settings under the audio
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [data.stream.audio.stereo=false] The flag that indiciates
+   *    if stereo is enabled for this connection.
+   * @param {String} [data.stream.audio.sourceId] The source id of the audio MediaStreamTrack
+     *    used for this connection.
+   * @param {String|Boolean} [data.stream.video=false] The video stream configuration.
+   *    If parsed as a boolean, other configuration settings under the video
+   *    configuration would be set as the default setting in the connection.
+   * @param {JSON} [data.stream.video.resolution] The video streaming resolution.
+   * @param {Integer} data.stream.video.resolution.width The video resolution width.
+   * @param {Integer} data.stream.video.resolution.height The video resolution height.
+   * @param {Integer} data.stream.video.frameRate The video stream framerate.
+   * @param {String} [data.stream.video.sourceId] The source id of the video MediaStreamTrack
+   *    used for this connection.
+   * @param {JSON} data.stream.status The stream MediaStreamTrack status.
+   * @param {Boolean} [data.stream.status.audioMuted=false] The flag that indicates if audio is muted.
+   *    If audio is set to false, this would be set as true.
+   * @param {Boolean} [data.stream.status.videoMuted=false] The flag that indicates if video is muted.
+   *    If video is set to false, this would be set as true.
+   * @param {JSON} data.bandwidth The bandwidth configuration the peer connections.
+   *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @param {Integer} [data.bandwidth.audio] The bandwidth configuration for the audio stream.
+   * @param {Boolean} [data.bandwidth.video] The bandwidth configuration for the video stream.
+   * @param {Boolean} [data.bandwidth.data] The bandwidth configuration for the data stream.
+   * @param {String} data.SDPType The session description type that the peer connection would send.
+   *    Types are <code>"offer"</code> or <code>"answer"</code>.
+   * @param {Stream} [stream] The stream object.
+   * @private
    * @for User
    * @since 0.6.0
    */
   com.addConnection = function (data, stream) {
     var peerConfig = {
       id: data.prid,
-      constraints: data.iceServers,
-      bandwidth: data.bandwidth,
+      iceServers: data.iceServers,
+      sdpConfig: {
+        bandwidth: data.bandwidth,
+        stereo: fn.isSafe(function () {
+          return !!data.settings.audio.stereo;
+        }),
+        SDPType: data.SDPType
+      },
       streamingConfig: data.settings
     };
-    
-    var peer = new Peer(peerConfig, com.handler);
-    
+
+    // Add the main streaming config
+    com.streamingConfigs[data.stream.prid] = data.settings;
+
+    var peer = new Peer(peerConfig, com.routeEvent);
+
     peer.connect(stream);
-    
-    peer.SDPType = data.SDPType;
-    
+
     com.peers[peer.id] = peer;
+
+    com.respond('user:addconnection', {
+      peerId: data.prid,
+      config: peerConfig
+    });
   };
- 
+
   /**
    * Stops a peer connection to user.
-   * @method addConnection
+   * @method removeConnection
+   * @param {String} peerId The shared peer connection id.
+   * @private
    * @for User
    * @since 0.6.0
    */
   com.removeConnection = function (peerId) {
     var peer = com.peers[peerId];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.disconnect();
     }
+
+    com.respond('user:removeconnection', {
+      peerId: peerId
+    });
   };
 
   /**
@@ -5278,123 +6542,238 @@ function User (config, listener) {
       peer.disconnect();
     });
   };
-  
-  /**
-   * Updates this user information.
-   * @method getInfo
-   * @for User
-   * @since 0.6.0
-   */
-  com.update = function (data) {
-    com.data = data;
-    
-    com.handler('user:update', {
-      data: com.data
-    });
-  };
-  
+
   /**
    * Gets this user information.
    * @method getInfo
+   * @param {String} [peerId] The shared peer connection id to retrieve
+   *    that streaming information only.
+   * @returns {JSON} The user streaming configuration and custom data.
+   * - <code>userData</code> <var>: <b>type</b> String | JSON</var><br>
+   *   The custom data.
+   * - <code>agent</code> <var>: <b>type</b> JSON</var><br>
+   *   The user's browser agent information.
+   * - <code>agent.name</code> <var>: <b>type</b> String</var><br>
+   *   The user's browser agent name.
+   * - <code>agent.version</code> <var>: <b>type</b> Integer</var><br>
+   *   The user's browser agent version.
+   * - <code>agent.webRTCType</code> <var>: <b>type</b> String</var><br>
+   *   The user's browser webrtc implementation type.
+   * - <code>streams</code> <var>: <b>type</b> JSON</var><br>
+   *   The list of peer connections streaming.
+   * - <code>streams.(#peerId)</code> <var>: <b>type</b> JSON</var><br>
+   *   The peer connection streaming information.
+   * - <code>streams.(#peerId).audio</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   *   The audio streaming information. If there is no stream connection with the peer,
+   *   it's <code>false</code>.
+   * - <code>streams.(#peerId).audio.stereo</code> <var>: <b>type</b> Boolean</var><br>
+   *   The flag that indicates if stereo is enabled for this connection. By default,
+   *   it's <code>false</code>.
+   * - <code>streams.(#peerId).audio.sourceId</code> <var>: <b>type</b> String</var><br>
+   *   The audio MediaStreamTrack source used for this connection.
+   * - <code>streams.(#peerId).video</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   *   The video streaming information. If there is no stream connection with the peer,
+   *   it's <code>false</code>.
+   * - <code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
+   *   The video stream resolution.
+   * - <code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution height.
+   * - <code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution width.
+   * - <code>streams.(#peerId).video.frameRate</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution framerate.
+   * - <code>streams.(#peerId).video.sourceId</code> <var>: <b>type</b> String</var><br>
+   *   The video MediaStreamTrack source used for this connection.
+   * - <code>streams.(#peerId).status</code> <var>: <b>type</b> JSON</var><br>
+   *   The MediaStreamTracks enabled status (muted/unmuted).
+   * - <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+   *   The audio MediaStreamTrack enabled status (muted/unmuted).
+   * - <code>streams.(#peerId).status.audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+   *   The video MediaStreamTrack enabled status (muted/unmuted).
+   * - <code>bandwidth</code> <var>: <b>type</b> JSON</var><br>
+   *   The bandwidth configuration for the peer connections.
+   *   This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * - <code>bandwidth.data</code> <var>: <b>type</b> Integer</var><br>
+   *   The bandwidth configuration for data stream.
+   * - <code>bandwidth.video</code> <var>: <b>type</b> Integer</var><br>
+   *   The bandwidth configuration for video stream.
+   * - <code>bandwidth.audio</code> <var>: <b>type</b> Integer</var><br>
+   *   The bandwidth configuration for audio stream.
    * @for User
    * @since 0.6.0
    */
   com.getInfo = function (peerId) {
     var data = {};
-    
+
+    // Pass jshint error
+    var getStreamSettingsFn = function (peer) {
+      var stream = peer.stream || {};
+      return stream.config || {
+        audio: false,
+        video: false,
+        status: {
+          audioMuted: true,
+          videoMuted: true
+        }
+      };
+    };
+
     data.userData = com.data;
-    
     data.agent = com.agent;
-    
-    data.settings = com.streamingConfigs;
-    
+    data.bandwidth = com.bandwidth;
+
+
+    // If it's retrieving on peer connection streaming information or not
+    if (!fn.isEmpty(peerId)) {
+      var onepeer = com.peers[peerId];
+
+      // If the peer connection is empty, throw an exception
+      if (!fn.isEmpty(onepeer)) {
+        data.stream = getStreamSettingsFn(onepeer);
+
+      } else {
+        throw new Error('Peer connection for "' + peerId + '" does not exist');
+      }
+
+
+    } else {
+      data.streams = {};
+
+      var key;
+
+      for (key in com.peers) {
+        if (com.peers.hasOwnProperty(key)) {
+          var peer = com.peers[key];
+
+          var settings = getStreamSettingsFn(peer);
+
+          settings.bandwidth = peer.bandwidth || {};
+
+          data.streams[peer.id] = settings;
+        }
+      }
+    }
     return data;
   };
-  
-  // Add the main streaming config
-  com.streamingConfigs[config.prid] = config.settings;
 
   fn.runSync(function () {
-    com.handler('user:start', config);
+    com.respond('user:ready', config);
   });
 }
 
 var UserEventReceivedHandler = {
-  
+
   peer: {
-    
+
     connect: function (com, data, listener) {
       var peer = com.peers[data.id];
 
       if (typeof com.onaddconnection === 'function') {
         com.onaddconnection(peer);
       }
-      
+
       if (peer.SDPType === 'offer') {
         peer.createOffer();
       }
     },
-    
+
     iceconnectionstate: function (com, data, listener) {
       if (data.id === 'main' && data.state === 'connected') {
         com.handler('user:connect', {});
       }
     },
-    
+
     disconnect: function (com, data, listener) {
       var peer = com.peers[data.id];
-      
+
       delete com.peers[data.id];
 
       if (typeof com.onremoveconnection === 'function') {
         com.onremoveconnection(peer);
       }
-      
+
       if (Object.keys(com.peers).length === 0) {
         com.handler('user:disconnect', {});
       }
     }
   },
-  
+
   transfer: {
-    
+
     complete: function (com, data, listener) {
       com.handler('user:data', data);
     },
-    
+
     request: function (com, data, listener) {
-      com.handler('user:datarequest', data); 
+      com.handler('user:datarequest', data);
     }
   }
-  
+
 };
 
 /**
  * Handles all the events to respond to other parent classes.
  * @attribute UserHandlerResponseHandler
+ * @private
  * @for User
  * @since 0.6.0
  */
 var UserEventResponseHandler = {
-  
+
+  /**
+   * Event fired when the user object is ready to use.
+   * @event user:ready
+   * @for User
+   * @since 0.6.0
+   */
+  ready: function (com, data, listener) {
+    if (typeof com.onready === 'function') {
+      com.onready();
+    }
+  },
+
+  /**
+   * Event fired when the user has an established "main" peer connection.
+   * @event user:connect
+   * @for User
+   * @since 0.6.0
+   */
   connect: function (com, data, listener) {
     if (typeof com.onconnect === 'function') {
       com.onconnect();
     }
   },
-  
+
+  /**
+   * Event fired when the user has transferred a data successfully.
+   * @event user:data
+   * @for User
+   * @since 0.6.0
+   */
   data: function (com, data, listener) {
     if (typeof com.ondata === 'function') {
       com.ondata();
     }
   },
-  
+
+  /**
+   * Event fired when the user is initiating a data transfer request.
+   * @event user:datarequest
+   * @for User
+   * @since 0.6.0
+   */
   datarequest: function (com, data, listener) {
     if (typeof com.ondatarequest === 'function') {
       com.ondatarequest();
     }
   },
-  
+
+  /**
+   * Event fired when the user's custom data has been updated.
+   * @event user:data
+   * @for User
+   * @since 0.6.0
+   */
   update: function (com, data, listener) {
     if (typeof com.onupdate === 'function') {
       com.onupdate(data.data);
@@ -5402,10 +6781,33 @@ var UserEventResponseHandler = {
   },
 
   /**
-   * Handles the incoming message trigger.
-   * @property message
-   * @type Function
-   * @private
+   * Event fired when the user has started a peer connection.
+   * @event user:addconnection
+   * @for User
+   * @since 0.6.0
+   */
+  addconnection: function (com, data, listener) {
+    if (typeof com.onaddconnection === 'function') {
+      com.onaddconnection();
+    }
+  },
+
+  /**
+   * Event fired when the user has ended a peer connection
+   * @event user:removeconnection
+   * @for User
+   * @since 0.6.0
+   */
+  removeconnection: function (com, data, listener) {
+    if (typeof com.onremoveconnection === 'function') {
+      com.onremoveconnection(data.data);
+    }
+  },
+
+  /**
+   * Event fired when the user sends an incoming message.
+   * @event user:message
+   * @for User
    * @since 0.6.0
    */
   message: function (com, data, listener) {
@@ -5413,23 +6815,31 @@ var UserEventResponseHandler = {
       com.onmessage();
     }
   },
-  
+
+  /**
+   * Event fired when the user's peer connections has been disconnected.
+   * Usually fired when user leaves the room.
+   * @event user:disconnect
+   * @for User
+   * @since 0.6.0
+   */
   disconnect: function (com, data, listener) {
     if (typeof com.ondisconnect === 'function') {
       com.ondisconnect();
     }
   }
-  
+
 };
 
 /**
  * Handles all the message events received from socket.
  * @attribute UserEventMessageHandler
+ * @private
  * @for User
  * @since 0.6.0
  */
 var UserEventMessageHandler = {
-  
+
   enter: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -5437,14 +6847,22 @@ var UserEventMessageHandler = {
       return;
     }
 
-    data.bandwidth = com.bandwidth;
-    data.SDPType = 'answer';
-    com.addConnection(data, data.stream);
+    // Adds a peer connection
+    com.addConnection({
+      id: data.prid,
+      iceServers: data.iceServers,
+      bandwidth: com.bandwidth,
+      stream: data.stream,
+      SDPType: 'answer'
+
+    }, data.streamObject);
   },
 
   welcome: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
+    // If peer has been created because of duplicate enter,
+    // Check which weight received is higher first
     if (!fn.isEmpty(peer)) {
       if (peer.weight < data.weight) {
         return;
@@ -5453,19 +6871,23 @@ var UserEventMessageHandler = {
       peer.SDPType = 'offer';
       data.type = 'start';
 
+    // New peer
     } else {
+      // Adds a peer connection
+      com.addConnection({
+        id: data.prid,
+        iceServers: data.iceServers,
+        bandwidth: com.bandwidth,
+        stream: data.stream,
+        SDPType: 'offer'
 
-      data.bandwidth = com.bandwidth;
-      com.addConnection(data, data.stream);
-      peer = com.peers[data.prid];
-
-      peer.SDPType = 'offer';
+      }, data.streamObject);
     }
   },
 
   offer: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:offer', data);
     }
@@ -5473,7 +6895,7 @@ var UserEventMessageHandler = {
 
   answer: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:answer', data);
     }
@@ -5481,74 +6903,41 @@ var UserEventMessageHandler = {
 
   candidate: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:candidate', data);
     }
   },
-  
+
   restart: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:restart', data);
     }
   },
-  
+
   updateUserEvent: function (com, data, listener) {
     com.data = data.data;
-  
+
     com.handler('user:update', {
       data: data.userData
     });
   },
-  
+
   muteAudioEvent: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:muteAudioEvent', data);
     }
   },
-    
+
   muteVideoEvent: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:muteVideoEvent', data);
     }
   }
-};
-
-/**
- * Handles the user class events.
- * @attribute UserHandler
- * @for User
- * @since 0.6.0
- */
-var UserHandler = function (com, event, data, listener) {
-  var params = event.split(':');
-
-  // Messaging events
-  if (event.indexOf('message:') === 0) {
-    
-    fn.applyHandler(UserEventMessageHandler, params, [com, data, listener]);
-  
-  } else {
-    // Class events
-    if (event.indexOf('user:') === 0) {
-      data.id = com.id;
-
-      fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
-
-    } else {
-      data.userId = com.id;
-
-      fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
-    }
-    
-    listener(event, data);
-  }
-  
-  //log.debug('UserHandler', event, data);
 };

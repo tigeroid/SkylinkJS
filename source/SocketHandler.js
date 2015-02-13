@@ -7,18 +7,19 @@
  * @since 0.6.0
  */
 var SocketEventResponseHandler = {
+
   /**
    * Event fired when the socket object is ready to use.
-   * @event socket:start
+   * @event socket:ready
    * @for Socket
    * @since 0.6.0
    */
-  start: function (com, data, listener) {
+  ready: function (com, data, listener) {
     if (typeof com.onstart === 'function') {
       com.onstart(data);
     }
   },
-  
+
   /**
    * Event fired when socket occurs an exception during connection.
    * @event socket:error
@@ -40,11 +41,11 @@ var SocketEventResponseHandler = {
    * @since 0.6.0
    */
   connect: function (com, data, listener) {
-    if (typeof com.onerror === 'function') {
-      com.onerror(data);
+    if (typeof com.onconnect === 'function') {
+      com.onconnect(data);
     }
   },
-  
+
   /**
    * Event fired when socket connection fails to connect to the signaling server.
    * @event socket:connecterror
@@ -57,7 +58,7 @@ var SocketEventResponseHandler = {
       com.onconnecterror(data);
     }
   },
-  
+
   /**
    * Event fired when socket attempts to reconnect with signaling server when attempt
    *  to establish connection fails.
@@ -70,23 +71,18 @@ var SocketEventResponseHandler = {
       com.onreconnect(data);
     }
   },
-  
+
   /**
-   * Event fired when socket receives a message from the signaling server.
+   * Event fired when socket sends a message to the signaling server.
    * @event socket:message
    * @param {String} event The message event type.
    * @param {JSON} data The data received from server.
    * @param {String} sourceType The source type of the message received.
-   * There are two types of sources:
-   * - <code>"local"</code> indicates that message was sent by socket.
-   * - <code>"remote</code> indicates that message was received by socket.
    * @for Socket
    * @since 0.6.0
    */
-  message: function (com, data, listener) {
-    listener('message:' + data.event, data.message);
-  },
-  
+  message: function (com, data, listener) {},
+
   /**
    * Event fired when socket connection with signaling server has been disconnected.
    * @event socket:disconnect
@@ -98,29 +94,4 @@ var SocketEventResponseHandler = {
       com.ondisconnect(data);
     }
   }
-};
-
-/**
- * Handles the Socket class events.
- * @method SocketHandler
- * @param {Object} com The reference to the class object.
- * @param {String} event The event name.
- * @param {JSON} data The event data response.
- * @param {Function} listener The listener function.
- * @private
- * @for Socket
- * @since 0.6.0
- */
-var SocketHandler = function (com, event, data, listener) {
-  var params = event.split(':');
-
-  // Class events
-  data.server = com.server;
-  data.port = com.port;
-  data.type = com.type;
-  data.protocol = com.protocol;
-
-  fn.applyHandler(SocketEventResponseHandler, params, [com, data, listener]);
-
-  listener(event, data);
 };

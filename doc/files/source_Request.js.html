@@ -135,7 +135,7 @@ var Request = {
    * @for Request
    * @since 0.6.0
    */
-  load: function (path, deferSuccess, deferError) {
+  load: function (path, deferSuccess, deferError, deferLoad) {
     var xhr = null;
 
     if (this.isXDomainRequest) {
@@ -179,6 +179,8 @@ var Request = {
 
     xhr.onprogress = function () {
       log.log(&#x27;Request&#x27;, &#x27;Request load in progress&#x27;);
+      
+      deferLoad();
     };
 
     xhr.open(&#x27;GET&#x27;, this.protocol + this.server + path, true);

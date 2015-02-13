@@ -43,7 +43,7 @@ var Request = {
    * @for Request
    * @since 0.6.0
    */
-  load: function (path, deferSuccess, deferError) {
+  load: function (path, deferSuccess, deferError, deferLoad) {
     var xhr = null;
 
     if (this.isXDomainRequest) {
@@ -87,6 +87,8 @@ var Request = {
 
     xhr.onprogress = function () {
       log.log('Request', 'Request load in progress');
+      
+      deferLoad();
     };
 
     xhr.open('GET', this.protocol + this.server + path, true);

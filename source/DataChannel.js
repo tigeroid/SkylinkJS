@@ -25,7 +25,7 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.id = channel.label || fn.generateUID();
-  
+
   /**
    * The type of datachannel.
    * @attribute type
@@ -35,7 +35,7 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.type = 'message';
-  
+
   /**
    * The datachannel source origin.
    * There are two types of sources:
@@ -68,7 +68,7 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.onconnect = function () {};
-  
+
   /**
    * Function to subscribe to when datachannel has closed.
    * @method ondisconnect
@@ -77,7 +77,7 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.ondisconnect = function () {};
-  
+
   /**
    * Function to subscribe to when datachannel has an error.
    * @method onerror
@@ -86,18 +86,49 @@ function DataChannel(channel, listener) {
    * @since 0.6.0
    */
   com.onerror = function () {};
-  
+
   /**
-   * The handler that manages all triggers or relaying events.
-   * @method handler
+   * The handler handles received events.
+   * @method routeEvent
    * @param {String} event The event name.
    * @param {JSON} data The response data.
    * @private
    * @for DataChannel
    * @since 0.6.0
    */
-  com.handler = function (event, data) {
-    DataChannelHandler(com, event, data, listener);
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.peerId = com.id;
+
+    fn.applyHandler(DataChannelReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('DataChannel: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for DataChannel
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.id = com.name;
+
+    fn.applyHandler(DataChannelResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('DataChannel: Responding with event = ', event, data);
   };
 
   /**
@@ -113,21 +144,21 @@ function DataChannel(channel, listener) {
     var onOpenFn = function () {
       com.handler('datachannel:connect', {});
     };
-    
+
     if (bindChannel.readyState !== 'open') {
       bindChannel.onopen = onOpenFn;
-    
+
     } else {
       onOpenFn();
     }
-    
+
     bindChannel.onerror = function (error) {
       com.handler('datachannel:error', {
         error: error
       });
     };
 
-    // NOTE: Older firefox might close the DataChannel earlier 
+    // NOTE: Older firefox might close the DataChannel earlier
     bindChannel.onclose = function () {
       com.handler('datachannel:disconnect', {});
     };
@@ -137,7 +168,7 @@ function DataChannel(channel, listener) {
         data: event.data
       });
     };
-    
+
     com.RTCDataChannel = bindChannel;
 
     fn.runSync(function () {
@@ -155,11 +186,11 @@ function DataChannel(channel, listener) {
    */
   com.send = function (data) {
     var sendingData = data;
-  
+
     if (typeof data === 'object') {
       sendingData = JSON.stringify(data);
     }
-  
+
     fn.isSafe(function () {
       com.RTCDataChannel.send(sendingData);
     });

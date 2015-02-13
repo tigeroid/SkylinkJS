@@ -111,7 +111,7 @@
  */
 function Socket(config, listener) {
   &#x27;use strict&#x27;;
-  
+
   // Prevent undefined listener error
   listener = listener || function (event, data) {};
 
@@ -167,7 +167,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.messageInterval = 1000;
-  
+
    /**
    * The queue of messages (throttle) before sending the next
    * @attribute messageQueue
@@ -198,7 +198,7 @@ function Socket(config, listener) {
   /**
    * The socket configuration passed into the &lt;code&gt;io.socket&lt;/code&gt;.
    * @attribute config
-   * @param {Boolean} forceNew The flag to indicate if socket.io should 
+   * @param {Boolean} forceNew The flag to indicate if socket.io should
    *   force a new connection everytime.
    * @param {Boolean} [reconnection=false] The flag to indicate if socket.io
    *   should reconnect if connection attempt fails. Reconnection is set to
@@ -239,15 +239,15 @@ function Socket(config, listener) {
    */
   com.Socket = null;
 
-  
+
   /**
    * Function to subscribe to when socket object is ready to use.
-   * @method onstart
+   * @method onready
    * @eventhandler true
    * @for Socket
    * @since 0.6.0
    */
-  com.onstart = function () {};
+  com.onready = function () {};
 
   /**
    * Function to subscribe to when socket has been connected.
@@ -266,7 +266,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.ondisconnect = function () {};
-  
+
   /**
    * Function to subscribe to when socket has connection error.
    * @method onconnecterror
@@ -275,7 +275,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.onconnecterror = function () {};
-  
+
   /**
    * Function to subscribe to when socket attempts to reconnect.
    * @method onreconnect
@@ -284,7 +284,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.onreconnect = function () {};
-  
+
   /**
    * Function to subscribe to when socket has an exception.
    * @method onerror
@@ -294,7 +294,7 @@ function Socket(config, listener) {
    */
   com.onerror = function () {};
 
-  
+
   /**
    * The handler that manages all triggers or relaying events.
    * @method handler
@@ -304,8 +304,19 @@ function Socket(config, listener) {
    * @for Socket
    * @since 0.6.0
    */
-  com.handler = function (event, data) {
-    SocketHandler(com, event, data, listener);
+  com.respond = function (event, data) {
+    var params = event.split(&#x27;:&#x27;);
+    data = data || {};
+
+    // Class events
+    data.server = com.server;
+    data.port = com.port;
+    data.type = com.type;
+    data.protocol = com.protocol;
+
+    fn.applyHandler(SocketEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
   };
 
   /**
@@ -317,7 +328,7 @@ function Socket(config, listener) {
    */
   com.connect = function () {
     com.port = com.ports[window.location.protocol][0];
-    
+
     if (com.type === &#x27;XHRPolling&#x27;) {
       com.Socket = new com.XHRPolling();
     } else {
@@ -335,7 +346,7 @@ function Socket(config, listener) {
   com.disconnect = function () {
     com.Socket.disconnect();
   };
- 
+
   /**
    * Sends data to the signaling server for relaying.
    * NOTE to Thanh: Please implement the throttle for messaging here.
@@ -353,9 +364,8 @@ function Socket(config, listener) {
     }
     setTimeout(function () {*/
       com.Socket.send(JSON.stringify(data));
-      com.handler(&#x27;socket:message&#x27;, {
+      com.respond(&#x27;socket:message&#x27;, {
         message: data,
-        event: data.type,
         sourceType: &#x27;local&#x27;
       });
     //}, interval);
@@ -369,12 +379,12 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.bindOnConnect = function () {
-    com.handler(&#x27;socket:connect&#x27;, {});
+    com.respond(&#x27;socket:connect&#x27;);
 
     com.Socket.removeAllListeners();
 
     com.Socket.on(&#x27;disconnect&#x27;, function () {
-      com.handler(&#x27;socket:disconnect&#x27;, {});
+      com.respond(&#x27;socket:disconnect&#x27;);
 
       if (typeof com.onerror === &#x27;function&#x27;) {
         com.ondisconnect();
@@ -392,24 +402,22 @@ function Socket(config, listener) {
 
         for (i = 0; i &lt; data.list.length; i++) {
           var message = data.list[i];
-          com.handler(&#x27;socket:message&#x27;, {
-            data: message,
-            event: data.type,
+          com.respond(&#x27;socket:message&#x27;, {
+            message: message,
             sourceType: &#x27;remote&#x27;
           });
         }
 
       } else {
-        com.handler(&#x27;socket:message&#x27;, {
-          data: data,
-          event: data.type,
+        com.respond(&#x27;socket:message&#x27;, {
+          message: data,
           sourceType: &#x27;remote&#x27;
         });
       }
     });
-    
+
     com.Socket.on(&#x27;error&#x27;, function (error) {
-      com.handler(&#x27;socket:error&#x27;, {
+      com.respond(&#x27;socket:error&#x27;, {
         error: error
       });
 
@@ -417,7 +425,7 @@ function Socket(config, listener) {
         com.onerror(error);
       }
     });
-    
+
     if (typeof com.onconnect === &#x27;function&#x27;) {
       com.onconnect();
     }
@@ -432,7 +440,7 @@ function Socket(config, listener) {
    * @since 0.6.0
    */
   com.bindOnConnectError = function (error) {
-    com.handler(&#x27;socket:connecterror&#x27;, {
+    com.respond(&#x27;socket:connecterror&#x27;, {
       error: error
     });
 
@@ -458,7 +466,7 @@ function Socket(config, listener) {
         break;
       }
     }
-    
+
     if (typeof com.onconnecterror === &#x27;function&#x27;) {
       com.onconnecterror(error);
     }
@@ -483,8 +491,8 @@ function Socket(config, listener) {
     default:
       com.Socket = com.XHRPolling();
     }
-    
-    com.handler(&#x27;socket:reconnect&#x27;, {});
+
+    com.respond(&#x27;socket:reconnect&#x27;);
   };
 
   /**
@@ -508,7 +516,7 @@ function Socket(config, listener) {
     var server = com.protocol + &#x27;//&#x27; + com.server + &#x27;:&#x27; + com.port;
 
     var socket = io.connect(server, options);
-    
+
     com.config = options;
 
     socket.on(&#x27;connect&#x27;, com.bindOnConnect);
@@ -540,7 +548,7 @@ function Socket(config, listener) {
     var server = com.protocol + &#x27;//&#x27; + com.server + &#x27;:&#x27; + com.port;
 
     var socket = io.connect(server, options);
-    
+
     com.config = options;
 
     socket.on(&#x27;connect&#x27;, com.bindOnConnect);
@@ -555,11 +563,12 @@ function Socket(config, listener) {
   if (!window.io) {
     throw new Error(&#x27;Required dependency socket.io not found&#x27;);
   }
-  
+
   fn.runSync(function () {
-    com.handler(&#x27;socket:start&#x27;, config);
+    com.respond(&#x27;socket:ready&#x27;, config);
   });
 }
+
     </pre>
 </div>
 

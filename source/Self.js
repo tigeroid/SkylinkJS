@@ -12,7 +12,7 @@
  * @for Skylink
  * @since 0.6.0
  */
-function Self (config) {
+function Self (config, listener) {
   // Reference of instance
   var com = this;
 
@@ -104,7 +104,7 @@ function Self (config) {
   };
 
   /**
-   * The self user bandwidth configuration. This does fixes 
+   * The self user bandwidth configuration. This does fixes
    *   the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
    * @attribute bandwidth
    * @param {Integer} [audio] The audio bandwidth configuration.
@@ -118,25 +118,77 @@ function Self (config) {
   com.bandwidth = {};
 
   /**
-   * The handler that manages all triggers or relaying events.
-   * @attribute handler
-   * @type Function
+   * The handler handles received events.
+   * @method routeEvent
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
    * @private
    * @for Self
    * @since 0.6.0
    */
-  com.handler = function (event, data) {
-    SelfHandler(com, event, data, listener);
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.roomName = com.name;
+
+    fn.applyHandler(SelfEventReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Self: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles received socket message events.
+   * @method routeMessage
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.routeMessage = function (message) {
+    // Messaging events
+    var fn = SelfEventMessageHandler[message.type];
+
+    if (typeof fn === 'function') {
+      fn(com, message, listener);
+    }
+
+    log.debug('Self: Received message = ', event, message);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Self
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.name = com.name;
+
+    fn.applyHandler(SelfEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Self: Responding with event = ', event, data);
   };
 
   /**
    * Function to subscribe to when self user object is ready to use.
-   * @method onstart
+   * @method onready
    * @eventhandler true
    * @for Self
    * @since 0.6.0
    */
-  com.onstart = function () {};
+  com.onready = function () {};
 
   /**
    * Function to subscribe to when self user custom user is connected to room.
@@ -193,7 +245,7 @@ function Self (config) {
   com.update = function (data) {
     com.data = data;
 
-    com.handler('self:update', {
+    com.respond('self:update', {
       userData: com.data
     });
   };
@@ -210,18 +262,18 @@ function Self (config) {
   com.addStreamConnection = function (stream, peerId) {
     stream.sourceType = 'local';
 
-    stream.parentHandler = com.handler;
+    stream.routeEventToParent = com.routeEvent;
 
     com.streamConnections[peerId] = stream;
 
-    com.handler('self:addstreamconnection', {
+    com.respond('self:addstreamconnection', {
       peerId: peerId,
       stream: stream
     });
   };
-  
+
   /**
-   * Finds the shared peer connection id from the stream id provided. 
+   * Finds the shared peer connection id from the stream id provided.
    * @method addStreamConnection
    * @param {Stream} stream The stream object.
    * @param {String} peerId The shared peer connection id.
@@ -231,7 +283,7 @@ function Self (config) {
    */
   com.findStreamConnectionId = function (streamId) {
     var key;
-    
+
     for (key in com.streamConnections) {
       if (com.streamConnections.hasOwnProperty(key)) {
         // If matches
@@ -256,19 +308,19 @@ function Self (config) {
   com.removeStreamConnection = function (peerId) {
     if (fn.isEmpty(peerId) || peerId === 'main') {
       var key;
-      
+
       for (key in com.streamConnections) {
         if (com.streamConnections.hasOwnProperty(key)) {
           com.streamConnections[key].stop();
         }
       }
-    
+
     } else {
       var stream = com.streamConnections[peerId];
-  
+
       if (typeof stream === 'object' ? stream instanceof Stream : false) {
         stream.stop();
-        
+
       } else {
         log.error('Unable to remove stream connection as there is not existing ' +
           'stream connection to the peer connection', peerId);
@@ -309,7 +361,7 @@ function Self (config) {
    *   The video streaming information. If there is no stream connection with the peer,
    *   it's <code>false</code>.
    * - <code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
-   *   The video stream resolution. 
+   *   The video stream resolution.
    * - <code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
    *   The video stream resolution height.
    * - <code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
@@ -339,28 +391,11 @@ function Self (config) {
   com.getInfo = function (peerId) {
     var data = {};
 
-    data.userData = com.data;
+    // Pass jshint error
+    var getStreamSettingsFn = function (stream) {
+      stream = stream || {};
 
-    data.agent = com.agent;
-
-    data.bandwidth = com.bandwidth;
-
-    // Get all stream connections
-    if (fn.isEmpty(peerId)) {
-      data.streams = {};
-
-      var key;
-
-      for (key in com.streamConnections) {
-        if (com.streamConnections.hasOwnProperty(key)) {
-          var stream = com.streamConnections[key];
-          data.streams[key] = stream.config;
-        }
-      }
-
-    // Get that stream connection only
-    } else {
-      data.stream = data.streams[peerId] || {
+      return stream.config || {
         audio: false,
         video: false,
         status: {
@@ -368,10 +403,31 @@ function Self (config) {
           videoMuted: true
         }
       };
+    };
+
+    data.userData = com.data;
+    data.agent = com.agent;
+    data.bandwidth = com.bandwidth;
+
+    // Get all stream connections
+    if (!fn.isEmpty(peerId)) {
+      data.stream = getStreamSettingsFn(com.streamConnections[peerId]);
+
+    // Get that stream connection only
+    } else {
+      data.streams = {};
+
+      var key;
+
+      for (key in com.streamConnections) {
+        if (com.streamConnections.hasOwnProperty(key)) {
+          data.streams[key] = getStreamSettingsFn(com.streamConnections[key]);
+        }
+      }
     }
 
     return data;
   };
 
-  com.handler('self:start', config);
+  com.respond('self:ready', config);
 }

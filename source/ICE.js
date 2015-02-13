@@ -64,13 +64,9 @@ var ICE = {
   popCandidate: function (peer, defer) {
     peer.queueCandidate = peer.queueCandidate || [];
 
-    var i;
-
-    for (i = 0; i < peer.queueCandidate.length; i += 1) {
-      var candidate = peer.queueCandidate[i];
-      var type = candidate.candidate.split(' ')[7];
-
-      peer.addIceCandidate(candidate, function (success) {
+    // To pass jshint errors
+    var addCandidateFn = function (candidate, type) {
+      peer.addIceCandidate(candidate, function () {
         defer('candidate:success', {
           candidate: candidate,
           type: type
@@ -82,6 +78,15 @@ var ICE = {
           error: error
         });
       });
+    };
+    
+    var i;
+  
+    for (i = 0; i < peer.queueCandidate.length; i += 1) {
+      var candidate = peer.queueCandidate[i];
+      var type = candidate.candidate.split(' ')[7];
+
+      addCandidateFn(candidate, type);
     }
     peer.queueCandidate = [];
   },
@@ -185,7 +190,7 @@ var ICE = {
    *   The ICE server url. For TURN server, the format may vary depending on the support of
    *   the TURN url format.
    * - <code>(#index).username</code> <var>: <b>type</b> String</var><br>
-   *   The ICE server username. Only used in TURN servers and Firefox browsers.
+   *   The ICE server username. Only used in TURN servers for Firefox browsers.
    * @private
    * @for ICE
    * @since 0.6.0

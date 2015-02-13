@@ -56,7 +56,7 @@
         <p>Join a Room with stream</p>
         <pre>
           function handler (event, data) {
-            if (event === 'room:start') {
+            if (event === 'room:ready') {
               var stream = new Stream(null, { audio: true }, function(event, data) {
                 if (event === 'stream:start') {
                   room.join(stream);
@@ -123,9 +123,9 @@
       var availableRooms = ['test1', 'test2'];
 
       var room1, room2;
-      
+
       var stream1, stream2;
-      
+
       var videoListDom1 = document.getElementById('videoList1');
       var videoListDom2 = document.getElementById('videoList2');
 
@@ -171,7 +171,7 @@
         var room = data.roomName || data.name;
         var peerId = data.id || 'main';
         var userId = data.userId;
-        
+
         var video = document.createElement('video');
         video.autoplay = 'autoplay';
 
@@ -181,7 +181,7 @@
           if (room === 'test1' ? stream.id !== stream1.id : stream.id !== stream2.id) {
             video.style.border = 'solid 2px red';
           }
-  
+
         } else {
           if (peerId !== 'main') {
             video.style.border = 'solid 2px red';
@@ -204,8 +204,9 @@
       }
 
       function handler(event, data) {
-        if (event === 'room:start') {
+        if (event === 'room:ready') {
           getStream(function (stream) {
+            console.info('the room:', data, data.name);
             if (data.name === 'test1') {
               stream1 = stream;
               room1.join(stream);
@@ -215,7 +216,7 @@
             }
           });
         }
-        
+
         if (event === 'room:join') {
           if (data.name === 'test1') {
             attachStream(stream1, data);
@@ -227,7 +228,7 @@
         if (event === 'peer:stream' && data.sourceType === 'remote') {
           attachStream(data.stream, data);
         }
-        
+
         if (event === 'room:leave') {
           if (data.name === 'test1') {
             stream1.stop();
@@ -237,11 +238,11 @@
             videoListDom2.innerHTML = '';
           }
         }
-        
+
         if (event === 'peer:disconnect') {
           var id = data.roomName + '-' + data.userId + '-' + (data.id || '');
           var element = document.getElementById(id);
-  
+
           if (data.roomName === 'test1') {
             videoListDom1.removeChild(element);
           } else {

@@ -142,11 +142,6 @@
             
           
             
-              <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
- </td> </tr>
-            
-          
-            
 
             
           
@@ -188,7 +183,17 @@
             
           
             
-              <tr> <td> <a href="#method_UserHandler"> <code>UserHandler()</code> </a> </td> <td> <p>Handles the user class events.</p>
+              <tr> <td> <a href="#method_respond"> <code>respond()</code> </a> </td> <td> <p>The handler handles response events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_routeEvent"> <code>routeEvent()</code> </a> </td> <td> <p>The handler handles received events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_routeMessage"> <code>routeMessage()</code> </a> </td> <td> <p>The handler handles received socket message events.</p>
  </td> </tr>
             
           
@@ -261,10 +266,10 @@ Usually fired when user leaves the room.</p>
             <tr> <td> <a href="#event_user:message"> <code>user:message</code> </a> </td> <td> <p>Event fired when the user sends an incoming message.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#event_user:removeconnection"> <code>user:removeconnection</code> </a> </td> <td> <p>Event fired when the user has ended a peer connection</p>
+            <tr> <td> <a href="#event_user:ready"> <code>user:ready</code> </a> </td> <td> <p>Event fired when the user object is ready to use.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#event_user:start"> <code>user:start</code> </a> </td> <td> <p>Event fired when the user object is ready to use.</p>
+            <tr> <td> <a href="#event_user:removeconnection"> <code>user:removeconnection</code> </a> </td> <td> <p>Event fired when the user has ended a peer connection</p>
  </td> </tr>
           
         </tbody>
@@ -275,8 +280,6 @@ Usually fired when user leaves the room.</p>
           <tr> <th colspan="2">Event Handlers</th> </tr>
         </thead>
         <tbody>
-          
-            
           
             
           
@@ -315,18 +318,22 @@ Usually fired when user leaves the room.</p>
             
           
             
-              <tr> <td> <a href="#handler_onremoveconnection"> <code>onremoveconnection</code> </a> </td> <td> <p>Function to subscribe to when a peer connection to user has added.</p>
+              <tr> <td> <a href="#handler_onready"> <code>onready</code> </a> </td> <td> <p>Function to subscribe to when the user object is ready to use.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#handler_onstart"> <code>onstart</code> </a> </td> <td> <p>Function to subscribe to when the user object is ready to use.</p>
+              <tr> <td> <a href="#handler_onremoveconnection"> <code>onremoveconnection</code> </a> </td> <td> <p>Function to subscribe to when a peer connection to user has added.</p>
  </td> </tr>
             
           
             
               <tr> <td> <a href="#handler_onupdate"> <code>onupdate</code> </a> </td> <td> <p>Function to subscribe to when user&#39;s custom data is updated.</p>
  </td> </tr>
+            
+          
+            
+          
             
           
             
@@ -965,31 +972,6 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">streamObject</code>
-    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
-  </div>
-
-  <blockquote>
-    
-    
-      <p> 
-        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
-      </p>
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The stream object passed for the &quot;main&quot; peer connection.</p>
-
-  </div>
-
-  
-</li>
-      
-        <li class="code-section-item-param">
-  <div class="name">
     <code class="param-name">SDPType</code>
     <span class="type"> : <em>type</em> String </span>
   </div>
@@ -1087,7 +1069,7 @@ Usually fired when user leaves the room.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l217"><code>source&#x2F;User.js:217</code></a>
+        Defined in: <a href="../files/source_User.js.html#l256"><code>source&#x2F;User.js:256</code></a>
       </p>
     
   </div>
@@ -1233,7 +1215,7 @@ Usually fired when user leaves the room.</p>
   </blockquote>
 
   <div class="description">
-    <p>The streamming configuration for the &quot;main&quot; shared peer connection.</p>
+    <p>The streamming configuration for the shared peer connection.</p>
 
   </div>
 
@@ -1242,7 +1224,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.audio</code>
+    <code class="param-name">audio</code>
     <span class="type"> : <em>type</em> JSON | Boolean </span>
   </div>
 
@@ -1272,7 +1254,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.audio.stereo</code>
+    <code class="param-name">audio.stereo</code>
     <span class="type"> : <em>type</em> Boolean </span>
   </div>
 
@@ -1301,7 +1283,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.audio.sourceId</code>
+    <code class="param-name">audio.sourceId</code>
     <span class="type"> : <em>type</em> String </span>
   </div>
 
@@ -1326,7 +1308,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.video</code>
+    <code class="param-name">video</code>
     <span class="type"> : <em>type</em> String | Boolean </span>
   </div>
 
@@ -1356,7 +1338,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.video.resolution</code>
+    <code class="param-name">video.resolution</code>
     <span class="type"> : <em>type</em> JSON </span>
   </div>
 
@@ -1380,7 +1362,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.video.resolution.width</code>
+    <code class="param-name">video.resolution.width</code>
     <span class="type"> : <em>type</em> Integer </span>
   </div>
 
@@ -1400,7 +1382,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.video.resolution.height</code>
+    <code class="param-name">video.resolution.height</code>
     <span class="type"> : <em>type</em> Integer </span>
   </div>
 
@@ -1420,7 +1402,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.video.frameRate</code>
+    <code class="param-name">video.frameRate</code>
     <span class="type"> : <em>type</em> Integer </span>
   </div>
 
@@ -1440,7 +1422,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.video.sourceId</code>
+    <code class="param-name">video.sourceId</code>
     <span class="type"> : <em>type</em> String </span>
   </div>
 
@@ -1465,7 +1447,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.status</code>
+    <code class="param-name">status</code>
     <span class="type"> : <em>type</em> JSON </span>
   </div>
 
@@ -1485,7 +1467,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.status.audioMuted</code>
+    <code class="param-name">status.audioMuted</code>
     <span class="type"> : <em>type</em> Boolean </span>
   </div>
 
@@ -1514,7 +1496,7 @@ Usually fired when user leaves the room.</p>
       
         <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">stream.status.videoMuted</code>
+    <code class="param-name">status.videoMuted</code>
     <span class="type"> : <em>type</em> Boolean </span>
   </div>
 
@@ -1657,7 +1639,8 @@ Usually fired when user leaves the room.</p>
   </blockquote>
 
   <div class="description">
-    <p>The session description type that the peer connection would send.</p>
+    <p>The session description type that the peer connection would send.
+   Types are <code>&quot;offer&quot;</code> or <code>&quot;answer&quot;</code>.</p>
 
   </div>
 
@@ -1745,7 +1728,7 @@ Usually fired when user leaves the room.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l301"><code>source&#x2F;User.js:301</code></a>
+        Defined in: <a href="../files/source_User.js.html#l345"><code>source&#x2F;User.js:345</code></a>
       </p>
     
   </div>
@@ -1839,7 +1822,16 @@ Usually fired when user leaves the room.</p>
     <h5>
       getInfo
       
-        <span class="paren">()</span>
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code class="optional">[peerId]</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
       
 
       
@@ -1855,7 +1847,7 @@ Usually fired when user leaves the room.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l313"><code>source&#x2F;User.js:313</code></a>
+        Defined in: <a href="../files/source_User.js.html#l357"><code>source&#x2F;User.js:357</code></a>
       </p>
     
   </div>
@@ -1916,6 +1908,39 @@ Usually fired when user leaves the room.</p>
   <div class="panel-body">
     <div class="col-md-6">
       
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The shared peer connection id to retrieve
+   that streaming information only.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
 
     <div class="code-section-item">
       <h6>Returns:</h6>
@@ -1959,7 +1984,7 @@ The audio MediaStreamTrack source used for this connection.</li>
 The video streaming information. If there is no stream connection with the peer,
 it&#39;s <code>false</code>.</li>
 <li><code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
-The video stream resolution. </li>
+The video stream resolution.</li>
 <li><code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
 The video stream resolution height.</li>
 <li><code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
@@ -1998,183 +2023,6 @@ The bandwidth configuration for audio stream.</li>
   <div class="col-md-6">
     <pre class="prettyprint">
       // Example for constructor getInfo ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
-      <div id="method_handler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      handler
-      
-        <span class="paren">(</span>
-          <em class="items">
-            
-              
-                <item><code>event</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>data</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-          </em>
-        <span class="paren">)</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_User.js.html#l204"><code>source&#x2F;User.js:204</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The handler that manages all triggers or relaying events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-        <div class="code-section-item">
-          <h6>Parameters:</h6>
-          <ul class="params-list">
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">event</code>
-    <span class="type"> : <em>type</em> String </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The event name.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">data</code>
-    <span class="type"> : <em>type</em> JSON </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The response data.</p>
-
-  </div>
-
-  
-</li>
-          
-          </ul>
-        </div>
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor handler ()
       
     </pre>
   </div>
@@ -2249,7 +2097,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l281"><code>source&#x2F;User.js:281</code></a>
+        Defined in: <a href="../files/source_User.js.html#l325"><code>source&#x2F;User.js:325</code></a>
       </p>
     
   </div>
@@ -2370,18 +2218,13 @@ The bandwidth configuration for audio stream.</li>
     
    
     
-      <div id="method_UserHandler" class="panel panel-code">
+      <div id="method_respond" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      UserHandler
+      respond
       
         <span class="paren">(</span>
           <em class="items">
-            
-              
-                <item><code>com</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
             
               
                 <item><code>event</code></item>
@@ -2390,11 +2233,6 @@ The bandwidth configuration for audio stream.</li>
             
               
                 <item><code>data</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>listener</code></item>
               
               <item class="seperator">,&nbsp;&nbsp;</item>
             
@@ -2415,7 +2253,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_UserHandler.js.html#l289"><code>source&#x2F;UserHandler.js:289</code></a>
+        Defined in: <a href="../files/source_User.js.html#l236"><code>source&#x2F;User.js:236</code></a>
       </p>
     
   </div>
@@ -2474,7 +2312,7 @@ The bandwidth configuration for audio stream.</li>
   
   
 </blockquote>
-    <p><p>Handles the user class events.</p>
+    <p><p>The handler handles response events.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2483,27 +2321,6 @@ The bandwidth configuration for audio stream.</li>
         <div class="code-section-item">
           <h6>Parameters:</h6>
           <ul class="params-list">
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">com</code>
-    <span class="type"> : <em>type</em> Object </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The reference to the class object.</p>
-
-  </div>
-
-  
-</li>
           
             <li class="code-section-item-param">
   <div class="name">
@@ -2540,28 +2357,7 @@ The bandwidth configuration for audio stream.</li>
   </blockquote>
 
   <div class="description">
-    <p>The event data response.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">listener</code>
-    <span class="type"> : <em>type</em> Function </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The listener function.</p>
+    <p>The response data.</p>
 
   </div>
 
@@ -2590,7 +2386,335 @@ The bandwidth configuration for audio stream.</li>
 
   <div class="col-md-6">
     <pre class="prettyprint">
-      // Example for constructor UserHandler ()
+      // Example for constructor respond ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_routeEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      routeEvent
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l203"><code>source&#x2F;User.js:203</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler handles received events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor routeEvent ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_routeMessage" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      routeMessage
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>message</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l223"><code>source&#x2F;User.js:223</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler handles received socket message events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message received.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor routeMessage ()
       
     </pre>
   </div>
@@ -2615,7 +2739,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l85"><code>source&#x2F;User.js:85</code></a>
+      Defined in: <a href="../files/source_User.js.html#l84"><code>source&#x2F;User.js:84</code></a>
     </p>
     
   </div>
@@ -2744,7 +2868,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l98"><code>source&#x2F;User.js:98</code></a>
+      Defined in: <a href="../files/source_User.js.html#l97"><code>source&#x2F;User.js:97</code></a>
     </p>
     
   </div>
@@ -2873,7 +2997,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l75"><code>source&#x2F;User.js:75</code></a>
+      Defined in: <a href="../files/source_User.js.html#l74"><code>source&#x2F;User.js:74</code></a>
     </p>
     
   </div>
@@ -2938,7 +3062,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l54"><code>source&#x2F;User.js:54</code></a>
+      Defined in: <a href="../files/source_User.js.html#l53"><code>source&#x2F;User.js:53</code></a>
     </p>
     
   </div>
@@ -3003,7 +3127,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l111"><code>source&#x2F;User.js:111</code></a>
+      Defined in: <a href="../files/source_User.js.html#l110"><code>source&#x2F;User.js:110</code></a>
     </p>
     
   </div>
@@ -3068,7 +3192,7 @@ The bandwidth configuration for audio stream.</li>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_User.js.html#l64"><code>source&#x2F;User.js:64</code></a>
+      Defined in: <a href="../files/source_User.js.html#l63"><code>source&#x2F;User.js:63</code></a>
     </p>
     
   </div>
@@ -3344,10 +3468,6 @@ The bandwidth configuration for audio stream.</li>
     
    
     
-      <em></em>
-    
-   
-    
       <div id="handler_onaddconnection" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -3369,7 +3489,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l158"><code>source&#x2F;User.js:158</code></a>
+        Defined in: <a href="../files/source_User.js.html#l157"><code>source&#x2F;User.js:157</code></a>
       </p>
     
   </div>
@@ -3479,7 +3599,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l140"><code>source&#x2F;User.js:140</code></a>
+        Defined in: <a href="../files/source_User.js.html#l139"><code>source&#x2F;User.js:139</code></a>
       </p>
     
   </div>
@@ -3589,7 +3709,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l185"><code>source&#x2F;User.js:185</code></a>
+        Defined in: <a href="../files/source_User.js.html#l184"><code>source&#x2F;User.js:184</code></a>
       </p>
     
   </div>
@@ -3699,7 +3819,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l176"><code>source&#x2F;User.js:176</code></a>
+        Defined in: <a href="../files/source_User.js.html#l175"><code>source&#x2F;User.js:175</code></a>
       </p>
     
   </div>
@@ -3809,7 +3929,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l149"><code>source&#x2F;User.js:149</code></a>
+        Defined in: <a href="../files/source_User.js.html#l148"><code>source&#x2F;User.js:148</code></a>
       </p>
     
   </div>
@@ -3919,7 +4039,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l194"><code>source&#x2F;User.js:194</code></a>
+        Defined in: <a href="../files/source_User.js.html#l193"><code>source&#x2F;User.js:193</code></a>
       </p>
     
   </div>
@@ -4008,6 +4128,116 @@ The bandwidth configuration for audio stream.</li>
     
    
     
+      <div id="handler_onready" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onready
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_User.js.html#l121"><code>source&#x2F;User.js:121</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when the user object is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onready ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="handler_onremoveconnection" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -4029,7 +4259,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l167"><code>source&#x2F;User.js:167</code></a>
+        Defined in: <a href="../files/source_User.js.html#l166"><code>source&#x2F;User.js:166</code></a>
       </p>
     
   </div>
@@ -4118,116 +4348,6 @@ The bandwidth configuration for audio stream.</li>
     
    
     
-      <div id="handler_onstart" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onstart
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_User.js.html#l122"><code>source&#x2F;User.js:122</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when the user object is ready to use.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <!--<div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>-->
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onstart ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
       <div id="handler_onupdate" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -4249,7 +4369,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_User.js.html#l131"><code>source&#x2F;User.js:131</code></a>
+        Defined in: <a href="../files/source_User.js.html#l130"><code>source&#x2F;User.js:130</code></a>
       </p>
     
   </div>
@@ -4335,6 +4455,14 @@ The bandwidth configuration for audio stream.</li>
   </div>
 </div>
 </div>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
     
    
     
@@ -5172,6 +5300,123 @@ Usually fired when user leaves the room.</p>
 
   
   <hr>
+</div>-->  <div id="event_user:ready" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      user:ready
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_UserHandler.js.html#l67"><code>source&#x2F;UserHandler.js:67</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when the user object is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor user:ready ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_user:ready" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>user:ready</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_UserHandler.js.html#l67"><code>source&#x2F;UserHandler.js:67</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the user object is ready to use.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
 </div>-->  <div id="event_user:removeconnection" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -5280,123 +5525,6 @@ Usually fired when user leaves the room.</p>
 
   <div class="code-item-description">
     <p>Event fired when the user has ended a peer connection</p>
-
-  </div>
-
-  
-
-  
-
-  
-  <hr>
-</div>-->  <div id="event_user:start" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      user:start
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_UserHandler.js.html#l67"><code>source&#x2F;UserHandler.js:67</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Event fired when the user object is ready to use.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor user:start ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->
-<!--
-<div id="event_user:start" class="code-item attr item event-item ">
-  <h3 class="code-item-name"><code>user:start</code></h3>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_UserHandler.js.html#l67"><code>source&#x2F;UserHandler.js:67</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Event fired when the user object is ready to use.</p>
 
   </div>
 

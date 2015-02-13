@@ -127,7 +127,7 @@
         <tbody>
           
             
-              <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+              <tr> <td> <a href="#method_init"> <code>init()</code> </a> </td> <td> <p>Loads the connection information of the room.</p>
  </td> </tr>
             
           
@@ -144,6 +144,10 @@
             
               <tr> <td> <a href="#method_lock"> <code>lock()</code> </a> </td> <td> <p>Locks the room.</p>
  </td> </tr>
+            
+          
+            
+
             
           
             
@@ -180,7 +184,17 @@
             
           
             
-              <tr> <td> <a href="#method_RoomHandler"> <code>RoomHandler()</code> </a> </td> <td> <p>Handles the room class events.</p>
+              <tr> <td> <a href="#method_respond"> <code>respond()</code> </a> </td> <td> <p>The handler handles response events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_routeEvent"> <code>routeEvent()</code> </a> </td> <td> <p>The handler handles received events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_routeMessage"> <code>routeMessage()</code> </a> </td> <td> <p>The handler handles received socket message events.</p>
  </td> </tr>
             
           
@@ -205,38 +219,53 @@
         </thead>
         <tbody>
           
-            <tr> <td> <a href="#attr_apiPath"> <code>apiPath</code> </a> </td> <td> <p>The request path to the api server.</p>
+            <tr> <td> <a href="#attr__apiPath"> <code>_apiPath</code> </a> </td> <td> <p>The request path to the api server.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_components"> <code>components</code> </a> </td> <td> <p>The list of components connected to room.
+            <tr> <td> <a href="#attr__components"> <code>_components</code> </a> </td> <td> <p>The list of components connected to room.
 This could be <var>MCU</var> or <var>Recording</var> peers.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_connected"> <code>connected</code> </a> </td> <td> <p>The flag that indicates if the self user has joined the room.</p>
+            <tr> <td> <a href="#attr__connected"> <code>_connected</code> </a> </td> <td> <p>The flag that indicates if the self user has joined the room.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_credentials"> <code>credentials</code> </a> </td> <td> <p>The user set settings for the room.</p>
+            <tr> <td> <a href="#attr__credentials"> <code>_credentials</code> </a> </td> <td> <p>The user set settings for the room.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_duration"> <code>duration</code> </a> </td> <td> <p>The room duration for persistent mode.</p>
+            <tr> <td> <a href="#attr__duration"> <code>_duration</code> </a> </td> <td> <p>The room duration for persistent mode.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_iceServers"> <code>iceServers</code> </a> </td> <td> <p>The room TURN/STUN servers connection.</p>
+            <tr> <td> <a href="#attr__iceServers"> <code>_iceServers</code> </a> </td> <td> <p>The room TURN/STUN servers connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The room id.</p>
+            <tr> <td> <a href="#attr__id"> <code>_id</code> </a> </td> <td> <p>The room id.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_key"> <code>key</code> </a> </td> <td> <p>The room key.</p>
+            <tr> <td> <a href="#attr__key"> <code>_key</code> </a> </td> <td> <p>The room key.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_locked"> <code>locked</code> </a> </td> <td> <p>The flag that indicates if the room is locked.</p>
+            <tr> <td> <a href="#attr__locked"> <code>_locked</code> </a> </td> <td> <p>The flag that indicates if the room is locked.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_name"> <code>name</code> </a> </td> <td> <p>The room name.</p>
+            <tr> <td> <a href="#attr__name"> <code>_name</code> </a> </td> <td> <p>The room name.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_owner"> <code>owner</code> </a> </td> <td> <p>The room api owner.</p>
+            <tr> <td> <a href="#attr__owner"> <code>_owner</code> </a> </td> <td> <p>The room api owner.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#attr__self"> <code>_self</code> </a> </td> <td> <p>The self user connection.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#attr__socket"> <code>_socket</code> </a> </td> <td> <p>The room socket object.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#attr__startDateTime"> <code>_startDateTime</code> </a> </td> <td> <p>The room start date timestamp (ISO format) for persistent mode.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#attr__token"> <code>_token</code> </a> </td> <td> <p>The room token.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#attr__users"> <code>_users</code> </a> </td> <td> <p>The list of users connected to room.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_RoomEventMessageHandler"> <code>RoomEventMessageHandler</code> </a> </td> <td> <p>Handles all the message events received from socket.</p>
@@ -246,21 +275,6 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_RoomEventResponseHandler"> <code>RoomEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_self"> <code>self</code> </a> </td> <td> <p>The self user connection.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_startDateTime"> <code>startDateTime</code> </a> </td> <td> <p>The room duration.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_startDateTime"> <code>startDateTime</code> </a> </td> <td> <p>The room start date timestamp (ISO format) for persistent mode.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_token"> <code>token</code> </a> </td> <td> <p>The room token.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_users"> <code>users</code> </a> </td> <td> <p>The list of users connected to room.</p>
  </td> </tr>
           
         </tbody>
@@ -275,13 +289,23 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
             <tr> <td> <a href="#event_room:error"> <code>room:error</code> </a> </td> <td> <p>Event fired when there is room connection problems.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#event_room:join"> <code>room:join</code> </a> </td> <td> <p>Event fired when self user is connected to the room.</p>
+            <tr> <td> <a href="#event_room:init"> <code>room:init</code> </a> </td> <td> <p>Event fired when room is initializing configuration information
+from API server.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_room:join"> <code>room:join</code> </a> </td> <td> <p>Event fired when room object to ready to use.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_room:kick"> <code>room:kick</code> </a> </td> <td> <p>Event fired when self user is kicked out from the room.</p>
  </td> </tr>
           
             <tr> <td> <a href="#event_room:leave"> <code>room:leave</code> </a> </td> <td> <p>Event fired when self user is disconnect from the room.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#event_room:start"> <code>room:start</code> </a> </td> <td> <p>Event fired when room object to ready to use.</p>
+            <tr> <td> <a href="#event_room:ready"> <code>room:ready</code> </a> </td> <td> <p>Event fired when room object to ready to use.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_room:warn"> <code>room:warn</code> </a> </td> <td> <p>Event fired when self user is warned regarding an action.</p>
  </td> </tr>
           
         </tbody>
@@ -302,6 +326,11 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
             
           
             
+              <tr> <td> <a href="#handler_oninit"> <code>oninit</code> </a> </td> <td> <p>Function to subscribe to when room is initializating the configuration.</p>
+ </td> </tr>
+            
+          
+            
               <tr> <td> <a href="#handler_onjoin"> <code>onjoin</code> </a> </td> <td> <p>Function to subscribe to when self has joined the room.</p>
  </td> </tr>
             
@@ -319,7 +348,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
             
           
             
-              <tr> <td> <a href="#handler_onstart"> <code>onstart</code> </a> </td> <td> <p>Function to subscribe to when room object has loaded and is ready to use.</p>
+              <tr> <td> <a href="#handler_onready"> <code>onready</code> </a> </td> <td> <p>Function to subscribe to when room object has loaded and is ready to use.</p>
  </td> </tr>
             
           
@@ -334,8 +363,12 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
             
           
             
-              <tr> <td> <a href="#handler_onwarn"> <code>onwarn</code> </a> </td> <td> <p>Function to subscribe to when self is warned by server.</p>
+              <tr> <td> <a href="#handler_onwarn"> <code>onwarn</code> </a> </td> <td> <p>Function to subscribe to when self is warned by server before kicking self user.</p>
  </td> </tr>
+            
+          
+            
+          
             
           
             
@@ -466,26 +499,12 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
   <h4>Methods</h4>
    
     
-      <div id="method_handler" class="panel panel-code">
+      <div id="method_init" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      handler
+      init
       
-        <span class="paren">(</span>
-          <em class="items">
-            
-              
-                <item><code>event</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>data</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-          </em>
-        <span class="paren">)</span>
+        <span class="paren">()</span>
       
 
       
@@ -501,7 +520,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l268"><code>source&#x2F;Room.js:268</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l337"><code>source&#x2F;Room.js:337</code></a>
       </p>
     
   </div>
@@ -560,60 +579,11 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
   
   
 </blockquote>
-    <p><p>The handler that manages all triggers or relaying events.</p>
+    <p><p>Loads the connection information of the room.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
-      
-        <div class="code-section-item">
-          <h6>Parameters:</h6>
-          <ul class="params-list">
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">event</code>
-    <span class="type"> : <em>type</em> String </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The event name.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">data</code>
-    <span class="type"> : <em>type</em> JSON </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The response data.</p>
-
-  </div>
-
-  
-</li>
-          
-          </ul>
-        </div>
       
 
     <div class="code-section-item">
@@ -634,7 +604,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
   <div class="col-md-6">
     <pre class="prettyprint">
-      // Example for constructor handler ()
+      // Example for constructor init ()
       
     </pre>
   </div>
@@ -678,7 +648,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l281"><code>source&#x2F;Room.js:281</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l405"><code>source&#x2F;Room.js:405</code></a>
       </p>
     
   </div>
@@ -974,7 +944,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l317"><code>source&#x2F;Room.js:317</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l441"><code>source&#x2F;Room.js:441</code></a>
       </p>
     
   </div>
@@ -1084,7 +1054,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l327"><code>source&#x2F;Room.js:327</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l452"><code>source&#x2F;Room.js:452</code></a>
       </p>
     
   </div>
@@ -1185,6 +1155,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     
    
     
+      <em></em>
+    
+   
+    
       <div id="method_onlock" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1206,7 +1180,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l241"><code>source&#x2F;Room.js:241</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l251"><code>source&#x2F;Room.js:251</code></a>
       </p>
     
   </div>
@@ -1311,18 +1285,13 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     
    
     
-      <div id="method_RoomHandler" class="panel panel-code">
+      <div id="method_respond" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      RoomHandler
+      respond
       
         <span class="paren">(</span>
           <em class="items">
-            
-              
-                <item><code>com</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
             
               
                 <item><code>event</code></item>
@@ -1331,11 +1300,6 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
             
               
                 <item><code>data</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>listener</code></item>
               
               <item class="seperator">,&nbsp;&nbsp;</item>
             
@@ -1356,7 +1320,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_RoomHandler.js.html#l657"><code>source&#x2F;RoomHandler.js:657</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l315"><code>source&#x2F;Room.js:315</code></a>
       </p>
     
   </div>
@@ -1415,7 +1379,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
   
   
 </blockquote>
-    <p><p>Handles the room class events.</p>
+    <p><p>The handler handles response events.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -1424,27 +1388,6 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
         <div class="code-section-item">
           <h6>Parameters:</h6>
           <ul class="params-list">
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">com</code>
-    <span class="type"> : <em>type</em> Object </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The reference to the class object.</p>
-
-  </div>
-
-  
-</li>
           
             <li class="code-section-item-param">
   <div class="name">
@@ -1481,28 +1424,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
   </blockquote>
 
   <div class="description">
-    <p>The event data response.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">listener</code>
-    <span class="type"> : <em>type</em> Function </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The listener function.</p>
+    <p>The response data.</p>
 
   </div>
 
@@ -1531,7 +1453,335 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
   <div class="col-md-6">
     <pre class="prettyprint">
-      // Example for constructor RoomHandler ()
+      // Example for constructor respond ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_routeEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      routeEvent
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l278"><code>source&#x2F;Room.js:278</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler handles received events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor routeEvent ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_routeMessage" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      routeMessage
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>message</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l300"><code>source&#x2F;Room.js:300</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler handles received socket message events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">message</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The message data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor routeMessage ()
       
     </pre>
   </div>
@@ -1570,7 +1820,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l365"><code>source&#x2F;Room.js:365</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l494"><code>source&#x2F;Room.js:494</code></a>
       </p>
     
   </div>
@@ -1709,7 +1959,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l346"><code>source&#x2F;Room.js:346</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l473"><code>source&#x2F;Room.js:473</code></a>
       </p>
     
   </div>
@@ -1803,10 +2053,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
 <div class="section code-section">
   <h4>Attributes</h4>
-   <div id="attr_apiPath" class="panel panel-code">
+   <div id="attr__apiPath" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      apiPath <span class="type"><em>type</em> String</span>
+      _apiPath <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -1858,7 +2108,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor apiPath ()
+      // Example for constructor _apiPath ()
       
     </pre>
     </div>
@@ -1868,10 +2118,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_components" class="panel panel-code">
+-->  <div id="attr__components" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      components <span class="type"><em>type</em> JSON</span>
+      _components <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -1950,7 +2200,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor components ()
+      // Example for constructor _components ()
       
     </pre>
     </div>
@@ -1960,10 +2210,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_connected" class="panel panel-code">
+-->  <div id="attr__connected" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      connected <span class="type"><em>type</em> Boolean</span>
+      _connected <span class="type"><em>type</em> Boolean</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2019,7 +2269,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor connected ()
+      // Example for constructor _connected ()
       
     </pre>
     </div>
@@ -2029,10 +2279,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_credentials" class="panel panel-code">
+-->  <div id="attr__credentials" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      credentials <span class="type"><em>type</em> JSON</span>
+      _credentials <span class="type"><em>type</em> JSON</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2148,7 +2398,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor credentials ()
+      // Example for constructor _credentials ()
       
     </pre>
     </div>
@@ -2158,10 +2408,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_duration" class="panel panel-code">
+-->  <div id="attr__duration" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      duration <span class="type"><em>type</em> Integer</span>
+      _duration <span class="type"><em>type</em> Integer</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2213,7 +2463,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor duration ()
+      // Example for constructor _duration ()
       
     </pre>
     </div>
@@ -2223,10 +2473,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_iceServers" class="panel panel-code">
+-->  <div id="attr__iceServers" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      iceServers <span class="type"><em>type</em> Array</span>
+      _iceServers <span class="type"><em>type</em> Array</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2358,7 +2608,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor iceServers ()
+      // Example for constructor _iceServers ()
       
     </pre>
     </div>
@@ -2368,10 +2618,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_id" class="panel panel-code">
+-->  <div id="attr__id" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      id <span class="type"><em>type</em> String</span>
+      _id <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2423,7 +2673,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor id ()
+      // Example for constructor _id ()
       
     </pre>
     </div>
@@ -2433,10 +2683,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_key" class="panel panel-code">
+-->  <div id="attr__key" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      key <span class="type"><em>type</em> String</span>
+      _key <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2488,7 +2738,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor key ()
+      // Example for constructor _key ()
       
     </pre>
     </div>
@@ -2498,10 +2748,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_locked" class="panel panel-code">
+-->  <div id="attr__locked" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      locked <span class="type"><em>type</em> Boolean</span>
+      _locked <span class="type"><em>type</em> Boolean</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2557,7 +2807,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor locked ()
+      // Example for constructor _locked ()
       
     </pre>
     </div>
@@ -2567,10 +2817,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_name" class="panel panel-code">
+-->  <div id="attr__name" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      name <span class="type"><em>type</em> String</span>
+      _name <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2622,7 +2872,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor name ()
+      // Example for constructor _name ()
       
     </pre>
     </div>
@@ -2632,10 +2882,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_owner" class="panel panel-code">
+-->  <div id="attr__owner" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      owner <span class="type"><em>type</em> String</span>
+      _owner <span class="type"><em>type</em> String</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2687,7 +2937,362 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor owner ()
+      // Example for constructor _owner ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr__self" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      _self <span class="type"><em>type</em> Self</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l112"><code>source&#x2F;Room.js:112</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The self user connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor _self ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr__socket" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      _socket <span class="type"><em>type</em> Socket</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l145"><code>source&#x2F;Room.js:145</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></em> This is required for other functionalities to work.
+    </p>
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The room socket object.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor _socket ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr__startDateTime" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      _startDateTime <span class="type"><em>type</em> String</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l59"><code>source&#x2F;Room.js:59</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The room start date timestamp (ISO format) for persistent mode.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor _startDateTime ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr__token" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      _token <span class="type"><em>type</em> String</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l39"><code>source&#x2F;Room.js:39</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The room token.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor _token ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr__users" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      _users <span class="type"><em>type</em> JSON</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Room.js.html#l122"><code>source&#x2F;Room.js:122</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The list of users connected to room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">(#userId)</code>
+    <span class="type"> : <em>type</em> <a href="../classes/User.html" class="crosslink">User</a> </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The user connected to room.</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor _users ()
       
     </pre>
     </div>
@@ -2708,7 +3313,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_RoomHandler.js.html#l230"><code>source&#x2F;RoomHandler.js:230</code></a>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l308"><code>source&#x2F;RoomHandler.js:308</code></a>
     </p>
     
   </div>
@@ -2838,7 +3443,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_RoomHandler.js.html#l158"><code>source&#x2F;RoomHandler.js:158</code></a>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l191"><code>source&#x2F;RoomHandler.js:191</code></a>
     </p>
     
   </div>
@@ -2892,361 +3497,6 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 <!--
 
   
--->  <div id="attr_self" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      self <span class="type"><em>type</em> Self</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l112"><code>source&#x2F;Room.js:112</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The self user connection.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor self ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_startDateTime" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      startDateTime <span class="type"><em>type</em> Socket</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l145"><code>source&#x2F;Room.js:145</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></em> This is required for other functionalities to work.
-    </p>
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The room duration.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor startDateTime ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_startDateTime" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      startDateTime <span class="type"><em>type</em> String</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l59"><code>source&#x2F;Room.js:59</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The room start date timestamp (ISO format) for persistent mode.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor startDateTime ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_token" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      token <span class="type"><em>type</em> String</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l39"><code>source&#x2F;Room.js:39</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The room token.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor token ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_users" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      users <span class="type"><em>type</em> JSON</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Room.js.html#l122"><code>source&#x2F;Room.js:122</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The list of users connected to room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-      <div class="code-section-item">
-        <h6>Object Keys:</h6>
-        <ul class="params-list">
-           <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">(#userId)</code>
-    <span class="type"> : <em>type</em> <a href="../classes/User.html" class="crosslink">User</a> </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The user connected to room.</p>
-
-  </div>
-
-  
-</li> 
-        </ul>
-      </div>
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor users ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
 --> 
 </div>
 
@@ -3274,6 +3524,116 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     
    
     
+      <div id="handler_oninit" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      oninit
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Room.js.html#l197"><code>source&#x2F;Room.js:197</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when room is initializating the configuration.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor oninit ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="handler_onjoin" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -3295,7 +3655,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l205"><code>source&#x2F;Room.js:205</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l215"><code>source&#x2F;Room.js:215</code></a>
       </p>
     
   </div>
@@ -3405,7 +3765,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l223"><code>source&#x2F;Room.js:223</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l233"><code>source&#x2F;Room.js:233</code></a>
       </p>
     
   </div>
@@ -3515,7 +3875,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l258"><code>source&#x2F;Room.js:258</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l268"><code>source&#x2F;Room.js:268</code></a>
       </p>
     
   </div>
@@ -3608,10 +3968,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     
    
     
-      <div id="handler_onstart" class="panel panel-code">
+      <div id="handler_onready" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      onstart
+      onready
       
         <span class="paren">()</span>
       
@@ -3629,7 +3989,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l196"><code>source&#x2F;Room.js:196</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l206"><code>source&#x2F;Room.js:206</code></a>
       </p>
     
   </div>
@@ -3709,7 +4069,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
   <div class="col-md-6">
     <pre class="prettyprint">
-      // Example for constructor onstart ()
+      // Example for constructor onready ()
       
     </pre>
   </div>
@@ -3739,7 +4099,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l249"><code>source&#x2F;Room.js:249</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l259"><code>source&#x2F;Room.js:259</code></a>
       </p>
     
   </div>
@@ -3849,7 +4209,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l214"><code>source&#x2F;Room.js:214</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l224"><code>source&#x2F;Room.js:224</code></a>
       </p>
     
   </div>
@@ -3959,7 +4319,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Room.js.html#l232"><code>source&#x2F;Room.js:232</code></a>
+        Defined in: <a href="../files/source_Room.js.html#l242"><code>source&#x2F;Room.js:242</code></a>
       </p>
     
   </div>
@@ -4014,7 +4374,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
   
   
 </blockquote>
-    <p><p>Function to subscribe to when self is warned by server.</p>
+    <p><p>Function to subscribe to when self is warned by server before kicking self user.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -4058,6 +4418,14 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     
       <em></em>
     
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
   
 </div>
 
@@ -4076,7 +4444,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_RoomHandler.js.html#l178"><code>source&#x2F;RoomHandler.js:178</code></a>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l225"><code>source&#x2F;RoomHandler.js:225</code></a>
     </p>
     
   </div>
@@ -4162,7 +4530,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l178"><code>source&#x2F;RoomHandler.js:178</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l225"><code>source&#x2F;RoomHandler.js:225</code></a>
       </small>
     
 
@@ -4182,10 +4550,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
   
   <hr>
-</div>-->  <div id="event_room:join" class="panel panel-code">
+</div>-->  <div id="event_room:init" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      room:join
+      room:init
 
       
         <span class="badge">Version 0.6.0</span>
@@ -4193,7 +4561,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_RoomHandler.js.html#l207"><code>source&#x2F;RoomHandler.js:207</code></a>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l200"><code>source&#x2F;RoomHandler.js:200</code></a>
     </p>
     
   </div>
@@ -4222,7 +4590,126 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
   
   
 </blockquote>
-    <p><p>Event fired when self user is connected to the room.</p>
+    <p><p>Event fired when room is initializing configuration information
+from API server.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor room:init ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_room:init" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>room:init</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l200"><code>source&#x2F;RoomHandler.js:200</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when room is initializing configuration information
+from API server.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_room:join" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      room:join
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l242"><code>source&#x2F;RoomHandler.js:242</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when room object to ready to use.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -4279,7 +4766,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l207"><code>source&#x2F;RoomHandler.js:207</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l242"><code>source&#x2F;RoomHandler.js:242</code></a>
       </small>
     
 
@@ -4289,7 +4776,124 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
   </div>
 
   <div class="code-item-description">
-    <p>Event fired when self user is connected to the room.</p>
+    <p>Event fired when room object to ready to use.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_room:kick" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      room:kick
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l266"><code>source&#x2F;RoomHandler.js:266</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when self user is kicked out from the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor room:kick ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_room:kick" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>room:kick</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l266"><code>source&#x2F;RoomHandler.js:266</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when self user is kicked out from the room.</p>
 
   </div>
 
@@ -4310,7 +4914,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_RoomHandler.js.html#l195"><code>source&#x2F;RoomHandler.js:195</code></a>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l254"><code>source&#x2F;RoomHandler.js:254</code></a>
     </p>
     
   </div>
@@ -4396,7 +5000,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l195"><code>source&#x2F;RoomHandler.js:195</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l254"><code>source&#x2F;RoomHandler.js:254</code></a>
       </small>
     
 
@@ -4416,10 +5020,10 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
   
   <hr>
-</div>-->  <div id="event_room:start" class="panel panel-code">
+</div>-->  <div id="event_room:ready" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      room:start
+      room:ready
 
       
         <span class="badge">Version 0.6.0</span>
@@ -4427,7 +5031,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_RoomHandler.js.html#l166"><code>source&#x2F;RoomHandler.js:166</code></a>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l213"><code>source&#x2F;RoomHandler.js:213</code></a>
     </p>
     
   </div>
@@ -4467,7 +5071,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     <div class="col-md-6">
       <pre class="prettyprint">
-      // Example for constructor room:start ()
+      // Example for constructor room:ready ()
       
     </pre>
     </div>
@@ -4479,8 +5083,8 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
   
 -->
 <!--
-<div id="event_room:start" class="code-item attr item event-item ">
-  <h3 class="code-item-name"><code>room:start</code></h3>
+<div id="event_room:ready" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>room:ready</code></h3>
 
   <div class="code-item-properties">
     <div class="properties-wrapper">
@@ -4513,7 +5117,7 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l166"><code>source&#x2F;RoomHandler.js:166</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l213"><code>source&#x2F;RoomHandler.js:213</code></a>
       </small>
     
 
@@ -4524,6 +5128,123 @@ This could be <var>MCU</var> or <var>Recording</var> peers.</p>
 
   <div class="code-item-description">
     <p>Event fired when room object to ready to use.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_room:warn" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      room:warn
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_RoomHandler.js.html#l283"><code>source&#x2F;RoomHandler.js:283</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when self user is warned regarding an action.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor room:warn ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_room:warn" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>room:warn</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_RoomHandler.js.html#l283"><code>source&#x2F;RoomHandler.js:283</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when self user is warned regarding an action.</p>
 
   </div>
 

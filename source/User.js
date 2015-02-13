@@ -36,7 +36,6 @@
  * @param {Integer} [config.bandwidth.audio] The bandwidth configuration for the audio stream.
  * @param {Boolean} [config.bandwidth.video] The bandwidth configuration for the video stream.
  * @param {Boolean} [config.bandwidth.data] The bandwidth configuration for the data stream.
- * @param {Stream} [config.streamObject] The stream object passed for the "main" peer connection.
  * @param {String} config.SDPType The session description type that the "main" peer connection would send.
  * @param {Function} listener The listener function.
  * @for Skylink
@@ -60,7 +59,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.id = config.id;
-  
+
   /**
    * The user type.
    * @attribute type
@@ -94,7 +93,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.agent = config.agent || {};
-  
+
   /**
    * Stores the user's bandwidth configuration.
    * @attribute bandwidth
@@ -107,7 +106,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.bandwidth = config.bandwidth || {};
-  
+
   /**
    * Stores the list of peer connections to user.
    * @attribute peers
@@ -117,16 +116,16 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.peers = {};
-  
-  
+
+
   /**
    * Function to subscribe to when the user object is ready to use.
-   * @method onstart
+   * @method onready
    * @eventhandler true
    * @for User
    * @since 0.6.0
    */
-  com.onstart = function () {};
+  com.onready = function () {};
 
   /**
    * Function to subscribe to when user's custom data is updated.
@@ -136,7 +135,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.onupdate = function () {};
-  
+
   /**
    * Function to subscribe to when user has an established "main" peer connection.
    * @method onconnect
@@ -145,7 +144,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.onconnect = function () {};
-  
+
   /**
    * Function to subscribe to when user is disconnected from the room.
    * @method ondisconnect
@@ -154,7 +153,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.ondisconnect = function () {};
-  
+
   /**
    * Function to subscribe to when a new peer connection is established to user.
    * @method onaddconnection
@@ -163,7 +162,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.onaddconnection = function () {};
-  
+
   /**
    * Function to subscribe to when a peer connection to user has added.
    * @method onremoveconnection
@@ -172,7 +171,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.onremoveconnection = function () {};
-  
+
   /**
    * Function to subscribe to when a new data transfer request is initialized from user.
    * @method ondatarequest
@@ -190,7 +189,7 @@ function User (config, listener) {
    * @since 0.6.0
    */
   com.ondata = function () {};
-  
+
   /**
    * Function to subscribe to when a new message is received from user.
    * @method onmessage
@@ -202,16 +201,66 @@ function User (config, listener) {
 
 
   /**
-   * The handler that manages all triggers or relaying events.
-   * @method handler
+   * The handler handles received events.
+   * @method routeEvent
    * @param {String} event The event name.
    * @param {JSON} data The response data.
    * @private
    * @for User
    * @since 0.6.0
    */
-  com.handler = function (event, data) {
-    UserHandler(com, event, data, listener);
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.userId = com.id;
+
+    fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('User: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles received socket message events.
+   * @method routeMessage
+   * @param {JSON} message The message received.
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.routeMessage = function (message) {
+    // Messaging events
+    var fn = UserEventMessageHandler[message.type];
+
+    if (typeof fn === 'function') {
+      fn(com, message, listener);
+    }
+
+    log.debug('User: Received message = ', event, message);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for User
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.id = com.id;
+
+    fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('User: Responding with even = ', event, data);
   };
 
   /**
@@ -220,27 +269,27 @@ function User (config, listener) {
    * @param {JSON} data The shared peer connection streaming configuration.
    * @param {JSON} data.prid The shared peer connection id.
    * @param {Array} data.iceServers The ICE servers the connection should use.
-   * @param {JSON} data.stream The streamming configuration for the "main" shared peer connection.
-   * @param {JSON|Boolean} [data.stream.stream.audio=false] The audio stream configuration.
+   * @param {JSON} data.stream The streamming configuration for the shared peer connection.
+   * @param {JSON|Boolean} [data.stream.audio=false] The audio stream configuration.
    *    If parsed as a boolean, other configuration settings under the audio
    *    configuration would be set as the default setting in the connection.
-   * @param {Boolean} [data.stream.stream.audio.stereo=false] The flag that indiciates
+   * @param {Boolean} [data.stream.audio.stereo=false] The flag that indiciates
    *    if stereo is enabled for this connection.
-   * @param {String} [data.stream.stream.audio.sourceId] The source id of the audio MediaStreamTrack
+   * @param {String} [data.stream.audio.sourceId] The source id of the audio MediaStreamTrack
      *    used for this connection.
-   * @param {String|Boolean} [data.stream.stream.video=false] The video stream configuration.
+   * @param {String|Boolean} [data.stream.video=false] The video stream configuration.
    *    If parsed as a boolean, other configuration settings under the video
    *    configuration would be set as the default setting in the connection.
-   * @param {JSON} [data.stream.stream.video.resolution] The video streaming resolution.
-   * @param {Integer} data.stream.stream.video.resolution.width The video resolution width.
-   * @param {Integer} data.stream.stream.video.resolution.height The video resolution height.
-   * @param {Integer} data.stream.stream.video.frameRate The video stream framerate.
-   * @param {String} [data.stream.stream.video.sourceId] The source id of the video MediaStreamTrack
+   * @param {JSON} [data.stream.video.resolution] The video streaming resolution.
+   * @param {Integer} data.stream.video.resolution.width The video resolution width.
+   * @param {Integer} data.stream.video.resolution.height The video resolution height.
+   * @param {Integer} data.stream.video.frameRate The video stream framerate.
+   * @param {String} [data.stream.video.sourceId] The source id of the video MediaStreamTrack
    *    used for this connection.
-   * @param {JSON} data.stream.stream.status The stream MediaStreamTrack status.
-   * @param {Boolean} [data.stream.stream.status.audioMuted=false] The flag that indicates if audio is muted.
+   * @param {JSON} data.stream.status The stream MediaStreamTrack status.
+   * @param {Boolean} [data.stream.status.audioMuted=false] The flag that indicates if audio is muted.
    *    If audio is set to false, this would be set as true.
-   * @param {Boolean} [data.stream.stream.status.videoMuted=false] The flag that indicates if video is muted.
+   * @param {Boolean} [data.stream.status.videoMuted=false] The flag that indicates if video is muted.
    *    If video is set to false, this would be set as true.
    * @param {JSON} data.bandwidth The bandwidth configuration the peer connections.
    *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
@@ -248,6 +297,7 @@ function User (config, listener) {
    * @param {Boolean} [data.bandwidth.video] The bandwidth configuration for the video stream.
    * @param {Boolean} [data.bandwidth.data] The bandwidth configuration for the data stream.
    * @param {String} data.SDPType The session description type that the peer connection would send.
+   *    Types are <code>"offer"</code> or <code>"answer"</code>.
    * @param {Stream} [stream] The stream object.
    * @private
    * @for User
@@ -257,27 +307,32 @@ function User (config, listener) {
     var peerConfig = {
       id: data.prid,
       iceServers: data.iceServers,
-      bandwidth: data.bandwidth,
+      sdpConfig: {
+        bandwidth: data.bandwidth,
+        stereo: fn.isSafe(function () {
+          return !!data.settings.audio.stereo;
+        }),
+        SDPType: data.SDPType
+      },
       streamingConfig: data.settings
     };
-    
+
     // Add the main streaming config
     com.streamingConfigs[data.stream.prid] = data.settings;
-    
-    var peer = new Peer(peerConfig, com.handler);
-    
+
+    var peer = new Peer(peerConfig, com.routeEvent);
+
     peer.connect(stream);
-    
-    peer.SDPType = data.SDPType;
-    
+
     com.peers[peer.id] = peer;
-    
-    com.handler('user:addconnection', {
+
+    com.respond('user:addconnection', {
+      peer: peer,
       peerId: data.prid,
       config: peerConfig
     });
   };
- 
+
   /**
    * Stops a peer connection to user.
    * @method removeConnection
@@ -288,12 +343,12 @@ function User (config, listener) {
    */
   com.removeConnection = function (peerId) {
     var peer = com.peers[peerId];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.disconnect();
     }
-    
-    com.handler('user:removeconnection', {
+
+    com.respond('user:removeconnection', {
       peerId: peerId
     });
   };
@@ -309,10 +364,12 @@ function User (config, listener) {
       peer.disconnect();
     });
   };
- 
+
   /**
    * Gets this user information.
    * @method getInfo
+   * @param {String} [peerId] The shared peer connection id to retrieve
+   *    that streaming information only.
    * @returns {JSON} The user streaming configuration and custom data.
    * - <code>userData</code> <var>: <b>type</b> String | JSON</var><br>
    *   The custom data.
@@ -340,7 +397,7 @@ function User (config, listener) {
    *   The video streaming information. If there is no stream connection with the peer,
    *   it's <code>false</code>.
    * - <code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
-   *   The video stream resolution. 
+   *   The video stream resolution.
    * - <code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
    *   The video stream resolution height.
    * - <code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
@@ -367,23 +424,13 @@ function User (config, listener) {
    * @for User
    * @since 0.6.0
    */
-  com.getInfo = function () {
+  com.getInfo = function (peerId) {
     var data = {};
-    
-    data.userData = com.data;
-    
-    data.agent = com.agent;
-    
-    data.streams = {};
-    
-    var i;
-    
-    for (i = 0; i < com.peers.length; i += 1) {
-      var peer = com.peers[i];
-  
-      var settings = (fn.isSafe() {
-        return peer.stream.config;
-      })() || {
+
+    // Pass jshint error
+    var getStreamSettingsFn = function (peer) {
+      var stream = peer.stream || {};
+      return stream.config || {
         audio: false,
         video: false,
         status: {
@@ -391,16 +438,47 @@ function User (config, listener) {
           videoMuted: true
         }
       };
-      
-      settings.bandwidth = peer.bandwidth || {};
-      
-      data.streams[peer.id] = settings;
-    }
+    };
 
+    data.userData = com.data;
+    data.agent = com.agent;
+    data.bandwidth = com.bandwidth;
+
+
+    // If it's retrieving on peer connection streaming information or not
+    if (!fn.isEmpty(peerId)) {
+      var onepeer = com.peers[peerId];
+
+      // If the peer connection is empty, throw an exception
+      if (!fn.isEmpty(onepeer)) {
+        data.stream = getStreamSettingsFn(onepeer);
+
+      } else {
+        throw new Error('Peer connection for "' + peerId + '" does not exist');
+      }
+
+
+    } else {
+      data.streams = {};
+
+      var key;
+
+      for (key in com.peers) {
+        if (com.peers.hasOwnProperty(key)) {
+          var peer = com.peers[key];
+
+          var settings = getStreamSettingsFn(peer);
+
+          settings.bandwidth = peer.bandwidth || {};
+
+          data.streams[peer.id] = settings;
+        }
+      }
+    }
     return data;
   };
 
   fn.runSync(function () {
-    com.handler('user:start', config);
+    com.respond('user:ready', config);
   });
 }

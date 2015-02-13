@@ -26,6 +26,7 @@ var StreamTrackList = {
         var i;
         
         for (i = 0; i < trackList.length; i += 1) {
+          var track = trackList[i];
           var data = {};
 
           // MediaStreamTrack label - FaceHD Camera

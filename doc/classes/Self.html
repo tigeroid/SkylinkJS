@@ -127,12 +127,12 @@
         <tbody>
           
             
-              <tr> <td> <a href="#method_addStreamConnection"> <code>addStreamConnection()</code> </a> </td> <td> <p>Starts a new stream connection.</p>
+              <tr> <td> <a href="#method_addStreamConnection"> <code>addStreamConnection()</code> </a> </td> <td> <p>Finds the shared peer connection id from the stream id provided.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_addStreamConnection"> <code>addStreamConnection()</code> </a> </td> <td> <p>Finds the shared peer connection id from the stream id provided.</p>
+              <tr> <td> <a href="#method_addStreamConnection"> <code>addStreamConnection()</code> </a> </td> <td> <p>Starts a new stream connection.</p>
  </td> </tr>
             
           
@@ -171,6 +171,21 @@
             
           
             
+              <tr> <td> <a href="#method_respond"> <code>respond()</code> </a> </td> <td> <p>The handler handles response events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_routeEvent"> <code>routeEvent()</code> </a> </td> <td> <p>The handler handles received events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_routeMessage"> <code>routeMessage()</code> </a> </td> <td> <p>The handler handles received socket message events.</p>
+ </td> </tr>
+            
+          
+            
               <tr> <td> <a href="#method_SelfHandler"> <code>SelfHandler()</code> </a> </td> <td> <p>Handles the self class events.</p>
  </td> </tr>
             
@@ -194,14 +209,11 @@
             <tr> <td> <a href="#attr_agent"> <code>agent</code> </a> </td> <td> <p>The self user browser agent information.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_bandwidth"> <code>bandwidth</code> </a> </td> <td> <p>The self user bandwidth configuration. This does fixes 
+            <tr> <td> <a href="#attr_bandwidth"> <code>bandwidth</code> </a> </td> <td> <p>The self user bandwidth configuration. This does fixes
   the bandwidth but doesn&#39;t prevent alterations done by browser for smoother streaming.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_data"> <code>data</code> </a> </td> <td> <p>The self user data.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The self user id.</p>
@@ -246,11 +258,11 @@
             <tr> <td> <a href="#event_self:disconnect"> <code>self:disconnect</code> </a> </td> <td> <p>Event fired when self user is disconnected from room.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#event_self:removestreamconnection"> <code>self:removestreamconnection</code> </a> </td> <td> <p>Event fired when self has removed a stream connection.</p>
+            <tr> <td> <a href="#event_self:ready"> <code>self:ready</code> </a> </td> <td> <p>Event fired when self object to ready to use.
+  At this stage, the self user id is empty as user has not joined the room.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#event_self:start"> <code>self:start</code> </a> </td> <td> <p>Event fired when self object to ready to use.
-  At this stage, the self user id is empty as user has not joined the room.</p>
+            <tr> <td> <a href="#event_self:removestreamconnection"> <code>self:removestreamconnection</code> </a> </td> <td> <p>Event fired when self has removed a stream connection.</p>
  </td> </tr>
           
             <tr> <td> <a href="#event_self:update"> <code>self:update</code> </a> </td> <td> <p>Event fired when self has updated data.</p>
@@ -287,18 +299,24 @@
             
           
             
-              <tr> <td> <a href="#handler_onremovestreamconnection"> <code>onremovestreamconnection</code> </a> </td> <td> <p>Function to subscribe to when self has stopped a stream connection.</p>
+              <tr> <td> <a href="#handler_onready"> <code>onready</code> </a> </td> <td> <p>Function to subscribe to when self user object is ready to use.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#handler_onstart"> <code>onstart</code> </a> </td> <td> <p>Function to subscribe to when self user object is ready to use.</p>
+              <tr> <td> <a href="#handler_onremovestreamconnection"> <code>onremovestreamconnection</code> </a> </td> <td> <p>Function to subscribe to when self has stopped a stream connection.</p>
  </td> </tr>
             
           
             
               <tr> <td> <a href="#handler_onupdate"> <code>onupdate</code> </a> </td> <td> <p>Function to subscribe to when self user custom user data is updated.</p>
  </td> </tr>
+            
+          
+            
+          
+            
+          
             
           
             
@@ -573,184 +591,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l201"><code>source&#x2F;Self.js:201</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Starts a new stream connection.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-        <div class="code-section-item">
-          <h6>Parameters:</h6>
-          <ul class="params-list">
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">stream</code>
-    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The stream object.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">peerId</code>
-    <span class="type"> : <em>type</em> String </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The shared peer connection id.</p>
-
-  </div>
-
-  
-</li>
-          
-          </ul>
-        </div>
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor addStreamConnection ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
-      <div id="method_addStreamConnection" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      addStreamConnection
-      
-        <span class="paren">(</span>
-          <em class="items">
-            
-              
-                <item><code>stream</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>peerId</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-          </em>
-        <span class="paren">)</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Self.js.html#l223"><code>source&#x2F;Self.js:223</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l265"><code>source&#x2F;Self.js:265</code></a>
       </p>
     
   </div>
@@ -892,6 +733,183 @@
     
    
     
+      <div id="method_addStreamConnection" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      addStreamConnection
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>stream</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>peerId</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Self.js.html#l243"><code>source&#x2F;Self.js:243</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Starts a new stream connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The stream object.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">peerId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The shared peer connection id.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor addStreamConnection ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="method_getInfo" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -922,7 +940,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l279"><code>source&#x2F;Self.js:279</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l321"><code>source&#x2F;Self.js:321</code></a>
       </p>
     
   </div>
@@ -1060,7 +1078,7 @@ The audio MediaStreamTrack source used for this connection.</li>
 The video streaming information. If there is no stream connection with the peer,
 it&#39;s <code>false</code>.</li>
 <li><code>streams.(#peerId).video.resolution</code> <var>: <b>type</b> JSON</var><br>
-The video stream resolution. </li>
+The video stream resolution.</li>
 <li><code>streams.(#peerId).video.resolution.width</code> <var>: <b>type</b> Integer</var><br>
 The video stream resolution height.</li>
 <li><code>streams.(#peerId).video.resolution.height</code> <var>: <b>type</b> Integer</var><br>
@@ -1161,7 +1179,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l245"><code>source&#x2F;Self.js:245</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l287"><code>source&#x2F;Self.js:287</code></a>
       </p>
     
   </div>
@@ -1289,6 +1307,537 @@ The bandwidth configuration for audio stream.</li>
     
    
     
+      <div id="method_respond" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      respond
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Self.js.html#l154"><code>source&#x2F;Self.js:154</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler handles response events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor respond ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_routeEvent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      routeEvent
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Self.js.html#l120"><code>source&#x2F;Self.js:120</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler handles received events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor routeEvent ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_routeMessage" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      routeMessage
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Self.js.html#l140"><code>source&#x2F;Self.js:140</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler handles received socket message events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor routeMessage ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="method_SelfHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1334,7 +1883,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_SelfHandler.js.html#l123"><code>source&#x2F;SelfHandler.js:123</code></a>
+        Defined in: <a href="../files/source_SelfHandler.js.html#l124"><code>source&#x2F;SelfHandler.js:124</code></a>
       </p>
     
   </div>
@@ -1539,7 +2088,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l187"><code>source&#x2F;Self.js:187</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l229"><code>source&#x2F;Self.js:229</code></a>
       </p>
     
   </div>
@@ -1811,7 +2360,7 @@ The bandwidth configuration for audio stream.</li>
   
   
 </blockquote>
-    <p><p>The self user bandwidth configuration. This does fixes 
+    <p><p>The self user bandwidth configuration. This does fixes
   the bandwidth but doesn&#39;t prevent alterations done by browser for smoother streaming.</p>
 </p>
   </div>
@@ -1965,71 +2514,6 @@ The bandwidth configuration for audio stream.</li>
     <div class="col-md-6">
       <pre class="prettyprint">
       // Example for constructor data ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_handler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      handler <span class="type"><em>type</em> Function</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Self.js.html#l120"><code>source&#x2F;Self.js:120</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The handler that manages all triggers or relaying events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor handler ()
       
     </pre>
     </div>
@@ -2645,7 +3129,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l159"><code>source&#x2F;Self.js:159</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l201"><code>source&#x2F;Self.js:201</code></a>
       </p>
     
   </div>
@@ -2755,7 +3239,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l141"><code>source&#x2F;Self.js:141</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l183"><code>source&#x2F;Self.js:183</code></a>
       </p>
     
   </div>
@@ -2865,7 +3349,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l177"><code>source&#x2F;Self.js:177</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l219"><code>source&#x2F;Self.js:219</code></a>
       </p>
     
   </div>
@@ -2954,6 +3438,116 @@ The bandwidth configuration for audio stream.</li>
     
    
     
+      <div id="handler_onready" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onready
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Self.js.html#l174"><code>source&#x2F;Self.js:174</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when self user object is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onready ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="handler_onremovestreamconnection" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -2975,7 +3569,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l168"><code>source&#x2F;Self.js:168</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l210"><code>source&#x2F;Self.js:210</code></a>
       </p>
     
   </div>
@@ -3064,116 +3658,6 @@ The bandwidth configuration for audio stream.</li>
     
    
     
-      <div id="handler_onstart" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onstart
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Self.js.html#l132"><code>source&#x2F;Self.js:132</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when self user object is ready to use.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <!--<div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>-->
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onstart ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
       <div id="handler_onupdate" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -3195,7 +3679,7 @@ The bandwidth configuration for audio stream.</li>
 
     
       <p>
-        Defined in: <a href="../files/source_Self.js.html#l150"><code>source&#x2F;Self.js:150</code></a>
+        Defined in: <a href="../files/source_Self.js.html#l192"><code>source&#x2F;Self.js:192</code></a>
       </p>
     
   </div>
@@ -3281,6 +3765,18 @@ The bandwidth configuration for audio stream.</li>
   </div>
 </div>
 </div>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
+    
+   
+    
+      <em></em>
     
    
     
@@ -3652,6 +4148,125 @@ The bandwidth configuration for audio stream.</li>
 
   
   <hr>
+</div>-->  <div id="event_self:ready" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      self:ready
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SelfHandler.js.html#l32"><code>source&#x2F;SelfHandler.js:32</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when self object to ready to use.
+  At this stage, the self user id is empty as user has not joined the room.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor self:ready ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_self:ready" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>self:ready</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SelfHandler.js.html#l32"><code>source&#x2F;SelfHandler.js:32</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when self object to ready to use.
+  At this stage, the self user id is empty as user has not joined the room.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
 </div>-->  <div id="event_self:removestreamconnection" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -3760,125 +4375,6 @@ The bandwidth configuration for audio stream.</li>
 
   <div class="code-item-description">
     <p>Event fired when self has removed a stream connection.</p>
-
-  </div>
-
-  
-
-  
-
-  
-  <hr>
-</div>-->  <div id="event_self:start" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      self:start
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_SelfHandler.js.html#l32"><code>source&#x2F;SelfHandler.js:32</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Event fired when self object to ready to use.
-  At this stage, the self user id is empty as user has not joined the room.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor self:start ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->
-<!--
-<div id="event_self:start" class="code-item attr item event-item ">
-  <h3 class="code-item-name"><code>self:start</code></h3>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SelfHandler.js.html#l32"><code>source&#x2F;SelfHandler.js:32</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Event fired when self object to ready to use.
-  At this stage, the self user id is empty as user has not joined the room.</p>
 
   </div>
 

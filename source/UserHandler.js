@@ -6,53 +6,53 @@
  * @since 0.6.0
  */
 var UserEventReceivedHandler = {
-  
+
   peer: {
-    
+
     connect: function (com, data, listener) {
       var peer = com.peers[data.id];
 
       if (typeof com.onaddconnection === 'function') {
         com.onaddconnection(peer);
       }
-      
+
       if (peer.SDPType === 'offer') {
         peer.createOffer();
       }
     },
-    
+
     iceconnectionstate: function (com, data, listener) {
       if (data.id === 'main' && data.state === 'connected') {
         com.handler('user:connect', {});
       }
     },
-    
+
     disconnect: function (com, data, listener) {
       var peer = com.peers[data.id];
-      
+
       delete com.peers[data.id];
 
       if (typeof com.onremoveconnection === 'function') {
         com.onremoveconnection(peer);
       }
-      
+
       if (Object.keys(com.peers).length === 0) {
         com.handler('user:disconnect', {});
       }
     }
   },
-  
+
   transfer: {
-    
+
     complete: function (com, data, listener) {
       com.handler('user:data', data);
     },
-    
+
     request: function (com, data, listener) {
-      com.handler('user:datarequest', data); 
+      com.handler('user:datarequest', data);
     }
   }
-  
+
 };
 
 /**
@@ -63,19 +63,19 @@ var UserEventReceivedHandler = {
  * @since 0.6.0
  */
 var UserEventResponseHandler = {
-  
+
   /**
    * Event fired when the user object is ready to use.
-   * @event user:start
+   * @event user:ready
    * @for User
    * @since 0.6.0
    */
-  start: function (com, data, listener) {
-    if (typeof com.onstart === 'function') {
-      com.onstart();
+  ready: function (com, data, listener) {
+    if (typeof com.onready === 'function') {
+      com.onready();
     }
   },
-  
+
   /**
    * Event fired when the user has an established "main" peer connection.
    * @event user:connect
@@ -87,7 +87,7 @@ var UserEventResponseHandler = {
       com.onconnect();
     }
   },
-  
+
   /**
    * Event fired when the user has transferred a data successfully.
    * @event user:data
@@ -99,7 +99,7 @@ var UserEventResponseHandler = {
       com.ondata();
     }
   },
-  
+
   /**
    * Event fired when the user is initiating a data transfer request.
    * @event user:datarequest
@@ -111,7 +111,7 @@ var UserEventResponseHandler = {
       com.ondatarequest();
     }
   },
-  
+
   /**
    * Event fired when the user's custom data has been updated.
    * @event user:data
@@ -135,7 +135,7 @@ var UserEventResponseHandler = {
       com.onaddconnection();
     }
   },
-  
+
   /**
    * Event fired when the user has ended a peer connection
    * @event user:removeconnection
@@ -159,7 +159,7 @@ var UserEventResponseHandler = {
       com.onmessage();
     }
   },
-  
+
   /**
    * Event fired when the user's peer connections has been disconnected.
    * Usually fired when user leaves the room.
@@ -172,7 +172,7 @@ var UserEventResponseHandler = {
       com.ondisconnect();
     }
   }
-  
+
 };
 
 /**
@@ -183,7 +183,7 @@ var UserEventResponseHandler = {
  * @since 0.6.0
  */
 var UserEventMessageHandler = {
-  
+
   enter: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -198,7 +198,7 @@ var UserEventMessageHandler = {
       bandwidth: com.bandwidth,
       stream: data.stream,
       SDPType: 'answer'
-    
+
     }, data.streamObject);
   },
 
@@ -231,7 +231,7 @@ var UserEventMessageHandler = {
 
   offer: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:offer', data);
     }
@@ -239,7 +239,7 @@ var UserEventMessageHandler = {
 
   answer: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:answer', data);
     }
@@ -247,77 +247,41 @@ var UserEventMessageHandler = {
 
   candidate: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:candidate', data);
     }
   },
-  
+
   restart: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:restart', data);
     }
   },
-  
+
   updateUserEvent: function (com, data, listener) {
     com.data = data.data;
-  
+
     com.handler('user:update', {
       data: data.userData
     });
   },
-  
+
   muteAudioEvent: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:muteAudioEvent', data);
     }
   },
-    
+
   muteVideoEvent: function (com, data, listener) {
     var peer = com.peers[data.prid];
-    
+
     if (!fn.isEmpty(peer)) {
       peer.handler('message:muteVideoEvent', data);
     }
-  }
-};
-
-/**
- * Handles the user class events.
- * @method UserHandler
- * @param {Object} com The reference to the class object.
- * @param {String} event The event name.
- * @param {JSON} data The event data response.
- * @param {Function} listener The listener function.
- * @private
- * @for User
- * @since 0.6.0
- */
-var UserHandler = function (com, event, data, listener) {
-  var params = event.split(':');
-
-  // Messaging events
-  if (event.indexOf('message:') === 0) {
-    
-    fn.applyHandler(UserEventMessageHandler, params, [com, data, listener]);
-  
-  } else {
-    // Class events
-    if (event.indexOf('user:') === 0) {
-      data.id = com.id;
-
-      fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
-
-    } else {
-      data.userId = com.id;
-
-      fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
-    }
-    
-    listener(event, data);
   }
 };

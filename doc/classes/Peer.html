@@ -125,63 +125,60 @@
             
           
             
-              <tr> <td> <a href="#method_connect"> <code>connect()</code> </a> </td> <td> <p>Starts the peer connection.</p>
+              <tr> <td> <a href="#method_connect"> <code>connect()</code> </a> </td> <td> <p>Starts the connection and initializes the RTCPeerConnection object.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_createAnswer"> <code>createAnswer()</code> </a> </td> <td> <p>Creates an answer session description.</p>
+              <tr> <td> <a href="#method_createAnswer"> <code>createAnswer()</code> </a> </td> <td> <p>Creates a local answer RTCSessionDescription.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_createOffer"> <code>createOffer()</code> </a> </td> <td> <p>Creates an offer session description.</p>
+              <tr> <td> <a href="#method_createOffer"> <code>createOffer()</code> </a> </td> <td> <p>Creates a local offer RTCSessionDescription.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_disconnect"> <code>disconnect()</code> </a> </td> <td> <p>Stops the peer connection.</p>
+              <tr> <td> <a href="#method_disconnect"> <code>disconnect()</code> </a> </td> <td> <p>Stops and closes the RTCPeerConnection connection.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_onaddstream"> <code>onaddstream()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s remote stream is received.</p>
+              <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_onconnect"> <code>onconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been started.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_oniceconnectionstatechange"> <code>oniceconnectionstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s ice connection state changes.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onicegatheringstatechange"> <code>onicegatheringstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s ice gathering state changes.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onreconnect"> <code>onreconnect()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onremoveconnection"> <code>onremoveconnection()</code> </a> </td> <td> <p>Function to subscribe to when a peer connection been disconnected.</p>
- </td> </tr>
+
             
           
             
-              <tr> <td> <a href="#method_onsignalingstatechange"> <code>onsignalingstatechange()</code> </a> </td> <td> <p>Function to subscribe to when peer&#39;s signaling state has changed.</p>
- </td> </tr>
+
+            
+          
+            
+
             
           
             
@@ -190,17 +187,18 @@
             
           
             
-              <tr> <td> <a href="#method_reconnect"> <code>reconnect()</code> </a> </td> <td> <p>Restarts the peer connection.</p>
+              <tr> <td> <a href="#method_reconnect"> <code>reconnect()</code> </a> </td> <td> <p>Restarts the connection and re-initialize the RTCPeerConnection object
+  to restart the ICE connection.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_setLocalDescription"> <code>setLocalDescription()</code> </a> </td> <td> <p>Sets local description.</p>
+              <tr> <td> <a href="#method_setLocalDescription"> <code>setLocalDescription()</code> </a> </td> <td> <p>Sets local RTCSessionDescription to the RTCPeerConnection.</p>
  </td> </tr>
             
           
             
-              <tr> <td> <a href="#method_setRemoteDescription"> <code>setRemoteDescription()</code> </a> </td> <td> <p>Sets remote description.</p>
+              <tr> <td> <a href="#method_setRemoteDescription"> <code>setRemoteDescription()</code> </a> </td> <td> <p>Sets remote RTCSessionDescription to the RTCPeerConnection.</p>
  </td> </tr>
             
           
@@ -213,19 +211,21 @@
         </thead>
         <tbody>
           
-            <tr> <td> <a href="#property_datachannel"> <code>datachannel</code> </a> </td> <td> <p>Handles the datachannel state trigger.</p>
+            <tr> <td> <a href="#property_datachannel"> <code>datachannel</code> </a> </td> <td> <p>Event fired when peer connection datachannel is received.
+This happens when RTCPeerConnection receives a local or remote RTCDataChannel.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#property_icecandidate"> <code>icecandidate</code> </a> </td> <td> <p>Handles the ice candidate trigger.</p>
+            <tr> <td> <a href="#property_icecandidate"> <code>icecandidate</code> </a> </td> <td> <p>Event fired when peer connection ICE candidate is received.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#property_iceconnectionstate"> <code>iceconnectionstate</code> </a> </td> <td> <p>Handles the ice connection state trigger.</p>
+            <tr> <td> <a href="#property_iceconnectionstate"> <code>iceconnectionstate</code> </a> </td> <td> <p>Event fired when peer connection ICE connection state has changed.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#property_icegatheringstate"> <code>icegatheringstate</code> </a> </td> <td> <p>Handles the ice gathering state trigger.</p>
+            <tr> <td> <a href="#property_icegatheringstate"> <code>icegatheringstate</code> </a> </td> <td> <p>Event fired when peer connection ICE gathering state has changed.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#property_signalingstate"> <code>signalingstate</code> </a> </td> <td> <p>Handles the signaling state trigger.</p>
+            <tr> <td> <a href="#property_signalingstate"> <code>signalingstate</code> </a> </td> <td> <p>Event fired when peer connection signaling state changes.
+This happens when RTCPeerConnection receives local or remote offer.</p>
  </td> </tr>
           
         </tbody>
@@ -237,28 +237,26 @@
         </thead>
         <tbody>
           
-            <tr> <td> <a href="#attr_config"> <code>config</code> </a> </td> <td> <p>The PeerConnection configuration.</p>
+            <tr> <td> <a href="#attr_datachannels"> <code>datachannels</code> </a> </td> <td> <p>The datachannels connected to peer connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_constraints"> <code>constraints</code> </a> </td> <td> <p>The PeerConnection constraints - iceServers.</p>
+            <tr> <td> <a href="#attr_healthTimer"> <code>healthTimer</code> </a> </td> <td> <p>The timeout that would be invoked when peer connection has expired without
+  an established connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_datachannels"> <code>datachannels</code> </a> </td> <td> <p>The datachannels connected to PeerConnection.</p>
+            <tr> <td> <a href="#attr_ICEConfig"> <code>ICEConfig</code> </a> </td> <td> <p>The RTCPeerConnection ICE servers configuration.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_handler"> <code>handler</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
+            <tr> <td> <a href="#attr_iceTrickle"> <code>iceTrickle</code> </a> </td> <td> <p>The flag that indicates if trickle ICE is enable for this peer connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_healthTimer"> <code>healthTimer</code> </a> </td> <td> <p>The timeout that would react if PeerConnection is unstable and refresh connection.</p>
+            <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The shared peer connection id.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_iceTrickle"> <code>iceTrickle</code> </a> </td> <td> <p>The flag that indicates if trickle ICE is enable for this PeerConnection.</p>
+            <tr> <td> <a href="#attr_localDescription"> <code>localDescription</code> </a> </td> <td> <p>The local RTCSessionDescription set for this peer connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_id"> <code>id</code> </a> </td> <td> <p>The peer id.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#attr_localDescription"> <code>localDescription</code> </a> </td> <td> <p>The local description to be set.</p>
+            <tr> <td> <a href="#attr_optionalConfig"> <code>optionalConfig</code> </a> </td> <td> <p>The RTCPeerConnection optional configuration.</p>
  </td> </tr>
           
             <tr> <td> <a href="#attr_PeerEventMessageHandler"> <code>PeerEventMessageHandler</code> </a> </td> <td> <p>Handles all the message events received from socket.</p>
@@ -270,36 +268,71 @@
             <tr> <td> <a href="#attr_PeerEventResponseHandler"> <code>PeerEventResponseHandler</code> </a> </td> <td> <p>Handles all the events to respond to other parent classes.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_remoteDescription"> <code>remoteDescription</code> </a> </td> <td> <p>The remote description to be set.</p>
+            <tr> <td> <a href="#attr_remoteDescription"> <code>remoteDescription</code> </a> </td> <td> <p>The remote RTCSessionDescription set for this peer connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_RTCPeerConnection"> <code>RTCPeerConnection</code> </a> </td> <td> <p>The PeerConnection object.</p>
+            <tr> <td> <a href="#attr_RTCPeerConnection"> <code>RTCPeerConnection</code> </a> </td> <td> <p>The RTCPeerConnection object.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_sdpConfig"> <code>sdpConfig</code> </a> </td> <td> <p>The PeerConnection session description configuration.</p>
+            <tr> <td> <a href="#attr_sdpConfig"> <code>sdpConfig</code> </a> </td> <td> <p>The RTCSessionDescription session description modification configuration.
+This uses the user&#39;s sent streaming configuration.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_sdpConstraints"> <code>sdpConstraints</code> </a> </td> <td> <p>The PeerConnection session description constraints.</p>
+            <tr> <td> <a href="#attr_sdpConstraints"> <code>sdpConstraints</code> </a> </td> <td> <p>The RTCPeerConnection createOffer and createAnswer.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_SDPType"> <code>SDPType</code> </a> </td> <td> <p>The local description type peer sends.</p>
+            <tr> <td> <a href="#attr_SDPType"> <code>SDPType</code> </a> </td> <td> <p>The RTCSessionDescription type that the peer connection would send.
+Types are <code>&quot;offer&quot;</code> or <code>&quot;answer&quot;</code>.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_stream"> <code>stream</code> </a> </td> <td> <p>The stream send from this peer.</p>
+            <tr> <td> <a href="#attr_stream"> <code>stream</code> </a> </td> <td> <p>The remote stream received from this peer.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_streamingConfig"> <code>streamingConfig</code> </a> </td> <td> <p>Stores the streaming configuration.</p>
+            <tr> <td> <a href="#attr_streamingConfig"> <code>streamingConfig</code> </a> </td> <td> <p>Stores the streaming configuration for the peer connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The peer type.</p>
+            <tr> <td> <a href="#attr_type"> <code>type</code> </a> </td> <td> <p>The peer connection type.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#attr_weight"> <code>weight</code> </a> </td> <td> <p>The peerconnection weight during handshake.</p>
+            <tr> <td> <a href="#attr_weight"> <code>weight</code> </a> </td> <td> <p>The generated weight for the &quot;welcome&quot; handshake priority.</p>
  </td> </tr>
           
         </tbody>
       
 
+      
+        <thead>
+          <tr> <th colspan="2">Events</th> </tr>
+        </thead>
+        <tbody>
+          
+            <tr> <td> <a href="#event_peer:connect"> <code>peer:connect</code> </a> </td> <td> <p>Event fired when peer connection has started.
+This happens when RTCPeerConnection object has just
+  been initialized and local MediaStream has been added.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_peer:connected"> <code>peer:connected</code> </a> </td> <td> <p>Event fired when peer connection is established and connected.
+This happens when RTCPeerConnection ICE connection state is
+ connected and completed.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_peer:disconnect"> <code>peer:disconnect</code> </a> </td> <td> <p>Event fired when peer connection has been disconnected.
+This happens when RTCPeerConnection close is invoked and 
+ connection stops.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_peer:disconnect"> <code>peer:disconnect</code> </a> </td> <td> <p>Event fired when peer connection adds or receives a stream object.
+This happens when user sends a local MediaStream to peer or receives
+  a remote MediaStream from onaddstream event.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_peer:reconnect"> <code>peer:reconnect</code> </a> </td> <td> <p>Event fired when peer connection is reconnecting.
+This happens when RTCPeerConnection object is
+  re-initialized and the ICE connection restarts again.
+It adds the re-updated local MediaStream.</p>
+ </td> </tr>
+          
+        </tbody>
       
 
       
@@ -321,17 +354,43 @@
             
           
             
-          
+              <tr> <td> <a href="#handler_onaddstream"> <code>onaddstream</code> </a> </td> <td> <p>Function to subscribe to when there is an incoming stream received.</p>
+ </td> </tr>
             
           
             
-          
+              <tr> <td> <a href="#handler_onconnect"> <code>onconnect</code> </a> </td> <td> <p>Function to subscribe to when peer connection has been started.</p>
+ </td> </tr>
             
           
             
-          
+              <tr> <td> <a href="#handler_onconnected"> <code>onconnected</code> </a> </td> <td> <p>Function to subscribe to when peer connection is established.</p>
+ </td> </tr>
             
           
+            
+              <tr> <td> <a href="#handler_oniceconnectionstatechange"> <code>oniceconnectionstatechange</code> </a> </td> <td> <p>Function to subscribe to when ICE connection state changes.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onicegatheringstatechange"> <code>onicegatheringstatechange</code> </a> </td> <td> <p>Function to subscribe to when ICE gathering state changes.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onreconnect"> <code>onreconnect</code> </a> </td> <td> <p>Function to subscribe to when peer connection has been restarted.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onremoveconnection"> <code>onremoveconnection</code> </a> </td> <td> <p>Function to subscribe to when peer connection been disconnected.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#handler_onsignalingstatechange"> <code>onsignalingstatechange</code> </a> </td> <td> <p>Function to subscribe to when signaling state has changed.</p>
+ </td> </tr>
             
           
             
@@ -376,7 +435,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l358"><code>source&#x2F;Peer.js:358</code></a>
+        Defined in: <a href="../files/source_Peer.js.html#l421"><code>source&#x2F;Peer.js:421</code></a>
       </p>
     
   </div>
@@ -413,6 +472,10 @@
   
    
   
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
    
   
    
@@ -470,7 +533,16 @@
     <h5>
       connect
       
-        <span class="paren">()</span>
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>stream</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
       
 
       
@@ -486,7 +558,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l270"><code>source&#x2F;Peer.js:270</code></a>
+        Defined in: <a href="../files/source_Peer.js.html#l340"><code>source&#x2F;Peer.js:340</code></a>
       </p>
     
   </div>
@@ -545,11 +617,39 @@
   
   
 </blockquote>
-    <p><p>Starts the peer connection.</p>
+    <p><p>Starts the connection and initializes the RTCPeerConnection object.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The stream object.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
       
 
     <div class="code-section-item">
@@ -600,7 +700,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l504"><code>source&#x2F;Peer.js:504</code></a>
+        Defined in: <a href="../files/source_Peer.js.html#l568"><code>source&#x2F;Peer.js:568</code></a>
       </p>
     
   </div>
@@ -637,6 +737,10 @@
   
    
   
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
    
   
    
@@ -655,7 +759,7 @@
   
   
 </blockquote>
-    <p><p>Creates an answer session description.</p>
+    <p><p>Creates a local answer RTCSessionDescription.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -710,117 +814,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l464"><code>source&#x2F;Peer.js:464</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Creates an offer session description.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor createOffer ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
-      <div id="method_disconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      disconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l342"><code>source&#x2F;Peer.js:342</code></a>
+        Defined in: <a href="../files/source_Peer.js.html#l529"><code>source&#x2F;Peer.js:529</code></a>
       </p>
     
   </div>
@@ -879,7 +873,121 @@
   
   
 </blockquote>
-    <p><p>Stops the peer connection.</p>
+    <p><p>Creates a local offer RTCSessionDescription.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor createOffer ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_disconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      disconnect
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l406"><code>source&#x2F;Peer.js:406</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Stops and closes the RTCPeerConnection connection.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -913,12 +1021,26 @@
     
    
     
-      <div id="method_onaddstream" class="panel panel-code">
+      <div id="method_handler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      onaddstream
+      handler
       
-        <span class="paren">()</span>
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
       
 
       
@@ -934,7 +1056,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l228"><code>source&#x2F;Peer.js:228</code></a>
+        Defined in: <a href="../files/source_Peer.js.html#l327"><code>source&#x2F;Peer.js:327</code></a>
       </p>
     
   </div>
@@ -971,6 +1093,10 @@
   
    
   
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
    
   
    
@@ -989,11 +1115,60 @@
   
   
 </blockquote>
-    <p><p>Function to subscribe to when peer&#39;s remote stream is received.</p>
+    <p><p>The handler that manages all triggers or relaying events.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
       
 
     <div class="code-section-item">
@@ -1014,7 +1189,7 @@
 
   <div class="col-md-6">
     <pre class="prettyprint">
-      // Example for constructor onaddstream ()
+      // Example for constructor handler ()
       
     </pre>
   </div>
@@ -1023,773 +1198,35 @@
     
    
     
-      <div id="method_onconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l204"><code>source&#x2F;Peer.js:204</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when peer&#39;s connection has been started.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onconnect ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_oniceconnectionstatechange" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      oniceconnectionstatechange
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l212"><code>source&#x2F;Peer.js:212</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when peer&#39;s ice connection state changes.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor oniceconnectionstatechange ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_onicegatheringstatechange" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onicegatheringstatechange
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l220"><code>source&#x2F;Peer.js:220</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when peer&#39;s ice gathering state changes.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onicegatheringstatechange ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_onreconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onreconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l252"><code>source&#x2F;Peer.js:252</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onreconnect ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_onreconnect" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onreconnect
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l244"><code>source&#x2F;Peer.js:244</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when peer&#39;s connection has been restarted.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onreconnect ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_onremoveconnection" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onremoveconnection
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l260"><code>source&#x2F;Peer.js:260</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when a peer connection been disconnected.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onremoveconnection ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
-      <div id="method_onsignalingstatechange" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onsignalingstatechange
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
+      <em></em>
     
-      
-        
-      
+   
     
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Peer.js.html#l236"><code>source&#x2F;Peer.js:236</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when peer&#39;s signaling state has changed.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onsignalingstatechange ()
-      
-    </pre>
-  </div>
-</div>
-</div>
+      <em></em>
     
    
     
@@ -1838,7 +1275,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_PeerHandler.js.html#l196"><code>source&#x2F;PeerHandler.js:196</code></a>
+        Defined in: <a href="../files/source_PeerHandler.js.html#l253"><code>source&#x2F;PeerHandler.js:253</code></a>
       </p>
     
   </div>
@@ -2027,7 +1464,16 @@
     <h5>
       reconnect
       
-        <span class="paren">()</span>
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>stream</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
       
 
       
@@ -2043,7 +1489,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l304"><code>source&#x2F;Peer.js:304</code></a>
+        Defined in: <a href="../files/source_Peer.js.html#l369"><code>source&#x2F;Peer.js:369</code></a>
       </p>
     
   </div>
@@ -2102,11 +1548,40 @@
   
   
 </blockquote>
-    <p><p>Restarts the peer connection.</p>
+    <p><p>Restarts the connection and re-initialize the RTCPeerConnection object
+  to restart the ICE connection.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The updated stream object.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
       
 
     <div class="code-section-item">
@@ -2157,7 +1632,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l531"><code>source&#x2F;Peer.js:531</code></a>
+        Defined in: <a href="../files/source_Peer.js.html#l593"><code>source&#x2F;Peer.js:593</code></a>
       </p>
     
   </div>
@@ -2194,6 +1669,10 @@
   
    
   
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
    
   
    
@@ -2212,7 +1691,7 @@
   
   
 </blockquote>
-    <p><p>Sets local description.</p>
+    <p><p>Sets local RTCSessionDescription to the RTCPeerConnection.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2267,7 +1746,7 @@
 
     
       <p>
-        Defined in: <a href="../files/source_Peer.js.html#l566"><code>source&#x2F;Peer.js:566</code></a>
+        Defined in: <a href="../files/source_Peer.js.html#l625"><code>source&#x2F;Peer.js:625</code></a>
       </p>
     
   </div>
@@ -2304,6 +1783,10 @@
   
    
   
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
    
   
    
@@ -2322,7 +1805,7 @@
   
   
 </blockquote>
-    <p><p>Sets remote description.</p>
+    <p><p>Sets remote RTCSessionDescription to the RTCPeerConnection.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2361,137 +1844,7 @@
 
 <div class="section code-section">
   <h4>Attributes</h4>
-   <div id="attr_config" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      config <span class="type"><em>type</em> String</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Peer.js.html#l157"><code>source&#x2F;Peer.js:157</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The PeerConnection configuration.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor config ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_constraints" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      constraints <span class="type"><em>type</em> String</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Peer.js.html#l43"><code>source&#x2F;Peer.js:43</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The PeerConnection constraints - iceServers.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor constraints ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_datachannels" class="panel panel-code">
+   <div id="attr_datachannels" class="panel panel-code">
   <div class="panel-heading">
     <h5>
       datachannels <span class="type"><em>type</em> JSON</span>
@@ -2502,7 +1855,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l73"><code>source&#x2F;Peer.js:73</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l104"><code>source&#x2F;Peer.js:104</code></a>
     </p>
     
   </div>
@@ -2535,7 +1888,7 @@
   
   
 </blockquote>
-    <p><p>The datachannels connected to PeerConnection.</p>
+    <p><p>The datachannels connected to peer connection.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2546,7 +1899,7 @@
         <ul class="params-list">
            <li class="code-section-item-param">
   <div class="name">
-    <code class="param-name">&lt;channelId&gt;</code>
+    <code class="param-name">(#channelId)</code>
     <span class="type"> : <em>type</em> <a href="../classes/DataChannel.html" class="crosslink">DataChannel</a> </span>
   </div>
 
@@ -2582,71 +1935,6 @@
 <!--
 
   
--->  <div id="attr_handler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      handler <span class="type"><em>type</em> Function</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Peer.js.html#l191"><code>source&#x2F;Peer.js:191</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The handler that manages all triggers or relaying events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor handler ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
 -->  <div id="attr_healthTimer" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -2658,7 +1946,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l94"><code>source&#x2F;Peer.js:94</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l125"><code>source&#x2F;Peer.js:125</code></a>
     </p>
     
   </div>
@@ -2691,7 +1979,8 @@
   
   
 </blockquote>
-    <p><p>The timeout that would react if PeerConnection is unstable and refresh connection.</p>
+    <p><p>The timeout that would be invoked when peer connection has expired without
+  an established connection.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2712,10 +2001,324 @@
 <!--
 
   
+-->  <div id="attr_ICEConfig" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      ICEConfig <span class="type"><em>type</em> String</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l47"><code>source&#x2F;Peer.js:47</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The RTCPeerConnection ICE servers configuration.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">iceServers</code>
+    <span class="type"> : <em>type</em> Array </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The list of ICE servers this peer connection
+   would use.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">(#index)</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The ICE server.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">credential</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The ICE server credential (password). 
+   Only used in TURN servers.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">url</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The ICE server url. For TURN server, 
+  the format may vary depending on the support of the TURN url format.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">username</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The ICE server username. 
+   Only used in TURN servers for Firefox browsers.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor ICEConfig ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
 -->  <div id="attr_iceTrickle" class="panel panel-code">
   <div class="panel-heading">
     <h5>
       iceTrickle <span class="type"><em>type</em> Boolean</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l115"><code>source&#x2F;Peer.js:115</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The flag that indicates if trickle ICE is enable for this peer connection.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor iceTrickle ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_id" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      id <span class="type"><em>type</em> String</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l16"><code>source&#x2F;Peer.js:16</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The shared peer connection id.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor id ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->  <div id="attr_localDescription" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      localDescription <span class="type"><em>type</em> Object</span>
 
       
         <span class="badge">Version 0.6.0</span>
@@ -2756,137 +2359,7 @@
   
   
 </blockquote>
-    <p><p>The flag that indicates if trickle ICE is enable for this PeerConnection.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor iceTrickle ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_id" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      id <span class="type"><em>type</em> String</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Peer.js.html#l13"><code>source&#x2F;Peer.js:13</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The peer id.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor id ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->  <div id="attr_localDescription" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      localDescription <span class="type"><em>type</em> Object</span>
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_Peer.js.html#l53"><code>source&#x2F;Peer.js:53</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The local description to be set.</p>
+    <p><p>The local RTCSessionDescription set for this peer connection.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -2907,6 +2380,147 @@
 <!--
 
   
+-->  <div id="attr_optionalConfig" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      optionalConfig <span class="type"><em>type</em> JSON</span>
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_Peer.js.html#l66"><code>source&#x2F;Peer.js:66</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The RTCPeerConnection optional configuration.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">optional</code>
+    <span class="type"> : <em>type</em> Array </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The optional configuration.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">(#index)</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The optional setting.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">DtlsSrtpKeyAgreement</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    Required flag
+   for Chrome and Firefox to interop.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor optionalConfig ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
 -->  <div id="attr_PeerEventMessageHandler" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -2918,7 +2532,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l127"><code>source&#x2F;PeerHandler.js:127</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l184"><code>source&#x2F;PeerHandler.js:184</code></a>
     </p>
     
   </div>
@@ -3048,7 +2662,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l22"><code>source&#x2F;PeerHandler.js:22</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l25"><code>source&#x2F;PeerHandler.js:25</code></a>
     </p>
     
   </div>
@@ -3113,7 +2727,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l63"><code>source&#x2F;Peer.js:63</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l94"><code>source&#x2F;Peer.js:94</code></a>
     </p>
     
   </div>
@@ -3146,7 +2760,7 @@
   
   
 </blockquote>
-    <p><p>The remote description to be set.</p>
+    <p><p>The remote RTCSessionDescription set for this peer connection.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3178,7 +2792,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l171"><code>source&#x2F;Peer.js:171</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l231"><code>source&#x2F;Peer.js:231</code></a>
     </p>
     
   </div>
@@ -3211,7 +2825,7 @@
   
   
 </blockquote>
-    <p><p>The PeerConnection object.</p>
+    <p><p>The RTCPeerConnection object.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3243,7 +2857,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l144"><code>source&#x2F;Peer.js:144</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l211"><code>source&#x2F;Peer.js:211</code></a>
     </p>
     
   </div>
@@ -3276,11 +2890,137 @@
   
   
 </blockquote>
-    <p><p>The PeerConnection session description configuration.</p>
+    <p><p>The RTCSessionDescription session description modification configuration.
+This uses the user&#39;s sent streaming configuration.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The flag that indicates if stereo is enabled for this connection.</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">bandwidth</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The bandwidth configuration the peer connections.
+   This does fixes the bandwidth but doesn&#39;t prevent alterations done by browser for smoother streaming.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The bandwidth configuration for the audio stream.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The bandwidth configuration for the video stream.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The bandwidth configuration for the data stream.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
       
     </div>
 
@@ -3308,7 +3048,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l129"><code>source&#x2F;Peer.js:129</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l184"><code>source&#x2F;Peer.js:184</code></a>
     </p>
     
   </div>
@@ -3341,11 +3081,128 @@
   
   
 </blockquote>
-    <p><p>The PeerConnection session description constraints.</p>
+    <p><p>The RTCPeerConnection createOffer and createAnswer.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">mandatory</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The mandatory constraints. This format is only
+   for Chrome browsers.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">OfferToReceiveAudio</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The flag that indicates if
+   this RTCPeerConnection should receive audio.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">OfferToReceiveVideo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The flag that indicates if
+   this RTCPeerConnection should receive video.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">OfferToReceiveAudio</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The flag that indicates if
+   this RTCPeerConnection should receive audio. This format is only
+   for Firefox browsers (30+).</p>
+
+  </div>
+
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">OfferToReceiveVideo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The flag that indicates if
+   this RTCPeerConnection should receive video. This format is only
+   for Firefox browsers (30+).</p>
+
+  </div>
+
+  
+</li> 
+        </ul>
+      </div>
       
     </div>
 
@@ -3373,7 +3230,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l33"><code>source&#x2F;Peer.js:33</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l36"><code>source&#x2F;Peer.js:36</code></a>
     </p>
     
   </div>
@@ -3406,7 +3263,8 @@
   
   
 </blockquote>
-    <p><p>The local description type peer sends.</p>
+    <p><p>The RTCSessionDescription type that the peer connection would send.
+Types are <code>&quot;offer&quot;</code> or <code>&quot;answer&quot;</code>.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3438,7 +3296,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l104"><code>source&#x2F;Peer.js:104</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l136"><code>source&#x2F;Peer.js:136</code></a>
     </p>
     
   </div>
@@ -3471,7 +3329,7 @@
   
   
 </blockquote>
-    <p><p>The stream send from this peer.</p>
+    <p><p>The remote stream received from this peer.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3503,7 +3361,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l114"><code>source&#x2F;Peer.js:114</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l146"><code>source&#x2F;Peer.js:146</code></a>
     </p>
     
   </div>
@@ -3536,11 +3394,339 @@
   
   
 </blockquote>
-    <p><p>Stores the streaming configuration.</p>
+    <p><p>Stores the streaming configuration for the peer connection.</p>
 </p>
   </div>
   <div class="panel-body">
     <div class="col-md-6">
+      
+      <div class="code-section-item">
+        <h6>Object Keys:</h6>
+        <ul class="params-list">
+           <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audio</code>
+    <span class="type"> : <em>type</em> JSON | Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The audio stream configuration.
+   If parsed as a boolean, other configuration settings under the audio
+   configuration would be set as the default setting in the connection.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stereo</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The flag that indiciates
+   if stereo is enabled for this connection.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">sourceId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The source id of the audio MediaStreamTrack
+   used for this connection.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">video</code>
+    <span class="type"> : <em>type</em> String | Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The video stream configuration.
+   If parsed as a boolean, other configuration settings under the video
+   configuration would be set as the default setting in the connection.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">resolution</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The video streaming resolution.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">width</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video resolution width.
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">height</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    The video resolution height.
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">frameRate</code>
+    <span class="type"> : <em>type</em> Integer </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The video stream framerate.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">sourceId</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The source id of the video MediaStreamTrack
+   used for this connection.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li>  <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">status</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The stream MediaStreamTrack status.</p>
+
+  </div>
+
+  
+    <ul class="params-list">
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">audioMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The flag that indicates if audio is muted.
+   If audio is set to false, this would be set as true.</p>
+
+  </div>
+
+  
+</li>
+      
+        <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">videoMuted</code>
+    <span class="type"> : <em>type</em> Boolean </span>
+  </div>
+
+  <blockquote>
+    
+      <p>
+        <var> <b>value: </b> default = false</var>
+      </p>
+    
+    
+      <p> 
+        <em class="glyphicon glyphicon-check" aria-hidden="true"></em> This argument is optional.
+      </p>
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The flag that indicates if video is muted.
+   If video is set to false, this would be set as true.</p>
+
+  </div>
+
+  
+</li>
+      
+    </ul>
+  
+</li> 
+        </ul>
+      </div>
       
     </div>
 
@@ -3568,7 +3754,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l23"><code>source&#x2F;Peer.js:23</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l26"><code>source&#x2F;Peer.js:26</code></a>
     </p>
     
   </div>
@@ -3601,7 +3787,7 @@
   
   
 </blockquote>
-    <p><p>The peer type.</p>
+    <p><p>The peer connection type.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3633,7 +3819,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_Peer.js.html#l181"><code>source&#x2F;Peer.js:181</code></a>
+      Defined in: <a href="../files/source_Peer.js.html#l241"><code>source&#x2F;Peer.js:241</code></a>
     </p>
     
   </div>
@@ -3666,7 +3852,7 @@
   
   
 </blockquote>
-    <p><p>The peerconnection weight during handshake.</p>
+    <p><p>The generated weight for the &quot;welcome&quot; handshake priority.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3705,7 +3891,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l109"><code>source&#x2F;PeerHandler.js:109</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l165"><code>source&#x2F;PeerHandler.js:165</code></a>
     </p>
     
   </div>
@@ -3738,7 +3924,8 @@
   
   
 </blockquote>
-    <p><p>Handles the datachannel state trigger.</p>
+    <p><p>Event fired when peer connection datachannel is received.
+This happens when RTCPeerConnection receives a local or remote RTCDataChannel.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3797,7 +3984,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l109"><code>source&#x2F;PeerHandler.js:109</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l165"><code>source&#x2F;PeerHandler.js:165</code></a>
       </small>
     
 
@@ -3807,7 +3994,8 @@
   </div>
 
   <div class="code-item-description">
-    <p>Handles the datachannel state trigger.</p>
+    <p>Event fired when peer connection datachannel is received.
+This happens when RTCPeerConnection receives a local or remote RTCDataChannel.</p>
 
   </div>
 
@@ -3830,7 +4018,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l87"><code>source&#x2F;PeerHandler.js:87</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l142"><code>source&#x2F;PeerHandler.js:142</code></a>
     </p>
     
   </div>
@@ -3863,7 +4051,7 @@
   
   
 </blockquote>
-    <p><p>Handles the ice candidate trigger.</p>
+    <p><p>Event fired when peer connection ICE candidate is received.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -3922,7 +4110,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l87"><code>source&#x2F;PeerHandler.js:87</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l142"><code>source&#x2F;PeerHandler.js:142</code></a>
       </small>
     
 
@@ -3932,7 +4120,7 @@
   </div>
 
   <div class="code-item-description">
-    <p>Handles the ice candidate trigger.</p>
+    <p>Event fired when peer connection ICE candidate is received.</p>
 
   </div>
 
@@ -3955,7 +4143,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l61"><code>source&#x2F;PeerHandler.js:61</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l116"><code>source&#x2F;PeerHandler.js:116</code></a>
     </p>
     
   </div>
@@ -3988,7 +4176,7 @@
   
   
 </blockquote>
-    <p><p>Handles the ice connection state trigger.</p>
+    <p><p>Event fired when peer connection ICE connection state has changed.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -4047,7 +4235,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l61"><code>source&#x2F;PeerHandler.js:61</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l116"><code>source&#x2F;PeerHandler.js:116</code></a>
       </small>
     
 
@@ -4057,7 +4245,7 @@
   </div>
 
   <div class="code-item-description">
-    <p>Handles the ice connection state trigger.</p>
+    <p>Event fired when peer connection ICE connection state has changed.</p>
 
   </div>
 
@@ -4080,7 +4268,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l74"><code>source&#x2F;PeerHandler.js:74</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l129"><code>source&#x2F;PeerHandler.js:129</code></a>
     </p>
     
   </div>
@@ -4113,7 +4301,7 @@
   
   
 </blockquote>
-    <p><p>Handles the ice gathering state trigger.</p>
+    <p><p>Event fired when peer connection ICE gathering state has changed.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -4172,7 +4360,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l74"><code>source&#x2F;PeerHandler.js:74</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l129"><code>source&#x2F;PeerHandler.js:129</code></a>
       </small>
     
 
@@ -4182,7 +4370,7 @@
   </div>
 
   <div class="code-item-description">
-    <p>Handles the ice gathering state trigger.</p>
+    <p>Event fired when peer connection ICE gathering state has changed.</p>
 
   </div>
 
@@ -4205,7 +4393,7 @@
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_PeerHandler.js.html#l96"><code>source&#x2F;PeerHandler.js:96</code></a>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l151"><code>source&#x2F;PeerHandler.js:151</code></a>
     </p>
     
   </div>
@@ -4238,7 +4426,8 @@
   
   
 </blockquote>
-    <p><p>Handles the signaling state trigger.</p>
+    <p><p>Event fired when peer connection signaling state changes.
+This happens when RTCPeerConnection receives local or remote offer.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -4297,7 +4486,7 @@
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l96"><code>source&#x2F;PeerHandler.js:96</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l151"><code>source&#x2F;PeerHandler.js:151</code></a>
       </small>
     
 
@@ -4307,7 +4496,8 @@
   </div>
 
   <div class="code-item-description">
-    <p>Handles the signaling state trigger.</p>
+    <p>Event fired when peer connection signaling state changes.
+This happens when RTCPeerConnection receives local or remote offer.</p>
 
   </div>
 
@@ -4352,31 +4542,920 @@
     
    
     
-      <em></em>
+      <div id="handler_onaddstream" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onaddstream
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>stream</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l288"><code>source&#x2F;Peer.js:288</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when there is an incoming stream received.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Received Arguments:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">stream</code>
+    <span class="type"> : <em>type</em> <a href="../classes/Stream.html" class="crosslink">Stream</a> </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The stream object.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onaddstream ()
+      
+    </pre>
+  </div>
+</div>
+</div>
     
    
     
-      <em></em>
+      <div id="handler_onconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onconnect
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l252"><code>source&#x2F;Peer.js:252</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when peer connection has been started.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onconnect ()
+      
+    </pre>
+  </div>
+</div>
+</div>
     
    
     
-      <em></em>
+      <div id="handler_onconnected" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onconnected
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l261"><code>source&#x2F;Peer.js:261</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when peer connection is established.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onconnected ()
+      
+    </pre>
+  </div>
+</div>
+</div>
     
    
     
-      <em></em>
+      <div id="handler_oniceconnectionstatechange" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      oniceconnectionstatechange
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l270"><code>source&#x2F;Peer.js:270</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when ICE connection state changes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor oniceconnectionstatechange ()
+      
+    </pre>
+  </div>
+</div>
+</div>
     
    
     
-      <em></em>
+      <div id="handler_onicegatheringstatechange" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onicegatheringstatechange
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l279"><code>source&#x2F;Peer.js:279</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when ICE gathering state changes.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onicegatheringstatechange ()
+      
+    </pre>
+  </div>
+</div>
+</div>
     
    
     
-      <em></em>
+      <div id="handler_onreconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onreconnect
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l307"><code>source&#x2F;Peer.js:307</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when peer connection has been restarted.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onreconnect ()
+      
+    </pre>
+  </div>
+</div>
+</div>
     
    
     
-      <em></em>
+      <div id="handler_onremoveconnection" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onremoveconnection
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l316"><code>source&#x2F;Peer.js:316</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when peer connection been disconnected.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onremoveconnection ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="handler_onsignalingstatechange" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onsignalingstatechange
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Peer.js.html#l298"><code>source&#x2F;Peer.js:298</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when signaling state has changed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onsignalingstatechange ()
+      
+    </pre>
+  </div>
+</div>
+</div>
     
    
     
@@ -4398,6 +5477,648 @@
 </div>
 
 
+
+<div class="section code-section">
+  <h4>Events</h4>
+   <div id="event_peer:connect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peer:connect
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l34"><code>source&#x2F;PeerHandler.js:34</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when peer connection has started.
+This happens when RTCPeerConnection object has just
+  been initialized and local MediaStream has been added.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peer:connect ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peer:connect" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>peer:connect</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l34"><code>source&#x2F;PeerHandler.js:34</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when peer connection has started.
+This happens when RTCPeerConnection object has just
+  been initialized and local MediaStream has been added.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_peer:connected" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peer:connected
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l65"><code>source&#x2F;PeerHandler.js:65</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when peer connection is established and connected.
+This happens when RTCPeerConnection ICE connection state is
+ connected and completed.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peer:connected ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peer:connected" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>peer:connected</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l65"><code>source&#x2F;PeerHandler.js:65</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when peer connection is established and connected.
+This happens when RTCPeerConnection ICE connection state is
+ connected and completed.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_peer:disconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peer:disconnect
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l80"><code>source&#x2F;PeerHandler.js:80</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when peer connection has been disconnected.
+This happens when RTCPeerConnection close is invoked and 
+ connection stops.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peer:disconnect ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peer:disconnect" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>peer:disconnect</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l80"><code>source&#x2F;PeerHandler.js:80</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when peer connection has been disconnected.
+This happens when RTCPeerConnection close is invoked and 
+ connection stops.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_peer:disconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peer:disconnect
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l95"><code>source&#x2F;PeerHandler.js:95</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when peer connection adds or receives a stream object.
+This happens when user sends a local MediaStream to peer or receives
+  a remote MediaStream from onaddstream event.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peer:disconnect ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peer:disconnect" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>peer:disconnect</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l95"><code>source&#x2F;PeerHandler.js:95</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when peer connection adds or receives a stream object.
+This happens when user sends a local MediaStream to peer or receives
+  a remote MediaStream from onaddstream event.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_peer:reconnect" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      peer:reconnect
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_PeerHandler.js.html#l49"><code>source&#x2F;PeerHandler.js:49</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when peer connection is reconnecting.
+This happens when RTCPeerConnection object is
+  re-initialized and the ICE connection restarts again.
+It adds the re-updated local MediaStream.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor peer:reconnect ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_peer:reconnect" class="code-item attr item private-event-item ">
+  <h3 class="code-item-name"><code>peer:reconnect</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+        <span class="label label-default" title="This event is private.">private</span>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_PeerHandler.js.html#l49"><code>source&#x2F;PeerHandler.js:49</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when peer connection is reconnecting.
+This happens when RTCPeerConnection object is
+  re-initialized and the ICE connection restarts again.
+It adds the re-updated local MediaStream.</p>
+
+  </div>
+
+  
+
+  
+
+  
+  <hr>
+</div>--> 
+</div>
 
 
   <!--

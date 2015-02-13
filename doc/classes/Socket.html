@@ -188,11 +188,6 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
             
           
             
-              <tr> <td> <a href="#method_SocketHandler"> <code>SocketHandler()</code> </a> </td> <td> <p>Handles the Socket class events.</p>
- </td> </tr>
-            
-          
-            
               <tr> <td> <a href="#method_WebSocket"> <code>WebSocket()</code> </a> </td> <td> <p>Creates a WebSocket connection in socket.io.</p>
  </td> </tr>
             
@@ -271,14 +266,14 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
             <tr> <td> <a href="#event_socket:error"> <code>socket:error</code> </a> </td> <td> <p>Event fired when socket occurs an exception during connection.</p>
  </td> </tr>
           
-            <tr> <td> <a href="#event_socket:message"> <code>socket:message</code> </a> </td> <td> <p>Event fired when socket receives a message from the signaling server.</p>
+            <tr> <td> <a href="#event_socket:message"> <code>socket:message</code> </a> </td> <td> <p>Event fired when socket sends a message to the signaling server.</p>
+ </td> </tr>
+          
+            <tr> <td> <a href="#event_socket:ready"> <code>socket:ready</code> </a> </td> <td> <p>Event fired when the socket object is ready to use.</p>
  </td> </tr>
           
             <tr> <td> <a href="#event_socket:reconnect"> <code>socket:reconnect</code> </a> </td> <td> <p>Event fired when socket attempts to reconnect with signaling server when attempt
  to establish connection fails.</p>
- </td> </tr>
-          
-            <tr> <td> <a href="#event_socket:start"> <code>socket:start</code> </a> </td> <td> <p>Event fired when the socket object is ready to use.</p>
  </td> </tr>
           
         </tbody>
@@ -321,15 +316,13 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
             
           
             
+              <tr> <td> <a href="#handler_onready"> <code>onready</code> </a> </td> <td> <p>Function to subscribe to when socket object is ready to use.</p>
+ </td> </tr>
+            
+          
+            
               <tr> <td> <a href="#handler_onreconnect"> <code>onreconnect</code> </a> </td> <td> <p>Function to subscribe to when socket attempts to reconnect.</p>
  </td> </tr>
-            
-          
-            
-              <tr> <td> <a href="#handler_onstart"> <code>onstart</code> </a> </td> <td> <p>Function to subscribe to when socket object is ready to use.</p>
- </td> </tr>
-            
-          
             
           
             
@@ -621,7 +614,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l272"><code>source&#x2F;Socket.js:272</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l282"><code>source&#x2F;Socket.js:282</code></a>
       </p>
     
   </div>
@@ -744,7 +737,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l334"><code>source&#x2F;Socket.js:334</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l342"><code>source&#x2F;Socket.js:342</code></a>
       </p>
     
   </div>
@@ -886,7 +879,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l219"><code>source&#x2F;Socket.js:219</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l230"><code>source&#x2F;Socket.js:230</code></a>
       </p>
     
   </div>
@@ -1000,7 +993,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l236"><code>source&#x2F;Socket.js:236</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l247"><code>source&#x2F;Socket.js:247</code></a>
       </p>
     
   </div>
@@ -1315,7 +1308,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l375"><code>source&#x2F;Socket.js:375</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l383"><code>source&#x2F;Socket.js:383</code></a>
       </p>
     
   </div>
@@ -1439,7 +1432,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l247"><code>source&#x2F;Socket.js:247</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l258"><code>source&#x2F;Socket.js:258</code></a>
       </p>
     
   </div>
@@ -1561,235 +1554,6 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
     
    
     
-      <div id="method_SocketHandler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      SocketHandler
-      
-        <span class="paren">(</span>
-          <em class="items">
-            
-              
-                <item><code>com</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>event</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>data</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>listener</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-          </em>
-        <span class="paren">)</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_SocketHandler.js.html#l103"><code>source&#x2F;SocketHandler.js:103</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Handles the Socket class events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-        <div class="code-section-item">
-          <h6>Parameters:</h6>
-          <ul class="params-list">
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">com</code>
-    <span class="type"> : <em>type</em> Object </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The reference to the class object.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">event</code>
-    <span class="type"> : <em>type</em> String </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The event name.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">data</code>
-    <span class="type"> : <em>type</em> JSON </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The event data response.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">listener</code>
-    <span class="type"> : <em>type</em> Function </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The listener function.</p>
-
-  </div>
-
-  
-</li>
-          
-          </ul>
-        </div>
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor SocketHandler ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
       <div id="method_WebSocket" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1811,7 +1575,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l398"><code>source&#x2F;Socket.js:398</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l406"><code>source&#x2F;Socket.js:406</code></a>
       </p>
     
   </div>
@@ -1925,7 +1689,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Socket.js.html#l428"><code>source&#x2F;Socket.js:428</code></a>
+        Defined in: <a href="../files/source_Socket.js.html#l436"><code>source&#x2F;Socket.js:436</code></a>
       </p>
     
   </div>
@@ -2090,7 +1854,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
   </blockquote>
 
   <div class="description">
-    <p>The flag to indicate if socket.io should 
+    <p>The flag to indicate if socket.io should
   force a new connection everytime.</p>
 
   </div>
@@ -3416,6 +3180,116 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
     
    
     
+      <div id="handler_onready" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      onready
+      
+        <span class="paren">()</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Socket.js.html#l151"><code>source&#x2F;Socket.js:151</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Function to subscribe to when socket object is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+
+    <!--<div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>-->
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor onready ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
       <div id="handler_onreconnect" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -3526,120 +3400,6 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
     
    
     
-      <div id="handler_onstart" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      onstart
-      
-        <span class="paren">()</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Socket.js.html#l151"><code>source&#x2F;Socket.js:151</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Function to subscribe to when socket object is ready to use.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-
-    <!--<div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>-->
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor onstart ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
-      <em></em>
-    
-   
-    
       <em></em>
     
    
@@ -3672,7 +3432,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_SocketHandler.js.html#l35"><code>source&#x2F;SocketHandler.js:35</code></a>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l36"><code>source&#x2F;SocketHandler.js:36</code></a>
     </p>
     
   </div>
@@ -3784,7 +3544,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l35"><code>source&#x2F;SocketHandler.js:35</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l36"><code>source&#x2F;SocketHandler.js:36</code></a>
       </small>
     
 
@@ -3838,7 +3598,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_SocketHandler.js.html#l48"><code>source&#x2F;SocketHandler.js:48</code></a>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l49"><code>source&#x2F;SocketHandler.js:49</code></a>
     </p>
     
   </div>
@@ -3950,7 +3710,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l48"><code>source&#x2F;SocketHandler.js:48</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l49"><code>source&#x2F;SocketHandler.js:49</code></a>
       </small>
     
 
@@ -4004,7 +3764,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_SocketHandler.js.html#l90"><code>source&#x2F;SocketHandler.js:90</code></a>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l86"><code>source&#x2F;SocketHandler.js:86</code></a>
     </p>
     
   </div>
@@ -4090,7 +3850,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l90"><code>source&#x2F;SocketHandler.js:90</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l86"><code>source&#x2F;SocketHandler.js:86</code></a>
       </small>
     
 
@@ -4121,7 +3881,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_SocketHandler.js.html#l22"><code>source&#x2F;SocketHandler.js:22</code></a>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l23"><code>source&#x2F;SocketHandler.js:23</code></a>
     </p>
     
   </div>
@@ -4233,7 +3993,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l22"><code>source&#x2F;SocketHandler.js:22</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l23"><code>source&#x2F;SocketHandler.js:23</code></a>
       </small>
     
 
@@ -4287,7 +4047,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_SocketHandler.js.html#l74"><code>source&#x2F;SocketHandler.js:74</code></a>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l75"><code>source&#x2F;SocketHandler.js:75</code></a>
     </p>
     
   </div>
@@ -4316,7 +4076,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
   
   
 </blockquote>
-    <p><p>Event fired when socket receives a message from the signaling server.</p>
+    <p><p>Event fired when socket sends a message to the signaling server.</p>
 </p>
   </div>
   <div class="panel-body">
@@ -4377,12 +4137,7 @@ NOTE to Thanh: Please implement the throttle for messaging here.</p>
   </blockquote>
 
   <div class="description">
-    <p>The source type of the message received.
-There are two types of sources:</p>
-<ul>
-<li><code>&quot;local&quot;</code> indicates that message was sent by socket.</li>
-<li><code>&quot;remote</code> indicates that message was received by socket.</li>
-</ul>
+    <p>The source type of the message received.</p>
 
   </div>
 
@@ -4442,7 +4197,7 @@ There are two types of sources:</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l74"><code>source&#x2F;SocketHandler.js:74</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l75"><code>source&#x2F;SocketHandler.js:75</code></a>
       </small>
     
 
@@ -4452,7 +4207,7 @@ There are two types of sources:</p>
   </div>
 
   <div class="code-item-description">
-    <p>Event fired when socket receives a message from the signaling server.</p>
+    <p>Event fired when socket sends a message to the signaling server.</p>
 
   </div>
 
@@ -4500,12 +4255,7 @@ There are two types of sources:</p>
             
 
             <div class="param-description">
-                <p>The source type of the message received.
-There are two types of sources:</p>
-<ul>
-<li><code>&quot;local&quot;</code> indicates that message was sent by socket.</li>
-<li><code>&quot;remote</code> indicates that message was received by socket.</li>
-</ul>
+                <p>The source type of the message received.</p>
 
             </div>
 
@@ -4514,6 +4264,123 @@ There are two types of sources:</p>
       
       </ul>
     </div>
+  
+
+  
+
+  
+  <hr>
+</div>-->  <div id="event_socket:ready" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      socket:ready
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+          
+    <p>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l11"><code>source&#x2F;SocketHandler.js:11</code></a>
+    </p>
+    
+  </div>
+
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>Event fired when the socket object is ready to use.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+    </div>
+
+
+    <div class="col-md-6">
+      <pre class="prettyprint">
+      // Example for constructor socket:ready ()
+      
+    </pre>
+    </div>
+  </div>
+</div>
+
+<!--
+
+  
+-->
+<!--
+<div id="event_socket:ready" class="code-item attr item event-item ">
+  <h3 class="code-item-name"><code>socket:ready</code></h3>
+
+  <div class="code-item-properties">
+    <div class="properties-wrapper">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </div>
+
+    <div class="code-item-information">
+      
+        
+          
+        
+      
+      
+      
+    </div>
+
+    
+      <small>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l11"><code>source&#x2F;SocketHandler.js:11</code></a>
+      </small>
+    
+
+    
+      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
+    
+  </div>
+
+  <div class="code-item-description">
+    <p>Event fired when the socket object is ready to use.</p>
+
+  </div>
+
   
 
   
@@ -4531,7 +4398,7 @@ There are two types of sources:</p>
     </h5>
           
     <p>
-      Defined in: <a href="../files/source_SocketHandler.js.html#l61"><code>source&#x2F;SocketHandler.js:61</code></a>
+      Defined in: <a href="../files/source_SocketHandler.js.html#l62"><code>source&#x2F;SocketHandler.js:62</code></a>
     </p>
     
   </div>
@@ -4618,7 +4485,7 @@ There are two types of sources:</p>
 
     
       <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l61"><code>source&#x2F;SocketHandler.js:61</code></a>
+        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l62"><code>source&#x2F;SocketHandler.js:62</code></a>
       </small>
     
 
@@ -4630,123 +4497,6 @@ There are two types of sources:</p>
   <div class="code-item-description">
     <p>Event fired when socket attempts to reconnect with signaling server when attempt
  to establish connection fails.</p>
-
-  </div>
-
-  
-
-  
-
-  
-  <hr>
-</div>-->  <div id="event_socket:start" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      socket:start
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-          
-    <p>
-      Defined in: <a href="../files/source_SocketHandler.js.html#l10"><code>source&#x2F;SocketHandler.js:10</code></a>
-    </p>
-    
-  </div>
-
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>Event fired when the socket object is ready to use.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-    </div>
-
-
-    <div class="col-md-6">
-      <pre class="prettyprint">
-      // Example for constructor socket:start ()
-      
-    </pre>
-    </div>
-  </div>
-</div>
-
-<!--
-
-  
--->
-<!--
-<div id="event_socket:start" class="code-item attr item event-item ">
-  <h3 class="code-item-name"><code>socket:start</code></h3>
-
-  <div class="code-item-properties">
-    <div class="properties-wrapper">
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-    </div>
-
-    <div class="code-item-information">
-      
-        
-          
-        
-      
-      
-      
-    </div>
-
-    
-      <small>
-        <i class="fa fa-chevron-right"></i>&nbsp;&nbsp;Defined in: <a href="../files/source_SocketHandler.js.html#l10"><code>source&#x2F;SocketHandler.js:10</code></a>
-      </small>
-    
-
-    
-      <small><i class="fa">&nbsp;&nbsp;&nbsp;</i>&nbsp;&nbsp;Available since <span class="badge">0.6.0</span></small>
-    
-  </div>
-
-  <div class="code-item-description">
-    <p>Event fired when the socket object is ready to use.</p>
 
   </div>
 

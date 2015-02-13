@@ -147,11 +147,6 @@
             
           
             
-              <tr> <td> <a href="#method_handler"> <code>handler()</code> </a> </td> <td> <p>The handler that manages all triggers or relaying events.</p>
- </td> </tr>
-            
-          
-            
               <tr> <td> <a href="#method_muteAudio"> <code>muteAudio()</code> </a> </td> <td> <p>Mutes all audio MediaStreamTracks of the MediaStream object.</p>
  </td> </tr>
             
@@ -190,7 +185,12 @@
             
           
             
-              <tr> <td> <a href="#method_parentHandler"> <code>parentHandler()</code> </a> </td> <td> <p>The handler that the parent classes utilises to listen to events.</p>
+              <tr> <td> <a href="#method_respond"> <code>respond()</code> </a> </td> <td> <p>The handler handles response events.</p>
+ </td> </tr>
+            
+          
+            
+              <tr> <td> <a href="#method_routeEventToParent"> <code>routeEventToParent()</code> </a> </td> <td> <p>The handler that the parent classes utilises to listen to events.</p>
  </td> </tr>
             
           
@@ -317,8 +317,6 @@ There are two types of sources:</p>
             
           
             
-          
-            
               <tr> <td> <a href="#handler_onerror"> <code>onerror</code> </a> </td> <td> <p>Function to subscribe to when getUserMedia throws an exception or event has error.</p>
  </td> </tr>
             
@@ -351,6 +349,8 @@ There are two types of sources:</p>
             
               <tr> <td> <a href="#handler_ontrackunmute"> <code>ontrackunmute</code> </a> </td> <td> <p>Function to subscribe to when MediaStreamTrack of the MediaStream object has been enabled (unmuted).</p>
  </td> </tr>
+            
+          
             
           
             
@@ -521,7 +521,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l275"><code>source&#x2F;Stream.js:275</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l303"><code>source&#x2F;Stream.js:303</code></a>
       </p>
     
   </div>
@@ -668,7 +668,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l183"><code>source&#x2F;Stream.js:183</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l190"><code>source&#x2F;Stream.js:190</code></a>
       </p>
     
   </div>
@@ -819,7 +819,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l292"><code>source&#x2F;Stream.js:292</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l320"><code>source&#x2F;Stream.js:320</code></a>
       </p>
     
   </div>
@@ -981,7 +981,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l214"><code>source&#x2F;Stream.js:214</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l221"><code>source&#x2F;Stream.js:221</code></a>
       </p>
     
   </div>
@@ -1127,183 +1127,6 @@ There are two types of sources:</p>
     
    
     
-      <div id="method_handler" class="panel panel-code">
-  <div class="panel-heading">
-    <h5>
-      handler
-      
-        <span class="paren">(</span>
-          <em class="items">
-            
-              
-                <item><code>event</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-              
-                <item><code>data</code></item>
-              
-              <item class="seperator">,&nbsp;&nbsp;</item>
-            
-          </em>
-        <span class="paren">)</span>
-      
-
-      
-        <span class="badge">Version 0.6.0</span>
-      
-    </h5>
-    
-      
-        
-      
-    
-    
-
-    
-      <p>
-        Defined in: <a href="../files/source_Stream.js.html#l150"><code>source&#x2F;Stream.js:150</code></a>
-      </p>
-    
-  </div>
-
-  <!--
-  <div class="panel-body table-responsive table-browsers">
-    <table class="table table-condensed">
-      <thead>
-        <tr> 
-          <th> Supported browsers </th>
-          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
-          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
-          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
-          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
-          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td> 35+ </td>
-          <td> 30+ </td>
-          <td> 21+ </td>
-          <td> 7+ </td>
-          <td> 11+ </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
--->
-  <div class="panel-body">
-    <blockquote>
-   
-  
-   
-  
-  
-    <p>
-      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
-    </p>
-   
-  
-   
-  
-   
-  
-    
-  
-   
-  
-   
-  
-  
-
-   
-  
-  
-</blockquote>
-    <p><p>The handler that manages all triggers or relaying events.</p>
-</p>
-  </div>
-  <div class="panel-body">
-    <div class="col-md-6">
-      
-        <div class="code-section-item">
-          <h6>Parameters:</h6>
-          <ul class="params-list">
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">event</code>
-    <span class="type"> : <em>type</em> String </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The event name.</p>
-
-  </div>
-
-  
-</li>
-          
-            <li class="code-section-item-param">
-  <div class="name">
-    <code class="param-name">data</code>
-    <span class="type"> : <em>type</em> JSON </span>
-  </div>
-
-  <blockquote>
-    
-    
-
-    
-  </blockquote>
-
-  <div class="description">
-    <p>The response data.</p>
-
-  </div>
-
-  
-</li>
-          
-          </ul>
-        </div>
-      
-
-    <div class="code-section-item">
-      <h6>Returns:</h6>
-      <ul>
-        
-          <li class="code-section-item-param">
-            <div class="name">
-              <code class="param-name">result</code>
-              <span class="type"> : <em>type</em> Null</span>
-            </div>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-6">
-    <pre class="prettyprint">
-      // Example for constructor handler ()
-      
-    </pre>
-  </div>
-</div>
-</div>
-    
-   
-    
       <div id="method_muteAudio" class="panel panel-code">
   <div class="panel-heading">
     <h5>
@@ -1325,7 +1148,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l370"><code>source&#x2F;Stream.js:370</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l398"><code>source&#x2F;Stream.js:398</code></a>
       </p>
     
   </div>
@@ -1435,7 +1258,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l461"><code>source&#x2F;Stream.js:461</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l469"><code>source&#x2F;Stream.js:469</code></a>
       </p>
     
   </div>
@@ -1552,10 +1375,187 @@ There are two types of sources:</p>
     
    
     
-      <div id="method_parentHandler" class="panel panel-code">
+      <div id="method_respond" class="panel panel-code">
   <div class="panel-heading">
     <h5>
-      parentHandler
+      respond
+      
+        <span class="paren">(</span>
+          <em class="items">
+            
+              
+                <item><code>event</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+              
+                <item><code>data</code></item>
+              
+              <item class="seperator">,&nbsp;&nbsp;</item>
+            
+          </em>
+        <span class="paren">)</span>
+      
+
+      
+        <span class="badge">Version 0.6.0</span>
+      
+    </h5>
+    
+      
+        
+      
+    
+    
+
+    
+      <p>
+        Defined in: <a href="../files/source_Stream.js.html#l150"><code>source&#x2F;Stream.js:150</code></a>
+      </p>
+    
+  </div>
+
+  <!--
+  <div class="panel-body table-responsive table-browsers">
+    <table class="table table-condensed">
+      <thead>
+        <tr> 
+          <th> Supported browsers </th>
+          <th> <img src="../assets/img/icons/chrome.png"> Chrome </th>
+          <th> <img src="../assets/img/icons/firefox.png"> Firefox </th>
+          <th> <img src="../assets/img/icons/opera.png"> Opera </th>
+          <th> <img src="../assets/img/icons/safari.png"> Safari (plugin) </th>
+          <th> <img src="../assets/img/icons/ie.png"> IE (plugin) </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td> 35+ </td>
+          <td> 30+ </td>
+          <td> 21+ </td>
+          <td> 7+ </td>
+          <td> 11+ </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+  <div class="panel-body">
+    <blockquote>
+   
+  
+   
+  
+  
+    <p>
+      <em class="glyphicon glyphicon-eye-close" aria-hidden="true"></em> Access level: private
+    </p>
+   
+  
+   
+  
+   
+  
+    
+  
+   
+  
+   
+  
+  
+
+   
+  
+  
+</blockquote>
+    <p><p>The handler handles response events.</p>
+</p>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      
+        <div class="code-section-item">
+          <h6>Parameters:</h6>
+          <ul class="params-list">
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">event</code>
+    <span class="type"> : <em>type</em> String </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The event name.</p>
+
+  </div>
+
+  
+</li>
+          
+            <li class="code-section-item-param">
+  <div class="name">
+    <code class="param-name">data</code>
+    <span class="type"> : <em>type</em> JSON </span>
+  </div>
+
+  <blockquote>
+    
+    
+
+    
+  </blockquote>
+
+  <div class="description">
+    <p>The response data.</p>
+
+  </div>
+
+  
+</li>
+          
+          </ul>
+        </div>
+      
+
+    <div class="code-section-item">
+      <h6>Returns:</h6>
+      <ul>
+        
+          <li class="code-section-item-param">
+            <div class="name">
+              <code class="param-name">result</code>
+              <span class="type"> : <em>type</em> Null</span>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <pre class="prettyprint">
+      // Example for constructor respond ()
+      
+    </pre>
+  </div>
+</div>
+</div>
+    
+   
+    
+      <div id="method_routeEventToParent" class="panel panel-code">
+  <div class="panel-heading">
+    <h5>
+      routeEventToParent
       
         <span class="paren">(</span>
           <em class="items">
@@ -1720,7 +1720,7 @@ There are two types of sources:</p>
 
   <div class="col-md-6">
     <pre class="prettyprint">
-      // Example for constructor parentHandler ()
+      // Example for constructor routeEventToParent ()
       
     </pre>
   </div>
@@ -1750,7 +1750,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l167"><code>source&#x2F;Stream.js:167</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l174"><code>source&#x2F;Stream.js:174</code></a>
       </p>
     
   </div>
@@ -1864,7 +1864,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l552"><code>source&#x2F;Stream.js:552</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l540"><code>source&#x2F;Stream.js:540</code></a>
       </p>
     
   </div>
@@ -1974,7 +1974,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l428"><code>source&#x2F;Stream.js:428</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l436"><code>source&#x2F;Stream.js:436</code></a>
       </p>
     
   </div>
@@ -2084,7 +2084,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l519"><code>source&#x2F;Stream.js:519</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l507"><code>source&#x2F;Stream.js:507</code></a>
       </p>
     
   </div>
@@ -2423,7 +2423,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l399"><code>source&#x2F;Stream.js:399</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l417"><code>source&#x2F;Stream.js:417</code></a>
       </p>
     
   </div>
@@ -2533,7 +2533,7 @@ There are two types of sources:</p>
 
     
       <p>
-        Defined in: <a href="../files/source_Stream.js.html#l490"><code>source&#x2F;Stream.js:490</code></a>
+        Defined in: <a href="../files/source_Stream.js.html#l488"><code>source&#x2F;Stream.js:488</code></a>
       </p>
     
   </div>
@@ -3035,10 +3035,6 @@ There are two types of sources:</p>
 
 <div class="section code-section">
   <h4>Event Handlers</h4>
-   
-    
-      <em></em>
-    
    
     
       <em></em>
@@ -3832,6 +3828,10 @@ There are two types of sources:</p>
   </div>
 </div>
 </div>
+    
+   
+    
+      <em></em>
     
    
     

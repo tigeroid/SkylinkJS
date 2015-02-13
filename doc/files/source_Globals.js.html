@@ -105,45 +105,45 @@ var globals = {
   apiKey: null,
 
   region: &#x27;us2&#x27;,
-  
+
   defaultRoom: null,
 
   roomServer: &#x27;//api.temasys.com.sg&#x27;,
 
   enforceSSL: false,
-  
+
   socketTimeout: 0,
-  
+
   TURNServer: true,
-  
+
   STUNServer: true,
-  
+
   ICETrickle: true,
-  
+
   TURNTransport: &#x27;any&#x27;,
-  
+
   dataChannel: true,
-  
+
   audioFallback: false,
-  
+
   credentials: null
 };
 
 var fn = {
   isEmpty: function (data) {
     var isUnDefined = typeof data === &#x27;undefined&#x27; || data === null;
-    
+
     if (typeof data === &#x27;object&#x27; &amp;&amp; !isUnDefined) {
       if (data.constructor === Array) {
         return data.length === 0;
-      
+
       } else {
         return Object.keys(data).length === 0;
       }
     }
     return isUnDefined;
   },
-  
+
   isSafe: function (unsafeFn) {
     try {
       return unsafeFn();
@@ -152,39 +152,25 @@ var fn = {
       return false;
     }
   },
-  
+
   runSync: function () {
     var args = Array.prototype.slice.call(arguments);
     var i;
-    
+
     var run = function (fn) {
       setTimeout(fn, 1);
-      
+
       args.splice(0, 1);
-  
+
       if (args.length === 0) {
         return;
       }
       run(args[0]);
     };
-    
+
     run(args[0]);
   },
-  
-  clone: function (obj) {
-    if (this.isEmpty(obj) || typeof obj !== &#x27;object&#x27;) {
-      return obj;
-    }
-    var copy = obj.constructor();
-    
-    for (var attr in obj) {
-      if (obj.hasOwnProperty(attr)) {
-        copy[attr] = obj[attr];
-      }
-    }
-    return copy;
-  },
-  
+
   constant: function (main, property, value) {
     var obj = {};
     obj[property] = {
@@ -193,15 +179,15 @@ var fn = {
     };
     Object.defineProperties(main, obj);
   },
-  
+
   generateUID: function() {
     return (new Date()).getTime().toString();
   },
-  
+
   applyHandler: function (callee, params, args) {
     var item = callee;
     var i;
-    
+
     for (i = 0; i &lt; params.length; i += 1) {
       if (!fn.isEmpty(item[params[i]])) {
         item = item[params[i]];
@@ -211,36 +197,10 @@ var fn = {
     if (typeof item === &#x27;function&#x27;) {
       item.apply(this, args);
     }
-  },
-  
-  forEach: function (main, deferItem, deferFin) {
-    if (typeof main === &#x27;object&#x27; &amp;&amp; !fn.isEmpty(main)) {
-      // Array objects
-      if (main.constructor === Array) {
-        var i;
-        
-        for (i = 0; i &lt; main.length; i += 1) {
-          deferItem(main[i], i);
-        }
-      
-      // JSON objects
-      } else {
-        var key;
-        
-        for (key in main) {
-          if (main.hasOwnProperty(key)) {
-            deferItem(main[key], key);
-          }
-        }
-      }
-      // Finished loop
-      if (typeof deferFin === &#x27;function&#x27;) {
-        deferFin();
-      }
-    }
   }
-  
+
 };
+
     </pre>
 </div>
 

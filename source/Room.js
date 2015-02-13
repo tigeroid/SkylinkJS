@@ -193,14 +193,24 @@ function Room(name, listener) {
    */
   com.locked = false;
 
+
   /**
-   * Function to subscribe to when room object has loaded and is ready to use.
-   * @method onstart
+   * Function to subscribe to when room is initializating the configuration.
+   * @method oninit
    * @eventhandler true
    * @for Room
    * @since 0.6.0
    */
-  com.onstart = function () {};
+  com.oninit = function () {};
+
+  /**
+   * Function to subscribe to when room object has loaded and is ready to use.
+   * @method onready
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onready = function () {};
 
   /**
    * Function to subscribe to when self has joined the room.
@@ -230,7 +240,7 @@ function Room(name, listener) {
   com.onkick = function () {};
 
   /**
-   * Function to subscribe to when self is warned by server.
+   * Function to subscribe to when self is warned by server before kicking self user.
    * @method onwarn
    * @eventhandler true
    * @for Room
@@ -266,16 +276,134 @@ function Room(name, listener) {
 
 
   /**
-   * The handler that manages all triggers or relaying events.
-   * @method handler
+   * The handler handles received events.
+   * @method routeEvent
    * @param {String} event The event name.
    * @param {JSON} data The response data.
    * @private
    * @for Room
    * @since 0.6.0
    */
-  com.handler = function (event, data) {
-    RoomHandler(com, event, data, listener);
+  com.routeEvent = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.roomName = com.name;
+
+    fn.applyHandler(RoomEventReceivedHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Room: Received event = ', event, data);
+  };
+
+  /**
+   * The handler handles received socket message events.
+   * @method routeMessage
+   * @param {JSON} message The message data.
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.routeMessage = function (message) {
+    // Messaging events
+    var fn = RoomEventMessageHandler[message.type];
+
+    if (typeof fn === 'function') {
+      fn(com, message, listener);
+    }
+
+    log.debug('Room: Received message = ', message.type, message);
+  };
+
+  /**
+   * The handler handles response events.
+   * @method respond
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.respond = function (event, data) {
+    var params = event.split(':');
+
+    data = data || {};
+    data.name = com.name;
+
+    fn.applyHandler(RoomEventResponseHandler, params, [com, data, listener]);
+
+    listener(event, data);
+
+    log.debug('Room: Responding with event = ', event, data);
+  };
+
+  /**
+   * Loads the connection information of the room.
+   * @method init
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.init = function () {
+    // Start loading the room information
+    var path = '/api/' + globals.apiKey + '/' + com.name;
+
+    // Set credentials if there is
+    if (com.credentials !== null) {
+      path += com.credentials.startDateTime + '/' +
+        com.credentials.duration + '?&cred=' + com.credentials.hash;
+    }
+
+    // Check if there is a other query parameters or not
+    if (globals.region) {
+      path += (path.indexOf('?&') > -1 ? '&' : '?&') + 'rg=' + globals.region;
+    }
+
+    // Start connection
+    Request.load(path, function (status, content) {
+      // Store the path information
+      com.apiPath = path;
+
+      // Room configuration settings from server
+      com.key = content.cid;
+      com.id = content.room_key;
+      com.token = content.roomCred;
+      com.startDateTime = content.start;
+      com.duration = content.len;
+      com.owner = content.apiOwner;
+
+      // User configuration settings from server
+      var userConfig = {
+        id: null,
+        username: content.username,
+        token: content.userCred,
+        timeStamp: content.timeStamp,
+        data: null
+      };
+
+      com.self = new Self(userConfig, com.routeEvent);
+
+      //com.constraints = JSON.parse(content.pc_constraints);
+
+      // Signalling information
+      var socketConfig = {
+        server: content.ipSigserver,
+        httpPortList: content.httpPortList,
+        httpsPortList: content.httpsPortList
+      };
+      com.socket = new Socket(socketConfig, com.routeEvent);
+
+      com.respond('room:ready');
+
+    }, function (status, error) {
+      com.respond('room:error', {
+        error: error
+      });
+
+    }, function () {
+      com.respond('room:init');
+    });
   };
 
   /**
@@ -296,7 +424,7 @@ function Room(name, listener) {
    */
   com.join = function (stream, config) {
     if (com.connected) {
-      throw new Error('You are already connected to this room [' + com.name +']');
+      throw new Error('You are already connected to this "' + com.name +'" room');
     }
 
     config = config || {};
@@ -321,6 +449,7 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.leave = function () {
+    // Disconnect socket connection
     com.socket.disconnect();
   };
 
@@ -331,15 +460,17 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.lock = function () {
-    com.socket.send({
+    var message = {
       type: 'roomLockEvent',
       mid: com.self.id,
       rid: com.id,
       lock: true
-    });
+    };
 
-    com.handler('room:lock', {
-      userId: com.self.id
+    com.socket.send(message);
+
+    com.respond('room:lock', {
+      selfId: com.self.id
     });
   };
 
@@ -350,14 +481,16 @@ function Room(name, listener) {
    * @since 0.6.0
    */
   com.unlock = function () {
-    com.socket.send({
+    var message = {
       type: 'roomLockEvent',
       mid: com.self.id,
       rid: com.id,
       lock: false
-    });
+    };
 
-    com.handler('room:unlock', {
+    com.socket.send(message);
+
+    com.respond('room:unlock', {
       userId: com.self.id
     });
   };
@@ -379,72 +512,19 @@ function Room(name, listener) {
 
     for (key in com.users) {
       if (com.users.hasOwnProperty(key)) {
-        com.users[key].handler('message:enter', {
+        var message = {
           type: 'enter',
           mid: com.self.id,
           rid: com.id,
           prid: peerId,
           stream: com.self.getStreamingInfo('main')
-        });
+        };
+
+        com.users[key].routeMessage('message:enter', message);
       }
     }
   };
 
-
-  // Start loading the room information
-  var path = '/api/' + globals.apiKey + '/' + com.name;
-
-  // Set credentials if there is
-  if (com.credentials !== null) {
-    path += com.credentials.startDateTime + '/' +
-      com.credentials.duration + '?&cred=' + com.credentials.hash;
-  }
-
-  // Check if there is a other query parameters or not
-  if (globals.region) {
-    path += (path.indexOf('?&') > -1 ? '&' : '?&') + 'rg=' + globals.region;
-  }
-
-  // Start connection
-  Request.load(path, function (status, content) {
-    // Store the path information
-    com.apiPath = path;
-
-    // Room configuration settings from server
-    com.key = content.cid;
-    com.id = content.room_key;
-    com.token = content.roomCred;
-    com.startDateTime = content.start;
-    com.duration = content.len;
-    com.owner = content.apiOwner;
-
-    // User configuration settings from server
-    com.self = new Self({
-      id: null,
-      username: content.username,
-      token: content.userCred,
-      timeStamp: content.timeStamp,
-      data: globals.userData
-    });
-
-    //com.constraints = JSON.parse(content.pc_constraints);
-
-    // Signalling information
-    com.socket = new Socket({
-      server: content.ipSigserver,
-      httpPortList: content.httpPortList,
-      httpsPortList: content.httpsPortList
-
-    }, com.handler);
-
-    // Bind the message events handler
-    MessageHandler(com, listener);
-
-    listener('room:start', {});
-
-  }, function (status, error) {
-    com.handler('room:error', {
-      error: error
-    });
-  });
+  // Start the room connection information
+  com.init();
 }

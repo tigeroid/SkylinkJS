@@ -98,13 +98,13 @@
  * @since 0.6.0
  */
 var SelfEventReceivedHandler = {
-  
+
   stream: {
     stop: function (com, data, listener) {
       // Trigger the event
       var peerId = com.findStreamConnectionId(data.id);
-      
-      com.handler(&#x27;self:removestreamconnection&#x27;, {
+
+      com.respond(&#x27;self:removestreamconnection&#x27;, {
         streamId: data.id,
         peerId: key
       });
@@ -124,13 +124,13 @@ var SelfEventResponseHandler = {
   /**
    * Event fired when self object to ready to use.
    *   At this stage, the self user id is empty as user has not joined the room.
-   * @event self:start
+   * @event self:ready
    * @for Self
    * @since 0.6.0
    */
-  start: function (com, data, listener) {
-    if (typeof com.onstart === &#x27;function&#x27;) {
-      com.onstart();
+  ready: function (com, data, listener) {
+    if (typeof com.onready === &#x27;function&#x27;) {
+      com.onready();
     }
   },
 
@@ -146,7 +146,7 @@ var SelfEventResponseHandler = {
       com.onupdate(data);
     }
   },
-  
+
   /**
    * Event fired when self has added a new stream for connection.
    * @event self:addstreamconnection
@@ -158,7 +158,7 @@ var SelfEventResponseHandler = {
       com.onaddstreamconnection(data);
     }
   },
-  
+
   /**
    * Event fired when self has removed a stream connection.
    * @event self:removestreamconnection
@@ -172,7 +172,7 @@ var SelfEventResponseHandler = {
       com.onremovestreamconnection(data);
     }
   },
-  
+
   /**
    * Event fired when self user is connected to room.
    * @event self:connect
@@ -205,10 +205,11 @@ var SelfEventResponseHandler = {
  * @for Self
  * @since 0.6.0
  */
-var RoomEventMessageHandler = {
-  
+var SelfEventMessageHandler = {
+
   inRoom: function (com, data, listener) {
-    com.handler(&#x27;self:connect&#x27;);
+    com.id = data.sid;
+    com.respond(&#x27;self:connect&#x27;);
   }
 };
 
@@ -225,15 +226,16 @@ var RoomEventMessageHandler = {
  */
 var SelfHandler = function (com, event, data, listener) {
   var params = event.split(&#x27;:&#x27;);
+  data = data || {};
 
   // Messaging events
   if (event.indexOf(&#x27;message:&#x27;) === 0) {
-    
+
     fn.applyHandler(SelfEventMessageHandler, params, [com, data, listener]);
-  
+
   } else {
     // Class events
-    if (event.indexOf(&#x27;room:&#x27;) === 0) {
+    if (event.indexOf(&#x27;self:&#x27;) === 0) {
       data.id = com.id;
 
       fn.applyHandler(SelfEventResponseHandler, params, [com, data, listener]);
@@ -245,10 +247,9 @@ var SelfHandler = function (com, event, data, listener) {
     }
 
     listener(event, data);
-
-    // log.debug(&#x27;SelfHandler&#x27;, event, data);
   }
 };
+
     </pre>
 </div>
 
