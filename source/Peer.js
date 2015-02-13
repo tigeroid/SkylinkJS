@@ -371,6 +371,9 @@ function Peer(config, listener) {
 
     bindPeer.ondatachannel = function (event) {
       var eventChannel = event.channel || event;
+
+      console.log('->channel');
+      console.log(eventChannel);
       
       // Send the channel only when channel has started
       var channel = new DataChannel(eventChannel, function (event, data) {
@@ -387,14 +390,19 @@ function Peer(config, listener) {
 
       com.datachannels[channel.id] = channel;
 
-      if (channel.id === 'main'){
-
+      if (channel.id === 'transfer'){
         com.handler('datatransfer:start',{
           data: data,
           dataChannel: channel
         });
-
       }
+
+      /*if (channel.id === 'main'){
+        com.handler('datatransfer:start',{
+          data: data,
+          dataChannel: channel
+        });
+      }*/
     };
 
     bindPeer.onaddstream = function (event) {
@@ -480,21 +488,20 @@ function Peer(config, listener) {
   };
 
   com.transferData = function(data){
-    /*for (var channel in com.datachannels){
-      if (com.datachannels.hasOwnProperty(channel)){
-        var dt = new DataTransfer(com.datachannels[channel], com.id, listener);
-        dt.sendBlobData(data,{
-          name: data.name,
-          size: data.size
-        });
-        return;
-      }
-    }*/
 
-    /*var dc = new DataChannel(com.RTCPeerConnection.createDataChannel('transfer'),listener);
-    com.datachannels.transfer = dc;*/
+    //com.datachannels.transfer = new DataChannel(com.RTCPeerConnection.createDataChannel('transfer'),listener);
 
     com.handler('datatransfer:start',{
+      data: data,
+      dataChannel: com.datachannels.transfer  
+    });    
+
+    com.datatransfers.transfer.sendBlobData(data,{
+      name: data.name,
+      size: data.size
+    });
+
+    /*com.handler('datatransfer:start',{
       data: data,
       dataChannel: com.datachannels.main  
     });
@@ -502,8 +509,7 @@ function Peer(config, listener) {
     com.datatransfers.main.sendBlobData(data,{
       name: data.name,
       size: data.size
-    });
-    return;
+    });*/
   };
 
   /**
@@ -518,6 +524,7 @@ function Peer(config, listener) {
     if (globals.dataChannel && com.type === 'user') {
 
       var eventChannel = com.RTCPeerConnection.createDataChannel('main');
+      var transferChannel = com.RTCPeerConnection.createDataChannel('transfer');
       
       // Send the channel only when channel has started
       var channel = new DataChannel(eventChannel, function (event, data) {
@@ -530,8 +537,28 @@ function Peer(config, listener) {
         });
       });
 
+      var transfer = new DataChannel(transferChannel, function (event, data) {
+        
+        com.handler(event, data);
+        
+        com.handler('peer:datachannel', {
+          sourceType: 'local',
+          channel: transfer
+        });
+
+      });
+
       com.datachannels.main = channel;
+      com.datachannels.transfer = transfer;
+      
+      com.handler('datatransfer:start',{
+        data: data,
+        dataChannel: com.datachannels.transfer  
+      });
     }
+
+    console.log('->offer');
+    console.log(com.datachannels);
 
     com.RTCPeerConnection.createOffer(function (offer) {
       offer.sdp = SDP.configure(offer.sdp, com.sdpConfig);
