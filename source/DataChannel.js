@@ -112,7 +112,7 @@ function DataChannel(channel, listener) {
 
     bindChannel.onopen = function(){
       com.handler('datachannel:connect', {});
-    }
+    };
     
     bindChannel.onerror = function (error) {
       com.handler('datachannel:error', {

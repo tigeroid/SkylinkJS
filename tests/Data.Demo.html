@@ -302,7 +302,7 @@
         if (event === 'datatransfer:downloadcompleted'){
           var infobox = document.getElementById('output');
           var transferStatus = document.createElement('a');
-          transferStatus.innerHTML = 'Download';
+          transferStatus.innerHTML = 'Download<br>';
           transferStatus.href = URL.createObjectURL(data.data);
           infobox.appendChild(transferStatus);
         }

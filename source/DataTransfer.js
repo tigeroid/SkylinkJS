@@ -57,7 +57,7 @@ function DataTransfer(channel, peerId, listener) {
 
   com.onMessage = function(bindChannel, data){
     com._dataChannelProtocolHandler(data);
-  }
+  };
 
   com.bind(com.channel);
 

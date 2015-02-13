@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-12 */
+/*! skylinkjs - v0.5.7 - 2015-02-13 */
 
 var globals = {
   apiKey: null,
@@ -576,7 +576,7 @@ function DataChannel(channel, listener) {
 
     bindChannel.onopen = function(){
       com.handler('datachannel:connect', {});
-    }
+    };
     
     bindChannel.onerror = function (error) {
       com.handler('datachannel:error', {
@@ -807,7 +807,7 @@ function DataTransfer(channel, peerId, listener) {
 
   com.onMessage = function(bindChannel, data){
     com._dataChannelProtocolHandler(data);
-  }
+  };
 
   com.bind(com.channel);
 
@@ -1269,10 +1269,10 @@ function DataTransfer(channel, peerId, listener) {
 
 DataTransferEventResponseHandler = {
 	start: function(com, data, listener){
-		var dt = new DataTransfer(com.datachannels['main'], com.id, listener);
-		com.datatransfers['main'] = dt;
+		var dt = new DataTransfer(data.dataChannel, com.id, listener);
+		com.datatransfers.main = dt;
 	}
-}
+};
 
 var DataTransferHandler = function (com, event, data, listener) {
   var params = event.split(':');
@@ -2162,6 +2162,10 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.handler = function (event, data) {
+    if (event.indexOf('datatransfer')===0){
+      DataTransferHandler(com, event, data, listener);
+      return;
+    }
     PeerHandler(com, event, data, listener);
   };
 
@@ -2352,8 +2356,6 @@ function Peer(config, listener) {
       com.datachannels[channel.id] = channel;
 
       if (channel.id === 'main'){
-        /*var dt = new DataTransfer(channel, com.id, listener);
-        com.datatransfers['main'] = dt;*/
 
         DataTransferHandler(com, 'datatransfer:start', {
           data: data,
@@ -2440,8 +2442,8 @@ function Peer(config, listener) {
   };
 
   com.sendMessage = function(message){
-    if (com.datachannels['main']){
-      com.datachannels['main'].send(message);
+    if (com.datachannels.main){
+      com.datachannels.main.send(message);
     }
   };
 
@@ -2457,12 +2459,15 @@ function Peer(config, listener) {
       }
     }*/
 
-    DataTransferHandler(com, 'datatransfer:start', {
-      data: data,
-      dataChannel: com.datachannels['main'],
-    }, listener);
+    /*var dc = new DataChannel(com.RTCPeerConnection.createDataChannel('transfer'),listener);
+    com.datachannels.transfer = dc;*/
 
-    com.datatransfers['main'].sendBlobData(data,{
+    com.handler('datatransfer:start',{
+      data: data,
+      dataChannel: com.datachannels.main  
+    });
+
+    com.datatransfers.main.sendBlobData(data,{
       name: data.name,
       size: data.size
     });
@@ -2493,7 +2498,7 @@ function Peer(config, listener) {
         });
       });
 
-      com.datachannels['main'] = channel;
+      com.datachannels.main = channel;
     }
 
     com.RTCPeerConnection.createOffer(function (offer) {

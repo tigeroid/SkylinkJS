@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-12 */
+/*! skylinkjs - v0.5.7 - 2015-02-13 */
 
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -7691,7 +7691,7 @@ if (navigator.mozGetUserMedia) {
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
 
-/*! skylinkjs - v0.5.7 - 2015-02-12 */
+/*! skylinkjs - v0.5.7 - 2015-02-13 */
 
 var globals = {
   apiKey: null,
@@ -8269,7 +8269,7 @@ function DataChannel(channel, listener) {
 
     bindChannel.onopen = function(){
       com.handler('datachannel:connect', {});
-    }
+    };
     
     bindChannel.onerror = function (error) {
       com.handler('datachannel:error', {
@@ -8500,7 +8500,7 @@ function DataTransfer(channel, peerId, listener) {
 
   com.onMessage = function(bindChannel, data){
     com._dataChannelProtocolHandler(data);
-  }
+  };
 
   com.bind(com.channel);
 
@@ -8962,10 +8962,10 @@ function DataTransfer(channel, peerId, listener) {
 
 DataTransferEventResponseHandler = {
 	start: function(com, data, listener){
-		var dt = new DataTransfer(com.datachannels['main'], com.id, listener);
-		com.datatransfers['main'] = dt;
+		var dt = new DataTransfer(data.dataChannel, com.id, listener);
+		com.datatransfers.main = dt;
 	}
-}
+};
 
 var DataTransferHandler = function (com, event, data, listener) {
   var params = event.split(':');
@@ -9855,6 +9855,10 @@ function Peer(config, listener) {
    * @since 0.6.0
    */
   com.handler = function (event, data) {
+    if (event.indexOf('datatransfer')===0){
+      DataTransferHandler(com, event, data, listener);
+      return;
+    }
     PeerHandler(com, event, data, listener);
   };
 
@@ -10045,8 +10049,6 @@ function Peer(config, listener) {
       com.datachannels[channel.id] = channel;
 
       if (channel.id === 'main'){
-        /*var dt = new DataTransfer(channel, com.id, listener);
-        com.datatransfers['main'] = dt;*/
 
         DataTransferHandler(com, 'datatransfer:start', {
           data: data,
@@ -10133,8 +10135,8 @@ function Peer(config, listener) {
   };
 
   com.sendMessage = function(message){
-    if (com.datachannels['main']){
-      com.datachannels['main'].send(message);
+    if (com.datachannels.main){
+      com.datachannels.main.send(message);
     }
   };
 
@@ -10150,12 +10152,15 @@ function Peer(config, listener) {
       }
     }*/
 
-    DataTransferHandler(com, 'datatransfer:start', {
-      data: data,
-      dataChannel: com.datachannels['main'],
-    }, listener);
+    /*var dc = new DataChannel(com.RTCPeerConnection.createDataChannel('transfer'),listener);
+    com.datachannels.transfer = dc;*/
 
-    com.datatransfers['main'].sendBlobData(data,{
+    com.handler('datatransfer:start',{
+      data: data,
+      dataChannel: com.datachannels.main  
+    });
+
+    com.datatransfers.main.sendBlobData(data,{
       name: data.name,
       size: data.size
     });
@@ -10186,7 +10191,7 @@ function Peer(config, listener) {
         });
       });
 
-      com.datachannels['main'] = channel;
+      com.datachannels.main = channel;
     }
 
     com.RTCPeerConnection.createOffer(function (offer) {
