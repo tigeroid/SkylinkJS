@@ -1,20 +1,23 @@
 var app = angular.module('SkylinkDemo', []);
 
-var menu = [
-  { text: 'Room', url: 'room' }
-];
+app.config(['$locationProvider', function($locationProvider){
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });    
+}]);
 
-app.controller('MainController', function ($http, $log) {
-  this.template = 'templates/room.html';
-  this.codeTemplate = 'templates-code/room.js';
+app.controller('MainController', function ($location, $http, $log) {
+  this.template = '';
+  this.codeTemplate = '';
   this.code = '';
-  this.nav = menu;
+  this.nav = demos;
   this.loaded = false;
 
   this.setPage = function (url) {
     this.active = url;
-    this.template = 'templates/' + url + '.html';
-    this.codeTemplate = 'templates-code/' + url + '.js';
+    this.template = url + 'index.html';
+    this.codeTemplate = url + 'script.js';
 
     angular.element('.content, .code').removeClass('loaded');
 
@@ -53,9 +56,12 @@ app.controller('MainController', function ($http, $log) {
     };
 
     head.appendChild(script);
+    
+    $location.hash(url);
   };
 
-  this.setPage('room');
+  var url = $location.hash() ? $location.hash() : demos[0].dir;
+  this.setPage(url);
 });
 
 

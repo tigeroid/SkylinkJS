@@ -14,6 +14,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.min.js"></script>
   <script src="../publish/skylink.complete.js"></script>
   <script src="../config.js"></script>
+  <script src="js/demos.js"></script>
   <script src="js/script.js"></script>
 </head>
 
@@ -22,8 +23,8 @@
     <nav>
       <a class="title">Class / Modules</a>
       <a ng-repeat="item in mctrl.nav"
-         ng-class="{true: 'active', false: ''}[item.url===mctrl.active]"
-         ng-click="mctrl.setPage(item.url)">{{item.text}}</a>
+         ng-class="{true: 'active', false: ''}[item.dir===mctrl.active]"
+         ng-click="mctrl.setPage(item.dir)">{{item.text}}</a>
     </nav>
     <div class="header">
       <p><span>Demo</span></p>

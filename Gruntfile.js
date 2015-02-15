@@ -71,10 +71,11 @@ module.exports = function (grunt) {
       production: {
         files: {
           '<%= production %>/skylink.debug.js': [
-            '<%= source %>/Globals.js',
-            '<%= source %>/Log.js',
+            '<%= source %>/Modules/Globals.js',
+            '<%= source %>/Modules/Debugger.js',
             '<%= source %>/Skylink.js',
-            '<%= source %>/*.js'
+            '<%= source %>/Modules/*.js',
+            '<%= source %>/Classes/*/*.js'
           ],
           '<%= production %>/skylink.complete.js': [
                         'node_modules/socket.io-client/socket.io.js',
@@ -139,7 +140,9 @@ module.exports = function (grunt) {
           }
         }, grunt.file.readJSON('.jshintrc')),
         src: [
-                    '<%= source %>/*.js'
+                    '<%= source %>/Modules/*.js',
+                    '<%= source %>/Classes/*/*.js',
+                    '<%= source %>/Skylink.js'
                 ]
       }
     },
