@@ -5839,16 +5839,16 @@ var StreamPolyfill = {
      *   for plugin-enabled browsers MediaStreams when ended. It will trigger onended when
      *   stream has ended.
      * @method StreamPolyfill.track.checkEnded
-     * @param {Object} bindTrack The MediaStreamTrack object.
-     * @param {Object} bind The MediaStream object.
+     * @param {Object} bind The MediaStreamTrack object.
+     * @param {String} mediaStreamId The MediaStream object id.
      * @private
      * @for Stream
      * @since 0.6.0
      */
-    checkEnded: function (bindTrack, bind) {
+    checkEnded: function (bind, mediaStreamId) {
       if (window.webrtcDetectedBrowser === 'safari' ||
         window.webrtcDetectedBrowser === 'IE') {
-        this.getFn(bindTrack, bind.id, 'onended', bindTrack.onended);
+        this.getFn(bind, mediaStreamId, 'onended', bind.onended);
       }
     },
 
@@ -5857,16 +5857,16 @@ var StreamPolyfill = {
      *   for plugin-enabled browsers MediaStreams when muted. It will trigger onm,ute when
      *   stream has been muted.
      * @method StreamPolyfill.track.checkMute
-     * @param {Object} bindTrack The MediaStreamTrack object.
-     * @param {Object} bind The MediaStream object.
+     * @param {Object} bind The MediaStreamTrack object.
+     * @param {String} mediaStreamId The MediaStream object id.
      * @private
      * @for Stream
      * @since 0.6.0
      */
-    checkMute: function (bindTrack, bind) {
+    checkMute: function (bind, mediaStreamId) {
       if (window.webrtcDetectedBrowser === 'safari' ||
         window.webrtcDetectedBrowser === 'IE') {
-        this.getFn(bindTrack, bind.id, 'onmute', bindTrack.onmute);
+        this.getFn(bind, mediaStreamId, 'onmute', bind.onmute);
       }
     },
 
@@ -5875,16 +5875,16 @@ var StreamPolyfill = {
      *   for plugin-enabled browsers MediaStreams when unmuted. It will trigger onunmuted when
      *   stream has unmuted.
      * @method StreamPolyfill.track.checkUnmute
-     * @param {Object} bindTrack The MediaStreamTrack object.
-     * @param {Object} bind The MediaStream object.
+     * @param {Object} bind The MediaStreamTrack object.
+     * @param {String} mediaStreamId The MediaStream object id.
      * @private
      * @for Stream
      * @since 0.6.0
      */
-    checkUnmute: function (bindTrack, bind) {
+    checkUnmute: function (bind, mediaStreamId) {
       if (window.webrtcDetectedBrowser === 'safari' ||
         window.webrtcDetectedBrowser === 'IE') {
-        this.getFn(bindTrack, bind.id, 'onunmute', bindTrack.onunmute);
+        this.getFn(bind, mediaStreamId, 'onunmute', bind.onunmute);
       }
     },
 
@@ -5908,9 +5908,6 @@ var StreamPolyfill = {
       // Workaround for Safari / IE users
       if (window.webrtcDetectedBrowser === 'safari' || window.webrtcDetectedBrowser === 'IE') {
         var fn = this.getFn(bind, mediaStreamId, 'onmute');
-
-        console.info('fn', fn);
-
         fn(bind);
 
       } else {
@@ -5940,9 +5937,6 @@ var StreamPolyfill = {
       // Workaround for Safari / IE users
       if (window.webrtcDetectedBrowser === 'safari' || window.webrtcDetectedBrowser === 'IE') {
         var fn = this.getFn(bind, mediaStreamId, 'onunmute');
-
-        console.info('fnn', fn);
-
         fn(bind);
 
       } else {
