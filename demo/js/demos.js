@@ -10,5 +10,9 @@ var demos = [
   {
     text: 'Stream',
     dir: 'demo/templates/Classes/Stream/'
+  },
+  {
+    text: 'Peer',
+    dir: 'demo/templates/Classes/Peer/'
   }
 ];

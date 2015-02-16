@@ -1,6 +1,31 @@
 /**
- * Handles the PeerConnection and Peer data.
+ * Handles the MediaStream object connection and events.
  * @class Peer
+ * @constructor
+ * @param {Object} stream The MediaStream object to parse and hook events on.
+ * @param {JSON} config The streaming configuration.
+ * @param {JSON|Boolean} [config.audio=false] The audio stream configuration.
+ *    If parsed as a boolean, other configuration settings under the audio
+ *    configuration would be set as the default setting in the connection.
+ * @param {Boolean} [config.audio.stereo=false] The flag that indiciates
+ *    if stereo is enabled for this stream connection.
+ * @param {String} [config.audio.sourceId] The source id of the audio MediaStreamTrack
+ *    used for this connection.
+ * @param {Boolean} [config.audio.mute=false] The flag that indicates if audio stream
+ *    should be muted when retrieving.
+ * @param {String|Boolean} [config.video=false] The video stream configuration.
+ *    If parsed as a boolean, other configuration settings under the video
+ *    configuration would be set as the default setting in the connection.
+ * @param {JSON} [config.video.resolution] The video streaming resolution.
+ * @param {Integer} config.video.resolution.width The video resolution width.
+ * @param {Integer} config.video.resolution.height The video resolution height.
+ * @param {Integer} config.video.frameRate The video stream framerate.
+ * @param {String} [config.video.sourceId] The source id of the video MediaStreamTrack
+ *    used for this connection.
+ * @param {Boolean} [config.video.mute=false] The flag that indicates if video stream
+ *    should be muted when retrieving.
+ * @param {Function} [listener] The listener function.
+ * @instantiable true
  * @for Skylink
  * @since 0.6.0
  */
@@ -14,10 +39,59 @@ function Peer(config, listener) {
   var com = this;
 
   /* Attributes */
+  /**
+   * The shared peer connection id.
+   * @attribute id
+   * @type String
+   * @for Peer
+   * @since 0.6.0
+   */
   com.id = config.id || fn.generateUID();
+
+  /**
+   * The peer connection type.
+   * - <code>"user"</code> denotes that this connection is used for the
+   *   main peer connection.
+   * - <code>"stream"</code> denotes that this connection is used for
+   *   sending an extra stream connection.
+   * @attribute type
+   * @type String
+   * @for Peer
+   * @since 0.6.0
+   */
   com.type = config.id === 'main' ? 'user' : 'stream';
-  com._SDPType = config.SDPType;
-  com._ICEConfig = null;
+
+  /**
+   * The RTCSessionDescription type that the peer connection would send.
+   * Types are <code>"offer"</code> or <code>"answer"</code>.
+   * This is used for superclasses to check and send the relevant
+   *   information.
+   * @attribute _sdpType
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._sdpType = config.sdpType || 'answer';
+
+  /**
+   * The list of ICE servers (TURN/STUN) that the peer connection would connect to.
+   * @attribute _iceServers
+   * @param {JSON} (#index) The ICE server.
+   * @param {String} (#index).credential The ICE server credential (password).
+   *    Only used in TURN servers.
+   * @param {String} (#index).url The ICE server url. For TURN server,
+   *   the format may vary depending on the support of the TURN url format.
+   * @param {String} (#index).username The ICE server username.
+   *    Only used in TURN servers for Firefox browsers.
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._iceServers = null;
+
+
   com._optionalConfig = {
     optional: [{
       DtlsSrtpKeyAgreement: true
@@ -171,9 +245,8 @@ function Peer(config, listener) {
       });
     };
 
-    bindPeer.oniceconnectionstatechange = function (event) {
-      ICE.parseIceConnectionState(bindPeer);
-    };
+    // Use helper function
+    PeerHelper.ICE.state(bind);
 
     bindPeer.oniceconnectionnewstatechange = function (event) {
       // Connection is successful
