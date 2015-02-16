@@ -37,7 +37,7 @@ var RoomEventReceivedHandler = {
     message: function (com, data, listener) {
       // If it's a remote source
       if (data.sourceType === 'remote') {
-        listener('message:' + com.data
+        listener('message:' + com.data, data);
       }
     },
 

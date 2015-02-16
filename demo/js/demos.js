@@ -1,14 +1,14 @@
 var demos = [
   {
     text: 'Room',
-    dir: 'templates/Classes/Room/'
+    dir: 'demo/templates/Classes/Room/'
   },
   {
     text: 'Socket',
-    dir: 'templates/Classes/Socket/'
+    dir: 'demo/templates/Classes/Socket/'
   },
   {
     text: 'Stream',
-    dir: 'templates/Classes/Stream/'
+    dir: 'demo/templates/Classes/Stream/'
   }
 ];

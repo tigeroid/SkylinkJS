@@ -6714,19 +6714,36 @@ function toArray(list, index) {
 (1)
 });
 
-/*! adapterjs - v0.10.0 - 2014-12-19 */
+/*! adapterjs - v0.10.3 - 2015-01-21 */
 
 // Adapter's interface.
-AdapterJS = { options:{} };
+var AdapterJS = AdapterJS || {};
+
+AdapterJS.options = {};
 
 // uncomment to get virtual webcams
 // AdapterJS.options.getAllCams = true;
 
 // uncomment to prevent the install prompt when the plugin in not yet installed
-// AdapterJS.options.hidePluginInstallPrompt
+// AdapterJS.options.hidePluginInstallPrompt = true;
 
 // AdapterJS version
-AdapterJS.VERSION = '0.10.0';
+AdapterJS.VERSION = '0.10.3';
+
+// This function will be called when the WebRTC API is ready to be used
+// Whether it is the native implementation (Chrome, Firefox, Opera) or 
+// the plugin
+// You may Override this function to synchronise the start of your application
+// with the WebRTC API being ready.
+// If you decide not to override use this synchronisation, it may result in 
+// an extensive CPU usage on the plugin start (once per tab loaded) 
+// Params:
+//    - isUsingPlugin: true is the WebRTC plugin is being used, false otherwise
+//
+AdapterJS.onwebrtcready = AdapterJS.onwebrtcready || function(isUsingPlugin) {
+  // The WebRTC API is ready.
+  // Override me and do whatever you want here
+};
 
 // Plugin namespace
 AdapterJS.WebRTCPlugin = AdapterJS.WebRTCPlugin || {};
@@ -6747,13 +6764,18 @@ if(!!navigator.platform.match(/^Mac/i)) {
 }
 else if(!!navigator.platform.match(/^Win/i)) {
   AdapterJS.WebRTCPlugin.pluginInfo.downloadLink = 'http://bit.ly/1kkS4FN';
-};
+}
 
 // Unique identifier of each opened page
 AdapterJS.WebRTCPlugin.pageId = Math.random().toString(36).slice(2);
 
 // Use this whenever you want to call the plugin.
 AdapterJS.WebRTCPlugin.plugin = null;
+
+// Set log level for the plugin once it is ready.
+// The different values are 
+// This is an asynchronous function that will run when the plugin is ready 
+AdapterJS.WebRTCPlugin.setLogLevel = null;
 
 // Defines webrtc's JS interface according to the plugin's implementation.
 // Define plugin Browsers as WebRTC Interface.
@@ -6770,6 +6792,8 @@ AdapterJS.WebRTCPlugin.pluginInjectionInterval = null;
 // Inject the HTML DOM object element into the page.
 AdapterJS.WebRTCPlugin.injectPlugin = null;
 
+// States of readiness that the plugin goes through when
+// being injected and stated
 AdapterJS.WebRTCPlugin.PLUGIN_STATES = {
   NONE : 0,           // no plugin use
   INITIALIZING : 1,   // Detected need for plugin
@@ -6781,6 +6805,28 @@ AdapterJS.WebRTCPlugin.PLUGIN_STATES = {
 // Current state of the plugin. You cannot use the plugin before this is
 // equal to AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY
 AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.NONE;
+
+// True is AdapterJS.onwebrtcready was already called, false otherwise
+// Used to make sure AdapterJS.onwebrtcready is only called once
+AdapterJS.onwebrtcreadyDone = false;
+
+// Log levels for the plugin. 
+// To be set by calling AdapterJS.WebRTCPlugin.setLogLevel
+/*
+Log outputs are prefixed in some cases. 
+  INFO: Information reported by the plugin. 
+  ERROR: Errors originating from within the plugin.
+  WEBRTC: Error originating from within the libWebRTC library
+*/
+// From the least verbose to the most verbose
+AdapterJS.WebRTCPlugin.PLUGIN_LOG_LEVELS = {
+  NONE : 'NONE',
+  ERROR : 'ERROR',  
+  WARNING : 'WARNING', 
+  INFO: 'INFO', 
+  VERBOSE: 'VERBOSE', 
+  SENSITIVE: 'SENSITIVE'  
+};
 
 // Does a waiting check before proceeding to load the plugin.
 AdapterJS.WebRTCPlugin.WaitForPluginReady = null;
@@ -6796,24 +6842,39 @@ AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb = null;
 // !!!! WARNING: DO NOT OVERRIDE THIS FUNCTION. !!!
 // This function will be called when plugin is ready. It sends necessary
 // details to the plugin.
-// If you need to do something once the page/plugin is ready, override
-// window.onwebrtcready instead.
+// The function will wait for the document to be ready and the set the
+// plugin state to AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY,
+// indicating that it can start being requested.
 // This function is not in the IE/Safari condition brackets so that
 // TemPluginLoaded function might be called on Chrome/Firefox.
 // This function is the only private function that is not encapsulated to
 // allow the plugin method to be called.
 __TemWebRTCReady0 = function () {
-  arguments.callee.StaticWasInit = arguments.callee.StaticWasInit || 1;
-  if (arguments.callee.StaticWasInit === 1) {
+  if (document.readyState === 'complete') {
+    AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY;
+
+    AdapterJS.maybeThroughWebRTCReady();
+  } else {
     AdapterJS.WebRTCPlugin.documentReadyInterval = setInterval(function () {
       if (document.readyState === 'complete') {
         // TODO: update comments, we wait for the document to be ready
         clearInterval(AdapterJS.WebRTCPlugin.documentReadyInterval);
         AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY;
+
+        AdapterJS.maybeThroughWebRTCReady();
       }
     }, 100);
   }
-  arguments.callee.StaticWasInit++;
+};
+
+AdapterJS.maybeThroughWebRTCReady = function() {
+  if (!AdapterJS.onwebrtcreadyDone) {
+    AdapterJS.onwebrtcreadyDone = true;
+
+    if (typeof(AdapterJS.onwebrtcready) === 'function') {
+      AdapterJS.onwebrtcready(AdapterJS.WebRTCPlugin.plugin !== null);
+    }
+  }
 };
 
 // The result of ice connection states.
@@ -6909,13 +6970,14 @@ AdapterJS.maybeFixConfiguration = function (pcConfig) {
 };
 
 AdapterJS.addEvent = function(elem, evnt, func) {
-   if (elem.addEventListener)  // W3C DOM
-      elem.addEventListener(evnt, func, false);
-   else if (elem.attachEvent) // OLD IE DOM 
-      elem.attachEvent("on"+evnt, func);
-   else // No much to do
-      elem[evnt] = func;
-}
+  if (elem.addEventListener) { // W3C DOM
+    elem.addEventListener(evnt, func, false);
+  } else if (elem.attachEvent) {// OLD IE DOM 
+    elem.attachEvent('on'+evnt, func);
+  } else { // No much to do
+    elem[evnt] = func;
+  }
+};
 
 // -----------------------------------------------------------
 // Detected webrtc implementation. Types are:
@@ -7181,6 +7243,8 @@ if (navigator.mozGetUserMedia) {
       return [];
     };
   }
+
+  AdapterJS.maybeThroughWebRTCReady();
 } else if (navigator.webkitGetUserMedia) {
   webrtcDetectedBrowser = 'chrome';
   webrtcDetectedType = 'webkit';
@@ -7264,6 +7328,8 @@ if (navigator.mozGetUserMedia) {
     to.src = from.src;
     return to;
   };
+
+  AdapterJS.maybeThroughWebRTCReady();
 } else { // TRY TO USE PLUGIN
   // IE 9 is not offering an implementation of console.log until you open a console
   if (typeof console !== 'object' || typeof console.log !== 'function') {
@@ -7302,22 +7368,37 @@ if (navigator.mozGetUserMedia) {
   /* jshint +W035 */
 
   AdapterJS.WebRTCPlugin.callWhenPluginReady = function (callback) {
-    var checkPluginReadyState = setInterval(function () {
-      if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
-        clearInterval(checkPluginReadyState);
-        callback();
-      }
-    }, 100);
+    if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
+      // Call immediately if possible
+      // Once the plugin is set, the code will always take this path
+      callback();
+    } else {
+      // otherwise start a 100ms interval
+      var checkPluginReadyState = setInterval(function () {
+        if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
+          clearInterval(checkPluginReadyState);
+          callback();
+        }
+      }, 100);
+    }
+  };
+
+  AdapterJS.WebRTCPlugin.setLogLevel = function(logLevel) {
+    AdapterJS.WebRTCPlugin.callWhenPluginReady(function() {
+      AdapterJS.WebRTCPlugin.plugin.setLogLevel(logLevel);
+    });
   };
 
   AdapterJS.WebRTCPlugin.injectPlugin = function () {
     // only inject once the page is ready
-    if (document.readyState !== 'complete')
+    if (document.readyState !== 'complete') {
       return;
+    }
 
     // Prevent multiple injections
-    if (AdapterJS.WebRTCPlugin.pluginState !== AdapterJS.WebRTCPlugin.PLUGIN_STATES.INITIALIZING)
+    if (AdapterJS.WebRTCPlugin.pluginState !== AdapterJS.WebRTCPlugin.PLUGIN_STATES.INITIALIZING) {
       return;
+    }
 
     AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.INJECTING;
 
@@ -7335,7 +7416,7 @@ if (navigator.mozGetUserMedia) {
         '" />' +
         // uncomment to be able to use virtual cams
         (AdapterJS.options.getAllCams ? '<param name="forceGetAllCams" value="True" />':'') +
-	
+  
         '</object>';
       while (AdapterJS.WebRTCPlugin.plugin.firstChild) {
         frag.appendChild(AdapterJS.WebRTCPlugin.plugin.firstChild);
@@ -7355,8 +7436,6 @@ if (navigator.mozGetUserMedia) {
         AdapterJS.WebRTCPlugin.plugin.width = '1px';
         AdapterJS.WebRTCPlugin.plugin.height = '1px';
       }
-      AdapterJS.WebRTCPlugin.plugin.width = '1px';
-      AdapterJS.WebRTCPlugin.plugin.height = '1px';
       AdapterJS.WebRTCPlugin.plugin.type = AdapterJS.WebRTCPlugin.pluginInfo.type;
       AdapterJS.WebRTCPlugin.plugin.innerHTML = '<param name="onload" value="' +
         AdapterJS.WebRTCPlugin.pluginInfo.onload + '">' +
@@ -7564,39 +7643,42 @@ if (navigator.mozGetUserMedia) {
   };
 
   AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb = function() {
-    AdapterJS.addEvent(document, 'readystatechange', AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv);
+    AdapterJS.addEvent(document, 
+                      'readystatechange',
+                       AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv);
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv();
-  }
+  };
 
   AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv = function () {
-    if (AdapterJS.options.hidePluginInstallPrompt)
+    if (AdapterJS.options.hidePluginInstallPrompt) {
       return;
+    }
 
     var downloadLink = AdapterJS.WebRTCPlugin.pluginInfo.downloadLink;
-    if(downloadLink) {
+    if(downloadLink) { // if download link
       var popupString;
-      if (AdapterJS.WebRTCPlugin.pluginInfo.downloadLink) {
+      if (AdapterJS.WebRTCPlugin.pluginInfo.portalLink) { // is portal link
        popupString = 'This website requires you to install the ' +
         ' <a href="' + AdapterJS.WebRTCPlugin.pluginInfo.portalLink + 
         '" target="_blank">' + AdapterJS.WebRTCPlugin.pluginInfo.companyName +
         ' WebRTC Plugin</a>' +
         ' to work on this browser.';
-      } else {
+      } else { // no portal link, just print a generic explanation
        popupString = 'This website requires you to install a WebRTC-enabling plugin ' +
         'to work on this browser.';
       }
 
       AdapterJS.WebRTCPlugin.renderNotificationBar(popupString, 'Install Now', downloadLink);
-    }
-    else {
+    } else { // no download link, just print a generic explanation
       AdapterJS.WebRTCPlugin.renderNotificationBar('Your browser does not support WebRTC.');
     }
   };
 
   AdapterJS.WebRTCPlugin.renderNotificationBar = function (text, buttonText, buttonLink) {
     // only inject once the page is ready
-    if (document.readyState !== 'complete')
+    if (document.readyState !== 'complete') {
       return;
+    }
 
     var w = window;
     var i = document.createElement('iframe');
@@ -7650,7 +7732,9 @@ if (navigator.mozGetUserMedia) {
     }, 300);
   };
   // Try to detect the plugin and act accordingly
-  AdapterJS.WebRTCPlugin.isPluginInstalled(AdapterJS.WebRTCPlugin.pluginInfo.prefix, AdapterJS.WebRTCPlugin.pluginInfo.plugName,
+  AdapterJS.WebRTCPlugin.isPluginInstalled(
+    AdapterJS.WebRTCPlugin.pluginInfo.prefix, 
+    AdapterJS.WebRTCPlugin.pluginInfo.plugName,
     AdapterJS.WebRTCPlugin.defineWebRTCInterface,
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
@@ -10040,55 +10124,312 @@ function Room(name, listener) {
   // Reference of instance
   var com = this;
 
-  /* Attributes */
+  /**
+   * The room name.
+   * @attribute name
+   * @type String
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
   com.name = name;
-  com.id = null;
-  com._token = null;
-  com._key = null;
-  com._startDateTime = null;
-  com._duration = null;
-  com._apiPath = null;
-  com._owner = null;
-  com._credentials = globals.credentials;
-  com._self = null;
-  com._users = {};
-  com._components = {};
-  com._socket = null;
-  com._iceServers = [];
-  com._connected = false;
-  com._locked = false;
 
-  /* Methods */
-  com._handler = function (event, data) {
+  /**
+   * The room id.
+   * @attribute id
+   * @type String
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.id = null;
+
+  /**
+   * The room token.
+   * @attribute token
+   * @type String
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.token = null;
+
+  /**
+   * The room key.
+   * @attribute key
+   * @type String
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.key = null;
+
+  /**
+   * The room start date timestamp (ISO format) for persistent mode.
+   * @attribute startDateTime
+   * @type String
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.startDateTime = null;
+
+  /**
+   * The room duration for persistent mode.
+   * @attribute duration
+   * @type Integer
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.duration = null;
+
+  /**
+   * The request path to the api server.
+   * @attribute apiPath
+   * @type String
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.apiPath = null;
+
+  /**
+   * The room api owner.
+   * @attribute owner
+   * @type String
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.owner = null;
+
+  /**
+   * The user set settings for the room.
+   * @attribute credentials
+   * @param {Integer} duration The room duration set by user.
+   * @param {String} hash The hashed secret generated by user.
+   * @param {String} startDateTime The room start date timestamp (ISO format) set by user.
+   * @type JSON
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.credentials = globals.credentials;
+
+  /**
+   * The self user connection.
+   * @attribute self
+   * @type Self
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.self = null;
+
+  /**
+   * The list of users connected to room.
+   * @attribute users
+   * @param {User} (#userId) The user connected to room.
+   * @type JSON
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.users = {};
+
+  /**
+   * The list of components connected to room.
+   * This could be <var>MCU</var> or <var>Recording</var> peers.
+   * @attribute components
+   * @param {Component} (#index) The component connected to room.
+   * @type JSON
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.components = {};
+
+  /**
+   * The room duration.
+   * @attribute startDateTime
+   * @type Socket
+   * @required
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.socket = null;
+
+  /**
+   * The room TURN/STUN servers connection.
+   * @attribute iceServers
+   * @param {JSON} (#index) The ICE server.
+   * @param {String} (#index).credential The ICE server credential (password).
+   * @param {String} (#index).url The ICE server url. The current format
+   *    for TURN servers is <code>turn:username@urlhost</code>. It may be
+   *    required to parse it differently in
+   *    <code>{ username: 'username', credential: 'xxx', url: 'turn:urlhost' }</code>
+   *    format for unsupported browsers like firefox.
+   * @type Array
+   * @required
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.iceServers = [];
+
+  /**
+   * The flag that indicates if the self user has joined the room.
+   * @attribute connected
+   * @type Boolean
+   * @required
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.connected = false;
+
+  /**
+   * The flag that indicates if the room is locked.
+   * @attribute locked
+   * @type Boolean
+   * @required
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.locked = false;
+
+
+  /**
+   * Function to subscribe to when room is initializating the configuration.
+   * @method oninit
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.oninit = function () {};
+
+  /**
+   * Function to subscribe to when room object has loaded and is ready to use.
+   * @method onready
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onready = function () {};
+
+  /**
+   * Function to subscribe to when self has joined the room.
+   * @method onjoin
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onjoin = function () {};
+
+  /**
+   * Function to subscribe to when a user has joined the room.
+   * @method onuserjoin
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onuserjoin = function () {};
+
+  /**
+   * Function to subscribe to when self has been kicked out of room.
+   * @method onkick
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onkick = function () {};
+
+  /**
+   * Function to subscribe to when self is warned by server before kicking self user.
+   * @method onwarn
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onwarn = function () {};
+
+  /**
+   * Function to subscribe to when room has been locked.
+   * @method onlock
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onlock = function () {};
+
+  /**
+   * Function to subscribe to when room has been unlocked.
+   * @method onunlock
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onunlock = function () {};
+
+  /**
+   * Function to subscribe to when self has leave the room.
+   * @method onleave
+   * @eventhandler true
+   * @for Room
+   * @since 0.6.0
+   */
+  com.onleave = function () {};
+
+
+  /**
+   * The handler handles events.
+   * @method handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.handler = function (event, data) {
     RoomHandler(com, event, data, listener);
   };
 
-  com._init = function () {
+  /**
+   * Loads the connection information of the room.
+   * @method init
+   * @private
+   * @for Room
+   * @since 0.6.0
+   */
+  com.init = function () {
     // Start loading the room information
     var path = '/api/' + globals.apiKey + '/' + com.name;
 
     // Set credentials if there is
-    if (com._credentials !== null) {
-      path += com._credentials.startDateTime + '/' +
-        com._credentials.duration + '?&cred=' + com._credentials.hash;
+    if (com.credentials !== null) {
+      path += com.credentials.startDateTime + '/' +
+        com.credentials.duration + '?&cred=' + com.credentials.hash;
     }
 
     // Check if there is a other query parameters or not
     if (globals.region) {
       path += (path.indexOf('?&') > -1 ? '&' : '?&') + 'rg=' + globals.region;
     }
-    
-    var successFn = function (status, content) {
+
+    // Start connection
+    Request.load(path, function (status, content) {
       // Store the path information
-      com._apiPath = path;
+      com.apiPath = path;
 
       // Room configuration settings from server
-      com._key = content.cid;
+      com.key = content.cid;
       com.id = content.room_key;
-      com._token = content.roomCred;
-      com._startDateTime = content.start;
-      com._duration = content.len;
-      com._owner = content.apiOwner;
+      com.token = content.roomCred;
+      com.startDateTime = content.start;
+      com.duration = content.len;
+      com.owner = content.apiOwner;
 
       // User configuration settings from server
       var userConfig = {
@@ -10099,7 +10440,7 @@ function Room(name, listener) {
         data: null
       };
 
-      com._self = new Self(userConfig, com._handler);
+      com.self = new Self(userConfig, com.routeEvent);
 
       //com.constraints = JSON.parse(content.pc_constraints);
 
@@ -10109,25 +10450,36 @@ function Room(name, listener) {
         httpPortList: content.httpPortList,
         httpsPortList: content.httpsPortList
       };
+      com.socket = new Socket(socketConfig, com.routeEvent);
 
-      com._socket = new Socket(socketConfig, com._handler);
-      com._handler('room:ready');
-    };
-    
-    var failureFn = function (status, error) {
-      com._handler('room:error', {
+      com.respond('room:ready');
+
+    }, function (status, error) {
+      com.respond('room:error', {
         error: error
       });
-    };
-    
-    var loadingFn = function () {
-      com._handler('room:init');
-    };
 
-    // Start connection
-    Request.load(path, successFn, failureFn, loadingFn);
+    }, function () {
+      com.respond('room:init');
+    });
   };
 
+  /**
+   * Starts the connection to the room.
+   * @method join
+   * @param {Stream} stream The stream object to send. <mark>Stream</mark> object must
+   *   be ready before sending. Look at <var>stream:start</var> event.
+   *   Set as <code>null</code> for non-stream connection.
+   * @param {JSON} [config] The configuration settings.
+   * @param {JSON} [config.bandwidth] The bandwidth configuration for the connection.
+   *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @param {Integer} [config.bandwidth.audio] The audio banwidth configuration.
+   * @param {Integer} [config.bandwidth.video] The video banwidth configuration.
+   * @param {Integer} [config.bandwidth.data] The data banwidth configuration.
+   * @param {JSON|String} [config.userData] The self user's custom data.
+   * @for Room
+   * @since 0.6.0
+   */
   com.join = function (stream, config) {
     if (com.connected) {
       throw new Error('You are already connected to this "' + com.name +'" room');
@@ -10148,11 +10500,23 @@ function Room(name, listener) {
     com.socket.connect();
   };
 
+  /**
+   * Stops the connection to the room.
+   * @method leave
+   * @for Room
+   * @since 0.6.0
+   */
   com.leave = function () {
     // Disconnect socket connection
     com.socket.disconnect();
   };
 
+  /**
+   * Locks the room.
+   * @method lock
+   * @for Room
+   * @since 0.6.0
+   */
   com.lock = function () {
     var message = {
       type: 'roomLockEvent',
@@ -10168,6 +10532,12 @@ function Room(name, listener) {
     });
   };
 
+  /**
+   * Unlocks the room.
+   * @method unlock
+   * @for Room
+   * @since 0.6.0
+   */
   com.unlock = function () {
     var message = {
       type: 'roomLockEvent',
@@ -10183,6 +10553,14 @@ function Room(name, listener) {
     });
   };
 
+  /**
+   * Sends a stream to users.
+   * @method sendStream
+   * @param {Stream} stream The stream object. <mark>Stream</mark> object must
+   *   be ready before sending. Look at <var>stream:start</var> event.
+   * @for Room
+   * @since 0.6.0
+   */
   com.sendStream = function (stream, targetUsers) {
     var peerId = fn.generateUID();
     var key;
@@ -10204,20 +10582,9 @@ function Room(name, listener) {
       }
     }
   };
-  
-  /* Event handlers */
-  com.oninit = function () {};
-  com.onready = function () {};
-  com.onjoin = function () {};
-  com.onuserjoin = function () {};
-  com.onkick = function () {};
-  com.onwarn = function () {};
-  com.onlock = function () {};
-  com.onunlock = function () {};
-  com.onleave = function () {};
 
   // Start the room connection information
-  com._init();
+  com.init();
 }
 /**
  * Handles all the message events received from socket.
@@ -10686,7 +11053,7 @@ var RoomEventReceivedHandler = {
     message: function (com, data, listener) {
       // If it's a remote source
       if (data.sourceType === 'remote') {
-        listener('message:' + com.data
+        listener('message:' + com.data, data);
       }
     },
 
@@ -12064,16 +12431,87 @@ function Stream(stream, config, listener) {
   var com = this;
 
   /* Attributes */
+  /**
+   * The stream id.
+   * @attribute id
+   * @type String
+   * @for Stream
+   * @since 0.6.0
+   */
   com.id = null;
+
+  /**
+   * The stream label.
+   * @attribute label
+   * @type String
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.label = '';
+
+  /**
+   * The getUserMedia constraints.
+   * @attribute _constraints
+   * @type JSON
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
   com._constraints = null;
+
+  /**
+   * The streaming configuration.
+   * @attribute config
+   * @type JSON
+   * @for Stream
+   * @since 0.6.0
+   */
   com.config = config;
+
+  /**
+   * The stream source origin.
+   * There are two types of sources:
+   * - <code>"local"</code> indicates that the stream came from self user.
+   * - <code>"remote</code> indicates that the stream came from other users.
+   * @attribute sourceType
+   * @type String
+   * @for Stream
+   * @since 0.6.0
+   */
   com.sourceType = 'local';
+
+  /**
+   * The MediaStream object.
+   * @attribute MediaStream
+   * @type Object
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
   com._MediaStream = null;
 
 
   /* Methods */
+  /**
+   * The handler that the parent classes utilises to listen to events.
+   * @method _parentHandler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
   com._parentHandler = function () {};
 
+  /**
+   * The handler that the manages response and received events.
+   * @method _handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
   com._handler = function (event, data) {
     StreamHandler(com, event, data, listener);
 
@@ -12082,6 +12520,14 @@ function Stream(stream, config, listener) {
     }
   };
 
+  /**
+   * Binds events to MediaStream object.
+   * @method _bind
+   * @param {Object} bind The MediaStream object to bind events to.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
   com._bind = function (bind) {
 
     com.id = fn.generateUID();
@@ -12091,41 +12537,42 @@ function Stream(stream, config, listener) {
     // bindStream.onaddtrack = function () { };
     // bindStream.onremovetrack = function () { };
 
-    StreamPolyfill.stop(bind);
+    // For firefox browsers
+    StreamPolyfill.checkEnded(bind);
 
     bind.onended = function (event) {
-      com._handler('stream:stop', {
-        label: stream.label,
-        constraints: com.constraints,
-        sourceType: com.sourceType
-      });
+      com._handler('stream:stop', {});
     };
 
+    com.label = bind.label || 'Stream ' + com.id;
+
     // Bind track events
-    com._bindTracks(bind.getAudioTracks());
-    com._bindTracks(bind.getVideoTracks());
+    com._bindTracks(bind.getAudioTracks(), bind);
+    com._bindTracks(bind.getVideoTracks(), bind);
 
     com._MediaStream = bind;
 
-    com._handler('stream:start', {
-      label: bind.label,
-      constraints: com.constraints,
-      sourceType: com.sourceType
-    });
+    com._handler('stream:start', {});
   };
 
-  com._bindTracks = function (bindTracks) {
+  /**
+   * Binds track events to all MediaStreamTrack objects of the MediaStream object.
+   * @method _bindTracks
+   * @param {Array} bindTracks The list of MediaStreamTrack objects.
+   * @param {Object} bindTracks.(#index) The MediaStreamTrack object to bind events to.
+   * @param {Object} bind The MediaStream object to bind events to.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  com._bindTracks = function (bindTracks, bind) {
     var i;
 
     // Passing jshint (Don't make functions within a loop)
     var onended = function (track) {
       return function () {
         com._handler('stream:track:stop', {
-          trackId: track.newId,
-          kind: track.kind,
-          label: track.label,
-          enabled: track.enabled,
-          sourceType: com.sourceType
+          track: track
         });
       };
     };
@@ -12133,11 +12580,7 @@ function Stream(stream, config, listener) {
     var onmute = function (track) {
       return function () {
         com._handler('stream:track:mute', {
-          trackId: track.newId,
-          kind: track.kind,
-          label: track.label,
-          enabled: track.enabled,
-          sourceType: com.sourceType
+          track: track
         });
       };
     };
@@ -12145,11 +12588,7 @@ function Stream(stream, config, listener) {
     var onunmute = function (track) {
       return function () {
         com._handler('stream:track:unmute', {
-          trackId: track.newId,
-          kind: track.kind,
-          label: track.label,
-          enabled: track.enabled,
-          sourceType: com.sourceType
+          track: track
         });
       };
     };
@@ -12157,20 +12596,27 @@ function Stream(stream, config, listener) {
     for (i = 0; i < bindTracks.length; i += 1) {
       var track = bindTracks[i];
 
-      track.newid = fn.generateUID();
+      var trackData = {
+        id: track.id || fn.generateUID(),
+        kind: track.kind,
+        label: track.label,
+        facing: track.facing
+      };
 
       // Bind events to MediaStreamTrack
       // Un-implemented events functions
       // track.onstarted = function () { };
       // track.onoverconstrained = function(event) {};
 
-      StreamPolyfill.track.stop(track);
-      StreamPolyfill.track.mute(track);
-      StreamPolyfill.track.unmute(track);
+      // Bind events first
+      track.onended = onended(trackData);
+      track.onmute = onmute(trackData);
+      track.onunmute = onunmute(trackData);
 
-      track.onended = onended(track);
-      track.onmute = onmute(track);
-      track.onunmute = onunmute(track);
+      // Fallback for Safari / IE browsers. Events must be BINDED first.
+      StreamPolyfill.track.checkEnded(track, bind);
+      StreamPolyfill.track.checkMute(track, bind);
+      StreamPolyfill.track.checkUnmute(track, bind);
 
       // Set the mute status
       var isEnabled = true;
@@ -12185,99 +12631,209 @@ function Stream(stream, config, listener) {
 
       track.enabled = isEnabled;
 
+      window.track = track;
+
       com._handler('stream:track:start', {
-        trackId: track.newid,
-        kind: track.kind,
-        label: track.label,
-        enabled: track.enabled,
-        sourceType: com.sourceType
+        track: track
       });
     }
   };
 
+  /**
+   * Attaches the MediaStream object to a video element.
+   * @method attachElement
+   * @param {DOM} element The video DOM element to bind the MediaStream to.
+   * @for Stream
+   * @since 0.6.0
+   */
   com.attachElement = function (element) {
     StreamPolyfill.attachMediaStream(element, com._MediaStream);
   };
 
-  com.muteAudio = function () {
-    var tracks = com._MediaStream.getAudioTracks();
-    var i;
-
-    for (i = 0; i < tracks.length; i += 1) {
-      var track = tracks[i];
-      track.polymute();
-    }
+  /**
+   * Stops MediaStream object streaming.
+   * This is only available for LocalMediaStreams.
+   * @method stop
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.stop = function () {
+    // Stop MediaStream
+    StreamPolyfill.stop(com._MediaStream);
   };
 
-  com.unmuteAudio = function () {
-    var tracks = com._MediaStream.getAudioTracks();
-    var i;
-
-    for (i = 0; i < tracks.length; i += 1) {
-      var track = tracks[i];
-      track.polyunmute();
-    }
-  };
-
+  /**
+   * Stops all audio MediaStreamTracks streaming in the MediaStream object.
+   * This is only available for LocalMediaStreams.
+   * @method stopAudio
+   * @support Firefox, Chrome, Opera
+   * @for Stream
+   * @since 0.6.0
+   */
   com.stopAudio = function () {
     var tracks = com._MediaStream.getAudioTracks();
     var i;
 
     for (i = 0; i < tracks.length; i += 1) {
       var track = tracks[i];
-      track.polystop();
+      StreamPolyfill.track.stop(track);
     }
   };
 
-  com.muteVideo = function () {
-    var tracks = com._MediaStream.getVideoTracks();
-    var i;
-
-    for (i = 0; i < tracks.length; i += 1) {
-      var track = tracks[i];
-      track.polymute();
-    }
-  };
-
-  com.unmuteVideo = function () {
-    var tracks = com._MediaStream.getVideoTracks();
-    var i;
-
-    for (i = 0; i < tracks.length; i += 1) {
-      var track = tracks[i];
-      track.polyunmute();
-    }
-  };
-
+  /**
+   * Stops all video MediaStreamTracks streaming of the MediaStream object.
+   * This is only available for LocalMediaStreams.
+   * @method stopVideo
+   * @support Firefox, Chrome, Opera
+   * @for Stream
+   * @since 0.6.0
+   */
   com.stopVideo = function () {
     var tracks = com._MediaStream.getVideoTracks();
     var i;
 
     for (i = 0; i < tracks.length; i += 1) {
       var track = tracks[i];
-      track.polystop();
+      StreamPolyfill.track.stop(track);
     }
   };
 
-  com.stop = function () {
-    // Stop MediaStream tracks
-    com.stopVideo();
-    com.stopAudio();
-    // Stop MediaStream
-    com._MediaStream.polystop();
+  /**
+   * Mutes all audio MediaStreamTracks of the MediaStream object.
+   * This is only available for LocalMediaStreams.
+   * @method muteAudio
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.muteAudio = function () {
+    var tracks = com._MediaStream.getAudioTracks();
+    var i;
+
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+      StreamPolyfill.track.mute(track, com._MediaStream.id);
+    }
+  };
+
+  /**
+   * Mutes all video MediaStreamTracks of the MediaStream object.
+   * This is only available for LocalMediaStreams.
+   * @method muteVideo
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.muteVideo = function () {
+    var tracks = com._MediaStream.getVideoTracks();
+    var i;
+
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+      StreamPolyfill.track.mute(track, com._MediaStream.id);
+    }
+  };
+
+
+  /**
+   * Unmutes all audio MediaStreamTracks of the MediaStream object.
+   * This is only available for LocalMediaStreams.
+   * @method unmuteAudio
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.unmuteAudio = function () {
+    var tracks = com._MediaStream.getAudioTracks();
+    var i;
+
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+      StreamPolyfill.track.unmute(track, com._MediaStream.id);
+    }
+  };
+
+  /**
+   * Unmutes all video MediaStreamTracks of the MediaStream object.
+   * This is only available for LocalMediaStreams.
+   * @method unmuteVideo
+   * @for Stream
+   * @since 0.6.0
+   */
+  com.unmuteVideo = function () {
+    var tracks = com._MediaStream.getVideoTracks();
+    var i;
+
+    for (i = 0; i < tracks.length; i += 1) {
+      var track = tracks[i];
+      StreamPolyfill.track.unmute(track, com._MediaStream.id);
+    }
   };
 
 
   /* Event Handlers */
+  /**
+   * Function to subscribe to when stream object is ready to use.
+   * @method onstart
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
   com.onstart = function () {};
+
+  /**
+   * Function to subscribe to when getUserMedia throws an exception or event has error.
+   * @method onerror
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
   com.onerror = function () {};
+
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has started.
+   * @method ontrackstart
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
   com.ontrackstart = function () {};
+
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has stopped.
+   * @method ontrackstop
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
   com.ontrackstop = function () {};
+
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has been disabled (muted).
+   * @method ontrackmute
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
   com.ontrackmute = function () {};
+
+  /**
+   * Function to subscribe to when MediaStreamTrack of the MediaStream object has been enabled (unmuted).
+   * @method ontrackunmute
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
   com.ontrackunmute = function () {};
+
+  /**
+   * Function to subscribe to when MediaStream object has ended.
+   * @method onstop
+   * @eventhandler true
+   * @for Stream
+   * @since 0.6.0
+   */
   com.onstop = function () {};
 
 
+  /* Beginning Logic */
   // Throw an error if adapterjs is not loaded
   if (!window.attachMediaStream) {
     throw new Error('Required dependency adapterjs not found');
@@ -12301,7 +12857,7 @@ function Stream(stream, config, listener) {
     };
 
     // Get user media
-    window.getUserMedia(com.constraints, com._bind, function (error) {
+    window.getUserMedia(com._constraints, com._bind, function (error) {
       com._handler('stream:error', {
         error: error,
         sourceType: com.sourceType
@@ -12325,70 +12881,120 @@ function Stream(stream, config, listener) {
 }
 var StreamEventResponseHandler = {
 
+  /* Stream events */
+  /**
+   * Event fired when the MediaStream has started and that the stream object is ready to use.
+   * @event stream:start
+   * @for Stream
+   * @since 0.6.0
+   */
   start: function (com, data, listener) {
     if (typeof com.onstart === 'function') {
       com.onstart(data.MediaStream);
     }
   },
 
+  /**
+   * Event fired when usually getUserMedia fails or an exception has occurred during the
+   *   MediaStream object handling.
+   * @event stream:error
+   * @param {Object} error The getUserMedia or event error.
+   * @for Stream
+   * @since 0.6.0
+   */
   error: function (com, data, listener) {
     if (typeof com.onerror === 'function') {
       com.onerror(data);
     }
   },
 
+  /**
+   * Event fired when the MediaStream object has stopped.
+   * @event stream:stop
+   * @for Stream
+   * @since 0.6.0
+   */
   stop: function (com, data, listener) {
     if (typeof com.onstop === 'function') {
       com.onstop(data);
     }
   },
 
+  /* StreamTrack events */
   track: {
 
+    /**
+     * Event fired when the MediaStreamTrack of the MediaStream object has started and
+     *   that the track is ready to use.
+     * @event stream:track:start
+     * @for Stream
+     * @since 0.6.0
+     */
     start: function (com, data, listener) {
       if (typeof com.ontrackstart === 'function') {
         com.ontrackstart(data);
       }
     },
 
+    /**
+     * Event fired when the MediaStreamTrack of the MediaStream object has stopped.
+     * @event stream:track:stop
+     * @for Stream
+     * @since 0.6.0
+     */
     stop: function (com, data, listener) {
       if (typeof com.ontrackstop === 'function') {
         com.ontrackstop(data);
       }
     },
 
-   mute: function (com, data, listener) {
+    /**
+     * Event fired when the MediaStreamTrack of the MediaStream object has been disabled (muted).
+     * @event stream:track:mute
+     * @for Stream
+     * @since 0.6.0
+     */
+    mute: function (com, data, listener) {
       if (typeof com.ontrackmute === 'function') {
         com.ontrackmute(data);
       }
     },
 
+    /**
+     * Event fired when the MediaStreamTrack of the MediaStream object has been enabled (unmuted).
+     * @event stream:track:unmute
+     * @for Stream
+     * @since 0.6.0
+     */
     unmute: function (com, data, listener) {
       if (typeof com.ontrackunmute === 'function') {
         com.ontrackunmute(data);
       }
     },
   }
+
 };
 var StreamHandler = function (com, event, data, listener) {
   var params = event.split(':');
 
   // Class events
   data.id = com.id;
+  data.label = com.label;
 
   fn.applyHandler(StreamEventResponseHandler, params, [com, data, listener]);
 
   listener(event, data);
 
-  log.debug('Stream', 'Responding with event =>', event, data);
+  log.debug('Stream', 'Responding with event', event, data);
 };
 var StreamParser = {
   /**
-   * Stores the default Stream / Bandwidth settings.
-   * @property defaultConfig
-   * @param {JSON} audio The default audio settings.
+   * Stores the default stream and bandwidth settings.
+   * @attribute StreamParser.defaultConfig
+   * @type JSON
+   * @param {JSON} audio The default audio streaming configuraiton.
    * @param {Boolean} audio.stereo The default flag to indicate if stereo is enabled.
-   * @param {JSON} video The default video settings.
+   * @param {JSON} video The default video streaming configuraiton.
    * @param {JSON} video.resolution The default video resolution.
    * @param {Integer} video.resolution.width The default video resolution width.
    * @param {Integer} video.resolution.height The default video resolution height.
@@ -12397,7 +13003,6 @@ var StreamParser = {
    * @param {Integer} bandwidth.audio The default audio bandwidth bitrate.
    * @param {Integer} bandwidth.video The default video bandwidth bitrate.
    * @param {Integer} bandwidth.data The default DataChannel data bandwidth bitrate.
-   * @type JSON
    * @private
    * @since 0.6.0
    */
@@ -12418,16 +13023,28 @@ var StreamParser = {
       data: 1638400
     }
   },
-  
+
   /**
-   * Parses the audio configuration for the getUserMedia constraints.
-   * @property parseAudioConfig
+   * Parses the audio configuration for the stream configuration and getUserMedia constraints.
+   * @method StreamParser.parseAudioConfig
    * @param {JSON|Boolean} options The audio settings or flag if audio is enabled.
    * @param {Boolean} options.stereo The flag to indicate if stereo is enabled.
-   * @type Function
-   * @return {JSON}
-   * - options: The configuration.
-   * - userMedia: The getUserMedia constraints.
+   * @param {String} options.sourceId The source id of the audio MediaStreamTrack.
+   * @return {JSON} Returns the output parsed audio configuration.
+   * - <code>settings</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   *   The audio stream configuration.
+   * - <code>settings.stereo</code> <var>: <b>type</b> Boolean</var><br>
+   *   The flag that indicates if stereo is enabled for this streaming.
+   * - <code>settings.sourceId</code> <var>: <b>type</b> JSON</var><br>
+   *   The audio stream source id.
+   * - <code>userMedia</code> <var>: <b>type</b> Boolean|JSON</var><br>
+   *   The audio stream getUserMedia constraints.
+   * - <code>userMedia.optional</code> <var>: <b>type</b> Array</var><br>
+   *   The audio stream optional configuration.
+   * - <code>settings.optional.(#index)</code> <var>: <b>type</b> JSON</var><br>
+   *   The audio stream optional configuration item.
+   * - <code>settings.optional.(#index).sourceId</code> <var>: <b>type</b> String</var><br>
+   *   The audio stream source id.
    * @private
    * @since 0.6.0
    */
@@ -12436,7 +13053,7 @@ var StreamParser = {
 
     var userMedia = false;
     var tempOptions = {};
-  
+
     // Cleaning of unwanted keys
     if (options !== false) {
       options = (typeof options === 'boolean') ? {} : options;
@@ -12459,19 +13076,45 @@ var StreamParser = {
       userMedia: userMedia
     };
   },
-  
+
   /**
-   * Parses the video configuration for the getUserMedia constraints.
-   * @property parseVideoConfig
-   * @param {JSON} options The video settings.
+   * Parses the video configuration for the stream configuration and getUserMedia constraints.
+   * @method StreamParser.parseVideoConfig
+   * @param {JSON|Boolean} options The video settings.
    * @param {JSON} options.resolution The video resolution.
    * @param {Integer} options.resolution.width The video resolution width.
    * @param {Integer} options.resolution.height The video resolution height.
    * @param {Integer} options.frameRate The video maximum framerate.
-   * @type Function
-   * @return {JSON}
-   * - options: The configuration.
-   * - userMedia: The getUserMedia constraints.
+   * @param {String} options.sourceId The source id of the video MediaStreamTrack.
+   * @return {JSON} Returns the output parsed video configuration.
+   * - <code>settings</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   *   The video stream configuration.
+   * - <code>settings.resolution</code> <var>: <b>type</b> Boolean</var><br>
+   *   The video stream resolution.
+   * - <code>settings.resolution.width</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution width.
+   * - <code>settings.resolution.height</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution height.
+   * - <code>settings.resolution.frameRate</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution maximum framerate.
+   * - <code>settings.sourceId</code> <var>: <b>type</b> JSON</var><br>
+   *   The video stream source id.
+   * - <code>userMedia</code> <var>: <b>type</b> Boolean|JSON</var><br>
+   *   The video stream getUserMedia constraints.
+   * - <code>userMedia.mandatory</code> <var>: <b>type</b> JSON</var><br>
+   *   The video stream mandatory configuration.
+   * - <code>userMedia.mandatory.maxWidth</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream maximum width resolution.
+   * - <code>userMedia.mandatory.maxHeight</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream maximum height resolution.
+   * - <code>userMedia.mandatory.maxFrameRate</code> <var>: <b>type</b> Array</var><br>
+   *   The video stream maximum framerate. Not supported in current Plugin browsers.
+   * - <code>userMedia.optional</code> <var>: <b>type</b> Array</var><br>
+   *   The video stream optional configuration.
+   * - <code>settings.optional.(#index)</code> <var>: <b>type</b> JSON</var><br>
+   *   The video stream optional configuration item.
+   * - <code>settings.optional.(#index).sourceId</code> <var>: <b>type</b> String</var><br>
+   *   The video stream source id.
    * @private
    * @since 0.6.0
    */
@@ -12486,26 +13129,26 @@ var StreamParser = {
     if (options !== false) {
       options = (typeof options === 'boolean') ?
         { resolution: {} } : options;
-      
+
       // set the resolution parsing
       options.resolution = options.resolution || {};
-      
+
       tempOptions.resolution = tempOptions.resolution || {};
-      
+
       // set resolution
       tempOptions.resolution.width = options.resolution.width ||
         this.defaultConfig.video.resolution.width;
-      
+
       tempOptions.resolution.height = options.resolution.height ||
         this.defaultConfig.video.resolution.height;
-      
+
       // set the framerate
       tempOptions.frameRate = options.frameRate ||
         this.defaultConfig.video.frameRate;
-      
+
       // set the sourceid
       tempOptions.sourceId = options.sourceId;
-      
+
       options = tempOptions;
 
       userMedia = {
@@ -12519,7 +13162,7 @@ var StreamParser = {
         },
         optional: []
       };
-      
+
       // Add video sourceId
       if (tempOptions.sourceId) {
         userMedia.optional[0] = { sourceId: tempOptions.sourceId };
@@ -12536,21 +13179,24 @@ var StreamParser = {
       userMedia: userMedia
     };
   },
-  
+
   /**
    * Parses the bandwidth configuration.
-   * - In low-bandwidth environment, it's mostly managed by the browser.
-   *   However, this option enables you to set low bandwidth for high-bandwidth
+   * In low-bandwidth environment, it's mostly managed by the browser.
+   * However, this option enables you to set low bandwidth for high-bandwidth
    *   environment whichever way is possible.
-   * @property parseBandwidthConfig
+   * @property StreamParser.parseBandwidthConfig
    * @param {JSON} options The bandwidth streaming settings.
    * @param {Integer} options.audio The audio bandwidth bitrate.
    * @param {Integer} options.video The video bandwidth bitrate.
    * @param {Integer} options.data The DataChannel data bandwidth bitrate.
-   * @type Function
-   * @return {JSON}
-   * - options: The configuration.
-   * - userMedia: The getUserMedia constraints.
+   * @return {JSON} Returns the output parsed bandwidth configuration.
+   * - <code>video</code> <var>: <b>type</b> Integer</var><br>
+   *   The video bandwidth configuration (bitrate).
+   * - <code>audio</code> <var>: <b>type</b> Integer</var><br>
+   *   The audio bandwidth configuration (bitrate).
+   * - <code>data</code> <var>: <b>type</b> Integer</var><br>
+   *   The data bandwidth configuration (bitrate).
    * @private
    * @since 0.6.0
    */
@@ -12560,11 +13206,11 @@ var StreamParser = {
     // set audio bandwidth
     options.audio = (typeof options.audio === 'number') ?
       options.audio : this.defaultConfig.bandwidth.audio;
-    
+
     // set video bandwidth
     options.video = (typeof options.video === 'number') ?
       options.video : this.defaultConfig.bandwidth.video;
-    
+
     // set data bandwidth
     options.data = (typeof options.data === 'number') ?
       options.data : this.defaultConfig.bandwidth.data;
@@ -12572,17 +13218,27 @@ var StreamParser = {
     // set the settings
     return options;
   },
-  
+
   /**
    * Parses the stream muted configuration.
-   * @property parseMutedConfig
+   * @method StreamParser.parseMutedConfig
    * @param {JSON} options The stream muted settings.
-   * @param {Integer} options.audioMuted The flag to indicate if audio stream is muted.
-   * @param {Integer} options.videoMuted The flag to indicate if video stream is muted.
-   * @type Function
-   * @return {JSON}
-   * - options: The configuration.
-   * - userMedia: The getUserMedia constraints.
+   * @param {JSON} config The streaming configuration.
+   * @param {JSON|Boolean} [config.audio=false] The audio stream configuration.
+   *    If parsed as a boolean, other configuration settings under the audio
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [config.audio.mute=false] The flag that indicates if audio stream
+   *    should be muted when retrieving.
+   * @param {String|Boolean} [config.video=false] The video stream configuration.
+   *    If parsed as a boolean, other configuration settings under the video
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [config.video.mute=false] The flag that indicates if video stream
+   *    should be muted when retrieving.
+   * @return {JSON} Returns the output parsed stream status configuration.
+   * - <code>videoMuted</code> <var>: <b>type</b> Boolean</var><br>
+   *   The video media status if video track is muted (disabled).
+   * - <code>audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+   *   The audio media status if audio track is muted (disabled).
    * @private
    * @since 0.6.0
    */
@@ -12601,6 +13257,7 @@ var StreamParser = {
       videoMuted: updateVideoMuted
     };
   },
+
 
   parseDefaultConfig: function (options) {
     var hasMediaChanged = false;
@@ -12624,18 +13281,75 @@ var StreamParser = {
 };
 var StreamPolyfill = {
 
+  /* MediaStream polyfills */
+  /**
+   * Handles the polyfill stop() function for MediaStream to trigger un-implemented
+   *   MediaStream.onended in Firefox.
+   * @method StreamPolyfill.stop
+   * @param {Object} bind The MediaStream object.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
   stop: function (bind) {
-    // Allow users to use polystop to polyfill stop and onended for MediaStreamTrack
-    bind.polystop = function () {
-      bind.stop();
+    // End MediaStreamTracks as well for non-Webkit browsers
+    if (window.webrtcDetectedType !== 'webkit') {
+      var audioTracks = bind.getAudioTracks();
+      var videoTracks = bind.getVideoTracks();
 
-      // NOTE: Should we end the mediastream tracks as well
+      var i, j;
+      var track = null;
+      var fn = function () {};
 
-      if (window.webrtcDetectedBrowser === 'firefox') {
-        bind.ended = true;
+      for (i = 0; i < audioTracks.length; i += 1) {
+        track = audioTracks[i];
+
+        if (window.webrtcDetectedBrowser === 'firefox') {
+          this.track.stop(track);
+
+        // Polyfill temporarily for Safari / IE plugin-enabled browsers to trigger onended event
+        } else {
+          fn = this.track.getFn(track, bind.id, 'onended');
+          fn(track);
+        }
       }
-    };
 
+      for (j = 0; j < videoTracks.length; j += 1) {
+        track = videoTracks[j];
+
+        if (window.webrtcDetectedBrowser === 'firefox') {
+          this.track.stop(track);
+
+        // Polyfill temporarily for Safari / IE plugin-enabled browsers to trigger onended event
+        } else {
+          fn = this.track.getFn(track, bind.id, 'onended');
+          fn(track);
+        }
+      }
+    }
+
+    // Allow users to use polystop to polyfill stop and onended for MediaStreamTrack
+    bind.stop();
+
+    if (window.webrtcDetectedType === 'safari' || window.webrtcDetectedBrowser === 'IE') {
+      delete this.track.fns[bind.id];
+    }
+
+    if (window.webrtcDetectedBrowser === 'firefox') {
+      bind.ended = true;
+    }
+  },
+
+  /**
+   * Handles the un-implemented MediaStream.onended events. Use this to set a checker
+   *   for Firefox MediaStreams when ended. It will trigger onended when stream has ended.
+   * @method StreamPolyfill.checkEnded
+   * @param {Object} bind The MediaStream object.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  checkEnded: function (bind) {
     // Firefox browsers
     if (window.webrtcDetectedBrowser === 'firefox') {
 
@@ -12710,6 +13424,7 @@ var StreamPolyfill = {
         var video = document.createElement('video');
 
         video.checkEnded = setInterval(function () {
+          // If stream has flag ended because of media tracks being stopped
           if (bind.ended) {
             clearInterval(bind.checkEnded);
 
@@ -12719,6 +13434,7 @@ var StreamPolyfill = {
             }
           }
 
+          // Check if mozSrcObject is not empty
           if (typeof video.mozSrcObject === 'object' &&
               video.mozSrcObject !== null) {
 
@@ -12735,6 +13451,7 @@ var StreamPolyfill = {
           }
         }, 1000);
 
+        // Bind the video element to MediaStream object
         bind.checkingVideo = video;
 
         window.attachMediaStream(video, bind);
@@ -12742,7 +13459,18 @@ var StreamPolyfill = {
     }
   },
 
-  attachMediaStream: function (video, bind) {
+  /**
+   * Handles the attachMediaStream function due to stop polyfill code
+   *   attaching the stream to the video element, hence attachMediaStream
+   *   has to be reattachMediaStream.
+   * @method StreamPolyfill.attachMediaStream
+   * @param {DOM} element The video element object.
+   * @param {Object} bind The MediaStream object.
+   * @private
+   * @for Stream
+   * @since 0.6.0
+   */
+  attachMediaStream: function (element, bind) {
     // Firefox browsers
     if (window.webrtcDetectedBrowser === 'firefox') {
       // If there's an element used for checking stream stop
@@ -12763,99 +13491,247 @@ var StreamPolyfill = {
     }
   },
 
+  /* MediaStreamTrack polyfills */
   track: {
+    /**
+     * Stores the list of subscription events to prevent over-bloating the MediaStream object
+     *   for Safari / IE (plugin-enabled) browsers.
+     * @attribute StreamPolyfill.track.fns
+     * @type JSON
+     * @param {JSON} (#streamId) The stream id of the parent MediaStream.
+     * @param {JSON} (#streamId).(#trackId) The track id that holds the functions.
+     * @param {Function} [(#streamId).(#trackId).onended] The track's onended function.
+     * @param {Function} [(#streamId).(#trackId).onmute] The track's onmute function.
+     * @param {Function} [(#streamId).(#trackId).onunmute] The track's onunmute function.
+     * @private
+     * @support Safari, IE
+     * @for Stream
+     * @since 0.6.0
+     */
+    fns: {},
 
+    /**
+     * Gets the track.onsomething event subscribed.
+     * @method StreamPolyfill.track.getFn
+     * @param {Object} bindTrack The MediaStreamTrack object.
+     * @param {String} mediaStreamId The MediaStream object id.
+     * @param {String} fnName The onsomething event name.
+     * @param {Function} [fn] The subscription function. If not provided, it
+     *   returns the subscription function.
+     * @private
+     * @for Stream
+     * @since 0.6.0
+     */
+    getFn: function (bindTrack, mediaStreamId, fnName, fn) {
+      // Prevent undefined error
+      this.fns[mediaStreamId] = this.fns[mediaStreamId] || {
+        audio: {},
+        video: {}
+      };
+      this.fns[mediaStreamId][bindTrack.kind] = this.fns[mediaStreamId][bindTrack.kind] || {};
+      this.fns[mediaStreamId][bindTrack.kind][bindTrack.id] = this.fns[mediaStreamId][bindTrack.kind][bindTrack.id] || {};
+
+      if (typeof fn === 'function') {
+        this.fns[mediaStreamId][bindTrack.kind][bindTrack.id][fnName] = fn || function () {};
+
+      } else {
+        return this.fns[mediaStreamId][bindTrack.kind][bindTrack.id][fnName] || function () {};
+      }
+    },
+
+    /**
+     * Handles the polyfill stop() function for MediaStreamTrack to trigger
+     *   un-implemented MediaStreamTrack.onended event for Firefox.
+     * @method StreamPolyfill.track.stop
+     * @param {Object} bind The MediaStreamTrack object.
+     * @support Firefox, Chrome, Opera
+     * @private
+     * @for Stream
+     * @since 0.6.0
+     */
     stop: function (bind) {
 
       // Allow users to use polystop to polyfill stop and onended for MediaStreamTrack
-      bind.polystop = function () {
-        bind.stop();
+      // Tell users that stop() is not implemented in plugin browsers for MediaStreamTrack
+      //    due to certain issues with the feature
+      if (window.webrtcDetectedBrowser === 'safari' || window.webrtcDetectedBrowser === 'IE') {
+        log.warn('StreamPolyfill', window.webrtcDetectedBrowser.toUpperCase() + ' (plugin-enabled) browser ' +
+          'does not support MediaStreamTrack.stop() due to issues with the feature');
+        return;
+      }
 
-        // Workaround for firefox as it does not have stop events
-        if (window.webrtcDetectedBrowser === 'firefox') {
+      bind.stop();
 
-          if (bind.ended !== true) {
-            bind.ended = true;
+      // Workaround for firefox as it does not have stop events
+      if (window.webrtcDetectedBrowser === 'firefox') {
 
-            if (typeof bind.onended === 'function') {
-              bind.onended(bind);
-            }
+        if (bind.ended !== true) {
+          bind.ended = true;
+
+          if (typeof bind.onended === 'function') {
+            bind.onended(bind);
           }
         }
-      };
+      }
     },
 
-    mute: function (bind) {
+    /**
+     * Handles the un-implemented MediaStream.onended events. Use this to set a checker
+     *   for plugin-enabled browsers MediaStreams when ended. It will trigger onended when
+     *   stream has ended.
+     * @method StreamPolyfill.track.checkEnded
+     * @param {Object} bindTrack The MediaStreamTrack object.
+     * @param {Object} bind The MediaStream object.
+     * @private
+     * @for Stream
+     * @since 0.6.0
+     */
+    checkEnded: function (bindTrack, bind) {
+      if (window.webrtcDetectedBrowser === 'safari' ||
+        window.webrtcDetectedBrowser === 'IE') {
+        this.getFn(bindTrack, bind.id, 'onended', bindTrack.onended);
+      }
+    },
+
+    /**
+     * Handles the un-implemented MediaStream.onmute events. Use this to set a checker
+     *   for plugin-enabled browsers MediaStreams when muted. It will trigger onm,ute when
+     *   stream has been muted.
+     * @method StreamPolyfill.track.checkMute
+     * @param {Object} bindTrack The MediaStreamTrack object.
+     * @param {Object} bind The MediaStream object.
+     * @private
+     * @for Stream
+     * @since 0.6.0
+     */
+    checkMute: function (bindTrack, bind) {
+      if (window.webrtcDetectedBrowser === 'safari' ||
+        window.webrtcDetectedBrowser === 'IE') {
+        this.getFn(bindTrack, bind.id, 'onmute', bindTrack.onmute);
+      }
+    },
+
+    /**
+     * Handles the un-implemented MediaStream.onunmute events. Use this to set a checker
+     *   for plugin-enabled browsers MediaStreams when unmuted. It will trigger onunmuted when
+     *   stream has unmuted.
+     * @method StreamPolyfill.track.checkUnmute
+     * @param {Object} bindTrack The MediaStreamTrack object.
+     * @param {Object} bind The MediaStream object.
+     * @private
+     * @for Stream
+     * @since 0.6.0
+     */
+    checkUnmute: function (bindTrack, bind) {
+      if (window.webrtcDetectedBrowser === 'safari' ||
+        window.webrtcDetectedBrowser === 'IE') {
+        this.getFn(bindTrack, bind.id, 'onunmute', bindTrack.onunmute);
+      }
+    },
+
+    /**
+     * Handles the polyfill muted attribute and sets it to <code>true</code> for
+     *   MediaStreamTrack to trigger un-implemented MediaStreamTrack.onmute event.
+     * This uses the enabled attribute and sets it to <code>false</code>.
+     * @method StreamPolyfill.track.mute
+     * @param {Object} bind The MediaStreamTrack object.
+     * @param {String} mediaStreamId The MediaStream object id.
+     * @private
+     * @for Stream
+     * @since 0.6.0
+     */
+    mute: function (bind, mediaStreamId) {
 
       // Allow users to use polymute to polyfill muted = true and onmute for MediaStreamTrack
-      bind.polymute = function () {
-        bind.enabled = false;
-        bind.muted = true;
+      bind.enabled = false;
+      bind.muted = true;
 
+      // Workaround for Safari / IE users
+      if (window.webrtcDetectedBrowser === 'safari' || window.webrtcDetectedBrowser === 'IE') {
+        var fn = this.getFn(bind, mediaStreamId, 'onmute');
+
+        console.info('fn', fn);
+
+        fn(bind);
+
+      } else {
         if (typeof bind.onmute === 'function') {
           bind.onmute(bind);
         }
-      };
+      }
     },
 
-    unmute: function (bind) {
+    /**
+     * Handles the polyfill muted attribute and sets it to <code>false</code> for
+     *   MediaStreamTrack to trigger un-implemented MediaStreamTrack.onunmute event.
+     * This uses the enabled attribute and sets it to <code>true</code>.
+     * @method StreamPolyfill.track.unmute
+     * @param {Object} bind The MediaStreamTrack object.
+     * @param {String} mediaStreamId The MediaStream object id.
+     * @private
+     * @for Stream
+     * @since 0.6.0
+     */
+    unmute: function (bind, mediaStreamId) {
 
       // Allow users to use polyunmute to polyfill muted = false and onunmute for MediaStreamTrack
-      bind.polyunmute = function () {
-        bind.enabled = true;
-        bind.muted = false;
+      bind.enabled = true;
+      bind.muted = false;
 
+      // Workaround for Safari / IE users
+      if (window.webrtcDetectedBrowser === 'safari' || window.webrtcDetectedBrowser === 'IE') {
+        var fn = this.getFn(bind, mediaStreamId, 'onunmute');
+
+        console.info('fnn', fn);
+
+        fn(bind);
+
+      } else {
         if (typeof bind.onunmute === 'function') {
           bind.onunmute(bind);
         }
-      };
+      }
     }
 
   }
 };
-var StreamTrackList = {
-  audio: [],
-  
-  video: [],
-  
-  get: function (defer) {
-    // Firefox does not support MediaStreamTrack.getSources yet
-    if (window.webrtcDetectedBrowser === 'firefox') {
-      StreamTrackList.readyState = 'done';
+var StreamGetSources = function (defer) {
+  // Firefox does not support MediaStreamTrack.getSources yet
+  // Chrome / Plugin / Opera supports MediaStreamTrack.getSources
+  if (window.webrtcDetectedBrowser !== 'firefox') {
+    var audioList = [];
+    var videoList = [];
 
-    // Chrome / Plugin / Opera supports MediaStreamTrack.getSources
-    } else {
-      // Retrieve list
-      MediaStreamTrack.getSources(function (trackList) {
-        var i;
-        
-        for (i = 0; i < trackList.length; i += 1) {
-          var track = trackList[i];
-          var data = {};
+    // Retrieve list
+    MediaStreamTrack.getSources(function (trackList) {
+      var i;
 
-          // MediaStreamTrack label - FaceHD Camera
-          data.label = track.label || (track.kind + '_' + (i + 1));
-          // MediaStreamTrack kind - audio / video
-          data.kind = track.kind;
-          // MediaStreamTrack id - The identifier
-          data.id = track.id;
-          // The facing environment
-          data.facing = track.facing;
+      for (i = 0; i < trackList.length; i += 1) {
+        var track = trackList[i];
+        var data = {};
 
-          if (track.kind === 'audio') {
-            StreamTrackList.audio.push(data);
-          } else {
-            StreamTrackList.video.push(data);
-          }
+        // MediaStreamTrack label - FaceHD Camera
+        data.label = track.label || (track.kind + '_' + (i + 1));
+        // MediaStreamTrack kind - audio / video
+        data.kind = track.kind;
+        // MediaStreamTrack id - The identifier
+        data.id = track.id;
+        // The facing environment
+        data.facing = track.facing;
+
+        if (track.kind === 'audio') {
+          audioList.push(data);
+        } else {
+          videoList.push(data);
         }
-        
-        defer({
-          audio: StreamTrackList.audio,
-          video: StreamTrackList.video
-        });
+      }
+
+      defer({
+        audio: audioList,
+        video: videoList
       });
-    }
-  } 
+    });
+  }
 };
 function User (config, listener) {
   'use strict';

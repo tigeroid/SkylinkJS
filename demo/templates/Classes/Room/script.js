@@ -11,7 +11,7 @@ var audioTrackListDom = document.getElementById('audioTrackList');
 var videoTrackListDom = document.getElementById('videoTrackList');
 
 
-StreamTrackList.get(function (sources) {
+StreamGetSources(function (sources) {
   sources.audio.forEach(function (value) {
     var option = document.createElement('option');
     option.value = value.id;

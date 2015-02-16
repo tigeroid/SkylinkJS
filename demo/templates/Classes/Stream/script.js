@@ -1,36 +1,33 @@
-var stream = null;
+//$(document).ready(function () {
+stream = null;
 
-var audioTrackList = document.getElementById('audioTrackList');
-var videoTrackList = document.getElementById('videoTrackList');
-var output = document.getElementById('output');
+audioTrackList = document.getElementById('audioTrackList');
+videoTrackList = document.getElementById('videoTrackList');
+output = document.getElementById('output');
 
 
-function addToOption(element, list) {
+addToOption = function (element, list) {
   for (var i = 0; i < list.length; i++) {
     element.innerHTML += '<option value="' + list[i].id + '">' +
       list[i].label + '</option>';
   }
-}
+};
 
-function stopStream() {
+stopStream = function () {
   if (stream) {
     stream.stop();
   }
-}
+};
 
 function handler(event, data) {
   console.log(event, data);
 
   if (event === 'stream:start') {
-    output.innerHTML = '<p><b>constraints:</b>' +
-      JSON.stringify(stream._constraints) + '</p>' +
-      '<p><b>config:</b>' + JSON.stringify(stream.config) + '</p>';
-
     stream.attachElement(document.getElementById('stream'));
   }
-}
+};
 
-function getStream() {
+getStream = function() {
   stopStream();
 
   var options = {
@@ -49,9 +46,9 @@ function getStream() {
   }
 
   stream = new Stream(null, options, handler);
-}
+};
 
-function bindStream() {
+bindStream = function () {
   stopStream();
 
   getUserMedia({
@@ -62,18 +59,36 @@ function bindStream() {
   }, function (error) {
     console.error('exception occurred:', error);
   });
-}
+};
 
-function stopAudioTrack() {
+stopAudioTrack = function () {
   stream.stopAudio();
-}
+};
 
-function stopVideoTrack() {
+muteAudioTrack = function () {
+  stream.muteAudio();
+};
+
+unmuteAudioTrack = function () {
+  stream.unmuteAudio();
+};
+
+stopVideoTrack = function () {
   stream.stopVideo();
-}
+};
 
-StreamTrackList.get(function () {
+muteVideoTrack = function () {
+  stream.muteVideo();
+};
+
+unmuteVideoTrack = function () {
+  stream.unmuteVideo();
+};
+
+StreamGetSources(function (sources) {
   // Add to list
-  addToOption(audioTrackList, StreamTrackList.audio);
-  addToOption(videoTrackList, StreamTrackList.video);
+  addToOption(audioTrackList, sources.audio);
+  addToOption(videoTrackList, sources.video);
 });
+
+//});

@@ -1,16 +1,20 @@
 /**
- * Handles the parsing of Stream / Bandwidth settings.
+ * Handles the parsing of stream and bandwidth configuration.
  * @attribute StreamParser
- * @for Skylink
+ * @type JSON
+ * @private
+ * @global true
+ * @for Stream
  * @since 0.6.0
  */
 var StreamParser = {
   /**
-   * Stores the default Stream / Bandwidth settings.
-   * @property defaultConfig
-   * @param {JSON} audio The default audio settings.
+   * Stores the default stream and bandwidth settings.
+   * @attribute StreamParser.defaultConfig
+   * @type JSON
+   * @param {JSON} audio The default audio streaming configuraiton.
    * @param {Boolean} audio.stereo The default flag to indicate if stereo is enabled.
-   * @param {JSON} video The default video settings.
+   * @param {JSON} video The default video streaming configuraiton.
    * @param {JSON} video.resolution The default video resolution.
    * @param {Integer} video.resolution.width The default video resolution width.
    * @param {Integer} video.resolution.height The default video resolution height.
@@ -19,7 +23,6 @@ var StreamParser = {
    * @param {Integer} bandwidth.audio The default audio bandwidth bitrate.
    * @param {Integer} bandwidth.video The default video bandwidth bitrate.
    * @param {Integer} bandwidth.data The default DataChannel data bandwidth bitrate.
-   * @type JSON
    * @private
    * @since 0.6.0
    */
@@ -40,16 +43,28 @@ var StreamParser = {
       data: 1638400
     }
   },
-  
+
   /**
-   * Parses the audio configuration for the getUserMedia constraints.
-   * @property parseAudioConfig
+   * Parses the audio configuration for the stream configuration and getUserMedia constraints.
+   * @method StreamParser.parseAudioConfig
    * @param {JSON|Boolean} options The audio settings or flag if audio is enabled.
    * @param {Boolean} options.stereo The flag to indicate if stereo is enabled.
-   * @type Function
-   * @return {JSON}
-   * - options: The configuration.
-   * - userMedia: The getUserMedia constraints.
+   * @param {String} options.sourceId The source id of the audio MediaStreamTrack.
+   * @return {JSON} Returns the output parsed audio configuration.
+   * - <code>settings</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   *   The audio stream configuration.
+   * - <code>settings.stereo</code> <var>: <b>type</b> Boolean</var><br>
+   *   The flag that indicates if stereo is enabled for this streaming.
+   * - <code>settings.sourceId</code> <var>: <b>type</b> JSON</var><br>
+   *   The audio stream source id.
+   * - <code>userMedia</code> <var>: <b>type</b> Boolean|JSON</var><br>
+   *   The audio stream getUserMedia constraints.
+   * - <code>userMedia.optional</code> <var>: <b>type</b> Array</var><br>
+   *   The audio stream optional configuration.
+   * - <code>settings.optional.(#index)</code> <var>: <b>type</b> JSON</var><br>
+   *   The audio stream optional configuration item.
+   * - <code>settings.optional.(#index).sourceId</code> <var>: <b>type</b> String</var><br>
+   *   The audio stream source id.
    * @private
    * @since 0.6.0
    */
@@ -58,7 +73,7 @@ var StreamParser = {
 
     var userMedia = false;
     var tempOptions = {};
-  
+
     // Cleaning of unwanted keys
     if (options !== false) {
       options = (typeof options === 'boolean') ? {} : options;
@@ -81,19 +96,45 @@ var StreamParser = {
       userMedia: userMedia
     };
   },
-  
+
   /**
-   * Parses the video configuration for the getUserMedia constraints.
-   * @property parseVideoConfig
-   * @param {JSON} options The video settings.
+   * Parses the video configuration for the stream configuration and getUserMedia constraints.
+   * @method StreamParser.parseVideoConfig
+   * @param {JSON|Boolean} options The video settings.
    * @param {JSON} options.resolution The video resolution.
    * @param {Integer} options.resolution.width The video resolution width.
    * @param {Integer} options.resolution.height The video resolution height.
    * @param {Integer} options.frameRate The video maximum framerate.
-   * @type Function
-   * @return {JSON}
-   * - options: The configuration.
-   * - userMedia: The getUserMedia constraints.
+   * @param {String} options.sourceId The source id of the video MediaStreamTrack.
+   * @return {JSON} Returns the output parsed video configuration.
+   * - <code>settings</code> <var>: <b>type</b> JSON|Boolean</var><br>
+   *   The video stream configuration.
+   * - <code>settings.resolution</code> <var>: <b>type</b> Boolean</var><br>
+   *   The video stream resolution.
+   * - <code>settings.resolution.width</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution width.
+   * - <code>settings.resolution.height</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution height.
+   * - <code>settings.resolution.frameRate</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream resolution maximum framerate.
+   * - <code>settings.sourceId</code> <var>: <b>type</b> JSON</var><br>
+   *   The video stream source id.
+   * - <code>userMedia</code> <var>: <b>type</b> Boolean|JSON</var><br>
+   *   The video stream getUserMedia constraints.
+   * - <code>userMedia.mandatory</code> <var>: <b>type</b> JSON</var><br>
+   *   The video stream mandatory configuration.
+   * - <code>userMedia.mandatory.maxWidth</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream maximum width resolution.
+   * - <code>userMedia.mandatory.maxHeight</code> <var>: <b>type</b> Integer</var><br>
+   *   The video stream maximum height resolution.
+   * - <code>userMedia.mandatory.maxFrameRate</code> <var>: <b>type</b> Array</var><br>
+   *   The video stream maximum framerate. Not supported in current Plugin browsers.
+   * - <code>userMedia.optional</code> <var>: <b>type</b> Array</var><br>
+   *   The video stream optional configuration.
+   * - <code>settings.optional.(#index)</code> <var>: <b>type</b> JSON</var><br>
+   *   The video stream optional configuration item.
+   * - <code>settings.optional.(#index).sourceId</code> <var>: <b>type</b> String</var><br>
+   *   The video stream source id.
    * @private
    * @since 0.6.0
    */
@@ -108,26 +149,26 @@ var StreamParser = {
     if (options !== false) {
       options = (typeof options === 'boolean') ?
         { resolution: {} } : options;
-      
+
       // set the resolution parsing
       options.resolution = options.resolution || {};
-      
+
       tempOptions.resolution = tempOptions.resolution || {};
-      
+
       // set resolution
       tempOptions.resolution.width = options.resolution.width ||
         this.defaultConfig.video.resolution.width;
-      
+
       tempOptions.resolution.height = options.resolution.height ||
         this.defaultConfig.video.resolution.height;
-      
+
       // set the framerate
       tempOptions.frameRate = options.frameRate ||
         this.defaultConfig.video.frameRate;
-      
+
       // set the sourceid
       tempOptions.sourceId = options.sourceId;
-      
+
       options = tempOptions;
 
       userMedia = {
@@ -141,7 +182,7 @@ var StreamParser = {
         },
         optional: []
       };
-      
+
       // Add video sourceId
       if (tempOptions.sourceId) {
         userMedia.optional[0] = { sourceId: tempOptions.sourceId };
@@ -158,21 +199,24 @@ var StreamParser = {
       userMedia: userMedia
     };
   },
-  
+
   /**
    * Parses the bandwidth configuration.
-   * - In low-bandwidth environment, it's mostly managed by the browser.
-   *   However, this option enables you to set low bandwidth for high-bandwidth
+   * In low-bandwidth environment, it's mostly managed by the browser.
+   * However, this option enables you to set low bandwidth for high-bandwidth
    *   environment whichever way is possible.
-   * @property parseBandwidthConfig
+   * @property StreamParser.parseBandwidthConfig
    * @param {JSON} options The bandwidth streaming settings.
    * @param {Integer} options.audio The audio bandwidth bitrate.
    * @param {Integer} options.video The video bandwidth bitrate.
    * @param {Integer} options.data The DataChannel data bandwidth bitrate.
-   * @type Function
-   * @return {JSON}
-   * - options: The configuration.
-   * - userMedia: The getUserMedia constraints.
+   * @return {JSON} Returns the output parsed bandwidth configuration.
+   * - <code>video</code> <var>: <b>type</b> Integer</var><br>
+   *   The video bandwidth configuration (bitrate).
+   * - <code>audio</code> <var>: <b>type</b> Integer</var><br>
+   *   The audio bandwidth configuration (bitrate).
+   * - <code>data</code> <var>: <b>type</b> Integer</var><br>
+   *   The data bandwidth configuration (bitrate).
    * @private
    * @since 0.6.0
    */
@@ -182,11 +226,11 @@ var StreamParser = {
     // set audio bandwidth
     options.audio = (typeof options.audio === 'number') ?
       options.audio : this.defaultConfig.bandwidth.audio;
-    
+
     // set video bandwidth
     options.video = (typeof options.video === 'number') ?
       options.video : this.defaultConfig.bandwidth.video;
-    
+
     // set data bandwidth
     options.data = (typeof options.data === 'number') ?
       options.data : this.defaultConfig.bandwidth.data;
@@ -194,17 +238,27 @@ var StreamParser = {
     // set the settings
     return options;
   },
-  
+
   /**
    * Parses the stream muted configuration.
-   * @property parseMutedConfig
+   * @method StreamParser.parseMutedConfig
    * @param {JSON} options The stream muted settings.
-   * @param {Integer} options.audioMuted The flag to indicate if audio stream is muted.
-   * @param {Integer} options.videoMuted The flag to indicate if video stream is muted.
-   * @type Function
-   * @return {JSON}
-   * - options: The configuration.
-   * - userMedia: The getUserMedia constraints.
+   * @param {JSON} config The streaming configuration.
+   * @param {JSON|Boolean} [config.audio=false] The audio stream configuration.
+   *    If parsed as a boolean, other configuration settings under the audio
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [config.audio.mute=false] The flag that indicates if audio stream
+   *    should be muted when retrieving.
+   * @param {String|Boolean} [config.video=false] The video stream configuration.
+   *    If parsed as a boolean, other configuration settings under the video
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [config.video.mute=false] The flag that indicates if video stream
+   *    should be muted when retrieving.
+   * @return {JSON} Returns the output parsed stream status configuration.
+   * - <code>videoMuted</code> <var>: <b>type</b> Boolean</var><br>
+   *   The video media status if video track is muted (disabled).
+   * - <code>audioMuted</code> <var>: <b>type</b> Boolean</var><br>
+   *   The audio media status if audio track is muted (disabled).
    * @private
    * @since 0.6.0
    */
@@ -223,6 +277,7 @@ var StreamParser = {
       videoMuted: updateVideoMuted
     };
   },
+
 
   parseDefaultConfig: function (options) {
     var hasMediaChanged = false;
