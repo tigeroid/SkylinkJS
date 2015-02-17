@@ -75,38 +75,13 @@ var PeerHelper = {
       };
     },
 
-    
+    addCandidate: function () {
+      
+    }
 
   }
 
-  /**
-   * The revised versions of ICE connection states to handle
-   *   the differences cross-browsers of different states. This was to
-   *   feedback to various users the completion state of the ICE connection.
-   * @attribute newIceConnectionStates
-   * @type JSON
-   * @param {String} starting The ICE connection has just started.
-   * @param {String} checking The ICE connection is in checking state.
-   * @param {String} connected The ICE connection is established.
-   * @param {String} completed The ICE connection is established.
-   * @param {String} done The ICE connection is in complete state.
-   * @param {String} disconnected The ICE connection has been disconnected.
-   * @param {String} failed The ICE connection has failed.
-   * @param {String} closed The ICE connection has closed.
-   * @private
-   * @for ICE
-   * @since 0.6.0
-   */
-  newIceConnectionStates: {
-    starting : 'starting',
-    checking : 'checking',
-    connected : 'connected',
-    completed : 'connected',
-    done : 'completed',
-    disconnected : 'disconnected',
-    failed : 'failed',
-    closed : 'closed'
-  },
+
 
   /**
    * Queues ICE candidates that is received before <var>setRemoteDescription</var> is called.

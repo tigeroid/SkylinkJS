@@ -25,7 +25,6 @@
  * @param {Boolean} [config.video.mute=false] The flag that indicates if video stream
  *    should be muted when retrieving.
  * @param {Function} [listener] The listener function.
- * @instantiable true
  * @for Skylink
  * @since 0.6.0
  */

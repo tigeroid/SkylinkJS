@@ -3,9 +3,9 @@ var PeerHandler = function (com, event, data, listener) {
 
   // Messaging events
   if (event.indexOf('message:') === 0) {
-    
+
     fn.applyHandler(PeerEventMessageHandler, params, [com, data, listener]);
-  
+
   } else {
     // Class events
     if (event.indexOf('peer:') === 0) {
@@ -18,9 +18,9 @@ var PeerHandler = function (com, event, data, listener) {
 
       fn.applyHandler(PeerEventReceivedHandler, params, [com, data, listener]);
     }
-    
+
     listener(event, data);
   }
-  
+
   //log.debug('PeerHandler', event, data);
 };
