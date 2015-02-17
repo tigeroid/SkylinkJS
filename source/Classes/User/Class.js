@@ -1,3 +1,46 @@
+/**
+ * Handles the user that joins the room.
+ * @class User
+ * @constructor
+ * @param {JSON} config The user configuration.
+ * @param {String} config.id The user id.
+ * @param {JSON} config.agent The user browser agent information.
+ * @param {String} config.agent.name The user browser agent name.
+ * @param {Integer} config.agent.version The user browser version.
+ * @param {String} config.agent.webRTCType The user browser WebRTC implementation type.
+ * @param {JSON|String} config.data The user custom data.
+ * @param {JSON} config.stream The streamming configuration for the "main" shared peer connection.
+ * @param {JSON|Boolean} [config.stream.audio=false] The audio stream configuration.
+ *    If parsed as a boolean, other configuration settings under the audio
+ *    configuration would be set as the default setting in the connection.
+ * @param {Boolean} [config.stream.audio.stereo=false] The flag that indiciates
+ *    if stereo is enabled for this connection.
+ * @param {String} [config.stream.audio.sourceId] The source id of the audio MediaStreamTrack
+   *    used for this connection.
+ * @param {String|Boolean} [config.stream.video=false] The video stream configuration.
+ *    If parsed as a boolean, other configuration settings under the video
+ *    configuration would be set as the default setting in the connection.
+ * @param {JSON} [config.stream.video.resolution] The video streaming resolution.
+ * @param {Integer} config.stream.video.resolution.width The video resolution width.
+ * @param {Integer} config.stream.video.resolution.height The video resolution height.
+ * @param {Integer} config.stream.video.frameRate The video stream framerate.
+ * @param {String} [config.stream.video.sourceId] The source id of the video MediaStreamTrack
+ *    used for this connection.
+ * @param {JSON} config.stream.status The stream MediaStreamTrack status.
+ * @param {Boolean} [config.stream.status.audioMuted=false] The flag that indicates if audio is muted.
+ *    If audio is set to false, this would be set as true.
+ * @param {Boolean} [config.stream.status.videoMuted=false] The flag that indicates if video is muted.
+ *    If video is set to false, this would be set as true.
+ * @param {JSON} config.bandwidth The bandwidth configuration for the peer connections.
+ *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+ * @param {Integer} [config.bandwidth.audio] The bandwidth configuration for the audio stream.
+ * @param {Boolean} [config.bandwidth.video] The bandwidth configuration for the video stream.
+ * @param {Boolean} [config.bandwidth.data] The bandwidth configuration for the data stream.
+ * @param {String} config.SDPType The session description type that the "main" peer connection would send.
+ * @param {Function} listener The listener function.
+ * @for Skylink
+ * @since 0.6.0
+ */
 function User (config, listener) {
   'use strict';
 
@@ -7,6 +50,7 @@ function User (config, listener) {
   // Reference of instance
   var com = this;
 
+  /* Attributes */
   /**
    * The user id.
    * @attribute id
@@ -45,7 +89,6 @@ function User (config, listener) {
    * @param {Integer} version The browser agent version.
    * @param {String} webRTCType The browser agent WebRTC type of implementation.
    * @type JSON
-   * @private
    * @for User
    * @since 0.6.0
    */
@@ -75,149 +118,18 @@ function User (config, listener) {
   com.peers = {};
 
 
+  /* Methods */
   /**
-   * Function to subscribe to when the user object is ready to use.
-   * @method onready
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onready = function () {};
-
-  /**
-   * Function to subscribe to when user's custom data is updated.
-   * @method onupdate
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onupdate = function () {};
-
-  /**
-   * Function to subscribe to when user has an established "main" peer connection.
-   * @method onconnect
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onconnect = function () {};
-
-  /**
-   * Function to subscribe to when user is disconnected from the room.
-   * @method ondisconnect
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.ondisconnect = function () {};
-
-  /**
-   * Function to subscribe to when a new peer connection is established to user.
-   * @method onaddconnection
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onaddconnection = function () {};
-
-  /**
-   * Function to subscribe to when a peer connection to user has added.
-   * @method onremoveconnection
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onremoveconnection = function () {};
-
-  /**
-   * Function to subscribe to when a new data transfer request is initialized from user.
-   * @method ondatarequest
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.ondatarequest = function () {};
-
-  /**
-   * Function to subscribe to when a new data is received after transfer is completed from user.
-   * @method ondata
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.ondata = function () {};
-
-  /**
-   * Function to subscribe to when a new message is received from user.
-   * @method onmessage
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onmessage = function () {};
-
-
-  /**
-   * The handler handles received events.
-   * @method routeEvent
+   * The handler that the manages response and received events.
+   * @method _handler
    * @param {String} event The event name.
    * @param {JSON} data The response data.
    * @private
-   * @for User
+   * @for Stream
    * @since 0.6.0
    */
-  com.routeEvent = function (event, data) {
-    var params = event.split(':');
-
-    data = data || {};
-    data.userId = com.id;
-
-    fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
-
-    listener(event, data);
-
-    log.debug('User: Received event = ', event, data);
-  };
-
-  /**
-   * The handler handles received socket message events.
-   * @method routeMessage
-   * @param {JSON} message The message received.
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.routeMessage = function (message) {
-    // Messaging events
-    var fn = UserEventMessageHandler[message.type];
-
-    if (typeof fn === 'function') {
-      fn(com, message, listener);
-    }
-
-    log.debug('User: Received message = ', event, message);
-  };
-
-  /**
-   * The handler handles response events.
-   * @method respond
-   * @param {String} event The event name.
-   * @param {JSON} data The response data.
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.respond = function (event, data) {
-    var params = event.split(':');
-
-    data = data || {};
-    data.id = com.id;
-
-    fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
-
-    listener(event, data);
-
-    log.debug('User: Responding with even = ', event, data);
+  com._handler = function (event, data) {
+    UserHandler(com, event, data, listener);
   };
 
   /**
@@ -283,7 +195,7 @@ function User (config, listener) {
 
     com.peers[peer.id] = peer;
 
-    com.respond('user:addconnection', {
+    com._handler('user:addconnection', {
       peer: peer,
       peerId: data.prid,
       config: peerConfig
@@ -305,7 +217,7 @@ function User (config, listener) {
       peer.disconnect();
     }
 
-    com.respond('user:removeconnection', {
+    com._handler('user:removeconnection', {
       peerId: peerId
     });
   };
@@ -313,6 +225,7 @@ function User (config, listener) {
   /**
    * Disconnects this user connection.
    * @method disconnect
+   * @private
    * @for User
    * @since 0.6.0
    */
@@ -435,7 +348,94 @@ function User (config, listener) {
     return data;
   };
 
+  /* Event Handlers */
+  /**
+   * Function to subscribe to when the user object is ready to use.
+   * @method onready
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onready = function () {};
+
+  /**
+   * Function to subscribe to when user's custom data is updated.
+   * @method onupdate
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onupdate = function () {};
+
+  /**
+   * Function to subscribe to when user has an established "main" peer connection.
+   * @method onconnect
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when user is disconnected from the room.
+   * @method ondisconnect
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+
+  /**
+   * Function to subscribe to when a new peer connection is established to user.
+   * @method onaddconnection
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onaddconnection = function () {};
+
+  /**
+   * Function to subscribe to when a peer connection to user has added.
+   * @method onremoveconnection
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onremoveconnection = function () {};
+
+  /**
+   * Function to subscribe to when a new data transfer request is initialized from user.
+   * @method ondatarequest
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.ondatarequest = function () {};
+
+  /**
+   * Function to subscribe to when a new data is received after transfer is completed from user.
+   * @method ondata
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.ondata = function () {};
+
+  /**
+   * Function to subscribe to when a new message is received from user.
+   * @method onmessage
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onmessage = function () {};
+
+
+  /* Beginning Logic */
+  // Run sync so there is time to return the user object before running ready.
+  // Example user = new User(). Return and assign to user the user object reference
+  //   before running user:ready
   fn.runSync(function () {
-    com.respond('user:ready', config);
+    com._handler('user:ready', config);
   });
 }

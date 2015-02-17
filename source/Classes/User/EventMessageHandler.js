@@ -1,5 +1,7 @@
 var UserEventMessageHandler = {
 
+  // Add peer connection if peer doesn't exists
+  // If exist, exit
   enter: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -18,6 +20,9 @@ var UserEventMessageHandler = {
     }, data.streamObject);
   },
 
+  // Add peer connection if peer doesn't exists
+  // If exist, it could be a weight checking
+  // For an instance, when both users receives each other's welcome
   welcome: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -45,6 +50,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives a peer offer, send to the correct peer
   offer: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -53,6 +59,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives a peer answer, send to the correct peer
   answer: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -61,6 +68,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives an ice candidate, send to the correct peer
   candidate: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -69,6 +77,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives a restart, send to the correct peer
   restart: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -77,6 +86,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives an updateUserEvent. Update the user data
   updateUserEvent: function (com, data, listener) {
     com.data = data.data;
 
@@ -85,6 +95,7 @@ var UserEventMessageHandler = {
     });
   },
 
+  // Receives an audio muted event. relay to correct peer
   muteAudioEvent: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -93,6 +104,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives an video muted event. relay to correct peer
   muteVideoEvent: function (com, data, listener) {
     var peer = com.peers[data.prid];
 

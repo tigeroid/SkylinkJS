@@ -3,9 +3,11 @@ var UserHandler = function (com, event, data, listener) {
 
   // Messaging events
   if (event.indexOf('message:') === 0) {
-    
+
     fn.applyHandler(UserEventMessageHandler, params, [com, data, listener]);
-  
+
+    log.debug('Stream', 'Received message event', event, data);
+
   } else {
     // Class events
     if (event.indexOf('user:') === 0) {
@@ -13,14 +15,16 @@ var UserHandler = function (com, event, data, listener) {
 
       fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
 
+      log.debug('Stream', 'Responding with event', event, data);
+
     } else {
-      data.peerId = com.id;
+      data.userId = com.id;
 
       fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
+
+      log.debug('Stream', 'Received sub-class event', event, data);
     }
-    
+
     listener(event, data);
   }
-  
-  //log.debug('PeerHandler', event, data);
 };
