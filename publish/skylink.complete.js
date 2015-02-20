@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-20 */
+/*! skylinkjs - v0.5.7 - 2015-02-21 */
 
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -7655,7 +7655,7 @@ if (navigator.mozGetUserMedia) {
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
 
-/*! skylinkjs - v0.5.7 - 2015-02-20 */
+/*! skylinkjs - v0.5.7 - 2015-02-21 */
 
 var globals = {
   apiKey: null,
@@ -9851,6 +9851,83 @@ var PeerHandler = function (com, event, data, listener) {
 var PeerHelper = {
   /* RTCPeerConnection polyfills */
   /**
+   * Handles the configuration settings for cross-browser interopability and
+   *   getConfiguration, getStreamById and canTrickleIceCandidates polyfill.
+   * @method PeerHelper.create
+   * @param {JSON} config The RTCConfiguration for the new RTCPeerConnection object.
+   * @param {JSON} [optional] The optional RTCConfiguration for the new RTCPeerConnection object.
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  create: function (config, optional) {
+    // Peer configuration
+    var peerConfig = null;
+    // Required parameters for Firefox interopability
+    var peerOptional = {
+      optional: [{
+        DtlsSrtpKeyAgreement: true
+      }]
+    };
+
+    if (config !== null && typeof config === 'object') {
+      peerConfig = config;
+
+      if (typeof config.iceServers === 'object' ? config.iceServers instanceof Array : false) {
+        peerConfig.iceServers = this.ICE.configureTURN(peerConfig.iceServers);
+      }
+    }
+
+    if (config !== null && typeof config === 'object') {
+      peerOptional = optional;
+    }
+
+    var peer = new window.RTCPeerConnection(peerConfig, peerOptional);
+
+    // Polyfill getConfiguration function
+    // Override firefox unsupported feature
+    if (typeof peer.getConfiguration !== 'function' || window.webrtcDetectedBrowser === 'firefox') {
+      peer.getConfiguration = function () {
+        peerConfig.optional = typeof peerOptional === 'object' ? peerOptional.optional || null : null;
+        return peerConfig;
+      };
+    }
+
+    // Polyfill getStreamById function
+    // Override firefox unsupported feature
+    if (typeof peer.getStreamById !== 'function' || window.webrtcDetectedBrowser === 'firefox') {
+      peer.getStreamById = function (streamId) {
+        var localStreams = peer.getLocalStreams();
+        var remoteStreams = peer.getRemoteStreams();
+
+        var i, j;
+
+        for (i = 0; i < localStreams.length; i += 1) {
+          if (streamId === localStreams[i].id) {
+            return localStreams[i];
+          }
+        }
+
+        for (j = 0; j < remoteStreams.length; j += 1) {
+          if (streamId === remoteStreams[i].id) {
+            return remoteStreams[j];
+          }
+        }
+
+        return null;
+      };
+    }
+
+    // Polyfill canTrickleIceCandidates property
+    if (typeof peer.canTrickleIceCandidates !== 'boolean') {
+      peer.canTrickleIceCandidates = window.webrtcDetectedBrowser === 'firefox' ?
+        window.webrtcDetectedVersion > 27 : true;
+    }
+
+    return peer;
+  },
+
+  /**
    * Handles the addStream polyfill for RTCPeerConnection object.
    * If onnegotiationneeded event is not supported, fire if a stream has been added.
    * This polyfills the missing onnegotiationneeded event handler.
@@ -9864,16 +9941,16 @@ var PeerHelper = {
    * @since 0.6.0
    */
   addStream: function (peer, stream) {
-    if (window.webrtcDetectedBrowser !== 'chrome' && window.webrtcDetectedBrowser !== 'opera') {
+    if (window.webrtcDetectedBrowser === 'chrome' && window.webrtcDetectedBrowser === 'opera') {
       peer.addStream(stream);
 
     // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
     // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
     } else {
       if (peer.getLocalStream().length > 0) {
-        log.warn('StreamPolyfill', 'You cannot add more than 1 stream. Multi-stream is not supported in ' +
-          window.webrtcDetectedBrowser.toUpperCase() +  (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' :
-          '') + ' browser');
+        log.warn('StreamPolyfill', 'You cannot add more than 1 stream. Multi-stream sending is ' +
+          'not supported in ' + window.webrtcDetectedBrowser.toUpperCase() +
+          (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' : '') + ' browser');
         return;
       }
 
@@ -9899,17 +9976,13 @@ var PeerHelper = {
    * @since 0.6.0
    */
   removeStream: function (peer, stream) {
-    if (window.webrtcDetectedBrowser !== 'chrome' && window.webrtcDetectedBrowser !== 'opera') {
+    if (window.webrtcDetectedBrowser === 'chrome' && window.webrtcDetectedBrowser === 'opera') {
       peer.removeStream(stream);
 
     // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
     // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
     } else {
       if (peer.getLocalStream().length > 0) {
-        log.warn('StreamPolyfill', 'You cannot add more than 1 stream. Multi-stream is not supported in ' +
-          window.webrtcDetectedBrowser.toUpperCase() +  (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' :
-          '') + ' browser');
-
         var constraints = null;
         var optional;
 
@@ -9963,12 +10036,28 @@ var PeerHelper = {
         }
 
         // If subscribed to our event
-        if (!!peer.newiceConnectionState) {
+        if (!!peer2.newiceConnectionState) {
           this.ICE.state(peer2);
         }
 
+        // Check if remoteDescription is set before firing onremovestream
+        var checkForRemoteDesc = setInterval(function () {
+          if (!!peer2.remoteDescription) {
+            clearInterval(checkForRemoteDesc);
+
+            if (typeof peer2.onremovestream === 'function') {
+              peer2.onremovestream(peer);
+            }
+          }
+        }, 10);
+
+
         // Re-invoke negotiation needed
-        peer.onnegotiationneeded(peer2);
+        if (typeof peer2.onnegotiationneeded === 'function') {
+          peer2.onnegotiationneeded(peer2);
+        }
+
+        peer = peer2;
       }
     }
   },
@@ -10080,12 +10169,12 @@ var PeerHelper = {
         if (!!peer.waitForBuffer && (peer.newiceConnectionState !== 'connected' ||
           peer.newiceConnectionState !== 'completed')) {
           // Do a buffer to check
-          peer.waitForBuffer = setInterval(function () {
+          var waitForBuffer = setInterval(function () {
             if (!!peer.remoteDescription) {
               console.log('Adding buffered candidates');
 
               // Clear interval
-              clearInterval(peer.waitForBuffer);
+              clearInterval(waitForBuffer);
 
               var i;
 
@@ -10097,7 +10186,7 @@ var PeerHelper = {
               // Remove reference
               delete peer.waitForBuffer;
             }
-          }, 100);
+          }, 10);
         }
       }
     },
@@ -10151,13 +10240,14 @@ var PeerHelper = {
         // For Firefox only
         if (window.webrtcDetectedBrowser === 'firefox') {
           // If it's a TURN server
-          if (iceServer.url.indexOf('turn') === 0 && indexOf) {
+          if (iceServer.url.indexOf('turn') === 0) {
             // Check if the url is username@turn.com
-            if (iceServer.url.indexOf('@')) {
+            if (iceServer.url.indexOf('@') > 0) {
               var iceParts = iceServer.url.split(':');
               var subIceParts = iceParts[1].split('@'); // user '@' url
 
-              iceServer.url = subIceParts[1];
+              iceParts[1] = subIceParts[1];
+              iceServer.url = iceParts.join(':');
               iceServer.username = subIceParts[0];
             }
           }

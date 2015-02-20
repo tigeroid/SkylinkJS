@@ -1,5 +1,8 @@
 /**
  * Polyfills un-implemented MediaStream APIs.
+ * Note that when the local MediaStream ends, it might not be reflected
+ *  in the remote MediaStream. You will require to send a signaling message
+ *  to inform and reflect the changes.
  * @attribute StreamPolyfill
  * @type JSON
  * @private
