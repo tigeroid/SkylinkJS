@@ -56,7 +56,9 @@ var StreamPolyfill = {
     }
 
     // Allow users to use polystop to polyfill stop and onended for MediaStreamTrack
-    bind.stop();
+    if (window.webrtcDetectedBrowser === 'firefox' ? bind instanceof LocalMediaStream : true) {
+      bind.stop();
+    }
 
     if (window.webrtcDetectedType === 'safari' || window.webrtcDetectedBrowser === 'IE') {
       delete this.track.fns[bind.id];
@@ -85,7 +87,7 @@ var StreamPolyfill = {
         var i, j;
 
         var audios = bind.getAudioTracks();
-        var videos = bind.getTracks();
+        var videos = bind.getVideoTracks();
 
         var audioEnded = true;
         var videoEnded = true;

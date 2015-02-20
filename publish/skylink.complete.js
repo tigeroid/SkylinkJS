@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-16 */
+/*! skylinkjs - v0.5.7 - 2015-02-20 */
 
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -6714,36 +6714,19 @@ function toArray(list, index) {
 (1)
 });
 
-/*! adapterjs - v0.10.3 - 2015-01-21 */
+/*! adapterjs - v0.10.0 - 2014-12-19 */
 
 // Adapter's interface.
-var AdapterJS = AdapterJS || {};
-
-AdapterJS.options = {};
+AdapterJS = { options:{} };
 
 // uncomment to get virtual webcams
 // AdapterJS.options.getAllCams = true;
 
 // uncomment to prevent the install prompt when the plugin in not yet installed
-// AdapterJS.options.hidePluginInstallPrompt = true;
+// AdapterJS.options.hidePluginInstallPrompt
 
 // AdapterJS version
-AdapterJS.VERSION = '0.10.3';
-
-// This function will be called when the WebRTC API is ready to be used
-// Whether it is the native implementation (Chrome, Firefox, Opera) or 
-// the plugin
-// You may Override this function to synchronise the start of your application
-// with the WebRTC API being ready.
-// If you decide not to override use this synchronisation, it may result in 
-// an extensive CPU usage on the plugin start (once per tab loaded) 
-// Params:
-//    - isUsingPlugin: true is the WebRTC plugin is being used, false otherwise
-//
-AdapterJS.onwebrtcready = AdapterJS.onwebrtcready || function(isUsingPlugin) {
-  // The WebRTC API is ready.
-  // Override me and do whatever you want here
-};
+AdapterJS.VERSION = '0.10.0';
 
 // Plugin namespace
 AdapterJS.WebRTCPlugin = AdapterJS.WebRTCPlugin || {};
@@ -6764,18 +6747,13 @@ if(!!navigator.platform.match(/^Mac/i)) {
 }
 else if(!!navigator.platform.match(/^Win/i)) {
   AdapterJS.WebRTCPlugin.pluginInfo.downloadLink = 'http://bit.ly/1kkS4FN';
-}
+};
 
 // Unique identifier of each opened page
 AdapterJS.WebRTCPlugin.pageId = Math.random().toString(36).slice(2);
 
 // Use this whenever you want to call the plugin.
 AdapterJS.WebRTCPlugin.plugin = null;
-
-// Set log level for the plugin once it is ready.
-// The different values are 
-// This is an asynchronous function that will run when the plugin is ready 
-AdapterJS.WebRTCPlugin.setLogLevel = null;
 
 // Defines webrtc's JS interface according to the plugin's implementation.
 // Define plugin Browsers as WebRTC Interface.
@@ -6792,8 +6770,6 @@ AdapterJS.WebRTCPlugin.pluginInjectionInterval = null;
 // Inject the HTML DOM object element into the page.
 AdapterJS.WebRTCPlugin.injectPlugin = null;
 
-// States of readiness that the plugin goes through when
-// being injected and stated
 AdapterJS.WebRTCPlugin.PLUGIN_STATES = {
   NONE : 0,           // no plugin use
   INITIALIZING : 1,   // Detected need for plugin
@@ -6805,28 +6781,6 @@ AdapterJS.WebRTCPlugin.PLUGIN_STATES = {
 // Current state of the plugin. You cannot use the plugin before this is
 // equal to AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY
 AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.NONE;
-
-// True is AdapterJS.onwebrtcready was already called, false otherwise
-// Used to make sure AdapterJS.onwebrtcready is only called once
-AdapterJS.onwebrtcreadyDone = false;
-
-// Log levels for the plugin. 
-// To be set by calling AdapterJS.WebRTCPlugin.setLogLevel
-/*
-Log outputs are prefixed in some cases. 
-  INFO: Information reported by the plugin. 
-  ERROR: Errors originating from within the plugin.
-  WEBRTC: Error originating from within the libWebRTC library
-*/
-// From the least verbose to the most verbose
-AdapterJS.WebRTCPlugin.PLUGIN_LOG_LEVELS = {
-  NONE : 'NONE',
-  ERROR : 'ERROR',  
-  WARNING : 'WARNING', 
-  INFO: 'INFO', 
-  VERBOSE: 'VERBOSE', 
-  SENSITIVE: 'SENSITIVE'  
-};
 
 // Does a waiting check before proceeding to load the plugin.
 AdapterJS.WebRTCPlugin.WaitForPluginReady = null;
@@ -6842,39 +6796,24 @@ AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb = null;
 // !!!! WARNING: DO NOT OVERRIDE THIS FUNCTION. !!!
 // This function will be called when plugin is ready. It sends necessary
 // details to the plugin.
-// The function will wait for the document to be ready and the set the
-// plugin state to AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY,
-// indicating that it can start being requested.
+// If you need to do something once the page/plugin is ready, override
+// window.onwebrtcready instead.
 // This function is not in the IE/Safari condition brackets so that
 // TemPluginLoaded function might be called on Chrome/Firefox.
 // This function is the only private function that is not encapsulated to
 // allow the plugin method to be called.
 __TemWebRTCReady0 = function () {
-  if (document.readyState === 'complete') {
-    AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY;
-
-    AdapterJS.maybeThroughWebRTCReady();
-  } else {
+  arguments.callee.StaticWasInit = arguments.callee.StaticWasInit || 1;
+  if (arguments.callee.StaticWasInit === 1) {
     AdapterJS.WebRTCPlugin.documentReadyInterval = setInterval(function () {
       if (document.readyState === 'complete') {
         // TODO: update comments, we wait for the document to be ready
         clearInterval(AdapterJS.WebRTCPlugin.documentReadyInterval);
         AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY;
-
-        AdapterJS.maybeThroughWebRTCReady();
       }
     }, 100);
   }
-};
-
-AdapterJS.maybeThroughWebRTCReady = function() {
-  if (!AdapterJS.onwebrtcreadyDone) {
-    AdapterJS.onwebrtcreadyDone = true;
-
-    if (typeof(AdapterJS.onwebrtcready) === 'function') {
-      AdapterJS.onwebrtcready(AdapterJS.WebRTCPlugin.plugin !== null);
-    }
-  }
+  arguments.callee.StaticWasInit++;
 };
 
 // The result of ice connection states.
@@ -6970,14 +6909,13 @@ AdapterJS.maybeFixConfiguration = function (pcConfig) {
 };
 
 AdapterJS.addEvent = function(elem, evnt, func) {
-  if (elem.addEventListener) { // W3C DOM
-    elem.addEventListener(evnt, func, false);
-  } else if (elem.attachEvent) {// OLD IE DOM 
-    elem.attachEvent('on'+evnt, func);
-  } else { // No much to do
-    elem[evnt] = func;
-  }
-};
+   if (elem.addEventListener)  // W3C DOM
+      elem.addEventListener(evnt, func, false);
+   else if (elem.attachEvent) // OLD IE DOM 
+      elem.attachEvent("on"+evnt, func);
+   else // No much to do
+      elem[evnt] = func;
+}
 
 // -----------------------------------------------------------
 // Detected webrtc implementation. Types are:
@@ -7243,8 +7181,6 @@ if (navigator.mozGetUserMedia) {
       return [];
     };
   }
-
-  AdapterJS.maybeThroughWebRTCReady();
 } else if (navigator.webkitGetUserMedia) {
   webrtcDetectedBrowser = 'chrome';
   webrtcDetectedType = 'webkit';
@@ -7328,8 +7264,6 @@ if (navigator.mozGetUserMedia) {
     to.src = from.src;
     return to;
   };
-
-  AdapterJS.maybeThroughWebRTCReady();
 } else { // TRY TO USE PLUGIN
   // IE 9 is not offering an implementation of console.log until you open a console
   if (typeof console !== 'object' || typeof console.log !== 'function') {
@@ -7368,37 +7302,22 @@ if (navigator.mozGetUserMedia) {
   /* jshint +W035 */
 
   AdapterJS.WebRTCPlugin.callWhenPluginReady = function (callback) {
-    if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
-      // Call immediately if possible
-      // Once the plugin is set, the code will always take this path
-      callback();
-    } else {
-      // otherwise start a 100ms interval
-      var checkPluginReadyState = setInterval(function () {
-        if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
-          clearInterval(checkPluginReadyState);
-          callback();
-        }
-      }, 100);
-    }
-  };
-
-  AdapterJS.WebRTCPlugin.setLogLevel = function(logLevel) {
-    AdapterJS.WebRTCPlugin.callWhenPluginReady(function() {
-      AdapterJS.WebRTCPlugin.plugin.setLogLevel(logLevel);
-    });
+    var checkPluginReadyState = setInterval(function () {
+      if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
+        clearInterval(checkPluginReadyState);
+        callback();
+      }
+    }, 100);
   };
 
   AdapterJS.WebRTCPlugin.injectPlugin = function () {
     // only inject once the page is ready
-    if (document.readyState !== 'complete') {
+    if (document.readyState !== 'complete')
       return;
-    }
 
     // Prevent multiple injections
-    if (AdapterJS.WebRTCPlugin.pluginState !== AdapterJS.WebRTCPlugin.PLUGIN_STATES.INITIALIZING) {
+    if (AdapterJS.WebRTCPlugin.pluginState !== AdapterJS.WebRTCPlugin.PLUGIN_STATES.INITIALIZING)
       return;
-    }
 
     AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.INJECTING;
 
@@ -7416,7 +7335,7 @@ if (navigator.mozGetUserMedia) {
         '" />' +
         // uncomment to be able to use virtual cams
         (AdapterJS.options.getAllCams ? '<param name="forceGetAllCams" value="True" />':'') +
-  
+	
         '</object>';
       while (AdapterJS.WebRTCPlugin.plugin.firstChild) {
         frag.appendChild(AdapterJS.WebRTCPlugin.plugin.firstChild);
@@ -7436,6 +7355,8 @@ if (navigator.mozGetUserMedia) {
         AdapterJS.WebRTCPlugin.plugin.width = '1px';
         AdapterJS.WebRTCPlugin.plugin.height = '1px';
       }
+      AdapterJS.WebRTCPlugin.plugin.width = '1px';
+      AdapterJS.WebRTCPlugin.plugin.height = '1px';
       AdapterJS.WebRTCPlugin.plugin.type = AdapterJS.WebRTCPlugin.pluginInfo.type;
       AdapterJS.WebRTCPlugin.plugin.innerHTML = '<param name="onload" value="' +
         AdapterJS.WebRTCPlugin.pluginInfo.onload + '">' +
@@ -7643,42 +7564,39 @@ if (navigator.mozGetUserMedia) {
   };
 
   AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb = function() {
-    AdapterJS.addEvent(document, 
-                      'readystatechange',
-                       AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv);
+    AdapterJS.addEvent(document, 'readystatechange', AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv);
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv();
-  };
+  }
 
   AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv = function () {
-    if (AdapterJS.options.hidePluginInstallPrompt) {
+    if (AdapterJS.options.hidePluginInstallPrompt)
       return;
-    }
 
     var downloadLink = AdapterJS.WebRTCPlugin.pluginInfo.downloadLink;
-    if(downloadLink) { // if download link
+    if(downloadLink) {
       var popupString;
-      if (AdapterJS.WebRTCPlugin.pluginInfo.portalLink) { // is portal link
+      if (AdapterJS.WebRTCPlugin.pluginInfo.downloadLink) {
        popupString = 'This website requires you to install the ' +
         ' <a href="' + AdapterJS.WebRTCPlugin.pluginInfo.portalLink + 
         '" target="_blank">' + AdapterJS.WebRTCPlugin.pluginInfo.companyName +
         ' WebRTC Plugin</a>' +
         ' to work on this browser.';
-      } else { // no portal link, just print a generic explanation
+      } else {
        popupString = 'This website requires you to install a WebRTC-enabling plugin ' +
         'to work on this browser.';
       }
 
       AdapterJS.WebRTCPlugin.renderNotificationBar(popupString, 'Install Now', downloadLink);
-    } else { // no download link, just print a generic explanation
+    }
+    else {
       AdapterJS.WebRTCPlugin.renderNotificationBar('Your browser does not support WebRTC.');
     }
   };
 
   AdapterJS.WebRTCPlugin.renderNotificationBar = function (text, buttonText, buttonLink) {
     // only inject once the page is ready
-    if (document.readyState !== 'complete') {
+    if (document.readyState !== 'complete')
       return;
-    }
 
     var w = window;
     var i = document.createElement('iframe');
@@ -7732,14 +7650,12 @@ if (navigator.mozGetUserMedia) {
     }, 300);
   };
   // Try to detect the plugin and act accordingly
-  AdapterJS.WebRTCPlugin.isPluginInstalled(
-    AdapterJS.WebRTCPlugin.pluginInfo.prefix, 
-    AdapterJS.WebRTCPlugin.pluginInfo.plugName,
+  AdapterJS.WebRTCPlugin.isPluginInstalled(AdapterJS.WebRTCPlugin.pluginInfo.prefix, AdapterJS.WebRTCPlugin.pluginInfo.plugName,
     AdapterJS.WebRTCPlugin.defineWebRTCInterface,
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
 
-/*! skylinkjs - v0.5.7 - 2015-02-16 */
+/*! skylinkjs - v0.5.7 - 2015-02-20 */
 
 var globals = {
   apiKey: null,
@@ -8787,237 +8703,6 @@ var EventList = [
    */
   'systemAction'
 ];
-var ICE = {
-  /**
-   * The revised versions of ICE connection states to handle
-   *   the differences cross-browsers of different states. This was to
-   *   feedback to various users the completion state of the ICE connection.
-   * @attribute newIceConnectionStates
-   * @type JSON
-   * @param {String} starting The ICE connection has just started.
-   * @param {String} checking The ICE connection is in checking state.
-   * @param {String} connected The ICE connection is established.
-   * @param {String} completed The ICE connection is established.
-   * @param {String} done The ICE connection is in complete state.
-   * @param {String} disconnected The ICE connection has been disconnected.
-   * @param {String} failed The ICE connection has failed.
-   * @param {String} closed The ICE connection has closed.
-   * @private
-   * @for ICE
-   * @since 0.6.0
-   */
-  newIceConnectionStates: {
-    starting : 'starting',
-    checking : 'checking',
-    connected : 'connected',
-    completed : 'connected',
-    done : 'completed',
-    disconnected : 'disconnected',
-    failed : 'failed',
-    closed : 'closed'
-  },
-
-  /**
-   * Queues ICE candidates that is received before <var>setRemoteDescription</var> is called.
-   * It stores in the <var>queueCandidate</var> property array in the peer connection object.
-   * @method queueCandidate
-   * @param {Object} peer The RTCPeerConnection object.
-   * @param {Object} candidate The RTCIceCandidate object.
-   * @private
-   * @for ICE
-   * @since 0.6.0
-   */
-  queueCandidate: function (peer, candidate) {
-    peer.queueCandidate = peer.queueCandidate || [];
-    peer.queueCandidate.push(candidate);
-  },
-
-  /**
-   * Adds all ICE candidates that is received before <var>setRemoteDescription</var> is called.
-   * It retrieves candidates from the <var>queueCandidate</var> property array in the peer connection object.
-   * @method popCandidate
-   * @param {Object} peer The RTCPeerConnection object.
-   * @param {Function} defer The defer function that is fired when an ICE candidate is added.
-   * @private
-   * @for ICE
-   * @since 0.6.0
-   */
-  popCandidate: function (peer, defer) {
-    peer.queueCandidate = peer.queueCandidate || [];
-
-    // To pass jshint errors
-    var addCandidateFn = function (candidate, type) {
-      peer.addIceCandidate(candidate, function () {
-        defer('candidate:success', {
-          candidate: candidate,
-          type: type
-        });
-      }, function (error) {
-        defer('candidate:error', {
-          candidate: candidate,
-          type: type,
-          error: error
-        });
-      });
-    };
-    
-    var i;
-  
-    for (i = 0; i < peer.queueCandidate.length; i += 1) {
-      var candidate = peer.queueCandidate[i];
-      var type = candidate.candidate.split(' ')[7];
-
-      addCandidateFn(candidate, type);
-    }
-    peer.queueCandidate = [];
-  },
-
-  /**
-   * Adds the ICE candidate or queues the candidate if it is received before
-   *   <var>setRemoteDescription</var> is called.
-   * @method addCandidate
-   * @param {Object} peer The RTCPeerConnection object.
-   * @param {Object} candidate The RTCIceCandidate object.
-   * @param {Function} defer The defer function that is fired when an ICE candidate is added.
-   * @private
-   * @for ICE
-   * @since 0.6.0
-   */
-  addCandidate: function (peer, candidate, defer) {
-    if (fn.isEmpty(candidate.candidate)) {
-      return;
-    }
-
-    if (!fn.isSafe(function () { return !!peer.remoteDescription.sdp; })) {
-      this.queueCandidate(peer, candidate, defer);
-
-    } else {
-      var type = candidate.candidate.split(' ')[7];
-
-      peer.addIceCandidate(candidate, function (success) {
-        defer('candidate:success', {
-          candidate: candidate,
-          type: type
-        });
-      }, function (error) {
-        defer('candidate:error', {
-          candidate: candidate,
-          type: type,
-          error: error
-        });
-      });
-    }
-  },
-
-  /**
-   * Parses the received ICE connection state and updates to a new version
-   *   to handle the differences received from cross-browsers.
-   * State should go from <code>checking > connected > completed</code>.
-   * @method parseIceConnectionState
-   * @param {Object} peer The RTCPeerConnection object.
-   * @private
-   * @for ICE
-   * @since 0.6.0
-   */
-  parseIceConnectionState: function (peer) {
-    var state = peer.iceConnectionState;
-
-    var checkState = this.newIceConnectionStates[state];
-
-    if (!peer.iceConnectionFiredStates || checkState === 'disconnected' ||
-        checkState === 'failed' || checkState === 'closed') {
-      peer.iceConnectionFiredStates = [];
-    }
-
-    var newState = this.newIceConnectionStates[state];
-
-    if (peer.iceConnectionFiredStates.indexOf(newState) < 0) {
-      peer.iceConnectionFiredStates.push(newState);
-
-      if (newState === 'connected') {
-        setTimeout(function () {
-          peer.iceConnectionFiredStates.push('done');
-
-          peer.newIceConnectionState = 'completed';
-          peer.oniceconnectionnewstatechange(peer);
-        }, 1000);
-      }
-      peer.newIceConnectionState = newState;
-      peer.oniceconnectionnewstatechange(peer);
-    }
-  },
-
-  /**
-   * Handles the ICE servers received based on the options set by user and parses
-   * the differences for iceServer format for cross-browsers.
-   * <br>Format of an ICE server:
-   * - <code>STUN</code> is structured like <code>{ url: 'stun:hosturl' }</code>.
-   * - <code>TURN</code> is structured like
-   *    <code>{ url: 'turn:username@hosturl', credential: 'xxx' }</code> and
-   *    <code>{ url: 'turn:hosturl', username: 'username', credential: 'xxx' }</code> for
-   *    Firefox browsers.
-   * @method parseICEServers
-   * @param {Array} iceServers The list of ICE servers.
-   * @param {JSON} iceServers.(#index) The ICE server.
-   * @param {String} iceServers.(#index).credential The ICE server credential (password).
-   * @param {String} iceServers.(#index).url The ICE server url. For TURN server,
-   *   the format may vary depending on the support of the TURN url format.
-   * @returns {Array} The updated ICE servers list.
-   * - <code>(#index)</code> <var>: <b>type</b> JSON</var><br>
-   *   The ICE server.
-   * - <code>(#index).credential</code> <var>: <b>type</b> String</var><br>
-   *   The ICE server credential (password). Only used in TURN servers.
-   * - <code>(#index).url</code> <var>: <b>type</b> String</var><br>
-   *   The ICE server url. For TURN server, the format may vary depending on the support of
-   *   the TURN url format.
-   * - <code>(#index).username</code> <var>: <b>type</b> String</var><br>
-   *   The ICE server username. Only used in TURN servers for Firefox browsers.
-   * @private
-   * @for ICE
-   * @since 0.6.0
-   */
-  parseICEServers: function (iceServers) {
-    var newIceServers = [];
-    var i;
-
-    console.info('globals TURN', globals.TURNServer);
-    console.info('globals STUN', globals.STUNServer);
-
-    for (i = 0; i < iceServers.length; i += 1) {
-      var iceServer = iceServers[i];
-      var urlParts = iceServer.url.split(':');
-      var serverType = urlParts[0];
-
-      if (serverType === 'turn') {
-        // Add TURN if needed
-        if (globals.TURNServer === true) {
-          // Firefox doesn't support turn:username@hosturl
-          if (window.webrtcDetectedBrowser === 'firefox') {
-            var subUrlParts = urlParts[1].split('@');
-            var username = subUrlParts[0];
-            var url = subUrlParts[1];
-
-            urlParts[1] = url;
-
-            iceServer.username = username;
-            iceServer.url = urlParts.join(':');
-          }
-          // Add it to array
-          newIceServers.push(iceServer);
-        }
-
-      } else {
-        // Add STUN if needed
-        if (globals.STUNServer === true) {
-          // Add it to array
-          newIceServers.push(iceServer);
-        }
-      }
-    }
-
-    return newIceServers;
-  }
-};
 var Request = {
   /**
    * The api server.
@@ -9512,10 +9197,59 @@ function Peer(config, listener) {
   var com = this;
 
   /* Attributes */
+  /**
+   * The shared peer connection id.
+   * @attribute id
+   * @type String
+   * @for Peer
+   * @since 0.6.0
+   */
   com.id = config.id || fn.generateUID();
+
+  /**
+   * The peer connection type.
+   * - <code>"user"</code> denotes that this connection is used for the
+   *   main peer connection.
+   * - <code>"stream"</code> denotes that this connection is used for
+   *   sending an extra stream connection.
+   * @attribute type
+   * @type String
+   * @for Peer
+   * @since 0.6.0
+   */
   com.type = config.id === 'main' ? 'user' : 'stream';
-  com._SDPType = config.SDPType;
-  com._ICEConfig = null;
+
+  /**
+   * The RTCSessionDescription type that the peer connection would send.
+   * Types are <code>"offer"</code> or <code>"answer"</code>.
+   * This is used for superclasses to check and send the relevant
+   *   information.
+   * @attribute _sdpType
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._sdpType = config.sdpType || 'answer';
+
+  /**
+   * The list of ICE servers (TURN/STUN) that the peer connection would connect to.
+   * @attribute _iceServers
+   * @param {JSON} (#index) The ICE server.
+   * @param {String} (#index).credential The ICE server credential (password).
+   *    Only used in TURN servers.
+   * @param {String} (#index).url The ICE server url. For TURN server,
+   *   the format may vary depending on the support of the TURN url format.
+   * @param {String} (#index).username The ICE server username.
+   *    Only used in TURN servers for Firefox browsers.
+   * @type String
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._iceServers = null;
+
+
   com._optionalConfig = {
     optional: [{
       DtlsSrtpKeyAgreement: true
@@ -9669,9 +9403,8 @@ function Peer(config, listener) {
       });
     };
 
-    bindPeer.oniceconnectionstatechange = function (event) {
-      ICE.parseIceConnectionState(bindPeer);
-    };
+    // Use helper function
+    PeerHelper.ICE.state(bind);
 
     bindPeer.oniceconnectionnewstatechange = function (event) {
       // Connection is successful
@@ -10094,9 +9827,9 @@ var PeerHandler = function (com, event, data, listener) {
 
   // Messaging events
   if (event.indexOf('message:') === 0) {
-    
+
     fn.applyHandler(PeerEventMessageHandler, params, [com, data, listener]);
-  
+
   } else {
     // Class events
     if (event.indexOf('peer:') === 0) {
@@ -10109,11 +9842,333 @@ var PeerHandler = function (com, event, data, listener) {
 
       fn.applyHandler(PeerEventReceivedHandler, params, [com, data, listener]);
     }
-    
+
     listener(event, data);
   }
-  
+
   //log.debug('PeerHandler', event, data);
+};
+var PeerHelper = {
+  /* RTCPeerConnection polyfills */
+  /**
+   * Handles the addStream polyfill for RTCPeerConnection object.
+   * If onnegotiationneeded event is not supported, fire if a stream has been added.
+   * This polyfills the missing onnegotiationneeded event handler.
+   * Support are for multi-stream sending only.
+   * @method PeerHelper.addStream
+   * @param {Object} peer The RTCPeerConnection object.
+   * @param {Object} stream The MediaStream object.
+   * @private
+   * @support Chrome, Opera
+   * @for Peer
+   * @since 0.6.0
+   */
+  addStream: function (peer, stream) {
+    if (window.webrtcDetectedBrowser !== 'chrome' && window.webrtcDetectedBrowser !== 'opera') {
+      peer.addStream(stream);
+
+    // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
+    // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
+    } else {
+      if (peer.getLocalStream().length > 0) {
+        log.warn('StreamPolyfill', 'You cannot add more than 1 stream. Multi-stream is not supported in ' +
+          window.webrtcDetectedBrowser.toUpperCase() +  (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' :
+          '') + ' browser');
+        return;
+      }
+
+      // Add stream once
+      peer.addStream(stream);
+
+      if (typeof peer.onnegotiationneeded === 'function') {
+        peer.onnegotiationneeded(peer);
+      }
+    }
+  },
+
+  /**
+   * Handles the removeStream polyfill for RTCPeerConnection object.
+   * For non-supported browsers, the peer connection will be re-initialized
+   *   without adding any stream.
+   * @method PeerHelper.removeStream
+   * @param {Object} peer The RTCPeerConnection object.
+   * @param {Object} stream The MediaStream object.
+   * @private
+   * @support Chrome, Opera
+   * @for Peer
+   * @since 0.6.0
+   */
+  removeStream: function (peer, stream) {
+    if (window.webrtcDetectedBrowser !== 'chrome' && window.webrtcDetectedBrowser !== 'opera') {
+      peer.removeStream(stream);
+
+    // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
+    // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
+    } else {
+      if (peer.getLocalStream().length > 0) {
+        log.warn('StreamPolyfill', 'You cannot add more than 1 stream. Multi-stream is not supported in ' +
+          window.webrtcDetectedBrowser.toUpperCase() +  (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' :
+          '') + ' browser');
+
+        var constraints = null;
+        var optional;
+
+        // Restart the negotiation
+        if (typeof peer.constraints === 'object') {
+          constraints = peer.constraints;
+          optional = peer.optional;
+        }
+
+        var peer2 = this.create(constraints, optional);
+
+        // Recopy all the functions again.
+        var key;
+
+        var unwantedKeys = [
+          'signalingState',
+          'iceConnectionState',
+          'iceGatheringState',
+          'localDescription',
+          'remoteDescription',
+          'createDataChannel',
+          'updateIce',
+          'addIceCandidate',
+          'addStream',
+          'removeStream',
+          'getStats',
+          'getStreamById',
+          'createDataChannel',
+          'createDTMFSender',
+          'createOffer',
+          'createAnswer',
+          'setLocalDescription',
+          'setRemoteDescription',
+          'getSenders',
+          'getReceivers',
+          'addTrack',
+          'removeTrack'
+        ];
+
+        for (key in peer) {
+          if (peer.hasOwnProperty(key)) {
+            if (unwantedKeys.indexof(key) === -1) {
+              try {
+                peer2[key] = peer[key];
+
+              } catch (error) {
+                log.warn('Not supported to replace "' + key + '" key');
+              }
+            }
+          }
+        }
+
+        // If subscribed to our event
+        if (!!peer.newiceConnectionState) {
+          this.ICE.state(peer2);
+        }
+
+        // Re-invoke negotiation needed
+        peer.onnegotiationneeded(peer2);
+      }
+    }
+  },
+
+  /* ICE helper functions */
+  ICE: {
+
+    /**
+     * Parses the received ICE connection state and updates to a new version
+     *   to handle the differences received from cross-browsers.
+     * Use <code>pc.onnewiceconnectionstatechange</code> instead of
+     *   <code>pc.oniceconnectionstatechange</code>.
+     * Use <code>pc.newiceConnectionState</code> for the updated ICE connection state.
+     * State should go from <code>checking > connected > completed</code>.
+     * @method PeerHelper.ICE.state
+     * @param {Object} peer The RTCPeerConnection object.
+     * @private
+     * @example
+     *   PeerHelper.ICE.state(pc);
+     *   pc.onnewiceconnectionstatechange = function () {
+     *     // here's my new state.
+     *     var state = pc.newiceConnectionState;
+     *   };
+     * @for Peer
+     * @since 0.6.0
+     */
+    state: function (peer) {
+      var updatedStateList = {
+        starting : 'starting',
+        checking : 'checking',
+        connected : 'connected',
+        completed : 'connected',
+        done : 'completed',
+        disconnected : 'disconnected',
+        failed : 'failed',
+        closed : 'closed'
+      };
+
+      peer.newiceConnectionState = peer.iceConnectionState || 'new';
+
+      peer.oniceconnectionstatechange = function () {
+        var state = peer.iceConnectionState;
+        var checkState = updatedStateList[state];
+
+        // Check if state is new or has been disconnected / failed / closed
+        if (!peer.iceConnectionFiredStates || checkState === 'disconnected' ||
+            checkState === 'failed' || checkState === 'closed') {
+          peer.iceConnectionFiredStates = [];
+        }
+
+        // Display updated state
+        var newState = updatedStateList[state];
+
+        if (peer.iceConnectionFiredStates.indexOf(newState) < 0) {
+          peer.iceConnectionFiredStates.push(newState);
+
+          if (newState === 'connected') {
+            setTimeout(function () {
+              peer.iceConnectionFiredStates.push('done');
+
+              peer.newiceConnectionState = 'completed';
+
+              // Set using a new attached function instead to prevent
+              // overriding the original one
+              peer.oniceconnectionnewstatechange(peer);
+            }, 1000);
+          }
+          peer.newiceConnectionState = newState;
+          peer.onnewiceconnectionstatechange(peer);
+        }
+      };
+    },
+
+    /**
+     * Adds ICE candidate to the RTCPeerConnection object and buffers
+     *   candidates if remote description has not yet be set.
+     * Use a common success and failure defer.
+     * Once remote description is set, the buffered ICE candidates will be
+     *   added to the RTCPeerConnection object.
+     * @method PeerHelper.ICE.addCandidate
+     * @param {Object} peer The RTCPeerConnection object.
+     * @param {Object} candidate The RTCIceCandidate object.
+     * @param {Function} successDefer The defer fired once ICE candidate is
+     *   added successfully.
+     * @param {Function} failureDefer The defer fired once ICE candidate has
+     *   an exception adding it.
+     * @private
+     * @example
+     *   PeerHelper.ICE.addCandidate(peer, candidate, function () {
+     *     console.log('Successfully added candidate');
+     *   }, function (error) {
+     *     console.error('Failed adding candidate. Exception occurred:', error)
+     *   });
+     * @for Peer
+     * @since 0.6.0
+     */
+    addCandidate: function (peer, candidate, successDefer, failureDefer) {
+      if (!!peer.remoteDescription) {
+        // Add the candidates
+        peer.addIceCandidate(candidate, successDefer, failureDefer);
+
+      } else {
+        // Buffer the candidates
+        peer.bufferCandidates = peer.bufferCandidates || [];
+        peer.bufferCandidates.push(candidate);
+
+        // If peer has a steady connection, do not add. If peer does not has an interval
+        //   create
+        if (!!peer.waitForBuffer && (peer.newiceConnectionState !== 'connected' ||
+          peer.newiceConnectionState !== 'completed')) {
+          // Do a buffer to check
+          peer.waitForBuffer = setInterval(function () {
+            if (!!peer.remoteDescription) {
+              console.log('Adding buffered candidates');
+
+              // Clear interval
+              clearInterval(peer.waitForBuffer);
+
+              var i;
+
+              // Loop and add all bufferred candidates
+              for (i = 0; i < peer.bufferCandidates.length; i += 1) {
+                peer.addIceCandidate(peer.bufferCandidates[i], successDefer, failureDefer);
+              }
+
+              // Remove reference
+              delete peer.waitForBuffer;
+            }
+          }, 100);
+        }
+      }
+    },
+
+    /**
+     * Parses TURN url format for cross-browser interopability.
+     * For an example, Firefox does not support <code>username@turnserver.com</code>,
+     *   whereas Chrome supports it.
+     * @method PeerHelper.ICE.configureTURN
+     * @param {Array} iceServers The list of ICE servers.
+     * @param {JSON} iceServers.(#index) The ICE server.
+     * @param {String} iceServers.(#index).credential The ICE server credential (password).
+     * @param {String} iceServers.(#index).url The ICE server url. For TURN server,
+     *   the format may vary depending on the support of the TURN url format.
+     * @returns {Array} The updated ICE servers list.
+     * - <code>(#index)</code> <var>: <b>type</b> JSON</var><br>
+     *   The ICE server.
+     * - <code>(#index).credential</code> <var>: <b>type</b> String</var><br>
+     *   The ICE server credential (password). Only used in TURN servers.
+     * - <code>(#index).url</code> <var>: <b>type</b> String</var><br>
+     *   The ICE server url. For TURN server, the format may vary depending on the support of
+     *   the TURN url format.
+     * - <code>(#index).username</code> <var>: <b>type</b> String</var><br>
+     *   The ICE server username. Only used in TURN servers for Firefox browsers.
+     * @private
+     * @example
+     *   var updateIceServers = PeerHelper.ICE.configureTURN(iceServers);
+     * @for Peer
+     * @since 0.6.0
+     */
+    configureTURN: function (iceServers) {
+      var newConfig = [];
+      var i;
+
+      for (i = 0; i < iceServers.length; i += 1) {
+        // The new ice server object
+        var iceServer = {
+          url: iceServers[i].url
+        };
+
+        // If there is credential, add it.
+        if (!!iceServers[i].credential) {
+          iceServer.credential = iceServers[i].credential;
+        }
+
+        // If there is username, add it.
+        if (!!iceServers[i].username) {
+          iceServer.username = iceServers[i].username;
+        }
+
+        // For Firefox only
+        if (window.webrtcDetectedBrowser === 'firefox') {
+          // If it's a TURN server
+          if (iceServer.url.indexOf('turn') === 0 && indexOf) {
+            // Check if the url is username@turn.com
+            if (iceServer.url.indexOf('@')) {
+              var iceParts = iceServer.url.split(':');
+              var subIceParts = iceParts[1].split('@'); // user '@' url
+
+              iceServer.url = subIceParts[1];
+              iceServer.username = subIceParts[0];
+            }
+          }
+        }
+        newConfig.push(iceServer);
+      }
+      // Return the new data
+      return newConfig;
+    }
+
+  }
 };
 function Room(name, listener) {
   'use strict';
@@ -13329,7 +13384,9 @@ var StreamPolyfill = {
     }
 
     // Allow users to use polystop to polyfill stop and onended for MediaStreamTrack
-    bind.stop();
+    if (window.webrtcDetectedBrowser === 'firefox' ? bind instanceof LocalMediaStream : true) {
+      bind.stop();
+    }
 
     if (window.webrtcDetectedType === 'safari' || window.webrtcDetectedBrowser === 'IE') {
       delete this.track.fns[bind.id];
@@ -13358,7 +13415,7 @@ var StreamPolyfill = {
         var i, j;
 
         var audios = bind.getAudioTracks();
-        var videos = bind.getTracks();
+        var videos = bind.getVideoTracks();
 
         var audioEnded = true;
         var videoEnded = true;
@@ -13736,6 +13793,7 @@ function User (config, listener) {
   // Reference of instance
   var com = this;
 
+  /* Attributes */
   /**
    * The user id.
    * @attribute id
@@ -13774,7 +13832,6 @@ function User (config, listener) {
    * @param {Integer} version The browser agent version.
    * @param {String} webRTCType The browser agent WebRTC type of implementation.
    * @type JSON
-   * @private
    * @for User
    * @since 0.6.0
    */
@@ -13804,149 +13861,18 @@ function User (config, listener) {
   com.peers = {};
 
 
+  /* Methods */
   /**
-   * Function to subscribe to when the user object is ready to use.
-   * @method onready
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onready = function () {};
-
-  /**
-   * Function to subscribe to when user's custom data is updated.
-   * @method onupdate
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onupdate = function () {};
-
-  /**
-   * Function to subscribe to when user has an established "main" peer connection.
-   * @method onconnect
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onconnect = function () {};
-
-  /**
-   * Function to subscribe to when user is disconnected from the room.
-   * @method ondisconnect
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.ondisconnect = function () {};
-
-  /**
-   * Function to subscribe to when a new peer connection is established to user.
-   * @method onaddconnection
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onaddconnection = function () {};
-
-  /**
-   * Function to subscribe to when a peer connection to user has added.
-   * @method onremoveconnection
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onremoveconnection = function () {};
-
-  /**
-   * Function to subscribe to when a new data transfer request is initialized from user.
-   * @method ondatarequest
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.ondatarequest = function () {};
-
-  /**
-   * Function to subscribe to when a new data is received after transfer is completed from user.
-   * @method ondata
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.ondata = function () {};
-
-  /**
-   * Function to subscribe to when a new message is received from user.
-   * @method onmessage
-   * @eventhandler true
-   * @for User
-   * @since 0.6.0
-   */
-  com.onmessage = function () {};
-
-
-  /**
-   * The handler handles received events.
-   * @method routeEvent
+   * The handler that the manages response and received events.
+   * @method _handler
    * @param {String} event The event name.
    * @param {JSON} data The response data.
    * @private
-   * @for User
+   * @for Stream
    * @since 0.6.0
    */
-  com.routeEvent = function (event, data) {
-    var params = event.split(':');
-
-    data = data || {};
-    data.userId = com.id;
-
-    fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
-
-    listener(event, data);
-
-    log.debug('User: Received event = ', event, data);
-  };
-
-  /**
-   * The handler handles received socket message events.
-   * @method routeMessage
-   * @param {JSON} message The message received.
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.routeMessage = function (message) {
-    // Messaging events
-    var fn = UserEventMessageHandler[message.type];
-
-    if (typeof fn === 'function') {
-      fn(com, message, listener);
-    }
-
-    log.debug('User: Received message = ', event, message);
-  };
-
-  /**
-   * The handler handles response events.
-   * @method respond
-   * @param {String} event The event name.
-   * @param {JSON} data The response data.
-   * @private
-   * @for User
-   * @since 0.6.0
-   */
-  com.respond = function (event, data) {
-    var params = event.split(':');
-
-    data = data || {};
-    data.id = com.id;
-
-    fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
-
-    listener(event, data);
-
-    log.debug('User: Responding with even = ', event, data);
+  com._handler = function (event, data) {
+    UserHandler(com, event, data, listener);
   };
 
   /**
@@ -14012,7 +13938,7 @@ function User (config, listener) {
 
     com.peers[peer.id] = peer;
 
-    com.respond('user:addconnection', {
+    com._handler('user:addconnection', {
       peer: peer,
       peerId: data.prid,
       config: peerConfig
@@ -14034,7 +13960,7 @@ function User (config, listener) {
       peer.disconnect();
     }
 
-    com.respond('user:removeconnection', {
+    com._handler('user:removeconnection', {
       peerId: peerId
     });
   };
@@ -14042,6 +13968,7 @@ function User (config, listener) {
   /**
    * Disconnects this user connection.
    * @method disconnect
+   * @private
    * @for User
    * @since 0.6.0
    */
@@ -14164,12 +14091,101 @@ function User (config, listener) {
     return data;
   };
 
+  /* Event Handlers */
+  /**
+   * Function to subscribe to when the user object is ready to use.
+   * @method onready
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onready = function () {};
+
+  /**
+   * Function to subscribe to when user's custom data is updated.
+   * @method onupdate
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onupdate = function () {};
+
+  /**
+   * Function to subscribe to when user has an established "main" peer connection.
+   * @method onconnect
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onconnect = function () {};
+
+  /**
+   * Function to subscribe to when user is disconnected from the room.
+   * @method ondisconnect
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.ondisconnect = function () {};
+
+  /**
+   * Function to subscribe to when a new peer connection is established to user.
+   * @method onaddconnection
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onaddconnection = function () {};
+
+  /**
+   * Function to subscribe to when a peer connection to user has added.
+   * @method onremoveconnection
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onremoveconnection = function () {};
+
+  /**
+   * Function to subscribe to when a new data transfer request is initialized from user.
+   * @method ondatarequest
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.ondatarequest = function () {};
+
+  /**
+   * Function to subscribe to when a new data is received after transfer is completed from user.
+   * @method ondata
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.ondata = function () {};
+
+  /**
+   * Function to subscribe to when a new message is received from user.
+   * @method onmessage
+   * @eventhandler true
+   * @for User
+   * @since 0.6.0
+   */
+  com.onmessage = function () {};
+
+
+  /* Beginning Logic */
+  // Run sync so there is time to return the user object before running ready.
+  // Example user = new User(). Return and assign to user the user object reference
+  //   before running user:ready
   fn.runSync(function () {
-    com.respond('user:ready', config);
+    com._handler('user:ready', config);
   });
 }
 var UserEventMessageHandler = {
 
+  // Add peer connection if peer doesn't exists
+  // If exist, exit
   enter: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -14188,6 +14204,9 @@ var UserEventMessageHandler = {
     }, data.streamObject);
   },
 
+  // Add peer connection if peer doesn't exists
+  // If exist, it could be a weight checking
+  // For an instance, when both users receives each other's welcome
   welcome: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -14215,6 +14234,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives a peer offer, send to the correct peer
   offer: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -14223,6 +14243,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives a peer answer, send to the correct peer
   answer: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -14231,6 +14252,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives an ice candidate, send to the correct peer
   candidate: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -14239,6 +14261,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives a restart, send to the correct peer
   restart: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -14247,6 +14270,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives an updateUserEvent. Update the user data
   updateUserEvent: function (com, data, listener) {
     com.data = data.data;
 
@@ -14255,6 +14279,7 @@ var UserEventMessageHandler = {
     });
   },
 
+  // Receives an audio muted event. relay to correct peer
   muteAudioEvent: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -14263,6 +14288,7 @@ var UserEventMessageHandler = {
     }
   },
 
+  // Receives an video muted event. relay to correct peer
   muteVideoEvent: function (com, data, listener) {
     var peer = com.peers[data.prid];
 
@@ -14274,8 +14300,12 @@ var UserEventMessageHandler = {
 
 var UserEventReceivedHandler = {
 
+  /* Handles peer events */
   peer: {
 
+    // Peer connection object is created an binded with
+    // apprioate rtcevents.
+    // Ready to start creating offer
     connect: function (com, data, listener) {
       var peer = com.peers[data.id];
 
@@ -14288,12 +14318,17 @@ var UserEventReceivedHandler = {
       }
     },
 
+    // Check if peer's ice connection state is connected
+    // If connected, user has one connection - meaning connected
     iceconnectionstate: function (com, data, listener) {
       if (data.id === 'main' && data.state === 'connected') {
         com.handler('user:connect', {});
       }
     },
 
+    // Handles the peers that disconnects
+    // TODO: If main connection disconnects, it should disconnect the other peers too
+    // If no peer connections connected, it should reflect user:disconnect
     disconnect: function (com, data, listener) {
       var peer = com.peers[data.id];
 
@@ -14309,12 +14344,14 @@ var UserEventReceivedHandler = {
     }
   },
 
+  /* Handles data transfer events */
   transfer: {
-
+    // TODO
     complete: function (com, data, listener) {
       com.handler('user:data', data);
     },
 
+    // TODO
     request: function (com, data, listener) {
       com.handler('user:datarequest', data);
     }
@@ -14438,9 +14475,11 @@ var UserHandler = function (com, event, data, listener) {
 
   // Messaging events
   if (event.indexOf('message:') === 0) {
-    
+
     fn.applyHandler(UserEventMessageHandler, params, [com, data, listener]);
-  
+
+    log.debug('Stream', 'Received message event', event, data);
+
   } else {
     // Class events
     if (event.indexOf('user:') === 0) {
@@ -14448,14 +14487,16 @@ var UserHandler = function (com, event, data, listener) {
 
       fn.applyHandler(UserEventResponseHandler, params, [com, data, listener]);
 
+      log.debug('Stream', 'Responding with event', event, data);
+
     } else {
-      data.peerId = com.id;
+      data.userId = com.id;
 
       fn.applyHandler(UserEventReceivedHandler, params, [com, data, listener]);
+
+      log.debug('Stream', 'Received sub-class event', event, data);
     }
-    
+
     listener(event, data);
   }
-  
-  //log.debug('PeerHandler', event, data);
 };

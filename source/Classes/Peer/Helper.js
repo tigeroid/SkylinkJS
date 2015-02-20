@@ -77,57 +77,56 @@ var PeerHelper = {
           optional = peer.optional;
         }
 
-          var peer2 = this.create(constraints, optional);
+        var peer2 = this.create(constraints, optional);
 
-          // Recopy all the functions again.
-          var key;
+        // Recopy all the functions again.
+        var key;
 
-          var unwantedKeys = [
-            'signalingState',
-            'iceConnectionState',
-            'iceGatheringState',
-            'localDescription',
-            'remoteDescription',
-            'createDataChannel',
-            'updateIce',
-            'addIceCandidate',
-            'addStream',
-            'removeStream',
-            'getStats',
-            'getStreamById',
-            'createDataChannel',
-            'createDTMFSender',
-            'createOffer',
-            'createAnswer',
-            'setLocalDescription',
-            'setRemoteDescription',
-            'getSenders',
-            'getReceivers',
-            'addTrack',
-            'removeTrack'
-          ];
+        var unwantedKeys = [
+          'signalingState',
+          'iceConnectionState',
+          'iceGatheringState',
+          'localDescription',
+          'remoteDescription',
+          'createDataChannel',
+          'updateIce',
+          'addIceCandidate',
+          'addStream',
+          'removeStream',
+          'getStats',
+          'getStreamById',
+          'createDataChannel',
+          'createDTMFSender',
+          'createOffer',
+          'createAnswer',
+          'setLocalDescription',
+          'setRemoteDescription',
+          'getSenders',
+          'getReceivers',
+          'addTrack',
+          'removeTrack'
+        ];
 
-          for (key in peer) {
-            if (peer.hasOwnProperty(key)) {
-              if (unwantedKeys.indexof(key) === -1) {
-                try {
-                  peer2[key] = peer[key];
+        for (key in peer) {
+          if (peer.hasOwnProperty(key)) {
+            if (unwantedKeys.indexof(key) === -1) {
+              try {
+                peer2[key] = peer[key];
 
-                } catch (error) {
-                  log.warn('Not supported to replace "' + key + '" key');
-                }
+              } catch (error) {
+                log.warn('Not supported to replace "' + key + '" key');
               }
             }
           }
-
-          // If subscribed to our event
-          if (!!peer.newiceConnectionState) {
-            this.ICE.state(peer2);
-          }
-
-          // Re-invoke negotiation needed
-          peer.onnegotiationneeded(peer2);
         }
+
+        // If subscribed to our event
+        if (!!peer.newiceConnectionState) {
+          this.ICE.state(peer2);
+        }
+
+        // Re-invoke negotiation needed
+        peer.onnegotiationneeded(peer2);
       }
     }
   },
@@ -237,7 +236,7 @@ var PeerHelper = {
         // If peer has a steady connection, do not add. If peer does not has an interval
         //   create
         if (!!peer.waitForBuffer && (peer.newiceConnectionState !== 'connected' ||
-          peer.newiceConnectionState !== 'completed') {
+          peer.newiceConnectionState !== 'completed')) {
           // Do a buffer to check
           peer.waitForBuffer = setInterval(function () {
             if (!!peer.remoteDescription) {
@@ -327,5 +326,5 @@ var PeerHelper = {
       return newConfig;
     }
 
-  },
+  }
 };
