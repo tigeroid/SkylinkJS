@@ -78,7 +78,8 @@ var StreamParser = {
     if (options !== false) {
       options = (typeof options === 'boolean') ? {} : options;
       tempOptions.stereo = !!options.stereo;
-      tempOptions.sourceId = options.sourceId;
+      tempOptions.sourceId = options.sourceId || null;
+      tempOptions.mute = typeof options.mute === 'boolean' ? options.mute : false;
 
       options = tempOptions;
     }
@@ -167,7 +168,10 @@ var StreamParser = {
         this.defaultConfig.video.frameRate;
 
       // set the sourceid
-      tempOptions.sourceId = options.sourceId;
+      tempOptions.sourceId = options.sourceId || null;
+
+      // set the mute options
+      tempOptions.mute = typeof options.mute === 'boolean' ? options.mute : false;
 
       options = tempOptions;
 
@@ -238,46 +242,6 @@ var StreamParser = {
     // set the settings
     return options;
   },
-
-  /**
-   * Parses the stream muted configuration.
-   * @method StreamParser.parseMutedConfig
-   * @param {JSON} options The stream muted settings.
-   * @param {JSON} config The streaming configuration.
-   * @param {JSON|Boolean} [config.audio=false] The audio stream configuration.
-   *    If parsed as a boolean, other configuration settings under the audio
-   *    configuration would be set as the default setting in the connection.
-   * @param {Boolean} [config.audio.mute=false] The flag that indicates if audio stream
-   *    should be muted when retrieving.
-   * @param {String|Boolean} [config.video=false] The video stream configuration.
-   *    If parsed as a boolean, other configuration settings under the video
-   *    configuration would be set as the default setting in the connection.
-   * @param {Boolean} [config.video.mute=false] The flag that indicates if video stream
-   *    should be muted when retrieving.
-   * @return {JSON} Returns the output parsed stream status configuration.
-   * - <code>videoMuted</code> <var>: <b>type</b> Boolean</var><br>
-   *   The video media status if video track is muted (disabled).
-   * - <code>audioMuted</code> <var>: <b>type</b> Boolean</var><br>
-   *   The audio media status if audio track is muted (disabled).
-   * @private
-   * @since 0.6.0
-   */
-  parseMutedConfig: function (options) {
-    // the stream options
-    options = (typeof options === 'object') ?
-      options : { audio: false, video: false };
-
-    var updateAudioMuted = (typeof options.audio === 'object') ?
-      !!options.audio.mute : !options.audio;
-    var updateVideoMuted = (typeof options.video === 'object') ?
-      !!options.video.mute : !options.video;
-
-    return {
-      audioMuted: updateAudioMuted,
-      videoMuted: updateVideoMuted
-    };
-  },
-
 
   parseDefaultConfig: function (options) {
     var hasMediaChanged = false;

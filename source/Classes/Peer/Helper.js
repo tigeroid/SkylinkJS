@@ -82,6 +82,32 @@ var PeerHelper = {
         window.webrtcDetectedVersion > 27 : true;
     }
 
+    if (window.webrtcDetectedBrowser !== 'chrome' && window.webrtcDetectedBrowser !== 'opera') {
+      var remoteStreamStatusChangedFn = function (prev, current) {
+        if (prev === true) {
+          peer.onremovestream(peer);
+        }
+      };
+
+      var remoteStreamChecker = setInterval(function () {
+        if (typeof peer.hasStream === 'undefined') {
+          peer.hasStream = peer.getRemoteStreams().length > 0;
+        }
+
+        // Clear interval if peer connection is closed
+        if (peer.signalingState === 'closed') {
+          clearInterval(remoteStreamChecker);
+        }
+
+        var status = peer.getRemoteStreams().length > 0;
+
+        if (peer.hasStream !== status) {
+          remoteStreamStatusChangedFn(!!peer.hasStream, status);
+          peer.hasStream = status;
+        }
+      }, 10);
+    }
+
     return peer;
   },
 
@@ -198,7 +224,7 @@ var PeerHelper = {
           this.ICE.state(peer2);
         }
 
-        // Check if remoteDescription is set before firing onremovestream
+        /*// Check if remoteDescription is set before firing onremovestream
         var checkForRemoteDesc = setInterval(function () {
           if (!!peer2.remoteDescription) {
             clearInterval(checkForRemoteDesc);
@@ -207,7 +233,7 @@ var PeerHelper = {
               peer2.onremovestream(peer);
             }
           }
-        }, 10);
+        }, 10);*/
 
 
         // Re-invoke negotiation needed
@@ -282,6 +308,18 @@ var PeerHelper = {
               // overriding the original one
               peer.oniceconnectionnewstatechange(peer);
             }, 1000);
+
+            if (peer.iceConnectionState === 'connected' || peer.iceConnectionState === 'completed') {
+              if (window.webrtcDetectedBrowser !== 'opera' || window.webrtcDetectedBrowser !== 'chrome') {
+                if (peer.hasStream && peer.getRemoteStreams().length === 0) {
+                  peer.hasStream = false;
+
+                  if (typeof peer.onremovestream === 'function') {
+                    peer.onremovestream(peer);
+                  }
+                }
+              }
+            }
           }
           peer.newiceConnectionState = newState;
           peer.onnewiceconnectionstatechange(peer);

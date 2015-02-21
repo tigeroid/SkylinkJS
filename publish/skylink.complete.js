@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-21 */
+/*! skylinkjs - v0.5.7 - 2015-02-22 */
 
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -7655,7 +7655,7 @@ if (navigator.mozGetUserMedia) {
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
 
-/*! skylinkjs - v0.5.7 - 2015-02-21 */
+/*! skylinkjs - v0.5.7 - 2015-02-22 */
 
 var globals = {
   apiKey: null,
@@ -9187,7 +9187,7 @@ var DataChannelHandler = function (com, event, data, listener) {
 
 
 
-function Peer(config, listener) {
+function Peer(stream, config, listener) {
   'use strict';
 
   // Prevent undefined listener error
@@ -9233,82 +9233,170 @@ function Peer(config, listener) {
   com._sdpType = config.sdpType || 'answer';
 
   /**
-   * The list of ICE servers (TURN/STUN) that the peer connection would connect to.
-   * @attribute _iceServers
-   * @param {JSON} (#index) The ICE server.
-   * @param {String} (#index).credential The ICE server credential (password).
-   *    Only used in TURN servers.
-   * @param {String} (#index).url The ICE server url. For TURN server,
-   *   the format may vary depending on the support of the TURN url format.
-   * @param {String} (#index).username The ICE server username.
-   *    Only used in TURN servers for Firefox browsers.
-   * @type String
+   * The local RTCSessionDescription set for this peer connection.
+   * @attribute _localDescription
+   * @type Object
    * @private
    * @for Peer
    * @since 0.6.0
    */
-  com._iceServers = null;
-
-
-  com._optionalConfig = {
-    optional: [{
-      DtlsSrtpKeyAgreement: true
-    }]
-  };
   com._localDescription = null;
+
+  /**
+   * The remote RTCSessionDescription set for this peer connection.
+   * @attribute _remoteDescription
+   * @type Object
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   com._remoteDescription = null;
+
+  /**
+   * The datachannels connected to peer connection.
+   * @attribute _datachannels
+   * @param {DataChannel} (#channelId) The datachannel connected to peer.
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   com._dataChannels = {};
-  com._iceTrickle = true;
+
+  /**
+   * The flag that indicates if datachannel connection should be enabled or not.
+   * @attribute _dataConnection
+   * @type Boolean
+   * @default this.type === 'user' ? true : false
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._dataConnection = com.type === 'user' ? (typeof config.dataChannel === 'boolean' ?
+    config.dataChannel : true) : false;
+
+  /**
+   * The flag that indicates if trickle ICE is enable for this peer connection.
+   * @attribute _trickleIce
+   * @type Boolean
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._trickleIce = typeof config.trickleIce === 'boolean' ? config.trickleIce : true;
+
+  /**
+   * The timeout that would be invoked when peer connection has expired without
+   *   an established connection.
+   * @attribute _healthTimer
+   * @type Object
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   com._healthTimer = null;
+
+  /**
+   * The remote stream received from this peer.
+   * @attribute _stream
+   * @type Stream
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   com._stream = null;
-  com._streamingConfig = config.streamingConfig || {
-    audio: false,
-    video: false,
-    status: {
-      audioMuted: true,
-      videoMuted: true
-    }
-  };
-  com._sdpConstraints = {
-    mandatory: {
-      OfferToReceiveAudio: true,
-      OfferToReceiveVideo: true
-    }
-  };
-  com._sdpConfig = {
-    stereo: false,
-    bandwidth: config.bandwidth
-  };
+
+  /**
+   * Stores the streaming configuration for the peer connection.
+   * @attribute _streamingConfig
+   * @param {JSON|Boolean} [audio=false] The audio stream configuration.
+   *    If parsed as a boolean, other configuration settings under the audio
+   *    configuration would be set as the default setting in the connection.
+   * @param {Boolean} [audio.stereo=false] The flag that indiciates
+   *    if stereo is enabled for this connection.
+   * @param {String} [audio.sourceId] The source id of the audio MediaStreamTrack
+     *    used for this connection.
+   * @param {String|Boolean} [video=false] The video stream configuration.
+   *    If parsed as a boolean, other configuration settings under the video
+   *    configuration would be set as the default setting in the connection.
+   * @param {JSON} [video.resolution] The video streaming resolution.
+   * @param {Integer} video.resolution.width The video resolution width.
+   * @param {Integer} video.resolution.height The video resolution height.
+   * @param {Integer} video.frameRate The video stream framerate.
+   * @param {String} [video.sourceId] The source id of the video MediaStreamTrack
+   *    used for this connection.
+   * @param {JSON} status The stream MediaStreamTrack status.
+   * @param {Boolean} [status.audioMuted=false] The flag that indicates if audio is muted.
+   *    If audio is set to false, this would be set as true.
+   * @param {Boolean} [status.videoMuted=false] The flag that indicates if video is muted.
+   *    If video is set to false, this would be set as true.
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._streamingConfig = null;
+
+  /**
+   * The RTCSessionDescription session description modification configuration.
+   * This uses the user's sent streaming configuration.
+   * @attribute _sdpConfig
+   * @param {Boolean} stereo The flag that indicates if stereo is enabled for this connection.
+   * @param {JSON} bandwidth The bandwidth configuration the peer connections.
+   *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+   * @param {Integer} [bandwidth.audio] The bandwidth configuration for the audio stream.
+   * @param {Boolean} [bandwidth.video] The bandwidth configuration for the video stream.
+   * @param {Boolean} [bandwidth.data] The bandwidth configuration for the data stream.
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._sdpConfig = null;
+
+  /**
+   * The RTCPeerConnection object.
+   * @attribute _RTCPeerConnection
+   * @type JSON
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   com._RTCPeerConnection = null;
+
+  /**
+   * The generated weight for the "welcome" handshake priority.
+   * @attribute _weight
+   * @type Integer
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   com._weight = parseInt(fn.generateUID(), 10);
 
 
   /* Methods */
+  /**
+   * The handler that the manages response and received events.
+   * @method _handler
+   * @param {String} event The event name.
+   * @param {JSON} data The response data.
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   com._handler = function (event, data) {
     PeerHandler(com, event, data, listener);
   };
 
-  com.connect = function (stream) {
-    var peer = new window.RTCPeerConnection(com.ICEConfig, com.optionalConfig);
-
-    // Send stream
-    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
-
-      // Set the data
-      com.stereo = fn.isSafe(function () { return stream.audio.stereo; });
-
-      // Check class type
-      peer.addStream(stream.MediaStream);
-
-      com.respond('peer:stream', {
-        sourceType: 'local',
-        stream: stream
-      });
-    }
-
-    com.bind(peer);
-  };
-
+  /**
+   * Restarts the connection and re-initialize the RTCPeerConnection object
+   *   to restart the ICE connection.
+   * @method reconnect
+   * @param {Stream} stream The updated stream object.
+   * @for Peer
+   * @since 0.6.0
+   */
   com.reconnect = function (stream) {
     var hasStream = !!stream;
 
@@ -9327,40 +9415,57 @@ function Peer(config, listener) {
       peer.addStream(stream.MediaStream);
 
       if (hasStream) {
-        com.respond('peer:stream', {
+        com._handler('peer:stream', {
           stream: stream
         });
       }
 
-      com.respond('peer:reconnect', {});
+      com._handler('peer:reconnect', {});
     }
     com.bind(peer);
   };
 
-  com.disconnect = function () {
+  /**
+   * Stops and closes the RTCPeerConnection connection.
+   * @method _disconnect
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._disconnect = function () {
     if (com.RTCPeerConnection.newSignalingState !== 'closed') {
       com.RTCPeerConnection.close();
     }
 
-    com.respond('peer:disconnect', {});
+    com._handler('peer:disconnect', {});
   };
 
-  com.bind = function (bindPeer) {
-    bindPeer.iceConnectionFiredStates = [];
-    bindPeer.queueCandidate = [];
-    bindPeer.newSignalingState = 'new';
-    bindPeer.newIceConnectionState = 'new';
+  /**
+   * Binds events to RTCPeerConnection object.
+   * @method _bind
+   * @param {Object} bind The RTCPeerConnection object.
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._bind = function (bind) {
+    // Bind events to RTCPeerConnection
+    // Un-implemented events functions
+    // bind.onidentityresult = function () {};
+    // bind.onidpassertionerror = function () {};
+    // bind.onidpvalidationerror = function () {};
+    // bind.onpeeridentity = function () {};
 
-    bindPeer.ondatachannel = function (event) {
+    bind.ondatachannel = function (event) {
       var eventChannel = event.channel || event;
 
       // Send the channel only when channel has started
       var channel = new DataChannel(eventChannel, function (event, data) {
 
-        com.respond(event, data);
+        com._handler(event, data);
 
         if (event === 'datachannel:start') {
-          com.respond('peer:datachannel', {
+          com._handler('peer:datachannel', {
             channel: channel,
             sourceType: 'remote'
           });
@@ -9368,16 +9473,16 @@ function Peer(config, listener) {
       });
     };
 
-    bindPeer.onaddstream = function (event) {
+    bind.onaddstream = function (event) {
       var eventStream = event.stream || event;
 
       // Send the stream only when stream has started
       var stream = new Stream(eventStream, config.streamingConfig, function (event, data) {
 
-        com.routeEvent(event, data);
+        com._handler(event, data);
 
         if (event === 'stream:start') {
-          com.respond('peer:stream', {
+          com._handler('peer:stream', {
             sourceType: 'remote',
             stream: stream
           });
@@ -9385,11 +9490,13 @@ function Peer(config, listener) {
       });
     };
 
-    bindPeer.onicecandidate = function (event) {
+    bind.onremovestream = function (event) {};
+
+    bind.onicecandidate = function (event) {
       var eventCandidate = event.candidate || event;
 
       if (fn.isEmpty(eventCandidate.candidate)) {
-        com.respond('candidate:gathered', {
+        com._handler('candidate:gathered', {
           candidate: eventCandidate
         });
         return;
@@ -9397,7 +9504,7 @@ function Peer(config, listener) {
 
       // Implement ice trickle disabling here
 
-      com.respond('peer:icecandidate', {
+      com._handler('peer:icecandidate', {
         sourceType: 'local',
         candidate: eventCandidate
       });
@@ -9406,7 +9513,7 @@ function Peer(config, listener) {
     // Use helper function
     PeerHelper.ICE.state(bind);
 
-    bindPeer.oniceconnectionnewstatechange = function (event) {
+    bind.oniceconnectionnewstatechange = function (event) {
       // Connection is successful
       if (com.RTCPeerConnection.newIceConnectionState === 'connected') {
         // Stop timer
@@ -9417,27 +9524,35 @@ function Peer(config, listener) {
         }
       }
 
-      com.respond('peer:iceconnectionstate', {
+      com._handler('peer:iceconnectionstate', {
         state: com.RTCPeerConnection.newIceConnectionState
       });
     };
 
-    bindPeer.onsignalingstatechange = function (event) {
-      com.respond('peer:signalingstate', {
+    bind.onsignalingstatechange = function (event) {
+      com._handler('peer:signalingstate', {
         state: com.RTCPeerConnection.newSignalingState
       });
     };
 
-    bindPeer.onicegatheringstatechange = function () {
-      com.respond('peer:icegatheringstate', {
+    bind.onicegatheringstatechange = function () {
+      com._handler('peer:icegatheringstate', {
         state: com.RTCPeerConnection.iceGatheringState
       });
     };
 
-    com.RTCPeerConnection = bindPeer;
+    bind.onnegotiationneeded = function (event) {
+      com._handler('peer:ready', {
+        weight: com._weight,
+        sdpType: com._sdpType,
+        streamingConfig: com._streamingConfig
+      });
+    };
+
+    com.RTCPeerConnection = bind;
 
     fn.runSync(function () {
-      com.respond('peer:connect', {
+      com._handler('peer:ready', {
         weight: com.weight,
         SDPType: com.SDPType,
         streamingConfig: com.streamingConfig
@@ -9445,17 +9560,24 @@ function Peer(config, listener) {
     });
   };
 
-  com.createOffer = function () {
+  /**
+   * Starts and initiates the handshaking to establish the RTCPeerConnection.
+   * @method _initiate
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  com._initiate = function () {
     // Create datachannel
-    if (globals.dataChannel && com.type === 'user') {
+    if (com._dataConnection) {
       var eventChannel = com.RTCPeerConnection.createDataChannel('main');
 
       // Send the channel only when channel has started
       var channel = new DataChannel(eventChannel, function (event, data) {
 
-        com.respond(event, data);
+        com._handler(event, data);
 
-        com.respond('peer:datachannel', {
+        com._handler('peer:datachannel', {
           sourceType: 'local',
           channel: channel
         });
@@ -9467,7 +9589,7 @@ function Peer(config, listener) {
 
       com.localDescription = offer;
 
-      com.respond('peer:offer', {
+      com._handler('peer:offer', {
         offer: offer
       });
 
@@ -9477,13 +9599,20 @@ function Peer(config, listener) {
     }, com.sdpConstraints);
   };
 
+  /**
+   * Starts and initiates the handshaking to establish the RTCPeerConnection.
+   * @method _initiate
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
   com.createAnswer = function () {
     com.RTCPeerConnection.createAnswer(function (answer) {
       answer.sdp = SDP.configure(answer.sdp, com.sdpConfig);
 
       com.localDescription = answer;
 
-      com.respond('peer:answer', {
+      com._handler('peer:answer', {
         answer: answer
       });
 
@@ -9499,7 +9628,7 @@ function Peer(config, listener) {
     var localDescription = com.localDescription;
 
     com.RTCPeerConnection.setLocalDescription(localDescription, function () {
-      com.respond('peer:localdescription', {
+      com._handler('peer:localdescription', {
         localDescription: localDescription.sdp,
         type: localDescription.type,
       });
@@ -9507,7 +9636,7 @@ function Peer(config, listener) {
       if (localDescription.type === 'answer') {
         com.RTCPeerConnection.newSignalingState = 'have-local-answer';
 
-        com.respond('peer:signalingstate', {
+        com._handler('peer:signalingstate', {
           state: com.RTCPeerConnection.newSignalingState
         });
 
@@ -9524,7 +9653,7 @@ function Peer(config, listener) {
     var remoteDescription = com.remoteDescription;
 
     com.RTCPeerConnection.setRemoteDescription(remoteDescription, function () {
-      com.respond('peer:remotedescription', {
+      com._handler('peer:remotedescription', {
         remoteDescription: remoteDescription.sdp,
         type: remoteDescription.type
       });
@@ -9532,7 +9661,7 @@ function Peer(config, listener) {
       if (remoteDescription.type === 'answer') {
         com.RTCPeerConnection.newSignalingState = 'have-remote-answer';
 
-        com.respond('peer:signalingstate', {
+        com._handler('peer:signalingstate', {
           state: com.RTCPeerConnection.newSignalingState
         });
 
@@ -9547,51 +9676,147 @@ function Peer(config, listener) {
       throw error;
     });
   };
-  
+
   /* Event Handlers */
+  /**
+   * Function to subscribe to when peer connection has been started and
+   *   class object is ready to use.
+   * @method onready
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
+  com.onready = function () {};
+
+  /**
+   * Function to subscribe to when peer connection is established.
+   * @method onconnect
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
   com.onconnect = function () {};
-  com.onconnected = function () {};
+
+  /**
+   * Function to subscribe to when ICE connection state changes.
+   * @method oniceconnectionstatechange
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
   com.oniceconnectionstatechange = function () {};
+
+  /**
+   * Function to subscribe to when ICE gathering state changes.
+   * @method onicegatheringstatechange
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
   com.onicegatheringstatechange = function () {};
+
+  /**
+   * Function to subscribe to when there is an incoming stream received.
+   * @method onaddstream
+   * @param {Stream} stream The stream object.
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
   com.onaddstream = function () {};
+
+  /**
+   * Function to subscribe to when signaling state has changed.
+   * @method onsignalingstatechange
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
   com.onsignalingstatechange = function () {};
+
+  /**
+   * Function to subscribe to when peer connection has been restarted.
+   * @method onreconnect
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
   com.onreconnect = function () {};
+
+  /**
+   * Function to subscribe to when peer connection been disconnected.
+   * @method onremoveconnection
+   * @eventhandler true
+   * @for Peer
+   * @since 0.6.0
+   */
   com.ondisconnect = function () {};
 
+
+  /* Beginning Logic */
   // Throw an error if adapterjs is not loaded
   if (!window.RTCPeerConnection) {
     throw new Error('Required dependency adapterjs not found');
   }
 
   // Parse bandwidth
-  com.streamingConfig.bandwidth = StreamParser.parseBandwidthConfig(com.streamingConfig.bandwidth);
-
-  // Parse constraints ICE servers
-  var iceServers = ICE.parseICEServers(config.iceServers);
-
-  com.ICEConfig = {
-    iceServers: iceServers
+  com._streamingConfig = config.streamingConfig || {
+    audio: false,
+    video: false,
+    status: {
+      audioMuted: true,
+      videoMuted: true
+    }
   };
 
-  // Start timer
-  /*com.healthTimer = setTimeout(function () {
-    if (!fn.isEmpty(com.healthTimer)) {
-      log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
+  // Parse sdp modification settings
+  com._sdpConfig = {
+    stereo: !!config.streamingConfig.audio.stereo,
+    bandwidth: StreamParser.parseBandwidthConfig(config.bandwidth)
+  };
 
-      clearInterval(com.healthTimer);
+  // Parse constraints ICE servers
+  var peerConfig = {
+    iceServers: config.iceServers
+  };
 
-      com.reconnect();
-    }
+  // Create the object
+  var peer = PeerHelper.create(peerConfig);
 
-  }, com.iceTrickle ? 10000 : 50000);*/
+  // Bind peer
+  com._bind(peer);
 
+  // Send stream
   fn.runSync(function () {
+    // Start timer
+    /*com.healthTimer = setTimeout(function () {
+      if (!fn.isEmpty(com.healthTimer)) {
+        log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
+
+        clearInterval(com.healthTimer);
+
+        com.reconnect();
+      }
+
+    }, com.iceTrickle ? 10000 : 50000);*/
+
     // When peer connection is ready to use, the connection connect() can start
-    com.respond('peer:start', {
-      weight: com.weight,
-      SDPType: com.SDPType,
-      streamingConfig: com.streamingConfig
-    });
+    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
+      // Check class type
+      peer.addStream(stream.MediaStream);
+
+      com._handler('peer:stream', {
+        sourceType: 'local',
+        stream: stream
+      });
+
+    } else {
+      com._handler('peer:ready', {
+        weight: com._weight,
+        sdpType: com._sdpType,
+        streamingConfig: com._streamingConfig
+      });
+    }
   });
 }
 var PeerEventMessageHandler = {
@@ -9924,6 +10149,32 @@ var PeerHelper = {
         window.webrtcDetectedVersion > 27 : true;
     }
 
+    if (window.webrtcDetectedBrowser !== 'chrome' && window.webrtcDetectedBrowser !== 'opera') {
+      var remoteStreamStatusChangedFn = function (prev, current) {
+        if (prev === true) {
+          peer.onremovestream(peer);
+        }
+      };
+
+      var remoteStreamChecker = setInterval(function () {
+        if (typeof peer.hasStream === 'undefined') {
+          peer.hasStream = peer.getRemoteStreams().length > 0;
+        }
+
+        // Clear interval if peer connection is closed
+        if (peer.signalingState === 'closed') {
+          clearInterval(remoteStreamChecker);
+        }
+
+        var status = peer.getRemoteStreams().length > 0;
+
+        if (peer.hasStream !== status) {
+          remoteStreamStatusChangedFn(!!peer.hasStream, status);
+          peer.hasStream = status;
+        }
+      }, 10);
+    }
+
     return peer;
   },
 
@@ -10040,7 +10291,7 @@ var PeerHelper = {
           this.ICE.state(peer2);
         }
 
-        // Check if remoteDescription is set before firing onremovestream
+        /*// Check if remoteDescription is set before firing onremovestream
         var checkForRemoteDesc = setInterval(function () {
           if (!!peer2.remoteDescription) {
             clearInterval(checkForRemoteDesc);
@@ -10049,7 +10300,7 @@ var PeerHelper = {
               peer2.onremovestream(peer);
             }
           }
-        }, 10);
+        }, 10);*/
 
 
         // Re-invoke negotiation needed
@@ -10124,6 +10375,18 @@ var PeerHelper = {
               // overriding the original one
               peer.oniceconnectionnewstatechange(peer);
             }, 1000);
+
+            if (peer.iceConnectionState === 'connected' || peer.iceConnectionState === 'completed') {
+              if (window.webrtcDetectedBrowser !== 'opera' || window.webrtcDetectedBrowser !== 'chrome') {
+                if (peer.hasStream && peer.getRemoteStreams().length === 0) {
+                  peer.hasStream = false;
+
+                  if (typeof peer.onremovestream === 'function') {
+                    peer.onremovestream(peer);
+                  }
+                }
+              }
+            }
           }
           peer.newiceConnectionState = newState;
           peer.onnewiceconnectionstatechange(peer);
@@ -12768,10 +13031,10 @@ function Stream(stream, config, listener) {
 
       if (track.kind === 'audio') {
         isEnabled = (typeof com.config.audio === 'object') ?
-          !!!com.config.status.audioMuted : !!com.config.audio;
+          !!!com.config.audio.mute : !!com.config.audio;
       } else {
         isEnabled = (typeof com.config.video === 'object') ?
-          !!!com.config.status.videoMuted : !!com.config.video;
+          !!!com.config.video.mute : !!com.config.video;
       }
 
       track.enabled = isEnabled;
@@ -12816,6 +13079,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.stopAudio = function () {
+    if (com.config.audio === false) {
+      log.warn('There is no available audio tracks to stop');
+      return;
+    }
+
     var tracks = com._MediaStream.getAudioTracks();
     var i;
 
@@ -12834,6 +13102,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.stopVideo = function () {
+    if (com.config.video === false) {
+      log.warn('There is no available video tracks to stop');
+      return;
+    }
+
     var tracks = com._MediaStream.getVideoTracks();
     var i;
 
@@ -12851,6 +13124,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.muteAudio = function () {
+    if (com.config.audio === false) {
+      log.warn('There is no available audio tracks to mute');
+      return;
+    }
+
     var tracks = com._MediaStream.getAudioTracks();
     var i;
 
@@ -12868,6 +13146,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.muteVideo = function () {
+    if (com.config.video === false) {
+      log.warn('There is no available video tracks to mute');
+      return;
+    }
+
     var tracks = com._MediaStream.getVideoTracks();
     var i;
 
@@ -12886,6 +13169,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.unmuteAudio = function () {
+    if (com.config.audio === false) {
+      log.warn('There is no available audio tracks to unmute');
+      return;
+    }
+
     var tracks = com._MediaStream.getAudioTracks();
     var i;
 
@@ -12903,6 +13191,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.unmuteVideo = function () {
+    if (com.config.video === false) {
+      log.warn('There is no available video tracks to unmute');
+      return;
+    }
+
     var tracks = com._MediaStream.getVideoTracks();
     var i;
 
@@ -12988,7 +13281,6 @@ function Stream(stream, config, listener) {
   if (fn.isEmpty(stream)) {
     var audioSettings = StreamParser.parseAudioConfig(config.audio);
     var videoSettings = StreamParser.parseVideoConfig(config.video);
-    var statusSettings = StreamParser.parseMutedConfig(config);
 
     com._constraints = {
       audio: audioSettings.userMedia,
@@ -12997,8 +13289,7 @@ function Stream(stream, config, listener) {
 
     com.config = {
       audio: audioSettings.settings,
-      video: audioSettings.settings,
-      status: statusSettings
+      video: audioSettings.settings
     };
 
     // Get user media
@@ -13203,7 +13494,8 @@ var StreamParser = {
     if (options !== false) {
       options = (typeof options === 'boolean') ? {} : options;
       tempOptions.stereo = !!options.stereo;
-      tempOptions.sourceId = options.sourceId;
+      tempOptions.sourceId = options.sourceId || null;
+      tempOptions.mute = typeof options.mute === 'boolean' ? options.mute : false;
 
       options = tempOptions;
     }
@@ -13292,7 +13584,10 @@ var StreamParser = {
         this.defaultConfig.video.frameRate;
 
       // set the sourceid
-      tempOptions.sourceId = options.sourceId;
+      tempOptions.sourceId = options.sourceId || null;
+
+      // set the mute options
+      tempOptions.mute = typeof options.mute === 'boolean' ? options.mute : false;
 
       options = tempOptions;
 
@@ -13363,46 +13658,6 @@ var StreamParser = {
     // set the settings
     return options;
   },
-
-  /**
-   * Parses the stream muted configuration.
-   * @method StreamParser.parseMutedConfig
-   * @param {JSON} options The stream muted settings.
-   * @param {JSON} config The streaming configuration.
-   * @param {JSON|Boolean} [config.audio=false] The audio stream configuration.
-   *    If parsed as a boolean, other configuration settings under the audio
-   *    configuration would be set as the default setting in the connection.
-   * @param {Boolean} [config.audio.mute=false] The flag that indicates if audio stream
-   *    should be muted when retrieving.
-   * @param {String|Boolean} [config.video=false] The video stream configuration.
-   *    If parsed as a boolean, other configuration settings under the video
-   *    configuration would be set as the default setting in the connection.
-   * @param {Boolean} [config.video.mute=false] The flag that indicates if video stream
-   *    should be muted when retrieving.
-   * @return {JSON} Returns the output parsed stream status configuration.
-   * - <code>videoMuted</code> <var>: <b>type</b> Boolean</var><br>
-   *   The video media status if video track is muted (disabled).
-   * - <code>audioMuted</code> <var>: <b>type</b> Boolean</var><br>
-   *   The audio media status if audio track is muted (disabled).
-   * @private
-   * @since 0.6.0
-   */
-  parseMutedConfig: function (options) {
-    // the stream options
-    options = (typeof options === 'object') ?
-      options : { audio: false, video: false };
-
-    var updateAudioMuted = (typeof options.audio === 'object') ?
-      !!options.audio.mute : !options.audio;
-    var updateVideoMuted = (typeof options.video === 'object') ?
-      !!options.video.mute : !options.video;
-
-    return {
-      audioMuted: updateAudioMuted,
-      videoMuted: updateVideoMuted
-    };
-  },
-
 
   parseDefaultConfig: function (options) {
     var hasMediaChanged = false;

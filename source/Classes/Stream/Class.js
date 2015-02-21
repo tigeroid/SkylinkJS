@@ -231,10 +231,10 @@ function Stream(stream, config, listener) {
 
       if (track.kind === 'audio') {
         isEnabled = (typeof com.config.audio === 'object') ?
-          !!!com.config.status.audioMuted : !!com.config.audio;
+          !!!com.config.audio.mute : !!com.config.audio;
       } else {
         isEnabled = (typeof com.config.video === 'object') ?
-          !!!com.config.status.videoMuted : !!com.config.video;
+          !!!com.config.video.mute : !!com.config.video;
       }
 
       track.enabled = isEnabled;
@@ -279,6 +279,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.stopAudio = function () {
+    if (com.config.audio === false) {
+      log.warn('There is no available audio tracks to stop');
+      return;
+    }
+
     var tracks = com._MediaStream.getAudioTracks();
     var i;
 
@@ -297,6 +302,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.stopVideo = function () {
+    if (com.config.video === false) {
+      log.warn('There is no available video tracks to stop');
+      return;
+    }
+
     var tracks = com._MediaStream.getVideoTracks();
     var i;
 
@@ -314,6 +324,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.muteAudio = function () {
+    if (com.config.audio === false) {
+      log.warn('There is no available audio tracks to mute');
+      return;
+    }
+
     var tracks = com._MediaStream.getAudioTracks();
     var i;
 
@@ -331,6 +346,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.muteVideo = function () {
+    if (com.config.video === false) {
+      log.warn('There is no available video tracks to mute');
+      return;
+    }
+
     var tracks = com._MediaStream.getVideoTracks();
     var i;
 
@@ -349,6 +369,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.unmuteAudio = function () {
+    if (com.config.audio === false) {
+      log.warn('There is no available audio tracks to unmute');
+      return;
+    }
+
     var tracks = com._MediaStream.getAudioTracks();
     var i;
 
@@ -366,6 +391,11 @@ function Stream(stream, config, listener) {
    * @since 0.6.0
    */
   com.unmuteVideo = function () {
+    if (com.config.video === false) {
+      log.warn('There is no available video tracks to unmute');
+      return;
+    }
+
     var tracks = com._MediaStream.getVideoTracks();
     var i;
 
@@ -451,7 +481,6 @@ function Stream(stream, config, listener) {
   if (fn.isEmpty(stream)) {
     var audioSettings = StreamParser.parseAudioConfig(config.audio);
     var videoSettings = StreamParser.parseVideoConfig(config.video);
-    var statusSettings = StreamParser.parseMutedConfig(config);
 
     com._constraints = {
       audio: audioSettings.userMedia,
@@ -460,8 +489,7 @@ function Stream(stream, config, listener) {
 
     com.config = {
       audio: audioSettings.settings,
-      video: audioSettings.settings,
-      status: statusSettings
+      video: audioSettings.settings
     };
 
     // Get user media
