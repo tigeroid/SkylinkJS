@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-22 */
+/*! skylinkjs - v0.5.7 - 2015-02-23 */
 
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -6714,19 +6714,36 @@ function toArray(list, index) {
 (1)
 });
 
-/*! adapterjs - v0.10.0 - 2014-12-19 */
+/*! adapterjs - v0.10.5 - 2015-02-11 */
 
 // Adapter's interface.
-AdapterJS = { options:{} };
+var AdapterJS = AdapterJS || {};
+
+AdapterJS.options = {};
 
 // uncomment to get virtual webcams
 // AdapterJS.options.getAllCams = true;
 
 // uncomment to prevent the install prompt when the plugin in not yet installed
-// AdapterJS.options.hidePluginInstallPrompt
+// AdapterJS.options.hidePluginInstallPrompt = true;
 
 // AdapterJS version
-AdapterJS.VERSION = '0.10.0';
+AdapterJS.VERSION = '0.10.5';
+
+// This function will be called when the WebRTC API is ready to be used
+// Whether it is the native implementation (Chrome, Firefox, Opera) or 
+// the plugin
+// You may Override this function to synchronise the start of your application
+// with the WebRTC API being ready.
+// If you decide not to override use this synchronisation, it may result in 
+// an extensive CPU usage on the plugin start (once per tab loaded) 
+// Params:
+//    - isUsingPlugin: true is the WebRTC plugin is being used, false otherwise
+//
+AdapterJS.onwebrtcready = AdapterJS.onwebrtcready || function(isUsingPlugin) {
+  // The WebRTC API is ready.
+  // Override me and do whatever you want here
+};
 
 // Plugin namespace
 AdapterJS.WebRTCPlugin = AdapterJS.WebRTCPlugin || {};
@@ -6747,13 +6764,18 @@ if(!!navigator.platform.match(/^Mac/i)) {
 }
 else if(!!navigator.platform.match(/^Win/i)) {
   AdapterJS.WebRTCPlugin.pluginInfo.downloadLink = 'http://bit.ly/1kkS4FN';
-};
+}
 
 // Unique identifier of each opened page
 AdapterJS.WebRTCPlugin.pageId = Math.random().toString(36).slice(2);
 
 // Use this whenever you want to call the plugin.
 AdapterJS.WebRTCPlugin.plugin = null;
+
+// Set log level for the plugin once it is ready.
+// The different values are 
+// This is an asynchronous function that will run when the plugin is ready 
+AdapterJS.WebRTCPlugin.setLogLevel = null;
 
 // Defines webrtc's JS interface according to the plugin's implementation.
 // Define plugin Browsers as WebRTC Interface.
@@ -6770,6 +6792,8 @@ AdapterJS.WebRTCPlugin.pluginInjectionInterval = null;
 // Inject the HTML DOM object element into the page.
 AdapterJS.WebRTCPlugin.injectPlugin = null;
 
+// States of readiness that the plugin goes through when
+// being injected and stated
 AdapterJS.WebRTCPlugin.PLUGIN_STATES = {
   NONE : 0,           // no plugin use
   INITIALIZING : 1,   // Detected need for plugin
@@ -6781,6 +6805,28 @@ AdapterJS.WebRTCPlugin.PLUGIN_STATES = {
 // Current state of the plugin. You cannot use the plugin before this is
 // equal to AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY
 AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.NONE;
+
+// True is AdapterJS.onwebrtcready was already called, false otherwise
+// Used to make sure AdapterJS.onwebrtcready is only called once
+AdapterJS.onwebrtcreadyDone = false;
+
+// Log levels for the plugin. 
+// To be set by calling AdapterJS.WebRTCPlugin.setLogLevel
+/*
+Log outputs are prefixed in some cases. 
+  INFO: Information reported by the plugin. 
+  ERROR: Errors originating from within the plugin.
+  WEBRTC: Error originating from within the libWebRTC library
+*/
+// From the least verbose to the most verbose
+AdapterJS.WebRTCPlugin.PLUGIN_LOG_LEVELS = {
+  NONE : 'NONE',
+  ERROR : 'ERROR',  
+  WARNING : 'WARNING', 
+  INFO: 'INFO', 
+  VERBOSE: 'VERBOSE', 
+  SENSITIVE: 'SENSITIVE'  
+};
 
 // Does a waiting check before proceeding to load the plugin.
 AdapterJS.WebRTCPlugin.WaitForPluginReady = null;
@@ -6796,24 +6842,39 @@ AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb = null;
 // !!!! WARNING: DO NOT OVERRIDE THIS FUNCTION. !!!
 // This function will be called when plugin is ready. It sends necessary
 // details to the plugin.
-// If you need to do something once the page/plugin is ready, override
-// window.onwebrtcready instead.
+// The function will wait for the document to be ready and the set the
+// plugin state to AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY,
+// indicating that it can start being requested.
 // This function is not in the IE/Safari condition brackets so that
 // TemPluginLoaded function might be called on Chrome/Firefox.
 // This function is the only private function that is not encapsulated to
 // allow the plugin method to be called.
 __TemWebRTCReady0 = function () {
-  arguments.callee.StaticWasInit = arguments.callee.StaticWasInit || 1;
-  if (arguments.callee.StaticWasInit === 1) {
+  if (document.readyState === 'complete') {
+    AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY;
+
+    AdapterJS.maybeThroughWebRTCReady();
+  } else {
     AdapterJS.WebRTCPlugin.documentReadyInterval = setInterval(function () {
       if (document.readyState === 'complete') {
         // TODO: update comments, we wait for the document to be ready
         clearInterval(AdapterJS.WebRTCPlugin.documentReadyInterval);
         AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY;
+
+        AdapterJS.maybeThroughWebRTCReady();
       }
     }, 100);
   }
-  arguments.callee.StaticWasInit++;
+};
+
+AdapterJS.maybeThroughWebRTCReady = function() {
+  if (!AdapterJS.onwebrtcreadyDone) {
+    AdapterJS.onwebrtcreadyDone = true;
+
+    if (typeof(AdapterJS.onwebrtcready) === 'function') {
+      AdapterJS.onwebrtcready(AdapterJS.WebRTCPlugin.plugin !== null);
+    }
+  }
 };
 
 // The result of ice connection states.
@@ -6909,13 +6970,14 @@ AdapterJS.maybeFixConfiguration = function (pcConfig) {
 };
 
 AdapterJS.addEvent = function(elem, evnt, func) {
-   if (elem.addEventListener)  // W3C DOM
-      elem.addEventListener(evnt, func, false);
-   else if (elem.attachEvent) // OLD IE DOM 
-      elem.attachEvent("on"+evnt, func);
-   else // No much to do
-      elem[evnt] = func;
-}
+  if (elem.addEventListener) { // W3C DOM
+    elem.addEventListener(evnt, func, false);
+  } else if (elem.attachEvent) {// OLD IE DOM 
+    elem.attachEvent('on'+evnt, func);
+  } else { // No much to do
+    elem[evnt] = func;
+  }
+};
 
 // -----------------------------------------------------------
 // Detected webrtc implementation. Types are:
@@ -7181,6 +7243,8 @@ if (navigator.mozGetUserMedia) {
       return [];
     };
   }
+
+  AdapterJS.maybeThroughWebRTCReady();
 } else if (navigator.webkitGetUserMedia) {
   webrtcDetectedBrowser = 'chrome';
   webrtcDetectedType = 'webkit';
@@ -7264,6 +7328,8 @@ if (navigator.mozGetUserMedia) {
     to.src = from.src;
     return to;
   };
+
+  AdapterJS.maybeThroughWebRTCReady();
 } else { // TRY TO USE PLUGIN
   // IE 9 is not offering an implementation of console.log until you open a console
   if (typeof console !== 'object' || typeof console.log !== 'function') {
@@ -7302,22 +7368,37 @@ if (navigator.mozGetUserMedia) {
   /* jshint +W035 */
 
   AdapterJS.WebRTCPlugin.callWhenPluginReady = function (callback) {
-    var checkPluginReadyState = setInterval(function () {
-      if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
-        clearInterval(checkPluginReadyState);
-        callback();
-      }
-    }, 100);
+    if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
+      // Call immediately if possible
+      // Once the plugin is set, the code will always take this path
+      callback();
+    } else {
+      // otherwise start a 100ms interval
+      var checkPluginReadyState = setInterval(function () {
+        if (AdapterJS.WebRTCPlugin.pluginState === AdapterJS.WebRTCPlugin.PLUGIN_STATES.READY) {
+          clearInterval(checkPluginReadyState);
+          callback();
+        }
+      }, 100);
+    }
+  };
+
+  AdapterJS.WebRTCPlugin.setLogLevel = function(logLevel) {
+    AdapterJS.WebRTCPlugin.callWhenPluginReady(function() {
+      AdapterJS.WebRTCPlugin.plugin.setLogLevel(logLevel);
+    });
   };
 
   AdapterJS.WebRTCPlugin.injectPlugin = function () {
     // only inject once the page is ready
-    if (document.readyState !== 'complete')
+    if (document.readyState !== 'complete') {
       return;
+    }
 
     // Prevent multiple injections
-    if (AdapterJS.WebRTCPlugin.pluginState !== AdapterJS.WebRTCPlugin.PLUGIN_STATES.INITIALIZING)
+    if (AdapterJS.WebRTCPlugin.pluginState !== AdapterJS.WebRTCPlugin.PLUGIN_STATES.INITIALIZING) {
       return;
+    }
 
     AdapterJS.WebRTCPlugin.pluginState = AdapterJS.WebRTCPlugin.PLUGIN_STATES.INJECTING;
 
@@ -7335,7 +7416,7 @@ if (navigator.mozGetUserMedia) {
         '" />' +
         // uncomment to be able to use virtual cams
         (AdapterJS.options.getAllCams ? '<param name="forceGetAllCams" value="True" />':'') +
-	
+  
         '</object>';
       while (AdapterJS.WebRTCPlugin.plugin.firstChild) {
         frag.appendChild(AdapterJS.WebRTCPlugin.plugin.firstChild);
@@ -7355,8 +7436,6 @@ if (navigator.mozGetUserMedia) {
         AdapterJS.WebRTCPlugin.plugin.width = '1px';
         AdapterJS.WebRTCPlugin.plugin.height = '1px';
       }
-      AdapterJS.WebRTCPlugin.plugin.width = '1px';
-      AdapterJS.WebRTCPlugin.plugin.height = '1px';
       AdapterJS.WebRTCPlugin.plugin.type = AdapterJS.WebRTCPlugin.pluginInfo.type;
       AdapterJS.WebRTCPlugin.plugin.innerHTML = '<param name="onload" value="' +
         AdapterJS.WebRTCPlugin.pluginInfo.onload + '">' +
@@ -7564,39 +7643,42 @@ if (navigator.mozGetUserMedia) {
   };
 
   AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb = function() {
-    AdapterJS.addEvent(document, 'readystatechange', AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv);
+    AdapterJS.addEvent(document, 
+                      'readystatechange',
+                       AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv);
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv();
-  }
+  };
 
   AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCbPriv = function () {
-    if (AdapterJS.options.hidePluginInstallPrompt)
+    if (AdapterJS.options.hidePluginInstallPrompt) {
       return;
+    }
 
     var downloadLink = AdapterJS.WebRTCPlugin.pluginInfo.downloadLink;
-    if(downloadLink) {
+    if(downloadLink) { // if download link
       var popupString;
-      if (AdapterJS.WebRTCPlugin.pluginInfo.downloadLink) {
+      if (AdapterJS.WebRTCPlugin.pluginInfo.portalLink) { // is portal link
        popupString = 'This website requires you to install the ' +
         ' <a href="' + AdapterJS.WebRTCPlugin.pluginInfo.portalLink + 
         '" target="_blank">' + AdapterJS.WebRTCPlugin.pluginInfo.companyName +
         ' WebRTC Plugin</a>' +
         ' to work on this browser.';
-      } else {
+      } else { // no portal link, just print a generic explanation
        popupString = 'This website requires you to install a WebRTC-enabling plugin ' +
         'to work on this browser.';
       }
 
       AdapterJS.WebRTCPlugin.renderNotificationBar(popupString, 'Install Now', downloadLink);
-    }
-    else {
+    } else { // no download link, just print a generic explanation
       AdapterJS.WebRTCPlugin.renderNotificationBar('Your browser does not support WebRTC.');
     }
   };
 
   AdapterJS.WebRTCPlugin.renderNotificationBar = function (text, buttonText, buttonLink) {
     // only inject once the page is ready
-    if (document.readyState !== 'complete')
+    if (document.readyState !== 'complete') {
       return;
+    }
 
     var w = window;
     var i = document.createElement('iframe');
@@ -7650,12 +7732,14 @@ if (navigator.mozGetUserMedia) {
     }, 300);
   };
   // Try to detect the plugin and act accordingly
-  AdapterJS.WebRTCPlugin.isPluginInstalled(AdapterJS.WebRTCPlugin.pluginInfo.prefix, AdapterJS.WebRTCPlugin.pluginInfo.plugName,
+  AdapterJS.WebRTCPlugin.isPluginInstalled(
+    AdapterJS.WebRTCPlugin.pluginInfo.prefix, 
+    AdapterJS.WebRTCPlugin.pluginInfo.plugName,
     AdapterJS.WebRTCPlugin.defineWebRTCInterface,
     AdapterJS.WebRTCPlugin.pluginNeededButNotInstalledCb);
 }
 
-/*! skylinkjs - v0.5.7 - 2015-02-22 */
+/*! skylinkjs - v0.5.7 - 2015-02-23 */
 
 var globals = {
   apiKey: null,
@@ -9459,8 +9543,13 @@ function Peer(stream, config, listener) {
     bind.ondatachannel = function (event) {
       var eventChannel = event.channel || event;
 
+      com._handler('peer:datachannel', {
+        channel: eventChannel,
+        sourceType: 'remote'
+      });
+
       // Send the channel only when channel has started
-      var channel = new DataChannel(eventChannel, function (event, data) {
+      /*var channel = new DataChannel(eventChannel, function (event, data) {
 
         com._handler(event, data);
 
@@ -9470,14 +9559,14 @@ function Peer(stream, config, listener) {
             sourceType: 'remote'
           });
         }
-      });
+      });*/
     };
 
     bind.onaddstream = function (event) {
       var eventStream = event.stream || event;
 
       // Send the stream only when stream has started
-      var stream = new Stream(eventStream, config.streamingConfig, function (event, data) {
+      var stream = new Stream(eventStream, config._streamingConfig, function (event, data) {
 
         com._handler(event, data);
 
@@ -9542,21 +9631,33 @@ function Peer(stream, config, listener) {
     };
 
     bind.onnegotiationneeded = function (event) {
-      com._handler('peer:ready', {
+      com._handler('peer:nready', {
         weight: com._weight,
         sdpType: com._sdpType,
         streamingConfig: com._streamingConfig
       });
     };
 
-    com.RTCPeerConnection = bind;
+    com._RTCPeerConnection = bind;
 
     fn.runSync(function () {
-      com._handler('peer:ready', {
-        weight: com.weight,
-        SDPType: com.SDPType,
-        streamingConfig: com.streamingConfig
-      });
+      // When peer connection is ready to use, the connection connect() can start
+      if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
+        // Check class type
+        PeerHelper.addStream(com._RTCPeerConnection, stream._MediaStream);
+
+        com._handler('peer:stream', {
+          sourceType: 'local',
+          stream: stream
+        });
+
+      } else {
+        com._handler('peer:ready', {
+          weight: com._weight,
+          sdpType: com._sdpType,
+          streamingConfig: com._streamingConfig
+        });
+      }
     });
   };
 
@@ -9760,7 +9861,7 @@ function Peer(stream, config, listener) {
   }
 
   // Parse bandwidth
-  com._streamingConfig = config.streamingConfig || {
+  com._streamingConfig = config.stream || {
     audio: false,
     video: false,
     status: {
@@ -9771,13 +9872,13 @@ function Peer(stream, config, listener) {
 
   // Parse sdp modification settings
   com._sdpConfig = {
-    stereo: !!config.streamingConfig.audio.stereo,
+    stereo: !!config.stream.audio.stereo,
     bandwidth: StreamParser.parseBandwidthConfig(config.bandwidth)
   };
 
   // Parse constraints ICE servers
   var peerConfig = {
-    iceServers: config.iceServers
+    iceServers: config.iceServers || []
   };
 
   // Create the object
@@ -9785,39 +9886,6 @@ function Peer(stream, config, listener) {
 
   // Bind peer
   com._bind(peer);
-
-  // Send stream
-  fn.runSync(function () {
-    // Start timer
-    /*com.healthTimer = setTimeout(function () {
-      if (!fn.isEmpty(com.healthTimer)) {
-        log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
-
-        clearInterval(com.healthTimer);
-
-        com.reconnect();
-      }
-
-    }, com.iceTrickle ? 10000 : 50000);*/
-
-    // When peer connection is ready to use, the connection connect() can start
-    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
-      // Check class type
-      peer.addStream(stream.MediaStream);
-
-      com._handler('peer:stream', {
-        sourceType: 'local',
-        stream: stream
-      });
-
-    } else {
-      com._handler('peer:ready', {
-        weight: com._weight,
-        sdpType: com._sdpType,
-        streamingConfig: com._streamingConfig
-      });
-    }
-  });
 }
 var PeerEventMessageHandler = {
 
@@ -9897,11 +9965,37 @@ var PeerEventReceivedHandler = {
   
 };
 var PeerEventResponseHandler = {
-  
+
   /**
    * Event fired when peer connection has started.
    * This happens when RTCPeerConnection object has just
    *   been initialized and local MediaStream has been added.
+   * @event peer:ready
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  ready: function (com, data, listener) {
+    /*// Start the health timer connection
+    com.healthTimer = setTimeout(function () {
+      if (!fn.isEmpty(com.healthTimer)) {
+        log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
+
+        clearInterval(com.healthTimer);
+
+        com.reconnect();
+      }
+    }, com.iceTrickle ? 10000 : 50000);*/
+
+    if (typeof com.onready === 'function') {
+      com.onready(com.id);
+    }
+  },
+
+  /**
+   * Event fired when peer connection is established and connected.
+   * This happens when RTCPeerConnection ICE connection state is
+   *  connected and completed.
    * @event peer:connect
    * @private
    * @for Peer
@@ -9912,7 +10006,7 @@ var PeerEventResponseHandler = {
       com.onconnect(com.id);
     }
   },
-  
+
   /**
    * Event fired when peer connection is reconnecting.
    * This happens when RTCPeerConnection object is
@@ -9928,25 +10022,10 @@ var PeerEventResponseHandler = {
       com.onreconnect();
     }
   },
-  
-  /**
-   * Event fired when peer connection is established and connected.
-   * This happens when RTCPeerConnection ICE connection state is
-   *  connected and completed.
-   * @event peer:connected
-   * @private
-   * @for Peer
-   * @since 0.6.0
-   */
-  connected: function (com, data, listener) {
-    if (typeof com.onconnect === 'function') {
-      com.onconnect(com.id);
-    }
-  },
-  
+
   /**
    * Event fired when peer connection has been disconnected.
-   * This happens when RTCPeerConnection close is invoked and 
+   * This happens when RTCPeerConnection close is invoked and
    *  connection stops.
    * @event peer:disconnect
    * @private
@@ -9958,7 +10037,7 @@ var PeerEventResponseHandler = {
       com.ondisconnect();
     }
   },
-  
+
   /**
    * Event fired when peer connection adds or receives a stream object.
    * This happens when user sends a local MediaStream to peer or receives
@@ -9974,7 +10053,7 @@ var PeerEventResponseHandler = {
     if (data.sourceType === 'remote') {
       com.stream = data.stream;
     }
-    
+
     if (typeof com.onaddstream === 'function') {
       com.onaddstream(data.stream);
     }
@@ -9990,7 +10069,7 @@ var PeerEventResponseHandler = {
   iceconnectionstate: function (com, data, listener) {
     if (typeof com.oniceconnectionstatechange === 'function') {
       com.oniceconnectionstatechange(data.state);
-    }  
+    }
   },
 
   /**
@@ -10041,7 +10120,7 @@ var PeerEventResponseHandler = {
     data.channel.sourceType = data.sourceType;
 
     com.datachannels[data.channel.id] = data.channel;
-    
+
     if (typeof com.ondatachannel === 'function') {
       com.ondatachannel(data.channel);
     }
@@ -10099,13 +10178,15 @@ var PeerHelper = {
       peerConfig = config;
 
       if (typeof config.iceServers === 'object' ? config.iceServers instanceof Array : false) {
-        peerConfig.iceServers = this.ICE.configureTURN(peerConfig.iceServers);
+        peerConfig.iceServers = this.ICE.configureServers(peerConfig.iceServers);
       }
     }
 
-    if (config !== null && typeof config === 'object') {
+    if (optional !== null && typeof optional === 'object') {
       peerOptional = optional;
     }
+
+    console.info('data', peerConfig, peerOptional);
 
     var peer = new window.RTCPeerConnection(peerConfig, peerOptional);
 
@@ -10192,25 +10273,31 @@ var PeerHelper = {
    * @since 0.6.0
    */
   addStream: function (peer, stream) {
-    if (window.webrtcDetectedBrowser === 'chrome' && window.webrtcDetectedBrowser === 'opera') {
+    if (window.webrtcDetectedBrowser === 'chrome' || window.webrtcDetectedBrowser === 'opera') {
       peer.addStream(stream);
 
     // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
-    // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
     } else {
-      if (peer.getLocalStream().length > 0) {
+      if (peer.getLocalStreams().length > 0) {
+        var browserName = window.webrtcDetectedBrowser.toUpperCase() +
+          (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' : '');
+
         log.warn('StreamPolyfill', 'You cannot add more than 1 stream. Multi-stream sending is ' +
-          'not supported in ' + window.webrtcDetectedBrowser.toUpperCase() +
-          (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' : '') + ' browser');
+          'not supported in ' + browserName + ' browser');
         return;
       }
 
       // Add stream once
       peer.addStream(stream);
 
-      if (typeof peer.onnegotiationneeded === 'function') {
-        peer.onnegotiationneeded(peer);
-      }
+      // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
+      //   to trigger on our own
+      // Set some time for stream to be ready
+      setTimeout(function () {
+        if (typeof peer.onnegotiationneeded === 'function') {
+          peer.onnegotiationneeded(peer);
+        }
+      }, 100);
     }
   },
 
@@ -10227,13 +10314,13 @@ var PeerHelper = {
    * @since 0.6.0
    */
   removeStream: function (peer, stream) {
-    if (window.webrtcDetectedBrowser === 'chrome' && window.webrtcDetectedBrowser === 'opera') {
+    if (window.webrtcDetectedBrowser === 'chrome' || window.webrtcDetectedBrowser === 'opera') {
       peer.removeStream(stream);
 
     // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
     // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
     } else {
-      if (peer.getLocalStream().length > 0) {
+      if (peer.getLocalStreams().length > 0) {
         var constraints = null;
         var optional;
 
@@ -10458,7 +10545,7 @@ var PeerHelper = {
      * Parses TURN url format for cross-browser interopability.
      * For an example, Firefox does not support <code>username@turnserver.com</code>,
      *   whereas Chrome supports it.
-     * @method PeerHelper.ICE.configureTURN
+     * @method PeerHelper.ICE.configureServers
      * @param {Array} iceServers The list of ICE servers.
      * @param {JSON} iceServers.(#index) The ICE server.
      * @param {String} iceServers.(#index).credential The ICE server credential (password).
@@ -10476,11 +10563,11 @@ var PeerHelper = {
      *   The ICE server username. Only used in TURN servers for Firefox browsers.
      * @private
      * @example
-     *   var updateIceServers = PeerHelper.ICE.configureTURN(iceServers);
+     *   var updateIceServers = PeerHelper.ICE.configureServers(iceServers);
      * @for Peer
      * @since 0.6.0
      */
-    configureTURN: function (iceServers) {
+    configureServers: function (iceServers) {
       var newConfig = [];
       var i;
 
@@ -10503,20 +10590,26 @@ var PeerHelper = {
         // For Firefox only
         if (window.webrtcDetectedBrowser === 'firefox') {
           // If it's a TURN server
-          if (iceServer.url.indexOf('turn') === 0) {
-            // Check if the url is username@turn.com
-            if (iceServer.url.indexOf('@') > 0) {
-              var iceParts = iceServer.url.split(':');
-              var subIceParts = iceParts[1].split('@'); // user '@' url
+          // Check if the url is username@turn.com
+          if (iceServer.url.indexOf('@') > 0) {
+            var iceParts = iceServer.url.split(':');
+            var subIceParts = iceParts[1].split('@'); // user '@' url
 
-              iceParts[1] = subIceParts[1];
-              iceServer.url = iceParts.join(':');
-              iceServer.username = subIceParts[0];
-            }
+            // Set the last part [user@tee.com]@xxxx. 'xxxx' as the url
+            iceParts[1] = subIceParts[subIceParts.length - 1];
+            // Set to empty
+            subIceParts.splice(subIceParts.length - 1, 1);
+
+            // Set the url
+            iceServer.url = iceParts.join(':');
+            // Join and set the username
+            iceServer.username = subIceParts.join('@');
           }
         }
         newConfig.push(iceServer);
       }
+
+      console.info(newConfig);
       // Return the new data
       return newConfig;
     }

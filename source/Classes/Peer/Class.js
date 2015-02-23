@@ -27,6 +27,11 @@
  *    used for this connection.
  * @param {Boolean} [config.stream.video.mute=false] The flag that indicates if video stream
  *    should be muted when retrieving.
+ * @param {JSON} config.bandwidth The bandwidth configuration for the peer connections.
+ *    This does fixes the bandwidth but doesn't prevent alterations done by browser for smoother streaming.
+ * @param {Integer} [config.bandwidth.audio] The bandwidth configuration for the audio stream.
+ * @param {Boolean} [config.bandwidth.video] The bandwidth configuration for the video stream.
+ * @param {Boolean} [config.bandwidth.data] The bandwidth configuration for the data stream.
  * @param {Function} [listener] The listener function.
  * @for Skylink
  * @since 0.6.0
@@ -303,8 +308,13 @@ function Peer(stream, config, listener) {
     bind.ondatachannel = function (event) {
       var eventChannel = event.channel || event;
 
+      com._handler('peer:datachannel', {
+        channel: eventChannel,
+        sourceType: 'remote'
+      });
+
       // Send the channel only when channel has started
-      var channel = new DataChannel(eventChannel, function (event, data) {
+      /*var channel = new DataChannel(eventChannel, function (event, data) {
 
         com._handler(event, data);
 
@@ -314,14 +324,14 @@ function Peer(stream, config, listener) {
             sourceType: 'remote'
           });
         }
-      });
+      });*/
     };
 
     bind.onaddstream = function (event) {
       var eventStream = event.stream || event;
 
       // Send the stream only when stream has started
-      var stream = new Stream(eventStream, config.streamingConfig, function (event, data) {
+      var stream = new Stream(eventStream, config._streamingConfig, function (event, data) {
 
         com._handler(event, data);
 
@@ -386,21 +396,33 @@ function Peer(stream, config, listener) {
     };
 
     bind.onnegotiationneeded = function (event) {
-      com._handler('peer:ready', {
+      com._handler('peer:nready', {
         weight: com._weight,
         sdpType: com._sdpType,
         streamingConfig: com._streamingConfig
       });
     };
 
-    com.RTCPeerConnection = bind;
+    com._RTCPeerConnection = bind;
 
     fn.runSync(function () {
-      com._handler('peer:ready', {
-        weight: com.weight,
-        SDPType: com.SDPType,
-        streamingConfig: com.streamingConfig
-      });
+      // When peer connection is ready to use, the connection connect() can start
+      if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
+        // Check class type
+        PeerHelper.addStream(com._RTCPeerConnection, stream._MediaStream);
+
+        com._handler('peer:stream', {
+          sourceType: 'local',
+          stream: stream
+        });
+
+      } else {
+        com._handler('peer:ready', {
+          weight: com._weight,
+          sdpType: com._sdpType,
+          streamingConfig: com._streamingConfig
+        });
+      }
     });
   };
 
@@ -604,7 +626,7 @@ function Peer(stream, config, listener) {
   }
 
   // Parse bandwidth
-  com._streamingConfig = config.streamingConfig || {
+  com._streamingConfig = config.stream || {
     audio: false,
     video: false,
     status: {
@@ -615,13 +637,13 @@ function Peer(stream, config, listener) {
 
   // Parse sdp modification settings
   com._sdpConfig = {
-    stereo: !!config.streamingConfig.audio.stereo,
+    stereo: !!config.stream.audio.stereo,
     bandwidth: StreamParser.parseBandwidthConfig(config.bandwidth)
   };
 
   // Parse constraints ICE servers
   var peerConfig = {
-    iceServers: config.iceServers
+    iceServers: config.iceServers || []
   };
 
   // Create the object
@@ -629,37 +651,4 @@ function Peer(stream, config, listener) {
 
   // Bind peer
   com._bind(peer);
-
-  // Send stream
-  fn.runSync(function () {
-    // Start timer
-    /*com.healthTimer = setTimeout(function () {
-      if (!fn.isEmpty(com.healthTimer)) {
-        log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
-
-        clearInterval(com.healthTimer);
-
-        com.reconnect();
-      }
-
-    }, com.iceTrickle ? 10000 : 50000);*/
-
-    // When peer connection is ready to use, the connection connect() can start
-    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
-      // Check class type
-      peer.addStream(stream.MediaStream);
-
-      com._handler('peer:stream', {
-        sourceType: 'local',
-        stream: stream
-      });
-
-    } else {
-      com._handler('peer:ready', {
-        weight: com._weight,
-        sdpType: com._sdpType,
-        streamingConfig: com._streamingConfig
-      });
-    }
-  });
 }

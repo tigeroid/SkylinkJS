@@ -1,9 +1,35 @@
 var PeerEventResponseHandler = {
-  
+
   /**
    * Event fired when peer connection has started.
    * This happens when RTCPeerConnection object has just
    *   been initialized and local MediaStream has been added.
+   * @event peer:ready
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  ready: function (com, data, listener) {
+    /*// Start the health timer connection
+    com.healthTimer = setTimeout(function () {
+      if (!fn.isEmpty(com.healthTimer)) {
+        log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
+
+        clearInterval(com.healthTimer);
+
+        com.reconnect();
+      }
+    }, com.iceTrickle ? 10000 : 50000);*/
+
+    if (typeof com.onready === 'function') {
+      com.onready(com.id);
+    }
+  },
+
+  /**
+   * Event fired when peer connection is established and connected.
+   * This happens when RTCPeerConnection ICE connection state is
+   *  connected and completed.
    * @event peer:connect
    * @private
    * @for Peer
@@ -14,7 +40,7 @@ var PeerEventResponseHandler = {
       com.onconnect(com.id);
     }
   },
-  
+
   /**
    * Event fired when peer connection is reconnecting.
    * This happens when RTCPeerConnection object is
@@ -30,25 +56,10 @@ var PeerEventResponseHandler = {
       com.onreconnect();
     }
   },
-  
-  /**
-   * Event fired when peer connection is established and connected.
-   * This happens when RTCPeerConnection ICE connection state is
-   *  connected and completed.
-   * @event peer:connected
-   * @private
-   * @for Peer
-   * @since 0.6.0
-   */
-  connected: function (com, data, listener) {
-    if (typeof com.onconnect === 'function') {
-      com.onconnect(com.id);
-    }
-  },
-  
+
   /**
    * Event fired when peer connection has been disconnected.
-   * This happens when RTCPeerConnection close is invoked and 
+   * This happens when RTCPeerConnection close is invoked and
    *  connection stops.
    * @event peer:disconnect
    * @private
@@ -60,7 +71,7 @@ var PeerEventResponseHandler = {
       com.ondisconnect();
     }
   },
-  
+
   /**
    * Event fired when peer connection adds or receives a stream object.
    * This happens when user sends a local MediaStream to peer or receives
@@ -76,7 +87,7 @@ var PeerEventResponseHandler = {
     if (data.sourceType === 'remote') {
       com.stream = data.stream;
     }
-    
+
     if (typeof com.onaddstream === 'function') {
       com.onaddstream(data.stream);
     }
@@ -92,7 +103,7 @@ var PeerEventResponseHandler = {
   iceconnectionstate: function (com, data, listener) {
     if (typeof com.oniceconnectionstatechange === 'function') {
       com.oniceconnectionstatechange(data.state);
-    }  
+    }
   },
 
   /**
@@ -143,7 +154,7 @@ var PeerEventResponseHandler = {
     data.channel.sourceType = data.sourceType;
 
     com.datachannels[data.channel.id] = data.channel;
-    
+
     if (typeof com.ondatachannel === 'function') {
       com.ondatachannel(data.channel);
     }

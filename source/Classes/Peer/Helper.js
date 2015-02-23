@@ -32,13 +32,15 @@ var PeerHelper = {
       peerConfig = config;
 
       if (typeof config.iceServers === 'object' ? config.iceServers instanceof Array : false) {
-        peerConfig.iceServers = this.ICE.configureTURN(peerConfig.iceServers);
+        peerConfig.iceServers = this.ICE.configureServers(peerConfig.iceServers);
       }
     }
 
-    if (config !== null && typeof config === 'object') {
+    if (optional !== null && typeof optional === 'object') {
       peerOptional = optional;
     }
+
+    console.info('data', peerConfig, peerOptional);
 
     var peer = new window.RTCPeerConnection(peerConfig, peerOptional);
 
@@ -125,25 +127,31 @@ var PeerHelper = {
    * @since 0.6.0
    */
   addStream: function (peer, stream) {
-    if (window.webrtcDetectedBrowser === 'chrome' && window.webrtcDetectedBrowser === 'opera') {
+    if (window.webrtcDetectedBrowser === 'chrome' || window.webrtcDetectedBrowser === 'opera') {
       peer.addStream(stream);
 
     // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
-    // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
     } else {
-      if (peer.getLocalStream().length > 0) {
+      if (peer.getLocalStreams().length > 0) {
+        var browserName = window.webrtcDetectedBrowser.toUpperCase() +
+          (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' : '');
+
         log.warn('StreamPolyfill', 'You cannot add more than 1 stream. Multi-stream sending is ' +
-          'not supported in ' + window.webrtcDetectedBrowser.toUpperCase() +
-          (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' : '') + ' browser');
+          'not supported in ' + browserName + ' browser');
         return;
       }
 
       // Add stream once
       peer.addStream(stream);
 
-      if (typeof peer.onnegotiationneeded === 'function') {
-        peer.onnegotiationneeded(peer);
-      }
+      // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
+      //   to trigger on our own
+      // Set some time for stream to be ready
+      setTimeout(function () {
+        if (typeof peer.onnegotiationneeded === 'function') {
+          peer.onnegotiationneeded(peer);
+        }
+      }, 100);
     }
   },
 
@@ -160,13 +168,13 @@ var PeerHelper = {
    * @since 0.6.0
    */
   removeStream: function (peer, stream) {
-    if (window.webrtcDetectedBrowser === 'chrome' && window.webrtcDetectedBrowser === 'opera') {
+    if (window.webrtcDetectedBrowser === 'chrome' || window.webrtcDetectedBrowser === 'opera') {
       peer.removeStream(stream);
 
     // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
     // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
     } else {
-      if (peer.getLocalStream().length > 0) {
+      if (peer.getLocalStreams().length > 0) {
         var constraints = null;
         var optional;
 
@@ -391,7 +399,7 @@ var PeerHelper = {
      * Parses TURN url format for cross-browser interopability.
      * For an example, Firefox does not support <code>username@turnserver.com</code>,
      *   whereas Chrome supports it.
-     * @method PeerHelper.ICE.configureTURN
+     * @method PeerHelper.ICE.configureServers
      * @param {Array} iceServers The list of ICE servers.
      * @param {JSON} iceServers.(#index) The ICE server.
      * @param {String} iceServers.(#index).credential The ICE server credential (password).
@@ -409,11 +417,11 @@ var PeerHelper = {
      *   The ICE server username. Only used in TURN servers for Firefox browsers.
      * @private
      * @example
-     *   var updateIceServers = PeerHelper.ICE.configureTURN(iceServers);
+     *   var updateIceServers = PeerHelper.ICE.configureServers(iceServers);
      * @for Peer
      * @since 0.6.0
      */
-    configureTURN: function (iceServers) {
+    configureServers: function (iceServers) {
       var newConfig = [];
       var i;
 
@@ -436,20 +444,26 @@ var PeerHelper = {
         // For Firefox only
         if (window.webrtcDetectedBrowser === 'firefox') {
           // If it's a TURN server
-          if (iceServer.url.indexOf('turn') === 0) {
-            // Check if the url is username@turn.com
-            if (iceServer.url.indexOf('@') > 0) {
-              var iceParts = iceServer.url.split(':');
-              var subIceParts = iceParts[1].split('@'); // user '@' url
+          // Check if the url is username@turn.com
+          if (iceServer.url.indexOf('@') > 0) {
+            var iceParts = iceServer.url.split(':');
+            var subIceParts = iceParts[1].split('@'); // user '@' url
 
-              iceParts[1] = subIceParts[1];
-              iceServer.url = iceParts.join(':');
-              iceServer.username = subIceParts[0];
-            }
+            // Set the last part [user@tee.com]@xxxx. 'xxxx' as the url
+            iceParts[1] = subIceParts[subIceParts.length - 1];
+            // Set to empty
+            subIceParts.splice(subIceParts.length - 1, 1);
+
+            // Set the url
+            iceServer.url = iceParts.join(':');
+            // Join and set the username
+            iceServer.username = subIceParts.join('@');
           }
         }
         newConfig.push(iceServer);
       }
+
+      console.info(newConfig);
       // Return the new data
       return newConfig;
     }

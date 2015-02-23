@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.7 - 2015-02-22 */
+/*! skylinkjs - v0.5.7 - 2015-02-23 */
 
 var globals = {
   apiKey: null,
@@ -1802,8 +1802,13 @@ function Peer(stream, config, listener) {
     bind.ondatachannel = function (event) {
       var eventChannel = event.channel || event;
 
+      com._handler('peer:datachannel', {
+        channel: eventChannel,
+        sourceType: 'remote'
+      });
+
       // Send the channel only when channel has started
-      var channel = new DataChannel(eventChannel, function (event, data) {
+      /*var channel = new DataChannel(eventChannel, function (event, data) {
 
         com._handler(event, data);
 
@@ -1813,14 +1818,14 @@ function Peer(stream, config, listener) {
             sourceType: 'remote'
           });
         }
-      });
+      });*/
     };
 
     bind.onaddstream = function (event) {
       var eventStream = event.stream || event;
 
       // Send the stream only when stream has started
-      var stream = new Stream(eventStream, config.streamingConfig, function (event, data) {
+      var stream = new Stream(eventStream, config._streamingConfig, function (event, data) {
 
         com._handler(event, data);
 
@@ -1885,21 +1890,33 @@ function Peer(stream, config, listener) {
     };
 
     bind.onnegotiationneeded = function (event) {
-      com._handler('peer:ready', {
+      com._handler('peer:nready', {
         weight: com._weight,
         sdpType: com._sdpType,
         streamingConfig: com._streamingConfig
       });
     };
 
-    com.RTCPeerConnection = bind;
+    com._RTCPeerConnection = bind;
 
     fn.runSync(function () {
-      com._handler('peer:ready', {
-        weight: com.weight,
-        SDPType: com.SDPType,
-        streamingConfig: com.streamingConfig
-      });
+      // When peer connection is ready to use, the connection connect() can start
+      if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
+        // Check class type
+        PeerHelper.addStream(com._RTCPeerConnection, stream._MediaStream);
+
+        com._handler('peer:stream', {
+          sourceType: 'local',
+          stream: stream
+        });
+
+      } else {
+        com._handler('peer:ready', {
+          weight: com._weight,
+          sdpType: com._sdpType,
+          streamingConfig: com._streamingConfig
+        });
+      }
     });
   };
 
@@ -2103,7 +2120,7 @@ function Peer(stream, config, listener) {
   }
 
   // Parse bandwidth
-  com._streamingConfig = config.streamingConfig || {
+  com._streamingConfig = config.stream || {
     audio: false,
     video: false,
     status: {
@@ -2114,13 +2131,13 @@ function Peer(stream, config, listener) {
 
   // Parse sdp modification settings
   com._sdpConfig = {
-    stereo: !!config.streamingConfig.audio.stereo,
+    stereo: !!config.stream.audio.stereo,
     bandwidth: StreamParser.parseBandwidthConfig(config.bandwidth)
   };
 
   // Parse constraints ICE servers
   var peerConfig = {
-    iceServers: config.iceServers
+    iceServers: config.iceServers || []
   };
 
   // Create the object
@@ -2128,39 +2145,6 @@ function Peer(stream, config, listener) {
 
   // Bind peer
   com._bind(peer);
-
-  // Send stream
-  fn.runSync(function () {
-    // Start timer
-    /*com.healthTimer = setTimeout(function () {
-      if (!fn.isEmpty(com.healthTimer)) {
-        log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
-
-        clearInterval(com.healthTimer);
-
-        com.reconnect();
-      }
-
-    }, com.iceTrickle ? 10000 : 50000);*/
-
-    // When peer connection is ready to use, the connection connect() can start
-    if ((!fn.isEmpty(stream)) ? stream instanceof Stream : false) {
-      // Check class type
-      peer.addStream(stream.MediaStream);
-
-      com._handler('peer:stream', {
-        sourceType: 'local',
-        stream: stream
-      });
-
-    } else {
-      com._handler('peer:ready', {
-        weight: com._weight,
-        sdpType: com._sdpType,
-        streamingConfig: com._streamingConfig
-      });
-    }
-  });
 }
 var PeerEventMessageHandler = {
 
@@ -2240,11 +2224,37 @@ var PeerEventReceivedHandler = {
   
 };
 var PeerEventResponseHandler = {
-  
+
   /**
    * Event fired when peer connection has started.
    * This happens when RTCPeerConnection object has just
    *   been initialized and local MediaStream has been added.
+   * @event peer:ready
+   * @private
+   * @for Peer
+   * @since 0.6.0
+   */
+  ready: function (com, data, listener) {
+    /*// Start the health timer connection
+    com.healthTimer = setTimeout(function () {
+      if (!fn.isEmpty(com.healthTimer)) {
+        log.debug('Peer', com.id, 'Restarting negotiation as timer has expired');
+
+        clearInterval(com.healthTimer);
+
+        com.reconnect();
+      }
+    }, com.iceTrickle ? 10000 : 50000);*/
+
+    if (typeof com.onready === 'function') {
+      com.onready(com.id);
+    }
+  },
+
+  /**
+   * Event fired when peer connection is established and connected.
+   * This happens when RTCPeerConnection ICE connection state is
+   *  connected and completed.
    * @event peer:connect
    * @private
    * @for Peer
@@ -2255,7 +2265,7 @@ var PeerEventResponseHandler = {
       com.onconnect(com.id);
     }
   },
-  
+
   /**
    * Event fired when peer connection is reconnecting.
    * This happens when RTCPeerConnection object is
@@ -2271,25 +2281,10 @@ var PeerEventResponseHandler = {
       com.onreconnect();
     }
   },
-  
-  /**
-   * Event fired when peer connection is established and connected.
-   * This happens when RTCPeerConnection ICE connection state is
-   *  connected and completed.
-   * @event peer:connected
-   * @private
-   * @for Peer
-   * @since 0.6.0
-   */
-  connected: function (com, data, listener) {
-    if (typeof com.onconnect === 'function') {
-      com.onconnect(com.id);
-    }
-  },
-  
+
   /**
    * Event fired when peer connection has been disconnected.
-   * This happens when RTCPeerConnection close is invoked and 
+   * This happens when RTCPeerConnection close is invoked and
    *  connection stops.
    * @event peer:disconnect
    * @private
@@ -2301,7 +2296,7 @@ var PeerEventResponseHandler = {
       com.ondisconnect();
     }
   },
-  
+
   /**
    * Event fired when peer connection adds or receives a stream object.
    * This happens when user sends a local MediaStream to peer or receives
@@ -2317,7 +2312,7 @@ var PeerEventResponseHandler = {
     if (data.sourceType === 'remote') {
       com.stream = data.stream;
     }
-    
+
     if (typeof com.onaddstream === 'function') {
       com.onaddstream(data.stream);
     }
@@ -2333,7 +2328,7 @@ var PeerEventResponseHandler = {
   iceconnectionstate: function (com, data, listener) {
     if (typeof com.oniceconnectionstatechange === 'function') {
       com.oniceconnectionstatechange(data.state);
-    }  
+    }
   },
 
   /**
@@ -2384,7 +2379,7 @@ var PeerEventResponseHandler = {
     data.channel.sourceType = data.sourceType;
 
     com.datachannels[data.channel.id] = data.channel;
-    
+
     if (typeof com.ondatachannel === 'function') {
       com.ondatachannel(data.channel);
     }
@@ -2442,13 +2437,15 @@ var PeerHelper = {
       peerConfig = config;
 
       if (typeof config.iceServers === 'object' ? config.iceServers instanceof Array : false) {
-        peerConfig.iceServers = this.ICE.configureTURN(peerConfig.iceServers);
+        peerConfig.iceServers = this.ICE.configureServers(peerConfig.iceServers);
       }
     }
 
-    if (config !== null && typeof config === 'object') {
+    if (optional !== null && typeof optional === 'object') {
       peerOptional = optional;
     }
+
+    console.info('data', peerConfig, peerOptional);
 
     var peer = new window.RTCPeerConnection(peerConfig, peerOptional);
 
@@ -2535,25 +2532,31 @@ var PeerHelper = {
    * @since 0.6.0
    */
   addStream: function (peer, stream) {
-    if (window.webrtcDetectedBrowser === 'chrome' && window.webrtcDetectedBrowser === 'opera') {
+    if (window.webrtcDetectedBrowser === 'chrome' || window.webrtcDetectedBrowser === 'opera') {
       peer.addStream(stream);
 
     // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
-    // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
     } else {
-      if (peer.getLocalStream().length > 0) {
+      if (peer.getLocalStreams().length > 0) {
+        var browserName = window.webrtcDetectedBrowser.toUpperCase() +
+          (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' : '');
+
         log.warn('StreamPolyfill', 'You cannot add more than 1 stream. Multi-stream sending is ' +
-          'not supported in ' + window.webrtcDetectedBrowser.toUpperCase() +
-          (window.webrtcDetectedType === 'plugin' ? ' (plugin-enabled)' : '') + ' browser');
+          'not supported in ' + browserName + ' browser');
         return;
       }
 
       // Add stream once
       peer.addStream(stream);
 
-      if (typeof peer.onnegotiationneeded === 'function') {
-        peer.onnegotiationneeded(peer);
-      }
+      // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
+      //   to trigger on our own
+      // Set some time for stream to be ready
+      setTimeout(function () {
+        if (typeof peer.onnegotiationneeded === 'function') {
+          peer.onnegotiationneeded(peer);
+        }
+      }, 100);
     }
   },
 
@@ -2570,13 +2573,13 @@ var PeerHelper = {
    * @since 0.6.0
    */
   removeStream: function (peer, stream) {
-    if (window.webrtcDetectedBrowser === 'chrome' && window.webrtcDetectedBrowser === 'opera') {
+    if (window.webrtcDetectedBrowser === 'chrome' || window.webrtcDetectedBrowser === 'opera') {
       peer.removeStream(stream);
 
     // Firefox and Safari / IE (plugin-enabled) browsers don't enable multi-stream
     // Firefox and Safari / IE (plugin-enabled) browsers does not support onnegotiationneeded
     } else {
-      if (peer.getLocalStream().length > 0) {
+      if (peer.getLocalStreams().length > 0) {
         var constraints = null;
         var optional;
 
@@ -2801,7 +2804,7 @@ var PeerHelper = {
      * Parses TURN url format for cross-browser interopability.
      * For an example, Firefox does not support <code>username@turnserver.com</code>,
      *   whereas Chrome supports it.
-     * @method PeerHelper.ICE.configureTURN
+     * @method PeerHelper.ICE.configureServers
      * @param {Array} iceServers The list of ICE servers.
      * @param {JSON} iceServers.(#index) The ICE server.
      * @param {String} iceServers.(#index).credential The ICE server credential (password).
@@ -2819,11 +2822,11 @@ var PeerHelper = {
      *   The ICE server username. Only used in TURN servers for Firefox browsers.
      * @private
      * @example
-     *   var updateIceServers = PeerHelper.ICE.configureTURN(iceServers);
+     *   var updateIceServers = PeerHelper.ICE.configureServers(iceServers);
      * @for Peer
      * @since 0.6.0
      */
-    configureTURN: function (iceServers) {
+    configureServers: function (iceServers) {
       var newConfig = [];
       var i;
 
@@ -2846,20 +2849,26 @@ var PeerHelper = {
         // For Firefox only
         if (window.webrtcDetectedBrowser === 'firefox') {
           // If it's a TURN server
-          if (iceServer.url.indexOf('turn') === 0) {
-            // Check if the url is username@turn.com
-            if (iceServer.url.indexOf('@') > 0) {
-              var iceParts = iceServer.url.split(':');
-              var subIceParts = iceParts[1].split('@'); // user '@' url
+          // Check if the url is username@turn.com
+          if (iceServer.url.indexOf('@') > 0) {
+            var iceParts = iceServer.url.split(':');
+            var subIceParts = iceParts[1].split('@'); // user '@' url
 
-              iceParts[1] = subIceParts[1];
-              iceServer.url = iceParts.join(':');
-              iceServer.username = subIceParts[0];
-            }
+            // Set the last part [user@tee.com]@xxxx. 'xxxx' as the url
+            iceParts[1] = subIceParts[subIceParts.length - 1];
+            // Set to empty
+            subIceParts.splice(subIceParts.length - 1, 1);
+
+            // Set the url
+            iceServer.url = iceParts.join(':');
+            // Join and set the username
+            iceServer.username = subIceParts.join('@');
           }
         }
         newConfig.push(iceServer);
       }
+
+      console.info(newConfig);
       // Return the new data
       return newConfig;
     }
