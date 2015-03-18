@@ -16,7 +16,7 @@ describe("A test suite", function() {
    });
 
    it('Testing async', function(done) { 
-   	this.timeout(7000);
+   	this.timeout(10000);
    	setTimeout(function(){
    		var stream_callback = function(error,success){
 		    if (error){

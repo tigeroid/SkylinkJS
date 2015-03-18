@@ -15,8 +15,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'publish/skylink.debug.js',
-      'test-karma/*.js'
+      'publish/skylink.complete.js',
+      'test-karma/helper-test.js'
     ],
 
 
@@ -93,6 +93,11 @@ module.exports = function(config) {
 
     browsers: ['ChromeUM'], //, 'Safari', 'Opera', 'Firefox', 'IE'],
 
+    browserNoActivityTimeout: 100000,
+
+    /*client: {
+      args: ['--grep', '<pattern>']
+    },*/
 
     plugins: [
       'karma-mocha',
