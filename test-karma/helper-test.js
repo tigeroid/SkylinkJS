@@ -29,7 +29,7 @@ describe("A test suite", function() {
 
    beforeEach(function() { 
    	var test_func_before_throttle = function(){
-	    sw._throttle(pushOneToArray,2000)();
+	    sw._throttle(pushOneToArray,3000)();
 	  }  
 
 	  //Test if only one function fires among these
@@ -46,15 +46,15 @@ describe("A test suite", function() {
 	  setTimeout(test_func_before_throttle, 1000);
 
 	  //Test if function can fire after timeout was gone
-	  setTimeout(test_func_before_throttle, 3000);
+	  setTimeout(test_func_before_throttle, 5000);
    });
 
    it('Testing throttle', function(done) { 
-   	this.timeout(7000);
+   	this.timeout(8000);
    	setTimeout(function(){
 	    assert.deepEqual(array, [1,1]);
 	    done();
-	  }, 5000);
+	  }, 6000);
    });
 });
 

@@ -15,8 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'publish/skylink.complete.js',
-      'test-karma/helper-test.js'
+      '../../publish/skylink.complete.js'
     ],
 
 
@@ -53,12 +52,6 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
 
-
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
-
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true,
@@ -91,13 +84,9 @@ module.exports = function(config) {
       }
     },
 
-    browsers: ['ChromeUM'], //, 'Safari', 'Opera', 'Firefox', 'IE'],
+    browsers: [],
 
     browserNoActivityTimeout: 100000,
-
-    /*client: {
-      args: ['--grep', '<pattern>']
-    },*/
 
     plugins: [
       'karma-mocha',
@@ -112,16 +101,4 @@ module.exports = function(config) {
 
   });
 };
-
-
-
-
-
-
-
-
-
-
-
-
 

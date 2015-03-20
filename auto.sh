@@ -10,14 +10,14 @@ open_new_tab() {
 }
  
 run_without_bot(){
-    open_new_tab "./test-client.sh $1"
+    open_new_tab "./test-client.sh $1 $2"
     browserify test-bots/"donothing-bot.js" | testling -x "open -a /Applications/Google\ Chrome.app"
 }
 
 run_with_bot(){
-    open_new_tab "./test-client.sh $1"
+    open_new_tab "./test-client.sh $1 $2"
     browserify test-bots/"$1-bot.js" | testling -x "open -a /Applications/Google\ Chrome.app"
 }
- 
-run_without_bot helper
-run_with_bot async
+
+run_with_bot async chrome
+run_without_bot helper chrome
