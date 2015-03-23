@@ -7,5 +7,6 @@
 karma start karma-config/"$2"/karma-"$1".conf.js
 
 #After test was run, close all remaining bots and node processes
+#TODO: close browser based on parameter
 killall -9 "Google Chrome"
 killall -9 node
