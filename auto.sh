@@ -11,7 +11,10 @@ open_new_tab() {
 
 #TODO: Get window and tab id correctly. Or just close every tabs other than the executing one
 close_tab(){
-    osascript -e "tell application \"Terminal\" to close tab 2 of window 1"
+    #osascript -e "tell application \"Terminal\" to close tab 2 of window 1"
+    osascript -e "tell application \"Terminal\"" \
+    -e "close rest of (get windows)" \
+    -e "end tell"
 }
 
 run_without_bot(){

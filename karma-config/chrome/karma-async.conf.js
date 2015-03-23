@@ -1,10 +1,10 @@
-sharedConfig = require('../shared/karma-chrome.conf.js');
+sharedChromeConfig = require('../shared/karma-chrome.conf.js');
 
 module.exports = function(config){
 
   var file = ['../../test-karma/async-test.js'];
 
-  sharedConfig(config);
+  sharedChromeConfig(config);
 
   config.files = config.files.concat(file);
   
