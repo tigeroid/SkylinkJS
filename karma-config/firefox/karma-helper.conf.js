@@ -1,4 +1,4 @@
-sharedFirefoxConfig = require('../shared/karma-firefox.conf.js');
+var sharedFirefoxConfig = require('../shared/karma-firefox.conf.js');
 
 module.exports = function(config){
 

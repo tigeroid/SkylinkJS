@@ -9,26 +9,40 @@ open_new_tab() {
         > /dev/null
 }
 
-#TODO: Get window and tab id correctly. Or just close every tabs other than the executing one
-close_tab(){
-    #osascript -e "tell application \"Terminal\" to close tab 2 of window 1"
-    osascript -e "tell application \"Terminal\"" \
-    -e "close rest of (get windows)" \
-    -e "end tell"
-}
-
 run_without_bot(){
-    open_new_tab "./test-client.sh $1 $2"
-    browserify test-bots/"donothing-bot.js" | testling -x "open -a /Applications/Google\ Chrome.app"
+    test="$1";
+    bot="$2";
+    client="$3";
+    open_new_tab "./test-client.sh $test $client"
+    if [ $bot == "chrome" ];
+    then
+        browserify test-bots/"donothing-bot.js" | testling -x "open -a /Applications/Google\ Chrome.app"
+    elif [ $bot == "firefox" ]; 
+    then
+        browserify test-bots/"donothing-bot.js" | testling -x "open -a /Applications/Firefox.app"
+    fi
 }
 
 run_with_bot(){
-    open_new_tab "./test-client.sh $1 $2"
-    browserify test-bots/"$1-bot.js" | testling -x "open -a /Applications/Google\ Chrome.app"
+    test="$1";
+    bot="$2";
+    client="$3";
+    open_new_tab "./test-client.sh $test $client"
+    if [ $bot == "chrome" ];
+    then
+        browserify test-bots/"$test-bot.js" | testling -x "open -a /Applications/Google\ Chrome.app"
+    elif [ $bot == "firefox" ]; 
+    then
+        browserify test-bots/"$test-bot.js" | testling -x "open -a /Applications/Firefox.app"
+    fi
 }
 
-run_with_bot async chrome
-run_without_bot helper chrome
-# close_tab
-# run_with_bot async firefox
-# run_without_bot helper firefox
+close_tab(){
+    echo "closing tab"
+    #TODO: Close all other terminal tabs either right here or let them kill themselves
+}
+
+run_with_bot async chrome chrome 
+run_without_bot helper chrome chrome
+run_with_bot async firefox firefox
+run_without_bot helper firefox firefox
