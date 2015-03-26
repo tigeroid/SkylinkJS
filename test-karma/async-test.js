@@ -7,7 +7,7 @@ var apikey = '5f874168-0079-46fc-ab9d-13931c2baa39';
 console.log('Async: Tests the callbacks');
 console.log('===============================================================================================');
 
-describe("A test suite", function() {
+describe("Test callbacks", function() {
 
    it('getUserMedia() - callback: Testing callback', function(done) { 
 
