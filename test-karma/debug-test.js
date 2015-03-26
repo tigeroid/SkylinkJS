@@ -7,7 +7,7 @@ var apikey = '5f874168-0079-46fc-ab9d-13931c2baa39';
 console.log('API: Tests the debug mode stack logs');
 console.log('===============================================================================================');
 
-describe("Test API", function() {
+describe("Test debug functionalities", function() {
 
 	it('setDebugMode(): Testing to check if logs are saved in setDebugMode options', function() {
 

@@ -22,10 +22,10 @@ var cancelTrigger = function(value) {
 };
 
 
-console.log('API: Tests the _throttle() function');
+console.log('HELPER: Tests helper functions');
 console.log('===============================================================================================');
 
-describe("A test suite", function() {
+describe("Test helper functions", function() {
 
    beforeEach(function() { 
    	var test_func_before_throttle = function(){
