@@ -7,7 +7,7 @@ var apikey = '5f874168-0079-46fc-ab9d-13931c2baa39';
 console.log('API: Tests the messaging in send message functions');
 console.log('===============================================================================================');
 
-describe("Test debug functionalities", function() {
+describe("Test messaging functionalities", function() {
 
 	before(function(){
 		sw.init(apikey, function(){
