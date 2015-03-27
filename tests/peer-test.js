@@ -10,7 +10,7 @@ var skylink  = require('./../publish/skylink.debug.js');
 var sw = new skylink.Skylink();
 
 // Testing attributes
-var apikey = '5c111af5-03cd-4d6b-ba58-4334551fcb74';
+var apikey = '5f874168-0079-46fc-ab9d-13931c2baa39';
 
 console.log('API: Tests peer connection');
 console.log('===============================================================================================');
@@ -137,8 +137,6 @@ test('leaveRoom(): Leave Room', function (t) {
     t.deepEqual(peer_array, [1, 2], 'User has left the room');
     t.end();
   }, 8000);
-
-  window.test = sw;
 
   setTimeout(function () {
     sw.leaveRoom();
