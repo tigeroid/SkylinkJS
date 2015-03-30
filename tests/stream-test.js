@@ -12,7 +12,7 @@ var sw = new skylink.Skylink();
 //sw.setLogLevel(4);
 
 // Testing attributes
-var apikey = 'fa152f2f-ad7a-46d1-a3be-cb0dffc617b5';
+var apikey = '5f874168-0079-46fc-ab9d-13931c2baa39';
 
 console.log('API: Tests the getUserMedia() and sendStream() information');
 console.log('===============================================================================================');
@@ -131,7 +131,7 @@ test('Media access stopped', function(t) {
 
 });
 
-test('joinRoom() - manualGetUserMedia: Testing manual getUserMedia', function(t) {
+test.only('joinRoom() - manualGetUserMedia: Testing manual getUserMedia', function(t) {
   t.plan(2);
 
   sw.leaveRoom();
@@ -166,44 +166,6 @@ test('joinRoom() - manualGetUserMedia: Testing manual getUserMedia', function(t)
       video: true
     });
   })
-
-});
-
-test('Media access stopped', function(t) {
-  t.plan(1);
-
-  sw.leaveRoom();
-
-  sw.on('incomingStream', function () {
-    sw.leaveRoom();
-  });
-
-  sw.on('mediaAccessStopped', function () {
-    t.pass('Triggers mediaAccessStopped after media access stopped');
-
-    sw.off('mediaAccessStopped');
-    sw.off('incomingStream');
-    sw.off('mediaAccessError');
-
-  });
-
-  sw.on('mediaAccessError', function (error) {
-    t.fail('Failed retriving stream');
-
-    sw.off('mediaAccessStopped');
-    sw.off('incomingStream');
-    sw.off('mediaAccessError');
-    
-  });
-
-  console.log(': Test joinRoom with audio and video');
-
-  sw.init(apikey, function(){
-    sw.joinRoom({
-      audio: true,
-      video: true
-    });
-  });
 
 });
 
