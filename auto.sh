@@ -11,13 +11,12 @@ open_new_tab() {
 
 run_without_bot(){
     test="$1";
-    bot="$2";
-    client="$3";
+    client="$2";
     open_new_tab "./test-client.sh $test $client"
-    if [ $bot == "chrome" ];
+    if [ $client == "chrome" ];
     then
         browserify test-bots/"donothing-bot.js" | testling -x "open -a /Applications/Google\ Chrome.app"
-    elif [ $bot == "firefox" ]; 
+    elif [ $client == "firefox" ]; 
     then
         browserify test-bots/"donothing-bot.js" | testling -x "open -a /Applications/Firefox.app"
     fi
@@ -42,7 +41,9 @@ close_tab(){
     #TODO: Close all other terminal tabs either right here or let them kill themselves
 }
 
-run_with_bot async chrome chrome 
-run_without_bot helper chrome chrome
-run_with_bot async firefox firefox
-run_without_bot helper firefox firefox
+run_without_bot socket chrome chrome
+
+# run_with_bot async chrome chrome 
+# run_without_bot helper chrome
+# run_with_bot async firefox firefox
+# run_without_bot helper firefox
