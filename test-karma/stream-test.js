@@ -8,6 +8,7 @@ console.log('API: Tests the getUserMedia() and sendStream() information');
 console.log('===============================================================================================');
 
 describe("Test stream functionalities", function() {
+	this.slow(5000);
 
 	it('joinRoom(): Test all passed bandwidth constraints', function (done) {
 	  this.timeout(15000);

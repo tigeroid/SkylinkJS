@@ -17,6 +17,12 @@ kill_browser(){
 	elif [ $browser == "firefox" ];
 	then
 		killall -9 "Firefox"
+	elif [ $browser == "Opera" ];
+	then
+		killall -9 "Opera"
+	elif [ $browser == "Safari" ];
+	then
+		killall -9 "Safari"
 	fi
 }
 
