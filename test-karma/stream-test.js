@@ -1,6 +1,6 @@
 // Testing attributes
 var sw = new Skylink();
-var apikey = '5f874168-0079-46fc-ab9d-13931c2baa39';
+var apikey = 'fa152f2f-ad7a-46d1-a3be-cb0dffc617b5';
 
 //sw.setLogLevel(sw.LOG_LEVEL.DEBUG);
 
@@ -8,7 +8,16 @@ console.log('API: Tests the getUserMedia() and sendStream() information');
 console.log('===============================================================================================');
 
 describe("Test stream functionalities", function() {
-	this.slow(5000);
+	//this.slow(5000);
+
+	before(function(done){
+		this.timeout(20000);
+
+		AdapterJS.onwebrtcready = function(isUsingPlugin){
+			console.log('isUsingPlugin: '+isUsingPlugin);
+			done();
+		};
+	});
 
 	it('joinRoom(): Test all passed bandwidth constraints', function (done) {
 	  this.timeout(15000);
@@ -35,6 +44,10 @@ describe("Test stream functionalities", function() {
 	  };
 
 	  sw.on('incomingStream', function (peerId, stream, isSelf) {
+
+	  	console.log(peerId, stream, isSelf);
+	  	window.test = stream;
+
 	    if (isSelf) {
 	      assert.deepEqual([
 	        stream.getAudioTracks().length,
@@ -52,23 +65,30 @@ describe("Test stream functionalities", function() {
 	      // check the set stream settings
 	      assert.deepEqual(sw._getUserMediaSettings.audio, true,
 	        'Set audio in joinRoom is correct');
-	      assert.deepEqual(sw._getUserMediaSettings.video, {
-	        mandatory: {
-	          //minWidth: settings.video.resolution.width,
-	          //minHeight: settings.video.resolution.height,
-	          maxWidth: settings.video.resolution.width,
-	          maxHeight: settings.video.resolution.height,
-	          //minFrameRate: settings.video.frameRate,
-	          maxFrameRate: settings.video.frameRate
-	        },
-	        optional: []
-	      }, 'Set video in joinRoom is correct');
+
+	      console.log(window.webrtcDetectedBrowser);
+
+	      if (window.webrtcDetectedBrowser !== 'IE' && window.webrtcDetectedBrowser !== 'safari') {
+
+	      	assert.deepEqual(sw._getUserMediaSettings.video, {
+		        mandatory: {
+		          //minWidth: settings.video.resolution.width,
+		          //minHeight: settings.video.resolution.height,
+		          maxWidth: settings.video.resolution.width,
+		          maxHeight: settings.video.resolution.height,
+		          //minFrameRate: settings.video.frameRate,
+		          maxFrameRate: settings.video.frameRate
+		        },
+		        optional: []
+		      }, 'Set video in joinRoom is correct');
+	      }
 
 	      // turn off all events
 	      sw.off('incomingStream');
 	      sw.off('mediaAccessError');
 
 	      done();
+
 	    }
 	  });
 
@@ -86,6 +106,7 @@ describe("Test stream functionalities", function() {
 	  console.log('> Requesting audio and video');
 
 	  sw.init(apikey, function(){
+	  	console.log('Initiated. Joining room now');
 	    sw.joinRoom(settings);
 	  });
 
@@ -139,7 +160,6 @@ describe("Test stream functionalities", function() {
 	      // turn off all events
 	      sw.off('incomingStream');
 	      sw.off('mediaAccessError');
-
 	      done();
 
 	    }

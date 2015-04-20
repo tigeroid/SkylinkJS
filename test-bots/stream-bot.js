@@ -9,7 +9,7 @@ var skylink  = require('./../publish/skylink.debug.js');
 
 var sw = new skylink.Skylink();
 
-var apikey = '5f874168-0079-46fc-ab9d-13931c2baa39';
+var apikey = 'fa152f2f-ad7a-46d1-a3be-cb0dffc617b5';
 
 console.log('BOT Stream intiailized');
 
