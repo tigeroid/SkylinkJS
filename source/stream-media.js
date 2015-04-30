@@ -213,7 +213,10 @@ Skylink.prototype._getUserMediaSettings = {};
  * @for Skylink
  * @since 0.5.6
  */
-Skylink.prototype._mediaStreamsStatus = {};
+Skylink.prototype._mediaStreamsStatus = {
+  audioMuted: true,
+  videoMuted: true
+};
 
 /**
  * Fallback to audio call if audio and video is required.

@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.9 - Wed Apr 29 2015 15:14:40 GMT+0800 (SGT) */
+/*! skylinkjs - v0.5.9 - Thu Apr 30 2015 13:44:16 GMT+0800 (SGT) */
 
 (function() {
 
@@ -6737,7 +6737,10 @@ Skylink.prototype._getUserMediaSettings = {};
  * @for Skylink
  * @since 0.5.6
  */
-Skylink.prototype._mediaStreamsStatus = {};
+Skylink.prototype._mediaStreamsStatus = {
+  audioMuted: true,
+  videoMuted: true
+};
 
 /**
  * Fallback to audio call if audio and video is required.
