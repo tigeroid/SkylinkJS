@@ -358,9 +358,11 @@ Skylink.prototype._requestServerInfo = function(method, url, callback, params) {
  * @since 0.5.2
  */
 Skylink.prototype._parseInfo = function(info) {
+  var self = this;
+
   log.log('Parsing parameter from server', info);
   if (!info.pc_constraints && !info.offer_constraints) {
-    this._trigger('readyStateChange', this.READY_STATE_CHANGE.ERROR, {
+    self._trigger('readyStateChange', self.READY_STATE_CHANGE.ERROR, {
       status: 200,
       content: info.info,
       errorCode: info.error
@@ -371,19 +373,19 @@ Skylink.prototype._parseInfo = function(info) {
   log.debug('Peer connection constraints:', info.pc_constraints);
   log.debug('Offer constraints:', info.offer_constraints);
 
-  this._key = info.cid;
-  this._apiKeyOwner = info.apiOwner;
+  self._key = info.cid;
+  self._apiKeyOwner = info.apiOwner;
 
-  this._signalingServer = info.ipSigserver;
+  self._signalingServer = info.ipSigserver;
 
-  this._user = {
+  self._user = {
     uid: info.username,
     token: info.userCred,
     timeStamp: info.timeStamp,
     streams: [],
     info: {}
   };
-  this._room = {
+  self._room = {
     id: info.room_key,
     token: info.roomCred,
     startDateTime: info.start,
@@ -401,22 +403,36 @@ Skylink.prototype._parseInfo = function(info) {
       mediaConstraints: JSON.parse(info.media_constraints)
     }
   };
-  this._parseDefaultMediaStreamSettings(this._room.connection.mediaConstraints);
+  self._parseDefaultMediaStreamSettings(self._room.connection.mediaConstraints);
 
   // set the socket ports
-  this._socketPorts = {
+  self._socketPorts = {
     'http:': info.httpPortList,
     'https:': info.httpsPortList
   };
 
   // use default bandwidth and media resolution provided by server
-  //this._streamSettings.bandwidth = info.bandwidth;
-  //this._streamSettings.video = info.video;
-  this._readyState = 2;
-  this._trigger('readyStateChange', this.READY_STATE_CHANGE.COMPLETED);
-  log.info('Parsed parameters from webserver. ' +
-    'Ready for web-realtime communication');
+  //self._streamSettings.bandwidth = info.bandwidth;
+  //self._streamSettings.video = info.video;
 
+  // check if adapterjs plugin is ready
+  if (window.webrtcDetectedBrowser !== 'IE' && window.webrtcDetectedBrowser !== 'Safari') {
+    AdapterJS.onwebrtcreadyDone = true;
+  }
+
+  var ready = function () {
+    self._readyState = 2;
+    self._trigger('readyStateChange', self.READY_STATE_CHANGE.COMPLETED);
+    log.info('Parsed parameters from webserver. ' +
+      'Ready for web-realtime communication');
+  };
+
+  if (!AdapterJS.onwebrtcreadyDone) {
+    AdapterJS.onwebrtcready = ready;
+
+  } else {
+    ready();
+  }
 };
 
 /**
