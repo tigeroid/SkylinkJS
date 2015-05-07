@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.9 - Wed Apr 29 2015 15:14:40 GMT+0800 (SGT) */
+/*! skylinkjs - v0.5.9 - Thu May 07 2015 11:33:00 GMT+0800 (SGT) */
 
 (function() {
 
@@ -7922,24 +7922,33 @@ Skylink.prototype._setSDPBitrate = function(sdpLines, settings) {
   if (maLineFound && cLineFound) {
     if (bandwidth.audio && hasAudio) {
       var audioLine = this._findSDPLine(sdpLines, ['a=audio', 'm=audio']);
-      sdpLines.splice(audioLine[0], 1, audioLine[1], 'b=AS:' + bandwidth.audio);
 
-      log.debug([null, 'SDP', null, 'Setting audio bitrate (' +
-        bandwidth.audio + ')'], audioLine);
+      if (audioLine.length>0){
+        sdpLines.splice(audioLine[0], 1, audioLine[1], 'b=AS:' + bandwidth.audio);
+
+        log.debug([null, 'SDP', null, 'Setting audio bitrate (' +
+          bandwidth.audio + ')'], audioLine);
+      }
     }
     if (bandwidth.video && hasVideo) {
       var videoLine = this._findSDPLine(sdpLines, ['a=video', 'm=video']);
-      sdpLines.splice(videoLine[0], 1, videoLine[1], 'b=AS:' + bandwidth.video);
 
-      log.debug([null, 'SDP', null, 'Setting video bitrate (' +
-        bandwidth.video + ')'], videoLine);
+      if (videoLine.length>0){
+        sdpLines.splice(videoLine[0], 1, videoLine[1], 'b=AS:' + bandwidth.video);
+
+        log.debug([null, 'SDP', null, 'Setting video bitrate (' +
+          bandwidth.video + ')'], videoLine);
+      }
     }
     if (bandwidth.data && this._enableDataChannel) {
-      var dataLine = this._findSDPLine(sdpLines, ['a=application', 'm=application']);
-      sdpLines.splice(dataLine[0], 1, dataLine[1], 'b=AS:' + bandwidth.data);
 
-      log.debug([null, 'SDP', null, 'Setting data bitrate (' +
-        bandwidth.data + ')'], dataLine);
+      var dataLine = this._findSDPLine(sdpLines, ['a=application', 'm=application']);
+
+      if (dataLine.length>0){
+        sdpLines.splice(dataLine[0], 1, dataLine[1], 'b=AS:' + bandwidth.data);
+        log.debug([null, 'SDP', null, 'Setting data bitrate (' +
+          bandwidth.data + ')'], dataLine);
+      }
     }
   }
   return sdpLines;
