@@ -1,4 +1,4 @@
-/*! skylinkjs - v0.5.9 - Thu Apr 30 2015 13:44:16 GMT+0800 (SGT) */
+/*! skylinkjs - v0.5.9 - Thu May 07 2015 16:43:20 GMT+0800 (SGT) */
 
 (function() {
 
@@ -7252,6 +7252,36 @@ Skylink.prototype._muteLocalMediaStreams = function () {
   };
 };
 
+
+/**
+ * Check whether media settings have changed.
+ * @method _compareMediaSettings
+ * @param {Object} newSettings The new settings to be compared with the current one.
+ * @return options If media settings have changed.
+ * @return options.audioChanged If audio settings have changed.
+ * @return options.videoChanged If video settings have changed.
+ * @return options.mediaChanged If either audio or video settings have changed.
+ * @component Stream
+ * @private
+ * @for Skylink
+ * @since 0.5.10
+ */
+Skylink.prototype._compareMediaSettings = function(newSettings){
+  var self = this;
+
+  var oldSettings = self._streamSettings;
+
+  var audioChanged = (JSON.stringify(oldSettings.audio) !== JSON.stringify(newSettings.audio));
+
+  var videoChanged = (JSON.stringify(oldSettings.video) !== JSON.stringify(newSettings.video));
+
+  return {
+    audioChanged: audioChanged,
+    videoChanged: videoChanged,
+    mediaChanged: audioChanged || videoChanged
+  };
+};
+
 /**
  * Waits for MediaStream.
  * - Once the stream is loaded, callback is called
@@ -7313,8 +7343,10 @@ Skylink.prototype._waitForLocalMediaStream = function(callback, options) {
     });
   }
 
-  // clear previous mediastreams
-  self.stopStream();
+  if (self._compareMediaSettings(options).mediaChanged){
+    // clear previous mediastreams
+    self.stopStream();
+  }
 
   var current50Block = 0;
   var mediaAccessRequiredFailure = false;
@@ -7452,8 +7484,12 @@ Skylink.prototype.getUserMedia = function(options,callback) {
 
   // if audio and video is false, do not call getUserMedia
   if (!(options.audio === false && options.video === false)) {
-    // clear previous mediastreams
-    self.stopStream();
+
+    if (self._compareMediaSettings(options).mediaChanged){
+      // clear previous mediastreams
+      self.stopStream();
+    }
+
     try {
       window.getUserMedia(self._getUserMediaSettings, function (stream) {
         self._onUserMediaSuccess(stream);
