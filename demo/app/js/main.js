@@ -224,12 +224,13 @@ Demo.Skylink.on('readyStateChange', function (state, error){
     var displayName = 'name_' + 'user_' + Math.floor((Math.random() * 1000) + 1);
     Demo.Skylink.joinRoom({
       userData: displayName,
-      audio: { stereo: true },
+      audio: false, //{ stereo: true },
       video: {
         resolution: {
           width: 1280,
           height: 720
-        }
+        },
+        //screenshare: true
       }
     });
     /*Demo.Skylink.joinRoom({

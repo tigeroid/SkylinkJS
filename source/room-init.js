@@ -425,6 +425,9 @@ Skylink.prototype._parseInfo = function(info) {
     self._trigger('readyStateChange', self.READY_STATE_CHANGE.COMPLETED);
     log.info('Parsed parameters from webserver. ' +
       'Ready for web-realtime communication');
+
+    self._screenSharingAvailable = !!AdapterJS.WebRTCPlugin.plugin.HasScreensharingFeature &&
+      !!AdapterJS.WebRTCPlugin.plugin.isScreensharingAvailable;
   };
 
   if (!AdapterJS.onwebrtcreadyDone) {
@@ -780,6 +783,8 @@ Skylink.prototype.init = function(options, callback) {
   self._socketTimeout = socketTimeout;
   self._selectedAudioCodec = audioCodec;
   self._selectedVideoCodec = videoCodec;
+
+
 
   log.log('Init configuration:', {
     serverUrl: self._path,
